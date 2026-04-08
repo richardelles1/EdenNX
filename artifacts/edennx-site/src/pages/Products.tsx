@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -375,7 +375,7 @@ export default function Products() {
             Ready to connect with the right science?
           </h2>
           <Link
-            href="/contact"
+            to="/contact"
             data-testid="products-cta"
             className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm reveal"
             style={{ transitionDelay: "0.1s" }}

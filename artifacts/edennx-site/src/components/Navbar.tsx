@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation } from "react-router-dom";
 import logoImg from "@assets/EdenNX_Logo_Text_1775676338906.png";
 
 const navLinks = [
@@ -11,7 +11,7 @@ const navLinks = [
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [location] = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -21,7 +21,7 @@ export function Navbar() {
 
   useEffect(() => {
     setMenuOpen(false);
-  }, [location]);
+  }, [location.pathname]);
 
   return (
     <header
@@ -33,7 +33,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-18">
-          <Link href="/" data-testid="nav-logo">
+          <Link to="/" data-testid="nav-logo">
             <img
               src={logoImg}
               alt="EdenNX"
@@ -45,10 +45,10 @@ export function Navbar() {
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 data-testid={`nav-link-${link.label.toLowerCase()}`}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
-                  location === link.href
+                  location.pathname === link.href
                     ? "text-primary"
                     : "text-foreground/70"
                 }`}
@@ -108,10 +108,10 @@ export function Navbar() {
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 data-testid={`nav-mobile-link-${link.label.toLowerCase()}`}
                 className={`text-base font-medium py-2 transition-colors ${
-                  location === link.href ? "text-primary" : "text-foreground/70"
+                  location.pathname === link.href ? "text-primary" : "text-foreground/70"
                 }`}
               >
                 {link.label}

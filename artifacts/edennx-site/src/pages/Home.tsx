@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link } from "react-router-dom";
 import { RadarBackground } from "@/components/RadarBackground";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
@@ -93,14 +93,14 @@ export default function Home() {
               style={{ transitionDelay: "0.3s" }}
             >
               <Link
-                href="/products"
+                to="/products"
                 data-testid="hero-cta-products"
                 className="inline-flex items-center px-6 py-3 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
               >
                 Explore Our Products
               </Link>
               <Link
-                href="/about"
+                to="/about"
                 data-testid="hero-cta-team"
                 className="inline-flex items-center px-6 py-3 rounded-md text-base font-semibold border-2 border-foreground/20 text-foreground hover:border-primary hover:text-primary transition-colors"
               >
@@ -151,7 +151,7 @@ export default function Home() {
           {products.map((product, i) => (
             <Link
               key={product.name}
-              href={product.href}
+              to={product.href}
               data-testid={`product-card-${product.name.toLowerCase()}`}
               className={`group block rounded-xl border-t-4 ${product.borderClass} ${product.bgClass} bg-card border border-border p-8 hover:shadow-md transition-all duration-300 reveal`}
               style={{ transitionDelay: `${i * 0.1}s` }}
@@ -205,7 +205,7 @@ export default function Home() {
             Ready to see what we've built?
           </h2>
           <Link
-            href="/products"
+            to="/products"
             data-testid="bottom-cta-products"
             className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm reveal"
             style={{ transitionDelay: "0.1s" }}
