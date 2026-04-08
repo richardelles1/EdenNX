@@ -1,0 +1,132 @@
+EdenNX Corporate Website — New Repl Starter Prompt
+Build the EdenNX corporate marketing website. This is the parent company site for EdenNX, the organization behind the EdenRadar product suite. The audience is sophisticated biotech and pharma buyers, life science investors, potential enterprise partners, and talent. The site should feel premium, credible, and minimal. Not a startup landing page. A company that knows what it's doing.
+
+Tech stack: React + Vite, TypeScript, Tailwind CSS, React Router (or wouter), Framer Motion v10 for scroll reveals. Deploy target is Vercel via GitHub, so the output must be a standard Vite SPA with no SSR dependencies.
+
+Brand rules (non-negotiable):
+
+Primary color: emerald green. Use hsl(142 52% 36%) as the primary brand green. Lighter variant hsl(142 65% 48%) for glows and accents.
+Background: near-white hsl(0 0% 98%) in light mode. Dark mode: hsl(222 47% 7%).
+No blue anywhere in the design. Not in buttons, not in links, not in accents.
+No em dashes (-- is fine in comments, never in UI copy).
+Never use the phrase "AI-powered." Describe capabilities concretely instead.
+Typography: clean, professional. Use Inter or a system font stack. Headings bold, body text at comfortable line-height.
+Subtle radar-ring background decoration (concentric circles, low opacity green, no animation on the corporate site).
+Footer: "2026 EdenNX. All rights reserved." with links to LinkedIn and product site (edenradar.com placeholder).
+Pages to build:
+
+1. Home (/)
+Hero section:
+
+Eyebrow label: "Biotech Intelligence Infrastructure"
+Headline: "Connecting university science to the industry ready to build it."
+Subheadline: "EdenNX builds the intelligence infrastructure that accelerates science from university discovery to industry development. Our product suite spans concept formation, structured research, and commercial asset scouting across 300+ technology transfer offices worldwide."
+Two CTAs: "Explore Our Products" (links to /products, primary green button) and "Meet the Team" (links to /about, outline button)
+Stats bar below hero (4 cards in a row):
+
+"10,000+" / Biotech Assets Indexed
+"300+" / TTO Sources Monitored
+"3" / Purpose-Built Portals
+"2026" / Founded
+Product preview section (3 cards):
+
+EdenDiscovery (amber/gold accent, hsl 38 92% 50%): "Creative concept community. For concept creators and early-stage innovators. Submit, date-stamp, and surface early-stage hypotheses before research begins."
+EdenLab (purple accent, hsl 265 60% 60%): "Project-based research workspace. For academic researchers and lab teams. Organize your science, synthesize literature, track grants, and gain visibility with industry partners."
+EdenScout (green accent, hsl 142 65% 48%): "Industry intelligence platform. For BD teams and licensing executives. A continuously enriched window into every major TTO, with EDEN-compiled dossiers and natural language asset search. Starting at $1,999/month."
+Mission statement panel (dark gradient card):
+
+Label: "Our Mission"
+Copy: "Accelerate science to patient impact by eliminating the discovery gap between university research and industry development. Every year, thousands of licensable technologies sit quietly inside research institutions while industry teams spend months and millions searching through fragmented databases and cold calls. We built EdenNX to change that."
+Bottom CTA section: "Ready to see what we've built?" with link to /products.
+
+2. Products (/products)
+
+Page intro:
+
+Label: "The Product Suite"
+Headline: "One platform. Purpose-built for every stakeholder."
+Sub: "Whether you are planting the seed of a concept or closing a licensing deal, EdenRadar has a portal built for your workflow."
+Three full product sections (stacked, each with a top-border in their accent color):
+
+EdenDiscovery (amber):
+
+Tagline: "Creative concept community"
+For: Concept Creators, Early-Stage Innovators
+Features: Submit early-stage hypotheses before research begins / EDEN credibility scoring on a 0-100 scale / Surface to industry scouts and collaborators / Graduate promising concepts into EdenLab projects / Concept registry with timestamped provenance
+Vision quote: "The spark of discovery is often the hardest thing to protect and communicate. EdenDiscovery gives every innovator a structured place to plant their idea, date-stamp it, and let the world know it exists."
+Access: Free
+EdenLab (purple):
+
+Tagline: "Project-based research workspace"
+For: Academic Researchers, Lab Leaders, PhD Teams
+Features: Structured 11-section project canvas / Literature synthesis across 40+ data sources / Evidence extraction and citation management / Visibility to industry partners and collaborators / Grants discovery matched to your research profile
+Vision quote: "EdenLab is built for the scientist who needs to move from hypothesis to publication without losing the thread. A workspace that organizes the complexity of research while making your work visible to the world."
+Access: Free
+EdenScout (green):
+
+Tagline: "Industry intelligence platform"
+For: BD Teams, Licensing Executives, Pharma Strategy
+Features: Continuously refreshed catalog of licensable biotech assets / Natural language queries via EDEN chat interface / Competing asset cross-reference by target and modality / Institution intelligence and researcher profiles / EDEN-compiled dossiers and board-ready reports
+Vision quote: "EdenScout is the platform your BD team has always needed. Instead of cold calls and conference hallways, you get a continuously enriched window into every major TTO on the planet."
+Pricing tiers (show a clean 2-column grid of tier cards):
+Individual: $1,999/mo — 1 Primary Intelligence Seat
+Team 5-Seat: $4,999/mo — 5 seats, shared pipeline
+Team 10-Seat: $8,999/mo — 10 seats, team reports
+Enterprise: Starting at $50,000/mo — Unlimited seats, private model tuning, API access, custom integrations, dedicated TAM
+Data pipeline section (4 steps, same as WhatWeDo pipeline in EdenRadar):
+
+Step 01: Continuous Monitoring — "EdenRadar's scrapers continuously crawl 300+ university tech transfer offices, government databases, and academic publication feeds. Every asset is collected, timestamped, and queued for analysis the moment it appears." Bullets: 300+ TTO portals monitored / Daily refresh on all sources / Patent filing alerts included
+Step 02: EDEN Classification and Enrichment — "Each asset passes through EDEN, which classifies therapy area, disease target, development stage, and modality. EDEN scores each asset 0-100 for licensing readiness, scientific credibility, and commercial potential." Bullets: Therapy area classification / Modality and target extraction / 0-100 EDEN readiness score
+Step 03: Semantic Search Index — "Enriched assets are embedded into a vector search index, enabling natural language queries that match by meaning, not just keyword. Ask EDEN a question in plain English and surface relevant assets instantly." Bullets: Vector embedding search / Natural language queries / Cross-institution matching
+Step 04: Dossier Generation — "For each asset you want to explore, EdenRadar auto-generates a structured intelligence dossier: competitive landscape, key scientific claims, patent coverage, inventor details, and a deal-readiness summary formatted for BD review." Bullets: Full EDEN-compiled dossier / Competitive cross-reference / Export to PDF or CSV
+3. About (/about)
+
+Page intro:
+
+Label: "Founded Early 2026"
+Headline: "Built by industry insiders, for the industry."
+Sub: "EdenNX was founded on a single conviction: the world's most important biotech assets are locked inside university technology transfer offices, and the industry teams that need them have no efficient way to find them."
+Mission panel (dark gradient card):
+
+"Accelerate science to patient impact by eliminating the discovery gap between university research and industry development."
+Sub: "Every year, thousands of licensable technologies sit quietly inside research institutions while industry teams spend months and millions searching through fragmented databases and cold calls. EdenRadar changes that with EDEN-enriched discovery, structured intelligence, and a connected ecosystem designed for the modern biotech deal."
+Founders section (2-column grid, each with photo circle, name, title, bio paragraphs, and a pull-quote card below):
+
+Wafick Mohamed — Co-Founder & Chief Executive Officer
+
+Bio paragraph 1: "Dr. Wafick Mohamed is a biotech executive, entrepreneur, and educator dedicated to advancing science for patient impact. With extensive experience across global pharma and emerging biotech, he specializes in building quality systems, scaling operations, and leading organizations from the ground up."
+Bio paragraph 2: "As Founder and CEO of WKM Consulting Services LLC, Dr. Mohamed has launched and shaped multiple innovative companies. He also serves as a professor of research and entrepreneurship, mentoring the next generation of scientific and business leaders."
+Quote: "We are extremely proud to be part of an industry that is pushing the boundaries of science to enhance patients' lives. We will help our clients identify gaps and generate new ideas and solutions to improve their processes and products."
+Photo: placeholder circle with initials WM (the actual photo will be added later)
+Richard Elles — Co-Founder & Chief Operating Officer
+
+Bio paragraph 1: "Richard Elles is a dynamic healthcare leader with a diverse background in strategy development, corporate leadership, patient advocacy, and process improvement. A dedicated and PMP-certified Project Manager, Rich has deployed extensive management systems across consulting firms, healthtech startups, academic institutions, and research teams."
+Bio paragraph 2: "As the founder of Oriva, Inc., Rich has harnessed the power of cutting-edge technology to redefine philanthropic development. He is a two-time Ironman and leverages his experience in endurance sports to connect with corporate wellness initiatives to power new giving trends. Rich completed his Bachelor's Degree in Business at Drexel University before earning a Master's Degree in Public Administration from Villanova University."
+Quote: "We are thrilled to bring new energy and laser focus to an industry in need of organization as it drives innovation. The opportunity to create in biotech and research spaces is matched only by the promise of what success will unlock for patients and consumers worldwide."
+Photo: placeholder circle with initials RE
+Values section (2x2 grid):
+
+Science First: "Every decision at EdenNX traces back to one question: does this advance the science that helps patients?"
+Built to Scale: "From 300+ tech transfer offices to global research ecosystems, we architect platforms that grow with the industry."
+People Behind the Science: "We believe the best deals start with relationships. EdenRadar connects the humans behind the discoveries with the teams that can bring them to market."
+Uncompromising Quality: "Grounded in pharmaceutical-grade operational discipline, our team brings rigorous standards to every layer of the platform."
+4. Contact (/contact)
+
+Headline: "Get in touch."
+Sub: "Whether you're interested in a product demo, a partnership, or just want to learn more about what we're building, we'd love to hear from you."
+Simple form: Name (text), Company (text), Email (text), Subject (dropdown: Product Demo / Partnership Inquiry / Press / General), Message (textarea), Submit button
+On submit: show a confirmation message "Thanks, we'll be in touch shortly." No backend needed, mailto fallback to support@edennx.com
+Right column (beside the form): contact info panel with Email: support@edennx.com / LinkedIn: linkedin.com/company/edennx (placeholder) / Location: United States
+Navigation:
+Fixed top nav with EdenNX wordmark (green, bold, serif or semi-serif feel), links: Products / About / Contact, and a right-side CTA button "Launch EdenRadar" that links to https://edenradar.com (placeholder, opens in new tab, primary green button). Mobile: hamburger menu that slides in from right.
+
+Important implementation notes:
+
+No backend, no database, no environment variables needed. This is a pure static site.
+All founder photos should use styled placeholder circles with initials until real photos are dropped in.
+The site must be fully responsive (mobile, tablet, desktop).
+Use IntersectionObserver-based scroll reveals on all major sections (fade up on entry, no repeat).
+Include proper <title> and meta description tags on every page for SEO.
+The vite.config.ts should have base: '/' so Vercel routing works correctly.
+Add a vercel.json at the root with { "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] } so client-side routing works after deploy.
+Do not add any blue colors. Do not use the phrase "AI-powered." Do not use em dashes in UI copy.
