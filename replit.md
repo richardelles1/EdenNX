@@ -21,7 +21,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 ### EdenNX Corporate Website (`artifacts/edennx-site`)
 - **Type**: React + Vite SPA (static, no backend)
 - **Preview path**: `/`
-- **Stack**: React, TypeScript, Tailwind CSS, Wouter (routing), Framer Motion ready
+- **Stack**: React, TypeScript, Tailwind CSS, react-router-dom v7 (routing), IntersectionObserver scroll-reveal animations
 - **Pages**: Home (`/`), Products (`/products`), About (`/about`), Contact (`/contact`)
 - **Brand**: Emerald green primary `hsl(142 52% 36%)`, light/dark mode, Inter font, radar-ring SVG background
 - **Assets**: EdenNX logo from `attached_assets/`, Richard Elles headshot from `attached_assets/Headshot1_1775676396671.jpg`
