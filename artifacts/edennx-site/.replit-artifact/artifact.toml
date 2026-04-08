@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "EdenNX Corporate Website"
+version = "1.0.0"
+id = "artifacts/edennx-site"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25501
+
+[services.development]
+run = "pnpm --filter @workspace/edennx-site run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/edennx-site", "run", "build" ]
+publicDir = "artifacts/edennx-site/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25501"
+BASE_PATH = "/"
