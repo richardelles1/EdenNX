@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useSEO } from "@/hooks/useSEO";
 
 const subjects = [
   "Product Demo",
@@ -10,6 +11,11 @@ const subjects = [
 
 export default function Contact() {
   useScrollReveal();
+  useSEO({
+    title: "Contact -- EdenNX",
+    description:
+      "Get in touch with EdenNX. Whether you're interested in a product demo, a partnership, or just want to learn more, we'd love to hear from you.",
+  });
 
   const [form, setForm] = useState({
     name: "",
@@ -20,17 +26,6 @@ export default function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    document.title = "Contact -- EdenNX";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "Get in touch with EdenNX. Whether you're interested in a product demo, a partnership, or just want to learn more, we'd love to hear from you."
-      );
-    }
-  }, []);
 
   function validate() {
     const errs: Record<string, string> = {};

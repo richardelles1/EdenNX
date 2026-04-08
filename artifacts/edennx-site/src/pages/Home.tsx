@@ -1,7 +1,7 @@
 import { Link } from "wouter";
-import { useEffect } from "react";
 import { RadarBackground } from "@/components/RadarBackground";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useSEO } from "@/hooks/useSEO";
 
 const stats = [
   { value: "30,000+", label: "Biotech Assets Indexed" },
@@ -51,23 +51,11 @@ const products = [
 
 export default function Home() {
   useScrollReveal();
-
-  useEffect(() => {
-    document.title = "EdenNX -- Biotech Intelligence Infrastructure";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "EdenNX builds the intelligence infrastructure that accelerates science from university discovery to industry development. Our product suite spans concept formation, structured research, and commercial asset scouting across 300+ technology transfer offices worldwide."
-      );
-    } else {
-      const newMeta = document.createElement("meta");
-      newMeta.name = "description";
-      newMeta.content =
-        "EdenNX builds the intelligence infrastructure that accelerates science from university discovery to industry development.";
-      document.head.appendChild(newMeta);
-    }
-  }, []);
+  useSEO({
+    title: "EdenNX -- Biotech Intelligence Infrastructure",
+    description:
+      "EdenNX builds the intelligence infrastructure that accelerates science from university discovery to industry development. Our product suite spans concept formation, structured research, and commercial asset scouting across 300+ technology transfer offices worldwide.",
+  });
 
   return (
     <div className="pt-16">

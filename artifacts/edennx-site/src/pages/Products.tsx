@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import { Link } from "wouter";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useSEO } from "@/hooks/useSEO";
 
 const pipelineSteps = [
   {
@@ -80,17 +80,11 @@ const scoutPricing = [
 
 export default function Products() {
   useScrollReveal();
-
-  useEffect(() => {
-    document.title = "Products -- EdenNX";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "The EdenNX product suite: EdenDiscovery, EdenLab, and EdenScout. Purpose-built for every stakeholder in the biotech licensing ecosystem."
-      );
-    }
-  }, []);
+  useSEO({
+    title: "Products -- EdenNX",
+    description:
+      "The EdenNX product suite: EdenDiscovery, EdenLab, and EdenScout. Purpose-built for every stakeholder in the biotech licensing ecosystem.",
+  });
 
   return (
     <div className="pt-16">

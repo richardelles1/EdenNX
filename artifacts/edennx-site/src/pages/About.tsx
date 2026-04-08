@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useSEO } from "@/hooks/useSEO";
 import headshot1 from "@assets/Headshot1_1775676396671.jpg";
 
 const founders = [
@@ -55,17 +55,11 @@ const values = [
 
 export default function About() {
   useScrollReveal();
-
-  useEffect(() => {
-    document.title = "About -- EdenNX";
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "EdenNX was founded on a single conviction: the world's most important biotech assets are locked inside university technology transfer offices. Meet the team behind the platform."
-      );
-    }
-  }, []);
+  useSEO({
+    title: "About -- EdenNX",
+    description:
+      "EdenNX was founded on a single conviction: the world's most important biotech assets are locked inside university technology transfer offices. Meet the team behind the platform.",
+  });
 
   return (
     <div className="pt-16">
