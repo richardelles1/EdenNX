@@ -49,33 +49,11 @@ const pipelineSteps = [
   },
 ];
 
-const scoutPricing = [
-  {
-    name: "Individual",
-    price: "$1,999",
-    period: "/mo",
-    description: "1 Primary Intelligence Seat",
-  },
-  {
-    name: "Team 5-Seat",
-    price: "$4,999",
-    period: "/mo",
-    description: "5 seats, shared pipeline",
-  },
-  {
-    name: "Team 10-Seat",
-    price: "$8,999",
-    period: "/mo",
-    description: "10 seats, team reports",
-    featured: true,
-  },
-  {
-    name: "Enterprise",
-    price: "Starting at $50,000",
-    period: "/mo",
-    description:
-      "Unlimited seats, private model tuning, API access, custom integrations, dedicated TAM",
-  },
+const scoutTiers = [
+  { name: "Individual", price: "$1,999", desc: "1 intelligence seat" },
+  { name: "Team 5-Seat", price: "$8,999", desc: "5 seats, shared pipeline" },
+  { name: "Team 10-Seat", price: "$18,999", desc: "10 seats, team reports" },
+  { name: "Enterprise", price: "$50,000+", desc: "Unlimited seats, API access, private model tuning" },
 ];
 
 export default function Products() {
@@ -105,7 +83,7 @@ export default function Products() {
           style={{ transitionDelay: "0.2s" }}
         >
           Whether you are planting the seed of a concept or closing a licensing
-          deal, EdenRadar has a portal built for your workflow.
+          deal, EdenNX has a portal built for your workflow.
         </p>
       </section>
 
@@ -287,36 +265,42 @@ export default function Products() {
             </div>
           </div>
 
-          {/* Pricing */}
-          <div className="reveal">
-            <h3 className="text-2xl font-bold text-foreground mb-8">Pricing</h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {scoutPricing.map((tier, i) => (
+          {/* Pricing teaser */}
+          <div className="reveal border-t border-emerald-200 dark:border-emerald-800/30 pt-12">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+              <div>
+                <h3 className="text-2xl font-bold text-foreground mb-1">
+                  EdenScout Pricing
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Starting at $1,999/mo. See full pricing on EdenRadar.
+                </p>
+              </div>
+              <a
+                href="https://edenradar.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline flex-shrink-0"
+              >
+                Full pricing on EdenRadar.com
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {scoutTiers.map((tier, i) => (
                 <div
                   key={tier.name}
-                  className={`rounded-xl p-6 border reveal ${
-                    tier.featured
-                      ? "border-primary bg-primary/5 ring-1 ring-primary"
-                      : "border-border bg-card"
-                  }`}
-                  style={{ transitionDelay: `${i * 0.08}s` }}
+                  className="rounded-xl border border-border bg-card p-5 reveal"
+                  style={{ transitionDelay: `${i * 0.07}s` }}
                   data-testid={`pricing-tier-${i}`}
                 >
-                  {tier.featured && (
-                    <span className="inline-block text-xs font-semibold tracking-wide uppercase text-primary mb-3">
-                      Most Popular
-                    </span>
-                  )}
-                  <p className="font-semibold text-foreground mb-1">{tier.name}</p>
-                  <p className="text-2xl font-bold text-foreground">
-                    {tier.price}
-                    <span className="text-sm font-normal text-muted-foreground">
-                      {tier.period}
-                    </span>
+                  <p className="text-xs font-semibold tracking-wide uppercase text-muted-foreground mb-2">
+                    {tier.name}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
-                    {tier.description}
-                  </p>
+                  <p className="text-xl font-bold text-foreground mb-1">{tier.price}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{tier.desc}</p>
                 </div>
               ))}
             </div>

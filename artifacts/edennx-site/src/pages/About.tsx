@@ -1,13 +1,15 @@
+import { useState, useEffect } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import headshot1 from "@assets/Headshot1_1775676396671.jpg";
+import wmPhoto from "@assets/WM_phot_1775790644431.jpg";
 
 const founders = [
   {
     name: "Wafick Mohamed",
     title: "Co-Founder & Chief Executive Officer",
-    initials: "WM",
-    hasPhoto: false,
+    photo: wmPhoto,
+    linkedIn: "https://www.linkedin.com/in/wafickmohamed/",
     bio: [
       "Dr. Wafick Mohamed is a biotech executive, entrepreneur, and educator dedicated to advancing science for patient impact. With extensive experience across global pharma and emerging biotech, he specializes in building quality systems, scaling operations, and leading organizations from the ground up.",
       "As Founder and CEO of WKM Consulting Services LLC, Dr. Mohamed has launched and shaped multiple innovative companies. He also serves as a professor of research and entrepreneurship, mentoring the next generation of scientific and business leaders.",
@@ -18,9 +20,8 @@ const founders = [
   {
     name: "Richard Elles",
     title: "Co-Founder & Chief Operating Officer",
-    initials: "RE",
-    hasPhoto: true,
     photo: headshot1,
+    linkedIn: "https://www.linkedin.com/in/richardelles/",
     bio: [
       "Richard Elles is a dynamic healthcare leader with a diverse background in strategy development, corporate leadership, patient advocacy, and process improvement. A dedicated and PMP-certified Project Manager, Rich has deployed extensive management systems across consulting firms, healthtech startups, academic institutions, and research teams.",
       "As the founder of Oriva, Inc., Rich has harnessed the power of cutting-edge technology to redefine philanthropic development. He is a two-time Ironman and leverages his experience in endurance sports to connect with corporate wellness initiatives to power new giving trends. Rich completed his Bachelor's Degree in Business at Drexel University before earning a Master's Degree in Public Administration from Villanova University.",
@@ -53,12 +54,110 @@ const values = [
   },
 ];
 
+function LinkedInIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.333 6.617c1.326 0 2.598.523 3.536 1.455a4.95 4.95 0 0 1 1.464 3.51v5.794H15v-5.793c0-.44-.176-.86-.488-1.17a1.673 1.673 0 0 0-2.357 0 1.65 1.65 0 0 0-.488 1.17v5.793H8.333v-5.793c0-1.317.527-2.58 1.465-3.511a5.02 5.02 0 0 1 3.535-1.455M5 7.445H1.667v9.932H5zM3.333 4.967C4.253 4.967 5 4.226 5 3.31s-.746-1.655-1.667-1.655A1.66 1.66 0 0 0 1.667 3.31a1.66 1.66 0 0 0 1.666 1.656" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function TeamCarousel() {
+  const [startIndex, setStartIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(2);
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 640) {
+        setVisibleCount(1);
+      } else {
+        setVisibleCount(2);
+      }
+      setStartIndex(0);
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const maxIndex = Math.max(0, founders.length - visibleCount);
+  const visibleMembers = founders.slice(startIndex, startIndex + visibleCount);
+
+  return (
+    <div>
+      <div className="flex items-start gap-4 md:gap-6">
+        <button
+          onClick={() => setStartIndex((p) => Math.max(0, p - 1))}
+          disabled={startIndex === 0}
+          aria-label="Previous"
+          className={`mt-28 flex-shrink-0 h-10 w-10 rounded-full border border-border flex items-center justify-center transition-opacity ${
+            startIndex === 0 ? "opacity-30 cursor-not-allowed" : "hover:border-primary hover:text-primary cursor-pointer"
+          }`}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="m15 18-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        <div className="flex gap-5 flex-1 min-w-0">
+          {visibleMembers.map((member, i) => (
+            <div
+              key={startIndex + i}
+              className="flex-1 min-w-0 bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors"
+            >
+              <img
+                src={member.photo}
+                alt={member.name}
+                className="w-full h-[clamp(200px,40vw,280px)] object-cover object-top rounded-xl mb-5"
+              />
+              <h3 className="text-lg font-bold text-foreground mb-0.5">{member.name}</h3>
+              <p className="text-sm text-muted-foreground mb-4">{member.title}</p>
+              <div className="space-y-3 mb-5">
+                {member.bio.map((para, j) => (
+                  <p key={j} className="text-sm text-foreground/75 leading-relaxed">{para}</p>
+                ))}
+              </div>
+              <blockquote className="rounded-xl border border-primary/20 bg-primary/5 p-5 mb-4">
+                <p className="text-sm italic text-foreground/80 leading-relaxed">
+                  "{member.quote}"
+                </p>
+              </blockquote>
+              <a
+                href={member.linkedIn}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              >
+                <LinkedInIcon />
+                LinkedIn
+              </a>
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setStartIndex((p) => Math.min(maxIndex, p + 1))}
+          disabled={startIndex >= maxIndex}
+          aria-label="Next"
+          className={`mt-28 flex-shrink-0 h-10 w-10 rounded-full border border-border flex items-center justify-center transition-opacity ${
+            startIndex >= maxIndex ? "opacity-30 cursor-not-allowed" : "hover:border-primary hover:text-primary cursor-pointer"
+          }`}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="m9 18 6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function About() {
   useScrollReveal();
   useSEO({
     title: "About -- EdenNX",
     description:
-      "EdenNX was founded on a single conviction: the world's most important biotech assets are locked inside university technology transfer offices. Meet the team behind the platform.",
+      "EdenNX is building the intelligence backbone of modern biotech. Meet the founders driving science from earliest discovery to patient impact.",
   });
 
   return (
@@ -66,7 +165,7 @@ export default function About() {
       {/* Intro */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
         <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 reveal">
-          Founded Early 2026
+          Founded 2026
         </p>
         <h1
           className="text-4xl md:text-5xl font-bold text-foreground mb-6 reveal"
@@ -79,10 +178,10 @@ export default function About() {
           className="text-lg text-muted-foreground max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.2s" }}
         >
-          EdenNX was founded on a single conviction: the world's most important
-          biotech assets are locked inside university technology transfer
-          offices, and the industry teams that need them have no efficient way
-          to find them.
+          EdenNX is building the intelligence backbone of modern biotech.
+          From earliest discovery hypothesis through commercial licensing and
+          patient delivery, we build the infrastructure that powers every stage
+          of the lifecycle.
         </p>
       </section>
 
@@ -96,77 +195,37 @@ export default function About() {
             Our Mission
           </p>
           <p className="text-2xl md:text-3xl font-bold text-background dark:text-foreground leading-snug max-w-3xl mb-6">
-            Accelerate science to patient impact by eliminating the discovery
-            gap between university research and industry development.
+            Accelerate science to patient impact by building the infrastructure
+            that biotech needs to discover, develop, and deliver breakthroughs.
           </p>
           <p className="text-base text-background/70 dark:text-muted-foreground leading-relaxed max-w-2xl">
-            Every year, thousands of licensable technologies sit quietly inside
-            research institutions while industry teams spend months and millions
-            searching through fragmented databases and cold calls. EdenRadar
-            changes that with EDEN-enriched discovery, structured intelligence,
-            and a connected ecosystem designed for the modern biotech deal.
+            Thousands of licensable technologies, groundbreaking research
+            hypotheses, and critical scientific partnerships remain undiscovered
+            each year due to fragmented data and outdated workflows. EdenNX is
+            changing that, building the connective tissue between every
+            stakeholder in the biotech ecosystem.
           </p>
         </div>
       </section>
 
-      {/* Founders */}
+      {/* Founders carousel */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-14 reveal" data-testid="founders-headline">
-          Our Founders
+        <h2
+          className="text-3xl md:text-4xl font-bold text-foreground mb-12 reveal"
+          data-testid="founders-headline"
+        >
+          Meet the Founders
         </h2>
-        <div className="grid lg:grid-cols-2 gap-16">
-          {founders.map((founder, i) => (
-            <div
-              key={founder.name}
-              className="reveal"
-              style={{ transitionDelay: `${i * 0.12}s` }}
-              data-testid={`founder-${i}`}
-            >
-              <div className="flex items-center gap-5 mb-6">
-                {founder.hasPhoto ? (
-                  <img
-                    src={founder.photo}
-                    alt={founder.name}
-                    className="h-20 w-20 rounded-full object-cover object-top border-2 border-border shadow-sm flex-shrink-0"
-                  />
-                ) : (
-                  <div className="h-20 w-20 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-xl font-bold text-primary">
-                      {founder.initials}
-                    </span>
-                  </div>
-                )}
-                <div>
-                  <h3 className="text-xl font-bold text-foreground">
-                    {founder.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">{founder.title}</p>
-                </div>
-              </div>
-              <div className="space-y-4 mb-6">
-                {founder.bio.map((paragraph, j) => (
-                  <p key={j} className="text-foreground/80 leading-relaxed text-sm">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-              <blockquote className="rounded-xl border border-primary/20 bg-primary/5 p-6">
-                <p className="text-sm italic text-foreground/80 leading-relaxed">
-                  "{founder.quote}"
-                </p>
-                <footer className="mt-3 text-xs font-semibold text-primary">
-                  -- {founder.name.split(" ")[0]}
-                </footer>
-              </blockquote>
-            </div>
-          ))}
-        </div>
+        <TeamCarousel />
       </section>
 
       {/* Values */}
       <section className="bg-foreground/[0.02] dark:bg-white/[0.02] border-y border-border py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-14 reveal" data-testid="values-headline">
+          <h2
+            className="text-3xl md:text-4xl font-bold text-foreground mb-14 reveal"
+            data-testid="values-headline"
+          >
             What we stand for.
           </h2>
           <div className="grid sm:grid-cols-2 gap-8">

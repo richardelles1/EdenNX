@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 
+const CONTACT_EMAIL = "wmohamed@edennx.com";
+
 const subjects = [
   "Product Demo",
   "Partnership Inquiry",
@@ -61,12 +63,12 @@ export default function Contact() {
       return;
     }
     const subject = encodeURIComponent(
-      `[EdenNX Contact] ${form.subject} -- ${form.name}`
+      `[EdenNX Contact] ${form.subject} - ${form.name}`
     );
     const body = encodeURIComponent(
       `Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\nSubject: ${form.subject}\n\n${form.message}`
     );
-    window.location.href = `mailto:support@edennx.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setSubmitted(true);
   }
 
@@ -91,7 +93,6 @@ export default function Contact() {
         </div>
 
         <div className="grid lg:grid-cols-5 gap-16">
-          {/* Form */}
           <div className="lg:col-span-3 reveal" style={{ transitionDelay: "0.15s" }}>
             {submitted ? (
               <div
@@ -117,7 +118,7 @@ export default function Contact() {
                   Thanks, we'll be in touch shortly.
                 </h2>
                 <p className="text-muted-foreground text-sm">
-                  Your message has been sent to support@edennx.com.
+                  Your message has been sent to {CONTACT_EMAIL}.
                 </p>
               </div>
             ) : (
@@ -258,7 +259,6 @@ export default function Contact() {
             )}
           </div>
 
-          {/* Contact info */}
           <div
             className="lg:col-span-2 reveal"
             style={{ transitionDelay: "0.2s" }}
@@ -271,11 +271,11 @@ export default function Contact() {
                     Email
                   </p>
                   <a
-                    href="mailto:support@edennx.com"
+                    href={`mailto:${CONTACT_EMAIL}`}
                     data-testid="contact-email"
                     className="text-sm text-primary hover:underline"
                   >
-                    support@edennx.com
+                    {CONTACT_EMAIL}
                   </a>
                 </div>
                 <div>

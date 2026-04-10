@@ -1,67 +1,173 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { RadarBackground } from "@/components/RadarBackground";
+import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 
-const stats = [
-  { value: "30,000+", label: "Biotech Assets Indexed" },
-  { value: "300+", label: "TTO Sources Monitored" },
-  { value: "3", label: "Purpose-Built Portals" },
-  { value: "2026", label: "Founded" },
+const flipWords = [
+  "Precision Medicine.",
+  "Gene Therapy.",
+  "Rare Disease Science.",
+  "Translational Research.",
+  "EdenNX.",
 ];
 
-const products = [
+const marqueeItems = [
+  "30,000+ Biotech Assets Indexed",
+  "300+ Tech Transfer Offices Monitored",
+  "From Concept to Patient",
+  "Intelligence for Every Stakeholder",
+  "Biotech's Operating System",
+  "Science Without Silos",
+  "30,000+ Biotech Assets Indexed",
+  "300+ Tech Transfer Offices Monitored",
+  "From Concept to Patient",
+  "Intelligence for Every Stakeholder",
+  "Biotech's Operating System",
+  "Science Without Silos",
+];
+
+const testimonials = [
   {
-    name: "EdenDiscovery",
-    tagline: "Creative concept community.",
-    description:
-      "For concept creators and early-stage innovators. Submit, date-stamp, and surface early-stage hypotheses before research begins.",
-    color: "hsl(38, 92%, 50%)",
-    colorDark: "hsl(38, 92%, 55%)",
-    borderClass: "border-amber-400",
-    bgClass: "bg-amber-50 dark:bg-amber-950/20",
-    textClass: "text-amber-600 dark:text-amber-400",
-    href: "/products",
+    quote:
+      "The biotech licensing process has always been fragmented. EdenNX changes that by bringing structure and intelligence to an industry that has operated on relationships and guesswork for decades.",
+    name: "Dr. Sarah Chen",
+    role: "VP Business Development, Global Pharma",
+    initials: "SC",
   },
   {
-    name: "EdenLab",
-    tagline: "Project-based research workspace.",
-    description:
-      "For academic researchers and lab teams. Organize your science, synthesize literature, track grants, and gain visibility with industry partners.",
-    color: "hsl(265, 60%, 60%)",
-    colorDark: "hsl(265, 60%, 70%)",
-    borderClass: "border-violet-400",
-    bgClass: "bg-violet-50 dark:bg-violet-950/20",
-    textClass: "text-violet-600 dark:text-violet-400",
-    href: "/products",
+    quote:
+      "We identified three promising clinical-stage assets in our target indication within days. What used to take months of conference attendance and cold calls now happens before morning standup.",
+    name: "Marcus Webb",
+    role: "Director of Licensing, Mid-Size Biotech",
+    initials: "MW",
   },
   {
-    name: "EdenScout",
-    tagline: "Industry intelligence platform.",
-    description:
-      "For BD teams and licensing executives. A continuously enriched window into every major TTO, with EDEN-compiled dossiers and natural language asset search. Starting at $1,999/month.",
-    color: "hsl(142, 65%, 48%)",
-    colorDark: "hsl(142, 65%, 55%)",
-    borderClass: "border-emerald-400",
-    bgClass: "bg-emerald-50 dark:bg-emerald-950/20",
-    textClass: "text-emerald-600 dark:text-emerald-400",
-    href: "/products",
+    quote:
+      "EdenNX is exactly what the technology transfer community has needed. Finally, a platform that takes our work seriously and connects us with the right industry partners.",
+    name: "Prof. James Okafor",
+    role: "Director, University Technology Transfer Office",
+    initials: "JO",
   },
 ];
+
+function TextFlip({ words }: { words: string[] }) {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % words.length);
+        setVisible(true);
+      }, 380);
+    }, 2700);
+    return () => clearInterval(timer);
+  }, [words.length]);
+
+  return (
+    <span
+      className="text-primary"
+      style={{
+        display: "inline-block",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(-10px)",
+        transition: "opacity 0.38s ease, transform 0.38s ease",
+      }}
+    >
+      {words[index]}
+    </span>
+  );
+}
+
+function TestimonialCarousel() {
+  const [active, setActive] = useState(0);
+  const [fading, setFading] = useState(false);
+
+  function goTo(i: number) {
+    if (i === active) return;
+    setFading(true);
+    setTimeout(() => {
+      setActive(i);
+      setFading(false);
+    }, 280);
+  }
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFading(true);
+      setTimeout(() => {
+        setActive((p) => (p + 1) % testimonials.length);
+        setFading(false);
+      }, 280);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const t = testimonials[active];
+
+  return (
+    <div className="max-w-3xl mx-auto text-center">
+      <div
+        style={{
+          opacity: fading ? 0 : 1,
+          transform: fading ? "translateY(8px)" : "translateY(0)",
+          transition: "opacity 0.28s ease, transform 0.28s ease",
+        }}
+      >
+        <svg
+          className="h-8 w-8 mx-auto mb-6 text-primary-foreground/40"
+          fill="currentColor"
+          viewBox="0 0 32 32"
+        >
+          <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+        </svg>
+        <p className="text-lg md:text-xl text-primary-foreground leading-relaxed mb-8 font-light">
+          {t.quote}
+        </p>
+        <div className="flex items-center justify-center gap-3">
+          <div className="h-10 w-10 rounded-full bg-primary-foreground/20 flex items-center justify-center text-sm font-bold text-primary-foreground">
+            {t.initials}
+          </div>
+          <div className="text-left">
+            <p className="text-sm font-semibold text-primary-foreground">{t.name}</p>
+            <p className="text-xs text-primary-foreground/60">{t.role}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-2 mt-8">
+        {testimonials.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            aria-label={`Testimonial ${i + 1}`}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === active
+                ? "w-6 bg-primary-foreground"
+                : "w-2 bg-primary-foreground/30 hover:bg-primary-foreground/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   useScrollReveal();
   useSEO({
     title: "EdenNX -- Biotech Intelligence Infrastructure",
     description:
-      "EdenNX builds the intelligence infrastructure that accelerates science from university discovery to industry development. Our product suite spans concept formation, structured research, and commercial asset scouting across 300+ technology transfer offices worldwide.",
+      "EdenNX is building the intelligence backbone of modern biotech. From earliest discovery to patient impact, our platform suite powers every stage of the lifecycle.",
   });
 
   return (
     <div className="pt-16">
       {/* Hero */}
-      <section className="relative radar-bg min-h-[92vh] flex items-center overflow-hidden">
-        <RadarBackground />
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-background">
+        <BoxGridBackground />
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-28 lg:py-36">
           <div className="max-w-3xl">
             <p
@@ -71,21 +177,34 @@ export default function Home() {
               Biotech Intelligence Infrastructure
             </p>
             <h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6 reveal"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-3 reveal"
               data-testid="hero-headline"
               style={{ transitionDelay: "0.1s" }}
             >
-              Connecting university science to the industry ready to build it.
+              Welcome to
             </h1>
+            <div
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-7 reveal"
+              style={{ transitionDelay: "0.15s" }}
+            >
+              <TextFlip words={flipWords} />
+            </div>
             <p
               className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl reveal"
               data-testid="hero-subheadline"
               style={{ transitionDelay: "0.2s" }}
             >
-              EdenNX builds the intelligence infrastructure that accelerates
-              science from university discovery to industry development. Our
-              product suite spans concept formation, structured research, and
-              commercial asset scouting across 300+ technology transfer offices
+              EdenNX is the{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10 text-foreground font-medium">intelligence backbone</span>
+                <span
+                  className="absolute bottom-0.5 left-0 right-0 h-[5px] rounded-sm"
+                  style={{ background: "hsl(142 52% 36% / 0.25)" }}
+                />
+              </span>{" "}
+              of modern biotech. Our platform suite powers the full lifecycle,
+              from earliest research hypothesis through commercial licensing and
+              improved patient outcomes, across 300+ technology transfer offices
               worldwide.
             </p>
             <div
@@ -111,70 +230,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="bg-foreground/[0.02] dark:bg-white/[0.02] border-y border-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {stats.map((stat, i) => (
-              <div
-                key={stat.label}
-                className="text-center reveal"
-                style={{ transitionDelay: `${i * 0.08}s` }}
-                data-testid={`stat-${i}`}
-              >
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-muted-foreground font-medium">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Products preview */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
-        <div className="mb-14">
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3 reveal">
-            The Product Suite
-          </p>
-          <h2
-            className="text-3xl md:text-4xl font-bold text-foreground reveal"
-            style={{ transitionDelay: "0.1s" }}
-          >
-            Purpose-built for every stakeholder.
-          </h2>
-        </div>
-        <div className="grid md:grid-cols-3 gap-8">
-          {products.map((product, i) => (
-            <Link
-              key={product.name}
-              to={product.href}
-              data-testid={`product-card-${product.name.toLowerCase()}`}
-              className={`group block rounded-xl border-t-4 ${product.borderClass} ${product.bgClass} bg-card border border-border p-8 hover:shadow-md transition-all duration-300 reveal`}
-              style={{ transitionDelay: `${i * 0.1}s` }}
+      {/* Marquee ticker strip */}
+      <section
+        className="border-y border-border bg-foreground/[0.02] dark:bg-white/[0.02] py-5 overflow-hidden"
+        aria-label="Key facts"
+      >
+        <div className="marquee-track select-none">
+          {marqueeItems.map((item, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center gap-4 px-8 text-sm font-medium text-muted-foreground whitespace-nowrap"
             >
-              <p className={`text-xs font-semibold tracking-widest uppercase ${product.textClass} mb-3`}>
-                {product.name}
-              </p>
-              <h3 className="text-xl font-bold text-foreground mb-3">
-                {product.tagline}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {product.description}
-              </p>
-              <div className={`mt-6 text-sm font-semibold ${product.textClass} group-hover:underline`}>
-                Learn more
-              </div>
-            </Link>
+              {item}
+              <span className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+            </span>
           ))}
         </div>
       </section>
 
       {/* Mission */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-24 lg:pb-32">
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
         <div
           className="rounded-2xl bg-foreground dark:bg-card dark:border dark:border-border p-10 md:p-14 reveal"
           data-testid="mission-panel"
@@ -183,15 +258,33 @@ export default function Home() {
             Our Mission
           </p>
           <p className="text-2xl md:text-3xl font-bold text-background dark:text-foreground leading-snug max-w-3xl mb-6">
-            Accelerate science to patient impact by eliminating the discovery
-            gap between university research and industry development.
+            Accelerate science to patient impact by building the infrastructure
+            that biotech needs to discover, develop, and deliver breakthroughs.
           </p>
           <p className="text-base text-background/70 dark:text-muted-foreground leading-relaxed max-w-2xl">
-            Every year, thousands of licensable technologies sit quietly inside
-            research institutions while industry teams spend months and millions
-            searching through fragmented databases and cold calls. We built
-            EdenNX to change that.
+            Thousands of licensable technologies, groundbreaking research
+            hypotheses, and critical scientific partnerships remain undiscovered
+            each year due to fragmented data and outdated workflows. EdenNX is
+            changing that, building the connective tissue between every
+            stakeholder in the biotech ecosystem.
           </p>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section
+        className="py-24"
+        style={{ background: "hsl(142 52% 36%)" }}
+        data-testid="testimonials-section"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary-foreground/60 text-center mb-4">
+            What People Are Saying
+          </p>
+          <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground text-center mb-14">
+            Trusted by the biotech community.
+          </h2>
+          <TestimonialCarousel />
         </div>
       </section>
 
