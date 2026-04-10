@@ -5,10 +5,18 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 
 const flipWords = [
+  "Technology Transfer.",
   "Precision Medicine.",
+  "Drug Discovery Intelligence.",
+  "Data-Driven Decisions.",
   "Gene Therapy.",
-  "Rare Disease Science.",
-  "Translational Research.",
+  "EdenRadar.",
+  "Scientific Collaboration.",
+  "Rare Disease Research.",
+  "Biotech Business Development.",
+  "Translational Science.",
+  "EdenScout.",
+  "Precision Oncology.",
   "EdenNX.",
 ];
 
@@ -19,12 +27,16 @@ const marqueeItems = [
   "Intelligence for Every Stakeholder",
   "Biotech's Operating System",
   "Science Without Silos",
+  "Drug Discovery Intelligence",
+  "EdenRadar by EdenNX",
   "30,000+ Biotech Assets Indexed",
   "300+ Tech Transfer Offices Monitored",
   "From Concept to Patient",
   "Intelligence for Every Stakeholder",
   "Biotech's Operating System",
   "Science Without Silos",
+  "Drug Discovery Intelligence",
+  "EdenRadar by EdenNX",
 ];
 
 const testimonials = [
@@ -61,8 +73,8 @@ function TextFlip({ words }: { words: string[] }) {
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % words.length);
         setVisible(true);
-      }, 380);
-    }, 2700);
+      }, 420);
+    }, 4000);
     return () => clearInterval(timer);
   }, [words.length]);
 
@@ -72,8 +84,8 @@ function TextFlip({ words }: { words: string[] }) {
       style={{
         display: "inline-block",
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(-10px)",
-        transition: "opacity 0.38s ease, transform 0.38s ease",
+        transform: visible ? "translateY(0)" : "translateY(-12px)",
+        transition: "opacity 0.42s ease, transform 0.42s ease",
       }}
     >
       {words[index]}
@@ -168,14 +180,10 @@ export default function Home() {
       {/* Hero */}
       <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-background">
         <BoxGridBackground />
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-28 lg:py-36">
+
+        {/* Content layer — pointer-events-none so background receives mouse events */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-28 lg:py-36 pointer-events-none">
           <div className="max-w-3xl">
-            <p
-              className="inline-block text-xs font-semibold tracking-widest uppercase text-primary border border-primary/30 bg-primary/5 px-3 py-1.5 rounded-full mb-8 reveal"
-              data-testid="hero-eyebrow"
-            >
-              Biotech Intelligence Infrastructure
-            </p>
             <h1
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-3 reveal"
               data-testid="hero-headline"
@@ -190,16 +198,16 @@ export default function Home() {
               <TextFlip words={flipWords} />
             </div>
             <p
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl reveal"
+              className="text-lg md:text-xl text-foreground/75 leading-relaxed mb-10 max-w-2xl reveal"
               data-testid="hero-subheadline"
               style={{ transitionDelay: "0.2s" }}
             >
               EdenNX is the{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 text-foreground font-medium">intelligence backbone</span>
+                <span className="relative z-10 text-foreground font-semibold">intelligence backbone</span>
                 <span
                   className="hero-highlight-bar absolute bottom-0.5 left-0 right-0 h-[5px] rounded-sm"
-                  style={{ background: "hsl(142 52% 36% / 0.30)" }}
+                  style={{ background: "hsl(var(--primary) / 0.28)" }}
                 />
               </span>{" "}
               of modern biotech. Our platform suite powers the full lifecycle,
@@ -207,8 +215,9 @@ export default function Home() {
               improved patient outcomes, across 300+ technology transfer offices
               worldwide.
             </p>
+            {/* Re-enable pointer events only on interactive elements */}
             <div
-              className="flex flex-wrap gap-4 reveal"
+              className="flex flex-wrap gap-4 reveal pointer-events-auto"
               style={{ transitionDelay: "0.3s" }}
             >
               <Link
@@ -248,20 +257,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mission */}
+      {/* Mission — light emerald tinted panel */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
         <div
-          className="rounded-2xl bg-foreground dark:bg-card dark:border dark:border-border p-10 md:p-14 reveal"
+          className="rounded-2xl border border-primary/20 p-10 md:p-14 reveal"
           data-testid="mission-panel"
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(152 72% 22% / 0.06) 0%, hsl(152 72% 22% / 0.10) 100%)",
+          }}
         >
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
             Our Mission
           </p>
-          <p className="text-2xl md:text-3xl font-bold text-background dark:text-foreground leading-snug max-w-3xl mb-6">
+          <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug max-w-3xl mb-6">
             Accelerate science to patient impact by building the infrastructure
             that biotech needs to discover, develop, and deliver breakthroughs.
           </p>
-          <p className="text-base text-background/70 dark:text-muted-foreground leading-relaxed max-w-2xl">
+          <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
             Thousands of licensable technologies, groundbreaking research
             hypotheses, and critical scientific partnerships remain undiscovered
             each year due to fragmented data and outdated workflows. EdenNX is
@@ -274,7 +287,7 @@ export default function Home() {
       {/* Testimonials */}
       <section
         className="py-24"
-        style={{ background: "hsl(142 52% 36%)" }}
+        style={{ background: "hsl(var(--primary))" }}
         data-testid="testimonials-section"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

@@ -26,40 +26,44 @@ export function Navbar() {
 
   return (
     <>
-      <header
-        className={`fixed z-50 transition-all duration-500 ease-in-out ${
-          scrolled
-            ? "top-4 left-1/2 -translate-x-1/2 w-[min(860px,calc(100%-2rem))]"
-            : "top-0 left-0 right-0"
-        }`}
-      >
+      <header className="fixed z-50 top-0 left-0 right-0 flex justify-center">
         <div
-          className={`transition-all duration-500 ${
+          className={`w-full transition-[max-width,margin,border-radius,background-color,box-shadow,border-color,padding] duration-500 ease-in-out ${
             scrolled
-              ? "rounded-full bg-background/95 backdrop-blur-xl border border-border shadow-xl px-5"
-              : "bg-transparent px-6 lg:px-8"
+              ? "rounded-full bg-background/95 backdrop-blur-xl border border-border shadow-xl"
+              : "bg-transparent border-transparent"
           }`}
+          style={{
+            maxWidth: scrolled ? "900px" : "100%",
+            marginTop: scrolled ? "16px" : "0",
+            marginLeft: scrolled ? "1rem" : "0",
+            marginRight: scrolled ? "1rem" : "0",
+          }}
         >
           <div
             className={`flex items-center justify-between transition-all duration-500 ${
-              scrolled ? "h-14" : "h-16"
+              scrolled ? "h-14 px-6" : "h-16 px-6 lg:px-10"
             }`}
           >
             <Link to="/" data-testid="nav-logo" className="flex-shrink-0">
               <img
                 src={logoImgLight}
                 alt="EdenNX"
-                className={`w-auto transition-all duration-500 block dark:hidden ${scrolled ? "h-7" : "h-9"}`}
+                className={`w-auto transition-all duration-500 block dark:hidden ${
+                  scrolled ? "h-8" : "h-11"
+                }`}
               />
               <img
                 src={logoImgDark}
                 alt="EdenNX"
-                className={`w-auto transition-all duration-500 hidden dark:block ${scrolled ? "h-7" : "h-9"}`}
+                className={`w-auto transition-all duration-500 hidden dark:block ${
+                  scrolled ? "h-8" : "h-11"
+                }`}
               />
             </Link>
 
             <nav
-              className="hidden md:flex items-center gap-7"
+              className="hidden md:flex items-center gap-8"
               aria-label="Main navigation"
             >
               {navLinks.map((link) => (
@@ -84,10 +88,10 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="nav-launch-edenradar"
-                className={`inline-flex items-center font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-all duration-300 ${
+                className={`inline-flex items-center font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-all duration-300 text-sm ${
                   scrolled
-                    ? "px-4 py-1.5 rounded-full text-sm"
-                    : "px-4 py-2 rounded-md text-sm"
+                    ? "px-4 py-1.5 rounded-full"
+                    : "px-5 py-2 rounded-md"
                 }`}
               >
                 Launch EdenRadar
@@ -125,7 +129,7 @@ export function Navbar() {
 
         {menuOpen && (
           <div
-            className="md:hidden mt-2 rounded-2xl bg-background/98 backdrop-blur-md border border-border shadow-lg overflow-hidden"
+            className="absolute top-full left-4 right-4 mt-2 rounded-2xl bg-background/98 backdrop-blur-md border border-border shadow-lg overflow-hidden"
             data-testid="nav-mobile-menu"
           >
             <div className="px-5 py-5 flex flex-col gap-4">
@@ -156,10 +160,6 @@ export function Navbar() {
           </div>
         )}
       </header>
-
-      {!scrolled && (
-        <div className="fixed top-0 left-0 right-0 z-40 h-16 pointer-events-none" />
-      )}
     </>
   );
 }
