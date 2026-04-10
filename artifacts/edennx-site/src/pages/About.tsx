@@ -70,8 +70,10 @@ function TeamCarousel() {
     function handleResize() {
       if (window.innerWidth < 640) {
         setVisibleCount(1);
-      } else {
+      } else if (window.innerWidth < 1024) {
         setVisibleCount(2);
+      } else {
+        setVisibleCount(3);
       }
       setStartIndex(0);
     }
