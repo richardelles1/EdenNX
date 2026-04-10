@@ -12,8 +12,8 @@ export function BoxGridBackground() {
   const [cols, setCols] = useState(24);
   const [rows, setRows] = useState(12);
   const [hoveredCell, setHoveredCell] = useState<Cell | null>(null);
-  const [activeCells, setActiveCells] = useState<Set<string>>(new Set());
-  const nextId = useRef(0);
+  // Map<"col,row", activeCount> — O(1) lookup, supports overlapping ripples
+  const [activeCells, setActiveCells] = useState<Map<string, number>>(new Map());
 
   useEffect(() => {
     function updateSize() {
@@ -47,17 +47,16 @@ export function BoxGridBackground() {
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const origin = getCellAt(e.clientX, e.clientY);
-    if (!origin) return;
-    if (!containerRef.current) return;
+    if (!origin || !containerRef.current) return;
     const { width, height } = containerRef.current.getBoundingClientRect();
     const currentCols = Math.ceil(width / CELL_SIZE) + 1;
     const currentRows = Math.ceil(height / CELL_SIZE) + 1;
 
-    const MAX_RING = 5;
-    const rippleId = nextId.current++;
+    // Propagate to full diagonal extent of the grid
+    const MAX_RING = Math.ceil(Math.sqrt(currentCols ** 2 + currentRows ** 2));
 
     for (let ring = 0; ring <= MAX_RING; ring++) {
-      const ring_cells: string[] = [];
+      const ringCells: string[] = [];
       for (let dc = -ring; dc <= ring; dc++) {
         const absDr = ring - Math.abs(dc);
         const deltas = absDr === 0 ? [0] : [-absDr, absDr];
@@ -65,25 +64,30 @@ export function BoxGridBackground() {
           const nc = origin.col + dc;
           const nr = origin.row + dr;
           if (nc >= 0 && nc < currentCols && nr >= 0 && nr < currentRows) {
-            ring_cells.push(`${rippleId}:${nc},${nr}`);
+            ringCells.push(`${nc},${nr}`);
           }
         }
       }
-      const delay = ring * 65;
+      if (ringCells.length === 0) continue;
+
       setTimeout(() => {
         setActiveCells(prev => {
-          const next = new Set(prev);
-          ring_cells.forEach(k => next.add(k));
+          const next = new Map(prev);
+          ringCells.forEach(k => next.set(k, (next.get(k) ?? 0) + 1));
           return next;
         });
         setTimeout(() => {
           setActiveCells(prev => {
-            const next = new Set(prev);
-            ring_cells.forEach(k => next.delete(k));
+            const next = new Map(prev);
+            ringCells.forEach(k => {
+              const count = (next.get(k) ?? 0) - 1;
+              if (count <= 0) next.delete(k);
+              else next.set(k, count);
+            });
             return next;
           });
         }, 480);
-      }, delay);
+      }, ring * 65);
     }
   }, [getCellAt]);
 
@@ -116,8 +120,11 @@ export function BoxGridBackground() {
         {Array.from({ length: totalCells }, (_, i) => {
           const col = i % cols;
           const row = Math.floor(i / cols);
+          const key = `${col},${row}`;
 
-          const isActive = Array.from(activeCells).some(k => k.endsWith(`:${col},${row}`));
+          // O(1) lookup via Map
+          const isActive = activeCells.has(key);
+
           const dist = hoveredCell
             ? Math.abs(hoveredCell.col - col) + Math.abs(hoveredCell.row - row)
             : Infinity;
@@ -138,7 +145,7 @@ export function BoxGridBackground() {
 
           return (
             <div
-              key={`${col},${row}`}
+              key={key}
               style={{
                 width: `${CELL_SIZE}px`,
                 height: `${CELL_SIZE}px`,
