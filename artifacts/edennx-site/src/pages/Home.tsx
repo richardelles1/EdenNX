@@ -198,8 +198,8 @@ export default function Home() {
               <span className="relative inline-block">
                 <span className="relative z-10 text-foreground font-medium">intelligence backbone</span>
                 <span
-                  className="absolute bottom-0.5 left-0 right-0 h-[5px] rounded-sm"
-                  style={{ background: "hsl(142 52% 36% / 0.25)" }}
+                  className="hero-highlight-bar absolute bottom-0.5 left-0 right-0 h-[5px] rounded-sm"
+                  style={{ background: "hsl(142 52% 36% / 0.30)" }}
                 />
               </span>{" "}
               of modern biotech. Our platform suite powers the full lifecycle,

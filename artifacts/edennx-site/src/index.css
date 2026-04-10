@@ -245,6 +245,16 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Hero highlight underline reveal */
+@keyframes highlightExpand {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.hero-highlight-bar {
+  transform-origin: left center;
+  animation: highlightExpand 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.7s both;
+}
+
 /* Scroll reveal utility */
 .reveal {
   opacity: 0;
