@@ -140,7 +140,7 @@ export function BoxGridBackground() {
           } else if (isNear) {
             bg = "hsl(152 72% 22% / 0.28)";
           } else if (isMid) {
-            bg = "hsl(152 72% 22% / 0.13)";
+            bg = "hsl(152 72% 22% / 0.14)";
           }
 
           return (
