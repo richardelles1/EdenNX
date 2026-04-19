@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BoxGridBackground } from "./_shared/BoxGridBackground";
 import "./_shared/_group.css";
 
@@ -16,17 +16,21 @@ const ROTATING_WORDS = [
 export function VariantA() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(true);
+  const fadeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setFade(false);
-      setTimeout(() => {
+      fadeTimeout.current = setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
         setFade(true);
-      }, 400); // fade out duration
-    }, 3500); // hold duration
+      }, 400);
+    }, 3500);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+    };
   }, []);
 
   return (

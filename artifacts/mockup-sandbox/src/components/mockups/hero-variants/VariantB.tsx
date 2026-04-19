@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BoxGridBackground } from "./_shared/BoxGridBackground";
 import "./_shared/_group.css";
 
@@ -16,17 +16,21 @@ const WORDS = [
 export default function VariantB() {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);
+  const fadeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setFade(false);
-      setTimeout(() => {
+      fadeTimeout.current = setTimeout(() => {
         setIndex((current) => (current + 1) % WORDS.length);
         setFade(true);
       }, 400);
     }, 3900);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+    };
   }, []);
 
   return (

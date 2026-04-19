@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BoxGridBackground } from "./_shared/BoxGridBackground";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight } from "lucide-react";
@@ -18,21 +18,25 @@ const ROTATING_WORDS = [
 export default function VariantC() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const fadeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setIsAnimating(true);
-      setTimeout(() => {
+      fadeTimeout.current = setTimeout(() => {
         setCurrentIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
         setIsAnimating(false);
-      }, 400); // fade out duration
-    }, 3900); // 3500ms hold + 400ms transition
+      }, 400);
+    }, 3900);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      if (fadeTimeout.current) clearTimeout(fadeTimeout.current);
+    };
   }, []);
 
   return (
-    <div className="relative min-h-screen w-full bg-[#fcfcfc] text-[#1a202c] overflow-hidden flex flex-col justify-center">
+    <div className="relative min-h-screen w-full bg-background text-foreground overflow-hidden flex flex-col justify-center">
       <BoxGridBackground />
 
       <div className="relative z-10 pointer-events-none w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 py-24 flex-grow flex items-center">
@@ -94,7 +98,7 @@ export default function VariantC() {
                   <Button 
                     size="lg" 
                     variant="ghost" 
-                    className="w-full sm:w-auto text-[#1a202c] hover:bg-black/5 hover:text-[#1a202c] rounded-sm h-12 px-8 text-base group"
+                    className="w-full sm:w-auto text-foreground hover:bg-foreground/5 hover:text-foreground rounded-sm h-12 px-8 text-base group"
                   >
                     Explore Solutions
                     <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1 opacity-70" />

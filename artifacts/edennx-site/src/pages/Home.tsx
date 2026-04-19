@@ -4,22 +4,17 @@ import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 
-const NORMAL_INTERVAL = 4000;
-const EDENNX_HOLD = 12000;
-const FLIP_DURATION = 420;
-const EDENNX_WORD = "EdenNX.";
+const FLIP_DURATION = 400;
 
 const flipWords = [
-  "Drug Discovery.",
-  "Early-Stage Research.",
-  "EdenLab.",
-  "Data-Driven Decisions.",
-  "Collaborative Intelligence.",
-  "Rare Disease Research.",
-  "Biotech Beginnings.",
-  "EdenScout.",
-  "Your Pipeline's Future.",
-  EDENNX_WORD,
+  "Drug Discovery",
+  "Rare Disease Research",
+  "Data-Driven Decisions",
+  "Early-Stage Research",
+  "Biotech Innovation",
+  "Collaborative Science",
+  "Clinical-Stage Intelligence",
+  "Your Pipeline's Future",
 ];
 
 const marqueeItems = [
@@ -68,39 +63,30 @@ const testimonials = [
 function TextFlip({ words }: { words: string[] }) {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
+  const timeoutRef = { t1: 0 as ReturnType<typeof setTimeout>, t2: 0 as ReturnType<typeof setTimeout> };
 
   useEffect(() => {
-    const timers: ReturnType<typeof setTimeout>[] = [];
-
-    function scheduleNext(currentIndex: number) {
-      const holdTime =
-        words[currentIndex] === EDENNX_WORD ? EDENNX_HOLD : NORMAL_INTERVAL;
-
-      const t1 = setTimeout(() => {
-        setVisible(false);
-        const t2 = setTimeout(() => {
-          const nextIndex = (currentIndex + 1) % words.length;
-          setIndex(nextIndex);
-          setVisible(true);
-          scheduleNext(nextIndex);
-        }, FLIP_DURATION);
-        timers.push(t2);
-      }, holdTime);
-      timers.push(t1);
-    }
-
-    scheduleNext(0);
-    return () => timers.forEach(clearTimeout);
+    timeoutRef.t1 = setTimeout(function tick() {
+      setVisible(false);
+      timeoutRef.t2 = setTimeout(() => {
+        setIndex((i) => (i + 1) % words.length);
+        setVisible(true);
+        timeoutRef.t1 = setTimeout(tick, 3500);
+      }, FLIP_DURATION);
+    }, 3500);
+    return () => {
+      clearTimeout(timeoutRef.t1);
+      clearTimeout(timeoutRef.t2);
+    };
   }, [words]);
 
   return (
     <span
-      className="text-primary"
+      className="text-primary whitespace-nowrap"
       style={{
         display: "inline-block",
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(-12px)",
-        transition: `opacity ${FLIP_DURATION}ms ease, transform ${FLIP_DURATION}ms ease`,
+        transition: `opacity ${FLIP_DURATION}ms ease`,
       }}
     >
       {words[index]}
@@ -198,46 +184,54 @@ export default function Home() {
 
         {/* Content layer — pointer-events-none lets background grid receive mouse events */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-28 lg:py-36 pointer-events-none">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
+
+            {/* Brand mark */}
+            <div className="mb-6 reveal" style={{ transitionDelay: "0.05s" }}>
+              <img
+                src="/eden-logo-icon.png"
+                alt="EdenNX"
+                className="h-8 w-auto"
+                style={{ mixBlendMode: "multiply" }}
+              />
+            </div>
+
+            {/* Primary headline — EdenNX as the anchor */}
             <h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-3 reveal"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-none tracking-tight mb-4 reveal"
               data-testid="hero-headline"
               style={{ transitionDelay: "0.1s" }}
             >
-              Welcome to
+              EdenNX
             </h1>
 
             {/*
-              Fixed-height container prevents layout shift as the rotating word changes length.
-              Heights are calibrated to one line at each font-size breakpoint with leading-tight.
+              "Powering [word]" — fixed-height container reserves exactly one line of space
+              so the layout never shifts when the rotating word changes.
+              overflow-hidden + whitespace-nowrap on the word prevent any reflow.
             */}
             <div
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-7 reveal"
+              className="flex items-baseline gap-3 mb-8 overflow-hidden reveal"
               style={{
                 transitionDelay: "0.15s",
-                minHeight: "clamp(3rem, 7vw, 4.75rem)",
+                height: "clamp(2rem, 4.5vw, 3.25rem)",
               }}
             >
-              <TextFlip words={flipWords} />
+              <span className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground/40 leading-none flex-shrink-0">
+                Powering
+              </span>
+              <span className="text-2xl md:text-3xl lg:text-4xl font-bold leading-none">
+                <TextFlip words={flipWords} />
+              </span>
             </div>
 
             <p
-              className="text-lg md:text-xl text-foreground/75 leading-relaxed mb-10 max-w-2xl reveal"
+              className="text-lg md:text-xl text-foreground/70 leading-relaxed mb-10 max-w-2xl reveal"
               data-testid="hero-subheadline"
               style={{ transitionDelay: "0.2s" }}
             >
-              EdenNX is the{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10 text-foreground font-semibold">intelligence backbone</span>
-                <span
-                  className="hero-highlight-bar absolute bottom-0.5 left-0 right-0 h-[5px] rounded-sm"
-                  style={{ background: "hsl(var(--primary) / 0.28)" }}
-                />
-              </span>{" "}
-              of modern biotech. Our platform suite powers the full lifecycle,
-              from earliest research hypothesis through commercial licensing and
-              improved patient outcomes, across 300+ technology transfer offices
-              worldwide.
+              The intelligence backbone of modern biotech, from earliest research
+              hypothesis through commercial licensing.
             </p>
 
             {/* Re-enable pointer events only on interactive elements */}
@@ -248,14 +242,14 @@ export default function Home() {
               <Link
                 to="/products"
                 data-testid="hero-cta-products"
-                className="inline-flex items-center px-6 py-3 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
               >
                 Explore Our Products
               </Link>
               <Link
                 to="/about"
                 data-testid="hero-cta-team"
-                className="inline-flex items-center px-6 py-3 rounded-md text-base font-semibold border-2 border-foreground/20 text-foreground hover:border-primary hover:text-primary transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold border border-foreground/20 text-foreground hover:border-primary hover:text-primary transition-colors"
               >
                 Meet the Team
               </Link>
