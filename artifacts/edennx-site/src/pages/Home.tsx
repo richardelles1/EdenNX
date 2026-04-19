@@ -237,7 +237,7 @@ export default function Home() {
                 Explore Our Products
               </Link>
               <Link
-                to="/about"
+                to="/team"
                 data-testid="hero-cta-team"
                 className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold border border-foreground/20 text-foreground hover:border-primary hover:text-primary transition-colors"
               >

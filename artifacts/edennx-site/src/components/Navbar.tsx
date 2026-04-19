@@ -5,6 +5,7 @@ import logoImg from "@assets/EdenNX_Logo_Text_T_1775676326136.png";
 const navLinks = [
   { href: "/products", label: "Products" },
   { href: "/about", label: "About" },
+  { href: "/team", label: "Team" },
   { href: "/contact", label: "Contact" },
 ];
 
