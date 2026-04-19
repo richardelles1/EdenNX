@@ -171,7 +171,7 @@ function TestimonialCarousel() {
 export default function Home() {
   useScrollReveal();
   useSEO({
-    title: "EdenNX -- Biotech Intelligence Infrastructure",
+    title: "EdenNX - Biotech Intelligence Infrastructure",
     description:
       "EdenNX is building the intelligence backbone of modern biotech. From earliest discovery to patient impact, our platform suite powers every stage of the lifecycle.",
   });
@@ -257,10 +257,10 @@ export default function Home() {
           {marqueeItems.map((item, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-4 px-8 text-sm font-medium text-muted-foreground whitespace-nowrap"
+              className="flex items-center gap-4 px-8 text-sm font-medium text-muted-foreground whitespace-nowrap"
             >
               {item}
-              <span className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+              <span className="block h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0 self-center" />
             </span>
           ))}
         </div>

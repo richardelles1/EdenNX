@@ -60,7 +60,7 @@ const edenPrinciples = [
 export default function About() {
   useScrollReveal();
   useSEO({
-    title: "About -- EdenNX",
+    title: "About - EdenNX",
     description:
       "EdenNX is building the intelligence backbone of modern biotech. Our mission, values, and the EDEN framework that guides everything we do.",
   });

@@ -135,7 +135,7 @@ function TeamCarousel() {
 export default function Team() {
   useScrollReveal();
   useSEO({
-    title: "Team -- EdenNX",
+    title: "Team - EdenNX",
     description:
       "Meet the founders behind EdenNX — industry insiders building the intelligence infrastructure that biotech needs.",
   });

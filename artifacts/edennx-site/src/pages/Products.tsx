@@ -59,7 +59,7 @@ const scoutTiers = [
 export default function Products() {
   useScrollReveal();
   useSEO({
-    title: "Products -- EdenNX",
+    title: "Products - EdenNX",
     description:
       "The EdenNX product suite: EdenDiscovery, EdenLab, and EdenScout. Purpose-built for every stakeholder in the biotech licensing ecosystem.",
   });
