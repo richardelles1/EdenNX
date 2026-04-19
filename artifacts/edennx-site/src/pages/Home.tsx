@@ -186,19 +186,9 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-28 lg:py-36 pointer-events-none">
           <div className="max-w-4xl">
 
-            {/* Brand mark */}
-            <div className="mb-6 reveal" style={{ transitionDelay: "0.05s" }}>
-              <img
-                src="/eden-logo-icon.png"
-                alt="EdenNX"
-                className="h-8 w-auto"
-                style={{ mixBlendMode: "multiply" }}
-              />
-            </div>
-
             {/* Primary headline — EdenNX as the anchor */}
             <h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-none tracking-tight mb-4 reveal"
+              className="text-6xl md:text-7xl lg:text-8xl font-bold text-foreground leading-none tracking-tight mb-5 reveal"
               data-testid="hero-headline"
               style={{ transitionDelay: "0.1s" }}
             >
@@ -217,7 +207,7 @@ export default function Home() {
                 height: "clamp(2rem, 4.5vw, 3.25rem)",
               }}
             >
-              <span className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground/40 leading-none flex-shrink-0">
+              <span className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground/65 leading-none flex-shrink-0">
                 Powering
               </span>
               <span className="text-2xl md:text-3xl lg:text-4xl font-bold leading-none">

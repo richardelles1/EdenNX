@@ -190,17 +190,21 @@ export default function About() {
       {/* Mission panel */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
         <div
-          className="rounded-2xl bg-foreground dark:bg-card dark:border dark:border-border p-10 md:p-14 reveal"
+          className="rounded-2xl border border-primary/20 p-10 md:p-14 reveal"
           data-testid="about-mission-panel"
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(152 72% 22% / 0.06) 0%, hsl(152 72% 22% / 0.10) 100%)",
+          }}
         >
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
             Our Mission
           </p>
-          <p className="text-2xl md:text-3xl font-bold text-background dark:text-foreground leading-snug max-w-3xl mb-6">
+          <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug max-w-3xl mb-6">
             Accelerate science to patient impact by building the infrastructure
             that biotech needs to discover, develop, and deliver breakthroughs.
           </p>
-          <p className="text-base text-background/70 dark:text-muted-foreground leading-relaxed max-w-2xl">
+          <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
             Thousands of licensable technologies, groundbreaking research
             hypotheses, and critical scientific partnerships remain undiscovered
             each year due to fragmented data and outdated workflows. EdenNX is

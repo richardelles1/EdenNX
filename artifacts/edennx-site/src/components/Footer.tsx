@@ -56,7 +56,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-6 border-t border-border/50 text-center text-sm text-muted-foreground">
-          2026 EdenNX. All rights reserved.
+          &copy; 2026 EdenNX. All rights reserved.
         </div>
       </div>
     </footer>
