@@ -45,10 +45,9 @@ export default function VariantC() {
           <div className="flex flex-col justify-center h-full pr-0 lg:pr-8">
             <div className="flex flex-col gap-4">
               <img 
-                src="/__mockup/images/eden-logo-text.png" 
-                alt="EdenNX Logo" 
-                className="h-16 sm:h-20 w-auto object-contain object-left mb-2"
-                style={{ mixBlendMode: "multiply" }}
+                src="/__mockup/images/eden-logo-icon.png" 
+                alt="EdenNX" 
+                className="h-20 sm:h-24 w-auto object-contain object-left mb-2"
               />
               <p className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase pl-1">
                 Biotech Intelligence
