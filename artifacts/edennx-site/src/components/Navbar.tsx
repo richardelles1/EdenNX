@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logoImgDark from "@assets/EdenNX_Logo_Text_T_1775676326136.png";
-import logoImgLight from "@assets/EdenNX_Logo_Text_1775676338906.png";
+import logoImg from "@assets/EdenNX_Logo_Text_T_1775676326136.png";
 
 const navLinks = [
   { href: "/products", label: "Products" },
@@ -46,23 +45,12 @@ export function Navbar() {
             }`}
           >
             <Link to="/" data-testid="nav-logo" className="flex-shrink-0">
-              {/* Light mode logo — mix-blend-mode:multiply knocks out the opaque white background */}
               <img
-                src={logoImgLight}
+                src={logoImg}
                 alt="EdenNX"
-                className={`w-auto transition-all duration-500 block dark:hidden ${
+                className={`w-auto transition-all duration-500 dark:invert ${
                   scrolled ? "h-8" : "h-11"
                 }`}
-                style={{ mixBlendMode: "multiply" }}
-              />
-              {/* Dark mode logo — screen blend removes any dark fringe against the dark bg */}
-              <img
-                src={logoImgDark}
-                alt="EdenNX"
-                className={`w-auto transition-all duration-500 hidden dark:block ${
-                  scrolled ? "h-8" : "h-11"
-                }`}
-                style={{ mixBlendMode: "screen" }}
               />
             </Link>
 
