@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+:root {
+  --background: 0 0% 98%;
+  --foreground: 215 25% 17%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 25% 17%;
+  --border: 214 20% 88%;
+  --muted: 210 20% 96%;
+  --muted-foreground: 215 16% 46%;
+  --primary: 152 72% 22%;
+  --primary-foreground: 0 0% 100%;
+}
+
+@keyframes boxPulse {
+  0%, 100% { background-color: hsl(152 72% 22% / 0); }
+  50% { background-color: hsl(152 72% 22% / 0.055); }
+}
