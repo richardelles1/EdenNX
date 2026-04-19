@@ -44,8 +44,8 @@ export function BoxGridBackground() {
     setHoveredCell(null);
   }, []);
 
-  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const origin = getCellAt(e.clientX, e.clientY);
+  const triggerRipple = useCallback((clientX: number, clientY: number) => {
+    const origin = getCellAt(clientX, clientY);
     if (!origin || !containerRef.current) return;
     const { width, height } = containerRef.current.getBoundingClientRect();
     const currentCols = Math.ceil(width / CELL_SIZE) + 1;
@@ -89,6 +89,10 @@ export function BoxGridBackground() {
     }
   }, [getCellAt]);
 
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    triggerRipple(e.clientX, e.clientY);
+  }, [triggerRipple]);
+
   const totalCells = cols * rows;
 
   return (
@@ -98,7 +102,7 @@ export function BoxGridBackground() {
       aria-hidden="true"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
+      onPointerDown={handlePointerDown}
       style={{
         maskImage:
           "radial-gradient(ellipse 80% 85% at 35% 50%, black 15%, transparent 80%)",
