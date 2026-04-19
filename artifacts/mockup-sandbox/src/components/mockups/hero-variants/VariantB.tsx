@@ -62,7 +62,7 @@ export default function VariantB() {
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-12 leading-relaxed">
-            The intelligence backbone of modern biotech — from earliest research hypothesis through commercial licensing.
+            The intelligence backbone of modern biotech, from earliest research hypothesis through commercial licensing.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
