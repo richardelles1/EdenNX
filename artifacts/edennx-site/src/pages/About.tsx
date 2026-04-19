@@ -6,7 +6,7 @@ const values = [
   {
     title: "Integrity First",
     description:
-      "We protect your IP, honor your data, and never compromise on truth—even when it's inconvenient.",
+      "We protect your IP, honor your data, and never compromise on truth, even when it's inconvenient.",
   },
   {
     title: "Collaboration Over Ego",
@@ -47,7 +47,7 @@ const edenPrinciples = [
     letter: "E",
     title: "Elevate, Don't Extract",
     description:
-      "Build collaborations that lift both sides—academic rigor and commercial speed—without gatekeeping or hidden agendas.",
+      "Build collaborations that lift both sides: academic rigor and commercial speed, without gatekeeping or hidden agendas.",
   },
   {
     letter: "N",

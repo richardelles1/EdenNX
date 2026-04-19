@@ -10,10 +10,11 @@ const founders = [
     name: "Wafick Mohamed",
     title: "Co-Founder & Chief Executive Officer",
     photo: wmPhoto,
-    linkedIn: "https://www.linkedin.com/in/wafickmohamed/",
+    linkedIn: "https://www.linkedin.com/in/wafick-mohamed-d-sc-m-sc-cqa-chrc-clssbb-pmp-81643b96",
     bio: [
       "Dr. Wafick Mohamed is a biotech executive, entrepreneur, and educator dedicated to advancing science for patient impact. With extensive experience across global pharma and emerging biotech, he specializes in building quality systems, scaling operations, and leading organizations from the ground up.",
       "As Founder and CEO of WKM Consulting Services LLC, Dr. Mohamed has launched and shaped multiple innovative companies. He also serves as a professor of research and entrepreneurship, mentoring the next generation of scientific and business leaders.",
+      "He holds a Doctorate in Science, a Master of Science, and certifications including CQA, PMP, and CLSSBB.",
     ],
     quote:
       "We are extremely proud to be part of an industry that is pushing the boundaries of science to enhance patients' lives. We will help our clients identify gaps and generate new ideas and solutions to improve their processes and products.",
@@ -22,7 +23,7 @@ const founders = [
     name: "Richard Elles",
     title: "Co-Founder & Chief Operating Officer",
     photo: headshot1,
-    linkedIn: "https://www.linkedin.com/in/richardelles/",
+    linkedIn: "https://www.linkedin.com/in/richard-elles-pmp",
     bio: [
       "Richard Elles is a dynamic healthcare leader with a diverse background in strategy development, corporate leadership, patient advocacy, and process improvement. A dedicated and PMP-certified Project Manager, Rich has deployed extensive management systems across consulting firms, healthtech startups, academic institutions, and research teams.",
       "As the founder of Oriva, Inc., Rich has harnessed the power of cutting-edge technology to redefine philanthropic development. He is a two-time Ironman and leverages his experience in endurance sports to connect with corporate wellness initiatives to power new giving trends. Rich completed his Bachelor's Degree in Business at Drexel University before earning a Master's Degree in Public Administration from Villanova University.",
@@ -83,16 +84,16 @@ function TeamCarousel() {
           {visibleMembers.map((member, i) => (
             <div
               key={startIndex + i}
-              className="flex-1 min-w-0 bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors"
+              className="flex-1 min-w-0 bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors flex flex-col"
             >
               <img
                 src={member.photo}
                 alt={member.name}
-                className="w-full h-[clamp(200px,40vw,280px)] object-cover object-top rounded-xl mb-5"
+                className="w-full h-[clamp(200px,40vw,280px)] object-cover object-[center_15%] rounded-xl mb-5"
               />
               <h3 className="text-lg font-bold text-foreground mb-0.5">{member.name}</h3>
               <p className="text-sm text-muted-foreground mb-4">{member.title}</p>
-              <div className="space-y-3 mb-5">
+              <div className="flex-1 space-y-3 mb-5">
                 {member.bio.map((para, j) => (
                   <p key={j} className="text-sm text-foreground/75 leading-relaxed">{para}</p>
                 ))}
@@ -137,7 +138,7 @@ export default function Team() {
   useSEO({
     title: "Team - EdenNX",
     description:
-      "Meet the founders behind EdenNX — industry insiders building the intelligence infrastructure that biotech needs.",
+      "Meet the founders behind EdenNX: industry insiders building the intelligence infrastructure that biotech needs.",
   });
 
   return (
@@ -159,7 +160,7 @@ export default function Team() {
           style={{ transitionDelay: "0.2s" }}
         >
           EdenNX was built by people who have lived the problem. Two industry veterans who
-          understand both the science and the business — and decided to fix the infrastructure
+          understand both the science and the business, and decided to fix the infrastructure
           that connects them.
         </p>
       </section>

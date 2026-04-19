@@ -192,7 +192,7 @@ export default function Home() {
               data-testid="hero-headline"
               style={{ transitionDelay: "0.1s" }}
             >
-              EdenNX
+              <span className="text-primary">Eden</span>NX
             </h1>
 
             {/*
@@ -239,7 +239,7 @@ export default function Home() {
               <Link
                 to="/team"
                 data-testid="hero-cta-team"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold border border-foreground/20 text-foreground hover:border-primary hover:text-primary transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
               >
                 Meet the Team
               </Link>
