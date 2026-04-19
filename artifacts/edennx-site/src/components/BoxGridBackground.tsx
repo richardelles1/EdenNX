@@ -52,7 +52,6 @@ export function BoxGridBackground() {
     const currentRows = Math.ceil(height / CELL_SIZE) + 1;
 
     const MAX_RING = Math.ceil(Math.sqrt(currentCols ** 2 + currentRows ** 2));
-    const timers: ReturnType<typeof setTimeout>[] = [];
 
     for (let ring = 0; ring <= MAX_RING; ring++) {
       const ringCells: string[] = [];
@@ -69,13 +68,13 @@ export function BoxGridBackground() {
       }
       if (ringCells.length === 0) continue;
 
-      const t1 = setTimeout(() => {
+      setTimeout(() => {
         setActiveCells(prev => {
           const next = new Map(prev);
           ringCells.forEach(k => next.set(k, (next.get(k) ?? 0) + 1));
           return next;
         });
-        const t2 = setTimeout(() => {
+        setTimeout(() => {
           setActiveCells(prev => {
             const next = new Map(prev);
             ringCells.forEach(k => {
@@ -86,9 +85,7 @@ export function BoxGridBackground() {
             return next;
           });
         }, 480);
-        timers.push(t2);
       }, ring * 65);
-      timers.push(t1);
     }
   }, [getCellAt]);
 

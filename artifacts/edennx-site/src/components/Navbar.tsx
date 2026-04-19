@@ -55,13 +55,14 @@ export function Navbar() {
                 }`}
                 style={{ mixBlendMode: "multiply" }}
               />
-              {/* Dark mode logo — already has transparent background */}
+              {/* Dark mode logo — screen blend removes any dark fringe against the dark bg */}
               <img
                 src={logoImgDark}
                 alt="EdenNX"
                 className={`w-auto transition-all duration-500 hidden dark:block ${
                   scrolled ? "h-8" : "h-11"
                 }`}
+                style={{ mixBlendMode: "screen" }}
               />
             </Link>
 
