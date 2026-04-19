@@ -48,7 +48,7 @@ const values = [
       "Move fast, but never at the expense of rigor or honesty.",
   },
   {
-    title: "Human-Centric, Always",
+    title: "Human-Centric Always",
     description:
       "Behind every asset and dataset are real people. We build for their success, safety, and dignity.",
   },
@@ -315,7 +315,7 @@ export default function About() {
                 style={{ transitionDelay: `${i * 0.08}s` }}
                 data-testid={`value-${i}`}
               >
-                <h3 className="text-base font-bold text-foreground mb-2">
+                <h3 className="text-base font-bold text-primary mb-2">
                   {value.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed text-sm">
@@ -332,7 +332,7 @@ export default function About() {
                 style={{ transitionDelay: `${(i + 3) * 0.08}s` }}
                 data-testid={`value-${i + 3}`}
               >
-                <h3 className="text-base font-bold text-foreground mb-2">
+                <h3 className="text-base font-bold text-primary mb-2">
                   {value.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed text-sm">
