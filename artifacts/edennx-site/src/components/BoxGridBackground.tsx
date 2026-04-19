@@ -12,7 +12,6 @@ export function BoxGridBackground() {
   const [cols, setCols] = useState(24);
   const [rows, setRows] = useState(12);
   const [hoveredCell, setHoveredCell] = useState<Cell | null>(null);
-  // Map<"col,row", activeCount> — O(1) lookup, supports overlapping ripples
   const [activeCells, setActiveCells] = useState<Map<string, number>>(new Map());
 
   useEffect(() => {
@@ -52,8 +51,8 @@ export function BoxGridBackground() {
     const currentCols = Math.ceil(width / CELL_SIZE) + 1;
     const currentRows = Math.ceil(height / CELL_SIZE) + 1;
 
-    // Propagate to full diagonal extent of the grid
     const MAX_RING = Math.ceil(Math.sqrt(currentCols ** 2 + currentRows ** 2));
+    const timers: ReturnType<typeof setTimeout>[] = [];
 
     for (let ring = 0; ring <= MAX_RING; ring++) {
       const ringCells: string[] = [];
@@ -70,13 +69,13 @@ export function BoxGridBackground() {
       }
       if (ringCells.length === 0) continue;
 
-      setTimeout(() => {
+      const t1 = setTimeout(() => {
         setActiveCells(prev => {
           const next = new Map(prev);
           ringCells.forEach(k => next.set(k, (next.get(k) ?? 0) + 1));
           return next;
         });
-        setTimeout(() => {
+        const t2 = setTimeout(() => {
           setActiveCells(prev => {
             const next = new Map(prev);
             ringCells.forEach(k => {
@@ -87,7 +86,9 @@ export function BoxGridBackground() {
             return next;
           });
         }, 480);
+        timers.push(t2);
       }, ring * 65);
+      timers.push(t1);
     }
   }, [getCellAt]);
 
@@ -96,7 +97,7 @@ export function BoxGridBackground() {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 z-0 overflow-hidden cursor-crosshair"
+      className="absolute inset-0 z-0 overflow-hidden"
       aria-hidden="true"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -122,14 +123,16 @@ export function BoxGridBackground() {
           const row = Math.floor(i / cols);
           const key = `${col},${row}`;
 
-          // O(1) lookup via Map
           const isActive = activeCells.has(key);
 
-          const dist = hoveredCell
-            ? Math.abs(hoveredCell.col - col) + Math.abs(hoveredCell.row - row)
+          // Euclidean distance for circular glow — not Manhattan (which gives a cross/plus shape)
+          const euclidDist = hoveredCell
+            ? Math.sqrt(
+                (hoveredCell.col - col) ** 2 + (hoveredCell.row - row) ** 2
+              )
             : Infinity;
-          const isNear = dist <= 1;
-          const isMid = dist === 2;
+          const isNear = euclidDist <= 1.5;
+          const isMid = euclidDist <= 2.8 && !isNear;
 
           const pulseDuration = 3.5 + ((i * 17) % 8) * 0.4;
           const pulseDelay = ((i * 41 + 7) % 31) * 0.35;
@@ -140,7 +143,7 @@ export function BoxGridBackground() {
           } else if (isNear) {
             bg = "hsl(152 72% 22% / 0.28)";
           } else if (isMid) {
-            bg = "hsl(152 72% 22% / 0.14)";
+            bg = "hsl(152 72% 22% / 0.13)";
           }
 
           return (

@@ -4,20 +4,22 @@ import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 
+const NORMAL_INTERVAL = 4000;
+const EDENNX_HOLD = 12000;
+const FLIP_DURATION = 420;
+const EDENNX_WORD = "EdenNX.";
+
 const flipWords = [
-  "Technology Transfer.",
-  "Precision Medicine.",
-  "Drug Discovery Intelligence.",
+  "Drug Discovery.",
+  "Early-Stage Research.",
+  "EdenLab.",
   "Data-Driven Decisions.",
-  "Gene Therapy.",
-  "EdenRadar.",
-  "Scientific Collaboration.",
+  "Collaborative Intelligence.",
   "Rare Disease Research.",
-  "Biotech Business Development.",
-  "Translational Science.",
+  "Biotech Beginnings.",
   "EdenScout.",
-  "Precision Oncology.",
-  "EdenNX.",
+  "Your Pipeline's Future.",
+  EDENNX_WORD,
 ];
 
 const marqueeItems = [
@@ -68,15 +70,28 @@ function TextFlip({ words }: { words: string[] }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setIndex((prev) => (prev + 1) % words.length);
-        setVisible(true);
-      }, 420);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [words.length]);
+    const timers: ReturnType<typeof setTimeout>[] = [];
+
+    function scheduleNext(currentIndex: number) {
+      const holdTime =
+        words[currentIndex] === EDENNX_WORD ? EDENNX_HOLD : NORMAL_INTERVAL;
+
+      const t1 = setTimeout(() => {
+        setVisible(false);
+        const t2 = setTimeout(() => {
+          const nextIndex = (currentIndex + 1) % words.length;
+          setIndex(nextIndex);
+          setVisible(true);
+          scheduleNext(nextIndex);
+        }, FLIP_DURATION);
+        timers.push(t2);
+      }, holdTime);
+      timers.push(t1);
+    }
+
+    scheduleNext(0);
+    return () => timers.forEach(clearTimeout);
+  }, [words]);
 
   return (
     <span
@@ -85,7 +100,7 @@ function TextFlip({ words }: { words: string[] }) {
         display: "inline-block",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-12px)",
-        transition: "opacity 0.42s ease, transform 0.42s ease",
+        transition: `opacity ${FLIP_DURATION}ms ease, transform ${FLIP_DURATION}ms ease`,
       }}
     >
       {words[index]}
@@ -181,7 +196,7 @@ export default function Home() {
       <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-background">
         <BoxGridBackground />
 
-        {/* Content layer — pointer-events-none so background receives mouse events */}
+        {/* Content layer — pointer-events-none lets background grid receive mouse events */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-28 lg:py-36 pointer-events-none">
           <div className="max-w-3xl">
             <h1
@@ -191,12 +206,21 @@ export default function Home() {
             >
               Welcome to
             </h1>
+
+            {/*
+              Fixed-height container prevents layout shift as the rotating word changes length.
+              Heights are calibrated to one line at each font-size breakpoint with leading-tight.
+            */}
             <div
               className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-7 reveal"
-              style={{ transitionDelay: "0.15s" }}
+              style={{
+                transitionDelay: "0.15s",
+                minHeight: "clamp(3rem, 7vw, 4.75rem)",
+              }}
             >
               <TextFlip words={flipWords} />
             </div>
+
             <p
               className="text-lg md:text-xl text-foreground/75 leading-relaxed mb-10 max-w-2xl reveal"
               data-testid="hero-subheadline"
@@ -215,6 +239,7 @@ export default function Home() {
               improved patient outcomes, across 300+ technology transfer offices
               worldwide.
             </p>
+
             {/* Re-enable pointer events only on interactive elements */}
             <div
               className="flex flex-wrap gap-4 reveal pointer-events-auto"

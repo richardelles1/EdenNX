@@ -46,13 +46,16 @@ export function Navbar() {
             }`}
           >
             <Link to="/" data-testid="nav-logo" className="flex-shrink-0">
+              {/* Light mode logo — mix-blend-mode:multiply knocks out the opaque white background */}
               <img
                 src={logoImgLight}
                 alt="EdenNX"
                 className={`w-auto transition-all duration-500 block dark:hidden ${
                   scrolled ? "h-8" : "h-11"
                 }`}
+                style={{ mixBlendMode: "multiply" }}
               />
+              {/* Dark mode logo — already has transparent background */}
               <img
                 src={logoImgDark}
                 alt="EdenNX"
