@@ -87,132 +87,6 @@ export default function Products() {
         </p>
       </section>
 
-      {/* EdenDiscovery */}
-      <section
-        id="edendiscovery"
-        className="border-t-4 border-amber-400 bg-amber-50/40 dark:bg-amber-950/10 py-20"
-        data-testid="product-section-edendiscovery"
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14">
-            <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-400 mb-3 reveal">
-                EdenDiscovery
-              </p>
-              <h2
-                className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
-                style={{ transitionDelay: "0.05s" }}
-              >
-                Concept registry and community
-              </h2>
-              <p
-                className="text-muted-foreground mb-6 reveal"
-                style={{ transitionDelay: "0.1s" }}
-              >
-                For: Early-Stage Innovators, Concept Creators, Independent Researchers
-              </p>
-              <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
-                {[
-                  "Structured concept submission forms to document early-stage hypotheses",
-                  "EDEN Credibility Score — automated 0-100 scoring",
-                  "Public searchable community feed",
-                  "Timestamped provenance protecting your first-to-conceive claim",
-                  "Graduation path: promising concepts promoted into EdenLab projects",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500 flex-shrink-0" />
-                    {feat}
-                  </li>
-                ))}
-              </ul>
-              <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 reveal"
-                style={{ transitionDelay: "0.2s" }}
-              >
-                Access: Free
-              </div>
-            </div>
-            <div
-              className="rounded-xl border border-amber-200 dark:border-amber-800/40 bg-card p-8 reveal"
-              style={{ transitionDelay: "0.15s" }}
-            >
-              <p className="text-xs font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-400 mb-4">
-                Vision
-              </p>
-              <blockquote className="text-base md:text-lg text-foreground/90 italic leading-relaxed">
-                "The spark of discovery is often the hardest thing to protect
-                and communicate. EdenDiscovery gives every innovator a
-                structured place to plant their idea, date-stamp it, and let
-                the world know it exists."
-              </blockquote>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* EdenLab */}
-      <section
-        id="edenlab"
-        className="border-t-4 border-violet-400 bg-violet-50/40 dark:bg-violet-950/10 py-20"
-        data-testid="product-section-edenlab"
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14">
-            <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-3 reveal">
-                EdenLab
-              </p>
-              <h2
-                className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
-                style={{ transitionDelay: "0.05s" }}
-              >
-                Project-based research workspace
-              </h2>
-              <p
-                className="text-muted-foreground mb-6 reveal"
-                style={{ transitionDelay: "0.1s" }}
-              >
-                For: Academic Scientists, PhD Teams, Lab Leaders, University Research Groups
-              </p>
-              <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
-                {[
-                  "11-section project canvas for structured research management",
-                  "Literature synthesis across 40+ academic data sources",
-                  "Evidence extraction and citation management",
-                  "Published projects visible to EdenScout industry buyers",
-                  "Grant discovery matched to your research profile",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-violet-500 flex-shrink-0" />
-                    {feat}
-                  </li>
-                ))}
-              </ul>
-              <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 reveal"
-                style={{ transitionDelay: "0.2s" }}
-              >
-                Access: Free
-              </div>
-            </div>
-            <div
-              className="rounded-xl border border-violet-200 dark:border-violet-800/40 bg-card p-8 reveal"
-              style={{ transitionDelay: "0.15s" }}
-            >
-              <p className="text-xs font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-4">
-                Vision
-              </p>
-              <blockquote className="text-base md:text-lg text-foreground/90 italic leading-relaxed">
-                "EdenLab is built for the scientist who needs to move from
-                hypothesis to publication without losing the thread. A workspace
-                that organizes the complexity of research while making your work
-                visible to the world."
-              </blockquote>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* EdenScout */}
       <section
         id="edenscout"
@@ -240,11 +114,12 @@ export default function Products() {
               <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[
                   "Continuous monitoring of 300+ TTOs and government databases",
-                  "EDEN Chat — natural language semantic search across the full asset catalog",
-                  "Asset Dossiers — competitive landscape, scientific claims, patent coverage",
-                  "Pipeline tracking — save, filter by therapy area, stage, and modality, export",
-                  "Institution Intelligence — profiles and metrics for research institutions and inventors",
-                  "Hot Areas sidebar showing therapy area convergence signals",
+                  "Instant email alerts for newly published assets matching your focus areas",
+                  "EDEN Chat for natural language search across the full asset catalog",
+                  "Asset Dossiers with competitive landscape, scientific claims, and patent coverage",
+                  "Pipeline tracking with save, filter by therapy area, stage, and modality, and export",
+                  "Institution profiles and metrics for research institutions and inventors",
+                  "Hot Areas sidebar highlighting therapy area convergence signals",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
@@ -318,6 +193,132 @@ export default function Products() {
                   </a>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* EdenLab */}
+      <section
+        id="edenlab"
+        className="border-t-4 border-violet-400 bg-violet-50/40 dark:bg-violet-950/10 py-20"
+        data-testid="product-section-edenlab"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-14">
+            <div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-3 reveal">
+                EdenLab
+              </p>
+              <h2
+                className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
+                style={{ transitionDelay: "0.05s" }}
+              >
+                Project-based research workspace
+              </h2>
+              <p
+                className="text-muted-foreground mb-6 reveal"
+                style={{ transitionDelay: "0.1s" }}
+              >
+                For: Academic Scientists, PhD Teams, Lab Leaders, University Research Groups
+              </p>
+              <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
+                {[
+                  "11-section project canvas for structured research management",
+                  "Literature synthesis across 40+ academic data sources",
+                  "Evidence extraction and citation management",
+                  "Published projects visible to EdenScout industry buyers",
+                  "Grant discovery matched to your research profile",
+                ].map((feat) => (
+                  <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-violet-500 flex-shrink-0" />
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+              <div
+                className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 reveal"
+                style={{ transitionDelay: "0.2s" }}
+              >
+                Access: Free
+              </div>
+            </div>
+            <div
+              className="rounded-xl border border-violet-200 dark:border-violet-800/40 bg-card p-8 reveal"
+              style={{ transitionDelay: "0.15s" }}
+            >
+              <p className="text-xs font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-4">
+                Vision
+              </p>
+              <blockquote className="text-base md:text-lg text-foreground/90 italic leading-relaxed">
+                "EdenLab is built for the scientist who needs to move from
+                hypothesis to publication without losing the thread. A workspace
+                that organizes the complexity of research while making your work
+                visible to the world."
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* EdenDiscovery */}
+      <section
+        id="edendiscovery"
+        className="border-t-4 border-amber-400 bg-amber-50/40 dark:bg-amber-950/10 py-20"
+        data-testid="product-section-edendiscovery"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-14">
+            <div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-400 mb-3 reveal">
+                EdenDiscovery
+              </p>
+              <h2
+                className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
+                style={{ transitionDelay: "0.05s" }}
+              >
+                Concept registry and community
+              </h2>
+              <p
+                className="text-muted-foreground mb-6 reveal"
+                style={{ transitionDelay: "0.1s" }}
+              >
+                For: Early-Stage Innovators, Concept Creators, Independent Researchers
+              </p>
+              <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
+                {[
+                  "Structured concept submission forms to document early-stage hypotheses",
+                  "Automated EDEN Credibility Score rated 0 to 100",
+                  "Public searchable community feed",
+                  "Timestamped provenance protecting your first-to-conceive claim",
+                  "Graduation path: promising concepts promoted into EdenLab projects",
+                ].map((feat) => (
+                  <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500 flex-shrink-0" />
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+              <div
+                className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 reveal"
+                style={{ transitionDelay: "0.2s" }}
+              >
+                Access: Free
+              </div>
+            </div>
+            <div
+              className="rounded-xl border border-amber-200 dark:border-amber-800/40 bg-card p-8 reveal"
+              style={{ transitionDelay: "0.15s" }}
+            >
+              <p className="text-xs font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-400 mb-4">
+                Vision
+              </p>
+              <blockquote className="text-base md:text-lg text-foreground/90 italic leading-relaxed">
+                "The spark of discovery is often the hardest thing to protect
+                and communicate. EdenDiscovery gives every innovator a
+                structured place to plant their idea, date-stamp it, and let
+                the world know it exists."
+              </blockquote>
             </div>
           </div>
         </div>
