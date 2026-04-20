@@ -269,35 +269,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mission — light emerald tinted panel */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
-        <div
-          className="rounded-2xl border border-primary/20 p-10 md:p-14 reveal"
-          data-testid="mission-panel"
-          style={{
-            background:
-              "linear-gradient(135deg, hsl(152 72% 22% / 0.06) 0%, hsl(152 72% 22% / 0.10) 100%)",
-          }}
-        >
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
-            Our Mission
-          </p>
-          <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug max-w-3xl mb-6">
-            Accelerate science to patient impact by building the infrastructure
-            that biotech needs to discover, develop, and deliver breakthroughs.
-          </p>
-          <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
-            Thousands of licensable technologies, groundbreaking research
-            hypotheses, and critical scientific partnerships remain undiscovered
-            each year due to fragmented data and outdated workflows. EdenNX is
-            changing that, building the connective tissue between every
-            stakeholder in the biotech ecosystem.
-          </p>
-        </div>
-      </section>
-
       {/* Product Highlights */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32" data-testid="product-highlights">
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20" data-testid="product-highlights">
         <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 reveal">
           The Product Suite
         </p>
@@ -425,9 +398,36 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Mission — light emerald tinted panel */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20">
+        <div
+          className="rounded-2xl border border-primary/20 p-10 md:p-14 reveal"
+          data-testid="mission-panel"
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(152 72% 22% / 0.06) 0%, hsl(152 72% 22% / 0.10) 100%)",
+          }}
+        >
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
+            Our Mission
+          </p>
+          <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug max-w-3xl mb-6">
+            Accelerate science to patient impact by building the infrastructure
+            that biotech needs to discover, develop, and deliver breakthroughs.
+          </p>
+          <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
+            Thousands of licensable technologies, groundbreaking research
+            hypotheses, and critical scientific partnerships remain undiscovered
+            each year due to fragmented data and outdated workflows. EdenNX is
+            changing that, building the connective tissue between every
+            stakeholder in the biotech ecosystem.
+          </p>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section
-        className="py-24"
+        className="py-16"
         style={{ background: "hsl(var(--primary))" }}
         data-testid="testimonials-section"
       >
@@ -444,7 +444,7 @@ export default function Home() {
 
       {/* Bottom CTA */}
       <section className="bg-primary/5 border-t border-primary/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 text-center">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 text-center">
           <h2
             className="text-2xl md:text-3xl font-bold text-foreground mb-6 reveal"
             data-testid="bottom-cta-headline"
