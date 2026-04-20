@@ -25,7 +25,8 @@ const founders = [
     name: "Richard Elles",
     title: "Co-Founder & Chief Operating Officer",
     photo: headshot1,
-    photoHeight: "clamp(160px,28vw,210px)",
+    photoHeight: "clamp(200px,40vw,280px)",
+    photoHeightDesktop: "clamp(180px,22vw,210px)",
     photoPosition: "center 20%",
     linkedIn: "https://www.linkedin.com/in/richard-elles-pmp",
     bio: [
@@ -95,7 +96,9 @@ function TeamCarousel() {
                 alt={member.name}
                 className="w-full object-cover rounded-xl mb-5"
                 style={{
-                  height: member.photoHeight ?? "clamp(200px,40vw,280px)",
+                  height: (visibleCount > 1 && member.photoHeightDesktop)
+                    ? member.photoHeightDesktop
+                    : (member.photoHeight ?? "clamp(200px,40vw,280px)"),
                   objectPosition: member.photoPosition ?? "center 15%",
                 }}
               />
