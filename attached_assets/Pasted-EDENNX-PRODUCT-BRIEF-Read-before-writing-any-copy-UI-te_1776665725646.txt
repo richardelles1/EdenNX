@@ -1,0 +1,57 @@
+EDENNX PRODUCT BRIEF — Read before writing any copy, UI text, or feature descriptions.
+
+Company: EdenNX — "Powering Drug Discovery"
+One-liner: The intelligence backbone of modern biotech, from earliest research hypothesis through commercial licensing.
+Website: edennx.com
+Brand colors: Dark forest/teal green for "Eden", same green for "NX" — emerald green for accent highlights. No blue anywhere in the EdenScout portal. Emerald and neutral tones only.
+Logo: Small green leaf/plant icon. Keep it in all headers.
+CTA on marketing site: "Launch EdenRadar" (dark green pill button, white text).
+Never use: Em dashes (--), the phrase "AI-powered", or blue color in the EdenScout portal.
+
+Product 1 — EdenDiscovery
+Portal color: Use discovery-appropriate greens/neutrals
+Access: Free, no subscription
+Audience: Early-stage innovators, concept creators, independent researchers
+What it does: A concept registry and community where innovators document and date-stamp early-stage biotech hypotheses before formal research begins
+Key features to build/display correctly:
+Structured concept submission forms
+EDEN Credibility Score (0-100 automated scoring)
+Public searchable community feed
+Timestamped provenance (protects "first to conceive")
+Graduation path: promising concepts can be promoted into EdenLab projects
+Pricing copy: Free, always
+Product 2 — EdenLab
+Portal color: Use lab/research blues-greens or neutral palette
+Access: Free, no subscription
+Audience: Academic scientists, PhD teams, lab leaders, university research groups
+What it does: A project-based research workspace to organize complex research, synthesize literature, and manage evidence — with industry visibility baked in
+Key features to build/display correctly:
+11-section project canvas (the structured workspace)
+Literature synthesis across 40+ academic data sources
+Evidence extraction and citation management
+Grant discovery (matching research profiles to funding)
+Published projects are visible to EdenScout industry buyers
+Pricing copy: Free, always
+Product 3 — EdenScout
+Portal color: Emerald and neutral tones ONLY — no blue anywhere
+Access: Paid subscription (gated)
+Audience: Business development teams, licensing executives, pharma strategy divisions, life science investors
+What it does: A continuously enriched intelligence window into licensable biotech assets from 300+ global Tech Transfer Offices (TTOs)
+Key features to build/display correctly:
+Continuous TTO monitoring (300+ institutions and government databases)
+EDEN Chat — natural language semantic search across the full asset catalog
+Asset Dossiers — AI-generated reports with competitive landscape, scientific claims, patent coverage
+Pipeline tracking — save, filter (therapy area, stage, modality), export
+Institution Intelligence — profiles and metrics for research institutions and inventors
+Hot Areas sidebar showing therapy area convergence signals
+Pricing (exact figures — do not change):
+Individual: $1,999/month (1 seat)
+Team: $8,999/month (5 seats)
+Team: $16,999/month (10 seats)
+Enterprise: Custom pricing (SLA guarantees, custom data integrations)
+Payment notes for billing work: ACH preferred for Team/Enterprise tiers. Annual billing option should be surfaced at checkout.
+Multi-tenant / Org model
+Users belong to organizations
+Organizations have roles: Individual, Team-5, Team-10, Enterprise
+Team tiers share seats within the org
+Admin panel manages collector health, scraper sync status, asset pipeline, and review queue
