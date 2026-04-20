@@ -10,6 +10,8 @@ const founders = [
     name: "Wafick Mohamed",
     title: "Co-Founder & Chief Executive Officer",
     photo: wmPhoto,
+    photoHeight: "clamp(200px,40vw,280px)",
+    photoPosition: "center 15%",
     linkedIn: "https://www.linkedin.com/in/wafick-mohamed-d-sc-m-sc-cqa-chrc-clssbb-pmp-81643b96",
     bio: [
       "Dr. Wafick Mohamed is a biotech executive, entrepreneur, and educator dedicated to advancing science for patient impact. With extensive experience across global pharma and emerging biotech, he specializes in building quality systems, scaling operations, and leading organizations from the ground up.",
@@ -23,6 +25,8 @@ const founders = [
     name: "Richard Elles",
     title: "Co-Founder & Chief Operating Officer",
     photo: headshot1,
+    photoHeight: "clamp(160px,28vw,210px)",
+    photoPosition: "center 20%",
     linkedIn: "https://www.linkedin.com/in/richard-elles-pmp",
     bio: [
       "Richard Elles is a dynamic healthcare leader with a diverse background in strategy development, corporate leadership, patient advocacy, and process improvement. A dedicated and PMP-certified Project Manager, Rich has deployed extensive management systems across consulting firms, healthtech startups, academic institutions, and research teams.",
@@ -89,7 +93,11 @@ function TeamCarousel() {
               <img
                 src={member.photo}
                 alt={member.name}
-                className="w-full h-[clamp(200px,40vw,280px)] object-cover object-[center_15%] rounded-xl mb-5"
+                className="w-full object-cover rounded-xl mb-5"
+                style={{
+                  height: member.photoHeight ?? "clamp(200px,40vw,280px)",
+                  objectPosition: member.photoPosition ?? "center 15%",
+                }}
               />
               <h3 className="text-lg font-bold text-foreground mb-0.5">{member.name}</h3>
               <p className="text-sm text-muted-foreground mb-4">{member.title}</p>
