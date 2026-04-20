@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
-import headshot1 from "@assets/Headshot_BW_1776710305543.jpg";
+import headshot1 from "@assets/Headshot_1776710302062.jfif";
 import wmPhoto from "@assets/WM_phot_1775790644431.jpg";
 
 const founders = [
