@@ -53,7 +53,7 @@ const scoutTiers = [
   { name: "Individual", price: "$1,999", desc: "1 intelligence seat" },
   { name: "Team 5-Seat", price: "$8,999", desc: "5 seats, shared pipeline" },
   { name: "Team 10-Seat", price: "$16,999", desc: "10 seats, shared pipeline and team reports" },
-  { name: "Enterprise", price: "Custom", desc: "SLA guarantees, custom data integrations" },
+  { name: "Enterprise", price: "Custom pricing", desc: "SLA guarantees, custom data integrations" },
 ];
 
 export default function Products() {
@@ -232,7 +232,7 @@ export default function Products() {
                 className="text-muted-foreground mb-6 reveal"
                 style={{ transitionDelay: "0.1s" }}
               >
-                For: BD Teams, Licensing Executives, Pharma Strategy
+                For: Business Development Teams, Licensing Executives, Pharma Strategy Divisions, Life Science Investors
               </p>
               <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[
@@ -302,7 +302,7 @@ export default function Products() {
                   </p>
                   <p className="text-xl font-bold text-foreground mb-1">
                     {tier.price}
-                    {tier.price !== "Custom" && <span className="text-sm font-normal text-muted-foreground">/mo</span>}
+                    {!tier.price.startsWith("Custom") && <span className="text-sm font-normal text-muted-foreground">/mo</span>}
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-4 flex-1">{tier.desc}</p>
                   <a
