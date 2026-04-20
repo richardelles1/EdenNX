@@ -117,7 +117,7 @@ export default function Products() {
                   "Instant email alerts for newly published assets matching your focus areas",
                   "EDEN Chat for natural language search across the full asset catalog",
                   "Asset Dossiers with competitive landscape, scientific claims, and patent coverage",
-                  "Pipeline tracking with save, filter by therapy area, stage, and modality, and export",
+                  "Pipeline tracking with filters by therapy area, stage, and modality, plus export",
                   "Institution profiles and metrics for research institutions and inventors",
                   "Hot Areas sidebar highlighting therapy area convergence signals",
                 ].map((feat) => (
