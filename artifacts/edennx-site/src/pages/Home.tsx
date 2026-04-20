@@ -179,11 +179,11 @@ export default function Home() {
   return (
     <div className="pt-16">
       {/* Hero */}
-      <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-background">
+      <section className="relative min-h-[72vh] flex items-center overflow-hidden bg-background">
         <BoxGridBackground />
 
         {/* Content layer — pointer-events-none lets background grid receive mouse events */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-28 lg:py-36 pointer-events-none">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24 pointer-events-none">
           <div className="max-w-4xl">
 
             {/* Primary headline — EdenNX as the anchor */}
@@ -317,7 +317,7 @@ export default function Home() {
             className="text-2xl md:text-3xl font-bold text-foreground mb-6 reveal"
             data-testid="bottom-cta-headline"
           >
-            Ready to see what we've built?
+            The intelligence infrastructure biotech has been waiting for.
           </h2>
           <Link
             to="/products"

@@ -52,8 +52,8 @@ const pipelineSteps = [
 const scoutTiers = [
   { name: "Individual", price: "$1,999", desc: "1 intelligence seat" },
   { name: "Team 5-Seat", price: "$8,999", desc: "5 seats, shared pipeline" },
-  { name: "Team 10-Seat", price: "$18,999", desc: "10 seats, team reports" },
-  { name: "Enterprise", price: "$50,000+", desc: "Unlimited seats, API access, private model tuning" },
+  { name: "Team 10-Seat", price: "$16,999", desc: "10 seats, shared pipeline and team reports" },
+  { name: "Enterprise", price: "Custom", desc: "SLA guarantees, custom data integrations" },
 ];
 
 export default function Products() {
@@ -102,21 +102,21 @@ export default function Products() {
                 className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
                 style={{ transitionDelay: "0.05s" }}
               >
-                Creative concept community
+                Concept registry and community
               </h2>
               <p
                 className="text-muted-foreground mb-6 reveal"
                 style={{ transitionDelay: "0.1s" }}
               >
-                For: Concept Creators, Early-Stage Innovators
+                For: Early-Stage Innovators, Concept Creators, Independent Researchers
               </p>
               <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[
-                  "Submit early-stage hypotheses before research begins",
-                  "EDEN credibility scoring on a 0-100 scale",
-                  "Surface to industry scouts and collaborators",
-                  "Graduate promising concepts into EdenLab projects",
-                  "Concept registry with timestamped provenance",
+                  "Structured concept submission forms to document early-stage hypotheses",
+                  "EDEN Credibility Score — automated 0-100 scoring",
+                  "Public searchable community feed",
+                  "Timestamped provenance protecting your first-to-conceive claim",
+                  "Graduation path: promising concepts promoted into EdenLab projects",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500 flex-shrink-0" />
@@ -170,15 +170,15 @@ export default function Products() {
                 className="text-muted-foreground mb-6 reveal"
                 style={{ transitionDelay: "0.1s" }}
               >
-                For: Academic Researchers, Lab Leaders, PhD Teams
+                For: Academic Scientists, PhD Teams, Lab Leaders, University Research Groups
               </p>
               <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[
-                  "Structured 11-section project canvas",
-                  "Literature synthesis across 40+ data sources",
+                  "11-section project canvas for structured research management",
+                  "Literature synthesis across 40+ academic data sources",
                   "Evidence extraction and citation management",
-                  "Visibility to industry partners and collaborators",
-                  "Grants discovery matched to your research profile",
+                  "Published projects visible to EdenScout industry buyers",
+                  "Grant discovery matched to your research profile",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-violet-500 flex-shrink-0" />
@@ -236,11 +236,12 @@ export default function Products() {
               </p>
               <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[
-                  "Continuously refreshed catalog of licensable biotech assets",
-                  "Natural language queries via EDEN chat interface",
-                  "Competing asset cross-reference by target and modality",
-                  "Institution intelligence and researcher profiles",
-                  "EDEN-compiled dossiers and board-ready reports",
+                  "Continuous monitoring of 300+ TTOs and government databases",
+                  "EDEN Chat — natural language semantic search across the full asset catalog",
+                  "Asset Dossiers — competitive landscape, scientific claims, patent coverage",
+                  "Pipeline tracking — save, filter by therapy area, stage, and modality, export",
+                  "Institution Intelligence — profiles and metrics for research institutions and inventors",
+                  "Hot Areas sidebar showing therapy area convergence signals",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
@@ -292,15 +293,26 @@ export default function Products() {
               {scoutTiers.map((tier, i) => (
                 <div
                   key={tier.name}
-                  className="rounded-xl border border-border bg-card p-5 reveal"
+                  className="rounded-xl border border-border bg-card p-5 reveal flex flex-col"
                   style={{ transitionDelay: `${i * 0.07}s` }}
                   data-testid={`pricing-tier-${i}`}
                 >
                   <p className="text-xs font-semibold tracking-wide uppercase text-muted-foreground mb-2">
                     {tier.name}
                   </p>
-                  <p className="text-xl font-bold text-foreground mb-1">{tier.price}<span className="text-sm font-normal text-muted-foreground">/mo</span></p>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{tier.desc}</p>
+                  <p className="text-xl font-bold text-foreground mb-1">
+                    {tier.price}
+                    {tier.price !== "Custom" && <span className="text-sm font-normal text-muted-foreground">/mo</span>}
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-4 flex-1">{tier.desc}</p>
+                  <a
+                    href="https://edenradar.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-xs font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity w-full"
+                  >
+                    Launch EdenRadar
+                  </a>
                 </div>
               ))}
             </div>

@@ -35,7 +35,7 @@ const edenPrinciples = [
     letter: "E",
     title: "Earn Trust Daily",
     description:
-      "Not just at sign-up. Through data protection, honest failures, and keeping promises to researchers and industry leaders alike.",
+      "Not just at sign-up. Through rigorous data protection, consistent accountability, and keeping every promise made to researchers and industry leaders alike.",
   },
   {
     letter: "D",
