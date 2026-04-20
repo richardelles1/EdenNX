@@ -89,6 +89,7 @@ export default function Products() {
 
       {/* EdenDiscovery */}
       <section
+        id="edendiscovery"
         className="border-t-4 border-amber-400 bg-amber-50/40 dark:bg-amber-950/10 py-20"
         data-testid="product-section-edendiscovery"
       >
@@ -151,6 +152,7 @@ export default function Products() {
 
       {/* EdenLab */}
       <section
+        id="edenlab"
         className="border-t-4 border-violet-400 bg-violet-50/40 dark:bg-violet-950/10 py-20"
         data-testid="product-section-edenlab"
       >
@@ -213,6 +215,7 @@ export default function Products() {
 
       {/* EdenScout */}
       <section
+        id="edenscout"
         className="border-t-4 border-emerald-400 bg-emerald-50/40 dark:bg-emerald-950/10 py-20"
         data-testid="product-section-edenscout"
       >

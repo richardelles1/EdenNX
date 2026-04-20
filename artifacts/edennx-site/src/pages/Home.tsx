@@ -293,6 +293,135 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Product Highlights */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32" data-testid="product-highlights">
+        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 reveal">
+          The Product Suite
+        </p>
+        <h2
+          className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
+          style={{ transitionDelay: "0.05s" }}
+        >
+          Three portals. One ecosystem.
+        </h2>
+        <p
+          className="text-base text-muted-foreground max-w-2xl leading-relaxed mb-14 reveal"
+          style={{ transitionDelay: "0.1s" }}
+        >
+          Whether you are planting the seed of a concept or closing a licensing deal, EdenNX has a portal built for your workflow.
+        </p>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {/* EdenDiscovery */}
+          <Link
+            to="/products#edendiscovery"
+            className="group rounded-xl border-t-4 border-amber-400 bg-amber-50/40 dark:bg-amber-950/10 border border-amber-200 dark:border-amber-800/40 p-7 flex flex-col hover:shadow-md transition-shadow reveal"
+            style={{ transitionDelay: "0.1s" }}
+            data-testid="highlight-edendiscovery"
+          >
+            <p className="text-xs font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-400 mb-2">
+              EdenDiscovery
+            </p>
+            <h3 className="text-xl font-bold text-foreground mb-1">Concept registry & community</h3>
+            <p className="text-sm text-muted-foreground mb-5">
+              For: Early-Stage Innovators, Concept Creators, Independent Researchers
+            </p>
+            <ul className="space-y-2.5 flex-1 mb-6">
+              {[
+                "Structured concept submission with timestamped provenance",
+                "EDEN Credibility Score — automated 0-100 scoring",
+                "Graduation path from concept to EdenLab project",
+              ].map((feat) => (
+                <li key={feat} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500 flex-shrink-0" />
+                  {feat}
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center justify-between">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">
+                Free
+              </span>
+              <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 group-hover:underline">
+                Learn more →
+              </span>
+            </div>
+          </Link>
+
+          {/* EdenLab */}
+          <Link
+            to="/products#edenlab"
+            className="group rounded-xl border-t-4 border-violet-400 bg-violet-50/40 dark:bg-violet-950/10 border border-violet-200 dark:border-violet-800/40 p-7 flex flex-col hover:shadow-md transition-shadow reveal"
+            style={{ transitionDelay: "0.15s" }}
+            data-testid="highlight-edenlab"
+          >
+            <p className="text-xs font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-2">
+              EdenLab
+            </p>
+            <h3 className="text-xl font-bold text-foreground mb-1">Project-based research workspace</h3>
+            <p className="text-sm text-muted-foreground mb-5">
+              For: Academic Scientists, PhD Teams, Lab Leaders, University Research Groups
+            </p>
+            <ul className="space-y-2.5 flex-1 mb-6">
+              {[
+                "11-section project canvas for structured research management",
+                "Literature synthesis across 40+ academic data sources",
+                "Published projects visible to EdenScout industry buyers",
+              ].map((feat) => (
+                <li key={feat} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-violet-500 flex-shrink-0" />
+                  {feat}
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center justify-between">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300">
+                Free
+              </span>
+              <span className="text-xs font-semibold text-violet-600 dark:text-violet-400 group-hover:underline">
+                Learn more →
+              </span>
+            </div>
+          </Link>
+
+          {/* EdenScout */}
+          <Link
+            to="/products#edenscout"
+            className="group rounded-xl border-t-4 border-emerald-400 bg-emerald-50/40 dark:bg-emerald-950/10 border border-emerald-200 dark:border-emerald-800/40 p-7 flex flex-col hover:shadow-md transition-shadow reveal"
+            style={{ transitionDelay: "0.2s" }}
+            data-testid="highlight-edenscout"
+          >
+            <p className="text-xs font-semibold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-2">
+              EdenScout
+            </p>
+            <h3 className="text-xl font-bold text-foreground mb-1">Industry intelligence platform</h3>
+            <p className="text-sm text-muted-foreground mb-5">
+              For: BD Teams, Licensing Executives, Pharma Strategy, Life Science Investors
+            </p>
+            <ul className="space-y-2.5 flex-1 mb-6">
+              {[
+                "Continuous monitoring of 300+ TTOs and government databases",
+                "EDEN Chat — natural language search across the full asset catalog",
+                "Asset dossiers with competitive landscape and patent coverage",
+              ].map((feat) => (
+                <li key={feat} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                  <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
+                  {feat}
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center justify-between">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
+                From $1,999/mo
+              </span>
+              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:underline">
+                Learn more →
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section
         className="py-24"
