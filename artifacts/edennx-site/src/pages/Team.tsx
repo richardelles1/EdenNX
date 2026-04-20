@@ -96,7 +96,7 @@ function TeamCarousel() {
                 alt={member.name}
                 className="w-full object-cover rounded-xl mb-5"
                 style={{
-                  height: (visibleCount > 1 && member.photoHeightDesktop)
+                  height: (visibleCount === 3 && member.photoHeightDesktop)
                     ? member.photoHeightDesktop
                     : (member.photoHeight ?? "clamp(200px,40vw,280px)"),
                   objectPosition: member.photoPosition ?? "center 15%",
