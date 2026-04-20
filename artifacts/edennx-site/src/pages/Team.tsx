@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
-import headshot1 from "@assets/Headshot1_1775676396671.jpg";
+import headshot1 from "@assets/Headshot_BW_1776710305543.jpg";
 import wmPhoto from "@assets/WM_phot_1775790644431.jpg";
 
 const founders = [
@@ -89,7 +89,7 @@ function TeamCarousel() {
               <img
                 src={member.photo}
                 alt={member.name}
-                className="w-full h-[clamp(200px,40vw,280px)] object-cover object-[center_15%] rounded-xl mb-5"
+                className="w-full h-[clamp(200px,40vw,280px)] object-cover object-top rounded-xl mb-5"
               />
               <h3 className="text-lg font-bold text-foreground mb-0.5">{member.name}</h3>
               <p className="text-sm text-muted-foreground mb-4">{member.title}</p>
