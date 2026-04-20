@@ -196,21 +196,20 @@ export default function Home() {
             </h1>
 
             {/*
-              "Powering [word]" — fixed-height container reserves exactly one line of space
-              so the layout never shifts when the rotating word changes.
-              overflow-hidden + whitespace-nowrap on the word prevent any reflow.
+              "Powering [word]" — w-full + overflow-hidden clips long words on narrow
+              viewports. Fixed height prevents layout shift when words swap.
             */}
             <div
-              className="flex items-baseline gap-3 mb-8 overflow-hidden reveal"
+              className="flex items-baseline gap-3 mb-8 w-full overflow-hidden reveal"
               style={{
                 transitionDelay: "0.15s",
-                height: "clamp(2rem, 4.5vw, 3.25rem)",
+                height: "clamp(1.75rem, 4.5vw, 3.25rem)",
               }}
             >
-              <span className="text-2xl md:text-3xl lg:text-4xl font-light text-foreground/65 leading-none flex-shrink-0">
+              <span className="text-xl md:text-3xl lg:text-4xl font-light text-foreground/65 leading-none flex-shrink-0">
                 Powering
               </span>
-              <span className="text-2xl md:text-3xl lg:text-4xl font-bold leading-none">
+              <span className="text-xl md:text-3xl lg:text-4xl font-bold leading-none min-w-0">
                 <TextFlip words={flipWords} />
               </span>
             </div>
@@ -254,15 +253,19 @@ export default function Home() {
         aria-label="Key facts"
       >
         <div className="marquee-track select-none">
-          {marqueeItems.map((item, i) => (
+          {marqueeItems.flatMap((item, i) => [
             <span
-              key={i}
-              className="flex items-center gap-4 px-8 text-sm font-medium text-muted-foreground whitespace-nowrap"
+              key={`item-${i}`}
+              className="px-6 text-sm font-medium text-muted-foreground whitespace-nowrap"
             >
               {item}
-              <span className="block h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0 self-center" />
-            </span>
-          ))}
+            </span>,
+            <span
+              key={`dot-${i}`}
+              className="flex-shrink-0 h-1.5 w-1.5 rounded-full bg-primary"
+              aria-hidden="true"
+            />,
+          ])}
         </div>
       </section>
 
