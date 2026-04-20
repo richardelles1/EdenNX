@@ -200,7 +200,7 @@ export default function Home() {
               viewports. Fixed height prevents layout shift when words swap.
             */}
             <div
-              className="flex items-baseline gap-3 mb-8 w-full overflow-hidden reveal"
+              className="flex items-baseline gap-3 mb-8 w-full max-w-full overflow-hidden reveal"
               style={{
                 transitionDelay: "0.15s",
                 height: "clamp(1.75rem, 4.5vw, 3.25rem)",
