@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logoImg from "@assets/EdenNX_Logo_Text_T_1775676326136.png";
+import { Logo } from "@/components/Logo";
 
 const navLinks = [
   { href: "/products", label: "Products" },
@@ -46,12 +46,9 @@ export function Navbar() {
             }`}
           >
             <Link to="/" data-testid="nav-logo" className="flex-shrink-0">
-              <img
-                src={logoImg}
-                alt="EdenNX"
-                className={`w-auto transition-all duration-500 dark:invert ${
-                  scrolled ? "h-8" : "h-11"
-                }`}
+              <Logo
+                iconClassName={`w-auto transition-all duration-500 ${scrolled ? "h-8" : "h-10"}`}
+                wordmarkClassName={`font-bold tracking-tight transition-all duration-500 ${scrolled ? "text-lg" : "text-xl"}`}
               />
             </Link>
 
@@ -81,7 +78,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="nav-launch-edenradar"
-                className={`inline-flex items-center font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-all duration-300 text-sm ${
+                className={`inline-flex items-center font-semibold bg-cta text-cta-foreground hover:opacity-90 transition-all duration-300 text-sm ${
                   scrolled
                     ? "px-4 py-1.5 rounded-full"
                     : "px-5 py-2 rounded-md"
@@ -145,7 +142,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="nav-mobile-launch"
-                className="inline-flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity mt-1"
+                className="inline-flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-semibold bg-cta text-cta-foreground hover:opacity-90 transition-opacity mt-1"
               >
                 Launch EdenRadar
               </a>

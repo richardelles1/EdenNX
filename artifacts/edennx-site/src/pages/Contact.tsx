@@ -71,19 +71,22 @@ export default function Contact() {
     setSubmitting(true);
     setSubmitError(null);
     try {
+      // Send as FormData (multipart) so the browser issues a CORS "simple
+      // request" with no preflight. A JSON body triggers an OPTIONS preflight
+      // that Web3Forms rejects, which broke the live submit.
+      const payload = new FormData();
+      payload.append("access_key", WEB3FORMS_ACCESS_KEY);
+      payload.append("from_name", "EdenNX Website");
+      payload.append("subject", `[EdenNX Contact] ${form.subject} - ${form.name}`);
+      payload.append("name", form.name);
+      payload.append("email", form.email);
+      payload.append("company", form.company || "Not provided");
+      payload.append("inquiry_type", form.subject);
+      payload.append("message", form.message);
+
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          from_name: "EdenNX Website",
-          subject: `[EdenNX Contact] ${form.subject} - ${form.name}`,
-          name: form.name,
-          email: form.email,
-          company: form.company || "Not provided",
-          inquiry_type: form.subject,
-          message: form.message,
-        }),
+        body: payload,
       });
       const data = await response.json();
       if (data.success) {
