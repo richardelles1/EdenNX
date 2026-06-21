@@ -44,14 +44,16 @@ export function PortalShowcase({
   src,
   alt,
   token,
+  className = "",
 }: {
   src: string;
   alt: string;
   token: string;
+  className?: string;
 }) {
   return (
     <div
-      className="rounded-xl overflow-hidden border border-border bg-card reveal"
+      className={`rounded-xl overflow-hidden border border-border bg-card reveal ${className}`}
       style={{ boxShadow: `0 18px 48px hsl(var(${token}) / 0.16), 0 4px 12px hsl(0 0% 0% / 0.06)` }}
     >
       <img src={src} alt={alt} className="w-full block" loading="lazy" />

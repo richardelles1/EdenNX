@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
@@ -41,98 +40,6 @@ function LinkedInIcon() {
   );
 }
 
-function TeamCarousel() {
-  const [startIndex, setStartIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(2);
-
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth < 640) {
-        setVisibleCount(1);
-      } else if (window.innerWidth < 1024) {
-        setVisibleCount(2);
-      } else {
-        setVisibleCount(3);
-      }
-      setStartIndex(0);
-    }
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const maxIndex = Math.max(0, founders.length - visibleCount);
-  const visibleMembers = founders.slice(startIndex, startIndex + visibleCount);
-
-  return (
-    <div>
-      <div className="flex items-start gap-4 md:gap-6">
-        <button
-          onClick={() => setStartIndex((p) => Math.max(0, p - 1))}
-          disabled={startIndex === 0}
-          aria-label="Previous"
-          className={`mt-28 flex-shrink-0 h-10 w-10 rounded-full border border-border flex items-center justify-center transition-opacity ${
-            startIndex === 0 ? "opacity-30 cursor-not-allowed" : "hover:border-primary hover:text-primary cursor-pointer"
-          }`}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="m15 18-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-
-        <div className="flex gap-5 flex-1 min-w-0">
-          {visibleMembers.map((member, i) => (
-            <div
-              key={startIndex + i}
-              className="flex-1 min-w-0 bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-colors flex flex-col"
-            >
-              <img
-                src={member.photo}
-                alt={member.name}
-                className="w-full h-[clamp(200px,40vw,280px)] object-cover object-top rounded-xl mb-5"
-              />
-              <h3 className="text-lg font-bold text-foreground mb-0.5">{member.name}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{member.title}</p>
-              <div className="flex-1 space-y-3 mb-5">
-                {member.bio.map((para, j) => (
-                  <p key={j} className="text-sm text-foreground/75 leading-relaxed">{para}</p>
-                ))}
-              </div>
-              <blockquote className="rounded-xl border border-primary/20 bg-primary/5 p-5 mb-4">
-                <p className="text-sm italic text-foreground/80 leading-relaxed">
-                  "{member.quote}"
-                </p>
-              </blockquote>
-              <a
-                href={member.linkedIn}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-              >
-                <LinkedInIcon />
-                LinkedIn
-              </a>
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={() => setStartIndex((p) => Math.min(maxIndex, p + 1))}
-          disabled={startIndex >= maxIndex}
-          aria-label="Next"
-          className={`mt-28 flex-shrink-0 h-10 w-10 rounded-full border border-border flex items-center justify-center transition-opacity ${
-            startIndex >= maxIndex ? "opacity-30 cursor-not-allowed" : "hover:border-primary hover:text-primary cursor-pointer"
-          }`}
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="m9 18 6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-}
-
 export default function Team() {
   useScrollReveal();
   useSEO({
@@ -165,9 +72,48 @@ export default function Team() {
         </p>
       </section>
 
-      {/* Founders carousel */}
+      {/* Founders — two-up */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
-        <TeamCarousel />
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+          {founders.map((member, i) => (
+            <article
+              key={member.name}
+              className="bg-card border border-border rounded-2xl p-7 lg:p-8 flex flex-col hover:border-primary/30 transition-colors reveal"
+              style={{ transitionDelay: `${i * 0.1}s` }}
+            >
+              <div className="flex items-center gap-5 mb-6">
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  className="h-24 w-24 rounded-2xl object-cover object-top flex-shrink-0 border border-border"
+                />
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground leading-tight">{member.name}</h2>
+                  <p className="text-sm font-semibold text-primary mt-1">{member.title}</p>
+                  <a
+                    href={member.linkedIn}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors mt-2"
+                  >
+                    <LinkedInIcon />
+                    LinkedIn
+                  </a>
+                </div>
+              </div>
+
+              <div className="space-y-3 mb-6">
+                {member.bio.map((para, j) => (
+                  <p key={j} className="text-sm text-foreground/75 leading-relaxed">{para}</p>
+                ))}
+              </div>
+
+              <blockquote className="mt-auto rounded-xl border-l-4 border-primary/40 bg-primary/5 p-5">
+                <p className="text-sm italic text-foreground/85 leading-relaxed">"{member.quote}"</p>
+              </blockquote>
+            </article>
+          ))}
+        </div>
       </section>
 
       {/* Footer teaser — link back to About */}

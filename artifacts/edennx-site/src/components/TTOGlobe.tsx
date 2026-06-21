@@ -218,38 +218,66 @@ export function TTOGlobe({
   const phiRef = useRef(0.4);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const globe = createGlobe(canvasRef.current, {
-      devicePixelRatio: 2,
-      width: size * 2,
-      height: size * 2,
-      phi: phiRef.current,
-      theta: 0.25,
-      dark: isDark ? 1 : 0,
-      diffuse: 1.1,
-      mapSamples: 22000,
-      mapBrightness: isDark ? 6.5 : 3,
-      mapBaseBrightness: isDark ? 0.12 : 0.1,
-      // baseColor is the land-dot color; keep it bright enough that the
-      // continents read clearly against the dark sphere.
-      baseColor: isDark ? [0.26, 0.55, 0.4] : [0.86, 0.93, 0.88],
-      markerColor: [0.4, 1, 0.62],
-      glowColor: isDark ? [0.12, 0.4, 0.28] : [0.12, 0.55, 0.3],
-      markers: SCALED_MARKERS,
-    } as Parameters<typeof createGlobe>[1]);
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let globe: ReturnType<typeof createGlobe> | null = null;
+    let rafId = 0;
 
-    let rafId: number;
+    const ensureGlobe = () => {
+      if (globe) return;
+      globe = createGlobe(canvas, {
+        devicePixelRatio: 2,
+        width: size * 2,
+        height: size * 2,
+        phi: phiRef.current,
+        theta: 0.25,
+        dark: isDark ? 1 : 0,
+        diffuse: 1.1,
+        mapSamples: 22000,
+        mapBrightness: isDark ? 6.5 : 3,
+        mapBaseBrightness: isDark ? 0.12 : 0.1,
+        // baseColor is the land-dot color; keep it bright enough that the
+        // continents read clearly against the dark sphere.
+        baseColor: isDark ? [0.26, 0.55, 0.4] : [0.86, 0.93, 0.88],
+        markerColor: [0.4, 1, 0.62],
+        glowColor: isDark ? [0.12, 0.4, 0.28] : [0.12, 0.55, 0.3],
+        markers: SCALED_MARKERS,
+      } as Parameters<typeof createGlobe>[1]);
+    };
+
     const animate = () => {
       phiRef.current += 0.003;
-      globe.update({ phi: phiRef.current } as Parameters<typeof globe.update>[0]);
+      if (globe) globe.update({ phi: phiRef.current } as Parameters<typeof globe.update>[0]);
       rafId = requestAnimationFrame(animate);
     };
-    rafId = requestAnimationFrame(animate);
+
+    const resume = () => {
+      ensureGlobe();
+      // Static (single frame) when the user prefers reduced motion.
+      if (prefersReduced) return;
+      if (!rafId) rafId = requestAnimationFrame(animate);
+    };
+
+    const pause = () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    // Only build/run the WebGL globe while it is on screen.
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? resume() : pause()),
+      { threshold: 0.05 }
+    );
+    io.observe(canvas);
 
     return () => {
-      cancelAnimationFrame(rafId);
-      globe.destroy();
+      io.disconnect();
+      pause();
+      if (globe) globe.destroy();
     };
   }, [size, isDark]);
 
