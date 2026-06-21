@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import logoImgLight from "@assets/EdenNX_Logo_Text_1775676338906.png";
-import logoImgDark from "@assets/EdenNX_Logo_Text_T_1775676326136.png";
+import { Logo } from "@/components/Logo";
 
 export function Footer() {
   return (
@@ -9,16 +8,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-row items-center gap-3">
             <Link to="/">
-              <img
-                src={logoImgLight}
-                alt="EdenNX"
-                className="h-7 w-auto opacity-80 block dark:hidden"
-              />
-              <img
-                src={logoImgDark}
-                alt="EdenNX"
-                className="h-7 w-auto opacity-80 hidden dark:block"
-              />
+              <Logo iconClassName="h-7 w-auto" wordmarkClassName="text-base font-bold tracking-tight" />
             </Link>
             <p className="text-sm text-muted-foreground">
               Accelerating science to patient impact.
