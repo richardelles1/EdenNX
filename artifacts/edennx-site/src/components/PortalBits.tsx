@@ -28,8 +28,8 @@ export function PortalEyebrow({ name, className = "" }: { name: string; classNam
   );
 }
 
-// Browser-chrome frame around a real product screenshot, tinted with the
-// portal accent. Replaces the old "vision" blockquotes with genuine UI.
+// Clean framed product screenshot, tinted with the portal accent. Replaces the
+// old "vision" blockquotes with genuine UI. No fake browser chrome.
 export function PortalShowcase({
   src,
   alt,
@@ -44,12 +44,6 @@ export function PortalShowcase({
       className="rounded-xl overflow-hidden border border-border bg-card reveal"
       style={{ boxShadow: `0 18px 48px hsl(var(${token}) / 0.16), 0 4px 12px hsl(0 0% 0% / 0.06)` }}
     >
-      <div className="flex items-center gap-1.5 px-4 h-9 border-b border-border bg-muted/40">
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#ef4444" }} />
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#f59e0b" }} />
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#22c55e" }} />
-        <span className="ml-3 text-[11px] font-mono text-muted-foreground">edenradar.com</span>
-      </div>
       <img src={src} alt={alt} className="w-full block" loading="lazy" />
     </div>
   );
