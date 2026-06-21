@@ -53,7 +53,7 @@ const scoutTiers = [
   { name: "Individual", price: "$1,999", desc: "1 intelligence seat" },
   { name: "Team 5-Seat", price: "$8,999", desc: "5 seats, shared pipeline" },
   { name: "Team 10-Seat", price: "$16,999", desc: "10 seats, shared pipeline and team reports" },
-  { name: "Enterprise", price: "Custom pricing", desc: "SLA guarantees, custom data integrations" },
+  { name: "Enterprise", price: "Custom pricing", desc: "Custom SLA terms, custom data integrations" },
 ];
 
 export default function Products() {
