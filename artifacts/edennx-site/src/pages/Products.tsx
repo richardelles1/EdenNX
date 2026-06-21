@@ -240,7 +240,7 @@ export default function Products() {
             </div>
             <PortalShowcase
               src="/images/portal-edenradar.png"
-              alt="EdenRadar asset dossier: EDEN score, key fields, and an auto-generated intelligence brief"
+              alt="EdenRadar Landscape Intelligence dashboard: pre-commercial pipeline, white space finder, and therapeutic whitespace"
               token="--portal-radar"
             />
           </div>
