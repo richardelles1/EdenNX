@@ -36,30 +36,6 @@ const marqueeItems = [
   "EdenRadar by EdenNX",
 ];
 
-const testimonials = [
-  {
-    quote:
-      "The biotech licensing process has always been fragmented. EdenNX changes that by bringing structure and intelligence to an industry that has operated on relationships and guesswork for decades.",
-    name: "Dr. Sarah Chen",
-    role: "VP Business Development, Global Pharma",
-    initials: "SC",
-  },
-  {
-    quote:
-      "We identified three promising clinical-stage assets in our target indication within days. What used to take months of conference attendance and cold calls now happens before morning standup.",
-    name: "Marcus Webb",
-    role: "Director of Licensing, Mid-Size Biotech",
-    initials: "MW",
-  },
-  {
-    quote:
-      "EdenNX is exactly what the technology transfer community has needed. Finally, a platform that takes our work seriously and connects us with the right industry partners.",
-    name: "Prof. James Okafor",
-    role: "Director, University Technology Transfer Office",
-    initials: "JO",
-  },
-];
-
 function TextFlip({ words }: { words: string[] }) {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -91,80 +67,6 @@ function TextFlip({ words }: { words: string[] }) {
     >
       {words[index]}
     </span>
-  );
-}
-
-function TestimonialCarousel() {
-  const [active, setActive] = useState(0);
-  const [fading, setFading] = useState(false);
-
-  function goTo(i: number) {
-    if (i === active) return;
-    setFading(true);
-    setTimeout(() => {
-      setActive(i);
-      setFading(false);
-    }, 280);
-  }
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setFading(true);
-      setTimeout(() => {
-        setActive((p) => (p + 1) % testimonials.length);
-        setFading(false);
-      }, 280);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const t = testimonials[active];
-
-  return (
-    <div className="max-w-3xl mx-auto text-center">
-      <div
-        style={{
-          opacity: fading ? 0 : 1,
-          transform: fading ? "translateY(8px)" : "translateY(0)",
-          transition: "opacity 0.28s ease, transform 0.28s ease",
-        }}
-      >
-        <svg
-          className="h-8 w-8 mx-auto mb-6 text-primary-foreground/40"
-          fill="currentColor"
-          viewBox="0 0 32 32"
-        >
-          <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-        </svg>
-        <p className="text-lg md:text-xl text-primary-foreground leading-relaxed mb-8 font-light">
-          {t.quote}
-        </p>
-        <div className="flex items-center justify-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-primary-foreground/20 flex items-center justify-center text-sm font-bold text-primary-foreground">
-            {t.initials}
-          </div>
-          <div className="text-left">
-            <p className="text-sm font-semibold text-primary-foreground">{t.name}</p>
-            <p className="text-xs text-primary-foreground/60">{t.role}</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-center gap-2 mt-8">
-        {testimonials.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Testimonial ${i + 1}`}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              i === active
-                ? "w-6 bg-primary-foreground"
-                : "w-2 bg-primary-foreground/30 hover:bg-primary-foreground/50"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -422,23 +324,6 @@ export default function Home() {
             changing that, building the connective tissue between every
             stakeholder in the biotech ecosystem.
           </p>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section
-        className="py-16"
-        style={{ background: "hsl(var(--primary))" }}
-        data-testid="testimonials-section"
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary-foreground/60 text-center mb-4">
-            What People Are Saying
-          </p>
-          <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground text-center mb-14">
-            Trusted by the biotech community.
-          </h2>
-          <TestimonialCarousel />
         </div>
       </section>
 
