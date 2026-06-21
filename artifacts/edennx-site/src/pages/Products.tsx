@@ -293,7 +293,7 @@ export default function Products() {
                   Access: Free
                 </span>
                 <a
-                  href="https://edenradar.com"
+                  href="https://edenradar.com/research"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold bg-violet-600 text-white hover:opacity-90 transition-opacity"
@@ -354,7 +354,7 @@ export default function Products() {
                   Access: Free
                 </span>
                 <a
-                  href="https://edenradar.com"
+                  href="https://edenradar.com/research"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold bg-amber-500 text-white hover:opacity-90 transition-opacity"
@@ -411,7 +411,7 @@ export default function Products() {
                   Access: Success-fee
                 </span>
                 <a
-                  href="https://edenradar.com"
+                  href="https://edenradar.com/market/preview"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold bg-indigo-600 text-white hover:opacity-90 transition-opacity"
