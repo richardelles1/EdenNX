@@ -22,6 +22,12 @@ const flipWords = [
   "Biotech Innovation",
   "Collaborative Science",
   "Clinical-Stage Intelligence",
+  "Licensing Deals",
+  "Translational Research",
+  "Technology Transfer",
+  "Smarter Business Development",
+  "The Next Breakthrough",
+  "Concept to Patient",
   "Your Pipeline's Future",
 ];
 
@@ -84,7 +90,7 @@ const flagship: Portal = {
   name: "EdenRadar",
   tagline: "Industry intelligence platform",
   thesis:
-    "See the full field before your first move: a continuously enriched window into every major tech transfer office on earth.",
+    `See the full field before your first move: a continuously enriched window into ${TTO_COUNT_LABEL} tech transfer offices worldwide.`,
   access: "From $1,999/mo",
   token: "--portal-radar",
   anchor: "/products#edenradar",
@@ -127,8 +133,8 @@ function FlagshipCard() {
       style={{ borderTop: `4px solid ${accent}`, background: `linear-gradient(180deg, ${accentSoft} 0%, hsl(var(--card)) 45%)` }}
       data-testid="highlight-edenradar"
     >
-      <div className="flex items-center justify-between mb-5">
-        <PortalEyebrow name={flagship.name} />
+      <div className="flex items-center justify-between mb-4">
+        <PortalEyebrow name={flagship.name} nameClassName="text-2xl md:text-3xl" iconClassName="h-7 w-7" />
         <span
           className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full"
           style={{ background: accentSoft, color: accent }}
@@ -136,11 +142,11 @@ function FlagshipCard() {
           Flagship
         </span>
       </div>
-      <h3 className="text-2xl font-bold text-foreground mb-3">{flagship.tagline}</h3>
-      <p className="text-base text-muted-foreground leading-relaxed max-w-md">{flagship.thesis}</p>
+      <h3 className="text-lg font-semibold text-foreground/90 mb-3">{flagship.tagline}</h3>
+      <p className="text-base text-foreground/75 leading-relaxed max-w-md">{flagship.thesis}</p>
 
       <div className="mt-auto pt-8">
-        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-foreground/70 mb-6">
+        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-foreground/75 mb-6">
           <span><span className="font-bold text-foreground">{TTO_COUNT_LABEL}</span> institutions</span>
           <span><span className="font-bold text-foreground">{ASSET_COUNT_LABEL}</span> assets</span>
           <span><span className="font-bold text-foreground">Scored</span> daily</span>
@@ -168,10 +174,10 @@ function SatelliteCard({ portal }: { portal: Portal }) {
       data-testid={`highlight-${portal.name.toLowerCase()}`}
     >
       <div className="flex items-center justify-between mb-2 gap-3">
-        <PortalEyebrow name={portal.name} />
+        <PortalEyebrow name={portal.name} nameClassName="text-lg md:text-xl" iconClassName="h-6 w-6" />
         <span className="text-xs font-medium flex-shrink-0" style={{ color: accent }}>{portal.access}</span>
       </div>
-      <p className="text-sm text-muted-foreground leading-relaxed">{portal.thesis}</p>
+      <p className="text-sm text-foreground/75 leading-relaxed">{portal.thesis}</p>
     </Link>
   );
 }
@@ -286,14 +292,14 @@ export default function Home() {
           className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          Four portals. One ecosystem.
+          Four products. One ecosystem.
         </h2>
         <p
-          className="text-base text-muted-foreground max-w-2xl leading-relaxed mb-14 reveal"
+          className="text-base text-foreground/70 max-w-2xl leading-relaxed mb-14 reveal"
           style={{ transitionDelay: "0.1s" }}
         >
           EdenNX is the parent company. EdenRadar is our flagship product, joined
-          by a portal built for every stakeholder, whether you are planting the
+          by a product built for every stakeholder, whether you are planting the
           seed of a concept or closing a licensing deal.
         </p>
 

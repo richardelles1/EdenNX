@@ -1,4 +1,4 @@
-// Drifting aurora blobs in the four portal accent colors. Sits behind hero
+// Drifting aurora blobs in emerald brand tones. Sits behind hero
 // content as a soft, premium ambient layer (ported from EdenRadar). Decorative
 // only; honors prefers-reduced-motion via the .aurora-blob-* classes in CSS.
 export function AuroraBackground({ className = "" }: { className?: string }) {
@@ -13,11 +13,11 @@ export function AuroraBackground({ className = "" }: { className?: string }) {
       />
       <div
         className="aurora-blob aurora-blob-2"
-        style={{ width: 360, height: 360, top: "20%", right: "-8%", background: "hsl(var(--portal-discovery) / 0.20)" }}
+        style={{ width: 360, height: 360, top: "20%", right: "-8%", background: "hsl(142 60% 45% / 0.16)" }}
       />
       <div
         className="aurora-blob aurora-blob-3"
-        style={{ width: 380, height: 380, bottom: "-12%", left: "30%", background: "hsl(var(--portal-market) / 0.18)" }}
+        style={{ width: 380, height: 380, bottom: "-12%", left: "30%", background: "hsl(160 55% 38% / 0.14)" }}
       />
     </div>
   );

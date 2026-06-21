@@ -1,6 +1,6 @@
 import { TTOGlobe } from "@/components/TTOGlobe";
 import {
-  TTO_COUNT_EXACT,
+  TTO_COUNT_LABEL,
   ASSET_COUNT_LABEL,
   DATA_SOURCE_LABEL,
   TOP_INSTITUTIONS,
@@ -18,7 +18,7 @@ const ROWS = Array.from({ length: ROW_COUNT }, (_, i) =>
 );
 
 const stats = [
-  { value: String(TTO_COUNT_EXACT), label: "research institutions" },
+  { value: TTO_COUNT_LABEL, label: "research institutions" },
   { value: ASSET_COUNT_LABEL, label: "licensable assets" },
   { value: DATA_SOURCE_LABEL, label: "live data sources" },
 ];
@@ -53,13 +53,13 @@ export function CoverageSection() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: "linear-gradient(160deg, hsl(222 47% 7%) 0%, hsl(158 45% 8%) 100%)" }}
+      style={{ background: "radial-gradient(120% 120% at 75% 30%, hsl(158 36% 12%) 0%, hsl(222 47% 6%) 55%)" }}
       aria-label="Global coverage"
     >
-      {/* Soft emerald glow behind the globe */}
+      {/* Tight emerald glow directly behind the globe */}
       <div
-        className="absolute right-0 top-1/4 pointer-events-none"
-        style={{ width: 600, height: 600, borderRadius: "9999px", filter: "blur(90px)", background: "hsl(142 65% 40% / 0.18)" }}
+        className="absolute pointer-events-none hidden lg:block"
+        style={{ width: 420, height: 420, right: "6%", top: "16%", borderRadius: "9999px", filter: "blur(80px)", background: "hsl(142 70% 42% / 0.16)" }}
         aria-hidden="true"
       />
 
@@ -71,12 +71,12 @@ export function CoverageSection() {
               Global coverage
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-5" style={{ color: "rgba(255,255,255,0.96)" }}>
-              Watching every major lab on earth.
+              Research intelligence across six continents.
             </h2>
             <p className="text-base md:text-lg leading-relaxed max-w-md mb-10" style={{ color: "rgba(255,255,255,0.6)" }}>
-              EdenRadar continuously monitors university tech transfer offices,
-              government labs, and publication feeds across six continents, so the
-              next breakthrough surfaces the day it is published.
+              EdenRadar continuously monitors hundreds of university tech transfer
+              offices, government labs, and publication feeds worldwide, so new
+              assets surface the day they are published.
             </p>
             <div className="flex flex-wrap gap-x-10 gap-y-6">
               {stats.map((s) => (

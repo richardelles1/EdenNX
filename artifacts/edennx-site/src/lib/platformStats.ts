@@ -9,7 +9,7 @@
 //   ASSET_COUNT_EXACT   most recent exact reading from the EdenRadar database
 //   DATA_SOURCE_LABEL   live data-source families feeding the pipeline
 
-export const TTO_COUNT_EXACT = 412;
+export const TTO_COUNT_EXACT = 414;
 export const TTO_COUNT_LABEL = "400+";
 export const ASSET_COUNT_EXACT = 35582;
 export const ASSET_COUNT_LABEL = "35,000+";
