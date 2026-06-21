@@ -1,4 +1,5 @@
-import logoIcon from "@assets/EdenNX_Logo_T_1775676346670.png";
+// Optimized transparent mark (192px, ~23KB) served from /public.
+const logoIcon = "/eden-mark.png";
 
 // EdenNX brand lockup. Uses the transparent (alpha) icon mark plus a CSS
 // wordmark so it adapts to light and dark surfaces with no white background
