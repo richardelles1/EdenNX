@@ -137,20 +137,22 @@ export function TTOGlobe({
       width: size * 2,
       height: size * 2,
       phi: phiRef.current,
-      theta: 0.15,
+      theta: 0.25,
       dark: isDark ? 1 : 0,
-      diffuse: 1.4,
-      mapSamples: 16000,
-      mapBrightness: isDark ? 5 : 3,
-      mapBaseBrightness: isDark ? 0 : 0.1,
-      baseColor: isDark ? [0.04, 0.12, 0.08] : [0.86, 0.93, 0.88],
-      markerColor: EMERALD,
-      glowColor: isDark ? [0.14, 0.68, 0.38] : [0.12, 0.55, 0.3],
+      diffuse: 1.1,
+      mapSamples: 22000,
+      mapBrightness: isDark ? 6.5 : 3,
+      mapBaseBrightness: isDark ? 0.12 : 0.1,
+      // baseColor is the land-dot color; keep it bright enough that the
+      // continents read clearly against the dark sphere.
+      baseColor: isDark ? [0.26, 0.55, 0.4] : [0.86, 0.93, 0.88],
+      markerColor: [0.4, 1, 0.62],
+      glowColor: isDark ? [0.12, 0.4, 0.28] : [0.12, 0.55, 0.3],
       markers: TTO_MARKERS,
       arcs: [],
       arcColor: EMERALD,
       arcWidth: 2,
-      arcHeight: 0.38,
+      arcHeight: 0.2,
     } as Parameters<typeof createGlobe>[1]);
 
     let rafId: number;

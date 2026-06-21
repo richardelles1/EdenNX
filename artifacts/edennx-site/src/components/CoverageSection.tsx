@@ -53,13 +53,13 @@ export function CoverageSection() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: "linear-gradient(160deg, hsl(222 47% 7%) 0%, hsl(158 45% 8%) 100%)" }}
+      style={{ background: "radial-gradient(120% 120% at 75% 30%, hsl(158 36% 12%) 0%, hsl(222 47% 6%) 55%)" }}
       aria-label="Global coverage"
     >
-      {/* Soft emerald glow behind the globe */}
+      {/* Tight emerald glow directly behind the globe */}
       <div
-        className="absolute right-0 top-1/4 pointer-events-none"
-        style={{ width: 600, height: 600, borderRadius: "9999px", filter: "blur(90px)", background: "hsl(142 65% 40% / 0.18)" }}
+        className="absolute pointer-events-none hidden lg:block"
+        style={{ width: 420, height: 420, right: "6%", top: "16%", borderRadius: "9999px", filter: "blur(80px)", background: "hsl(142 70% 42% / 0.16)" }}
         aria-hidden="true"
       />
 
