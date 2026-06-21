@@ -183,7 +183,7 @@ export default function Products() {
             </div>
             <PortalShowcase
               src="/images/portal-edenradar.png"
-              alt="EdenRadar pipeline board: assets tracked from watching to in-discussion to passed"
+              alt="EdenRadar asset dossier: EDEN score, key fields, and an auto-generated intelligence brief"
               token="--portal-radar"
             />
           </div>

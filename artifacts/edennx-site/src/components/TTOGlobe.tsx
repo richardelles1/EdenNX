@@ -161,10 +161,45 @@ const TTO_MARKERS: Array<{ location: [number, number]; size: number }> = [
   { location: [30.57, 104.07], size: 0.03 }, // Chengdu
   { location: [35.18, 129.08], size: 0.03 }, // Busan
   { location: [35.18, 136.91], size: 0.03 }, // Nagoya
+  // More US tech transfer offices (where most of our 400+ are)
+  { location: [40.5, -74.45], size: 0.03 }, // Rutgers
+  { location: [40.8, -77.86], size: 0.03 }, // Penn State
+  { location: [40.43, -86.91], size: 0.03 }, // Purdue
+  { location: [34.02, -118.29], size: 0.03 }, // USC
+  { location: [33.64, -117.84], size: 0.03 }, // UC Irvine
+  { location: [34.41, -119.85], size: 0.03 }, // UC Santa Barbara
+  { location: [40.91, -73.12], size: 0.03 }, // Stony Brook
+  { location: [30.62, -96.34], size: 0.03 }, // Texas A&M
+  { location: [33.78, -84.4], size: 0.03 }, // Georgia Tech
+  { location: [38.03, -78.51], size: 0.03 }, // Virginia
+  { location: [38.99, -76.94], size: 0.03 }, // Maryland
+  { location: [42.7, -84.48], size: 0.03 }, // Michigan State
+  { location: [41.66, -91.54], size: 0.03 }, // Iowa
+  { location: [38.95, -92.33], size: 0.03 }, // Missouri
+  { location: [38.96, -95.25], size: 0.03 }, // Kansas
+  { location: [40.81, -96.7], size: 0.03 }, // Nebraska
+  { location: [35.21, -97.45], size: 0.03 }, // Oklahoma
+  { location: [44.05, -123.07], size: 0.03 }, // Oregon
+  { location: [38.04, -84.5], size: 0.03 }, // Kentucky
+  { location: [35.95, -83.93], size: 0.03 }, // Tennessee
+  { location: [34.0, -81.03], size: 0.03 }, // South Carolina
+  { location: [41.8, -72.25], size: 0.03 }, // UConn
+  { location: [40.76, -111.84], size: 0.03 }, // Utah
+  { location: [33.21, -87.54], size: 0.03 }, // Alabama
+  // More international TTOs
+  { location: [43.77, 11.26], size: 0.03 }, // Florence
+  { location: [45.19, 5.72], size: 0.03 }, // Grenoble
+  { location: [43.6, 1.44], size: 0.03 }, // Toulouse
+  { location: [53.81, -1.55], size: 0.03 }, // Leeds
+  { location: [50.94, 6.96], size: 0.03 }, // Cologne
+  { location: [59.4, 24.74], size: 0.03 }, // Tallinn
+  { location: [1.35, 103.68], size: 0.03 }, // NTU Singapore
+  { location: [37.34, 126.73], size: 0.03 }, // Seoul (Yonsei)
+  { location: [31.23, 121.47], size: 0.03 }, // Shanghai Jiao Tong
 ];
 
 // Shrink every marker uniformly so the globe reads as densely covered.
-const SIZE_SCALE = 0.62;
+const SIZE_SCALE = 0.5;
 const SCALED_MARKERS = TTO_MARKERS.map((m) => ({
   location: m.location,
   size: m.size * SIZE_SCALE,
