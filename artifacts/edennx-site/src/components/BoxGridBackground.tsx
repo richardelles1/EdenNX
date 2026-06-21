@@ -140,11 +140,11 @@ export function BoxGridBackground() {
 
           let bg: string | undefined;
           if (isActive) {
-            bg = "hsl(152 72% 22% / 0.50)";
+            bg = "hsl(142 52% 36% / 0.50)";
           } else if (isNear) {
-            bg = "hsl(152 72% 22% / 0.28)";
+            bg = "hsl(142 52% 36% / 0.28)";
           } else if (isMid) {
-            bg = "hsl(152 72% 22% / 0.14)";
+            bg = "hsl(142 52% 36% / 0.14)";
           }
 
           return (
@@ -153,7 +153,7 @@ export function BoxGridBackground() {
               style={{
                 width: `${CELL_SIZE}px`,
                 height: `${CELL_SIZE}px`,
-                border: "1px solid hsl(152 72% 22% / 0.11)",
+                border: "1px solid hsl(142 52% 36% / 0.11)",
                 backgroundColor: bg,
                 transition: isActive || isNear || isMid
                   ? "background-color 0.18s ease"

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -22,6 +22,14 @@
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-primary-border: var(--primary-border);
+
+  --color-cta: hsl(var(--cta));
+  --color-cta-foreground: hsl(var(--cta-foreground));
+
+  --color-portal-radar: hsl(var(--portal-radar));
+  --color-portal-lab: hsl(var(--portal-lab));
+  --color-portal-discovery: hsl(var(--portal-discovery));
+  --color-portal-market: hsl(var(--portal-market));
 
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
@@ -66,7 +74,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* LIGHT MODE — deeper forest emerald matching EdenRadar brand */
+/* LIGHT MODE — EdenRadar canonical tokens (emerald primary, amber CTA) */
 :root {
   --button-outline: rgba(0,0,0, .10);
   --badge-outline: rgba(0,0,0, .05);
@@ -74,51 +82,63 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  --background: 0 0% 98%;
-  --foreground: 222 47% 11%;
-  --border: 220 13% 91%;
-  --input: 220 13% 91%;
-  --ring: 152 72% 22%;
+  /* Portal accent tokens (HSL components, no hsl() wrapper).
+     Use as hsl(var(--portal-lab)) or hsl(var(--portal-lab) / 0.5). */
+  --portal-radar: 142 52% 36%;     /* EdenRadar / Scout — emerald */
+  --portal-scout: 142 52% 36%;     /* alias for Scout */
+  --portal-lab: 262 80% 60%;       /* EdenLab — violet */
+  --portal-discovery: 38 92% 50%;  /* EdenDiscovery — amber */
+  --portal-market: 234 80% 58%;    /* EdenMarket — indigo */
+
+  /* Amber is the EdenRadar CTA / accent color across brand surfaces. */
+  --cta: 33 85% 44%;
+  --cta-foreground: 0 0% 100%;
+
+  --background: 210 25% 97%;
+  --foreground: 220 30% 12%;
+  --border: 210 15% 86%;
+  --input: 210 20% 75%;
+  --ring: 142 52% 36%;
 
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --card-border: 220 13% 91%;
+  --card-foreground: 220 30% 12%;
+  --card-border: 210 15% 88%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --popover-border: 220 13% 91%;
+  --popover-foreground: 220 30% 12%;
+  --popover-border: 210 15% 84%;
 
-  --primary: 152 72% 22%;
+  --primary: 142 52% 36%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222 47% 11%;
+  --secondary: 210 20% 92%;
+  --secondary-foreground: 220 30% 12%;
 
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
+  --muted: 210 15% 92%;
+  --muted-foreground: 220 20% 40%;
 
-  --accent: 210 40% 96%;
-  --accent-foreground: 222 47% 11%;
+  --accent: 210 20% 90%;
+  --accent-foreground: 220 30% 12%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 
-  --sidebar: 0 0% 98%;
-  --sidebar-foreground: 222 47% 11%;
-  --sidebar-border: 220 13% 91%;
-  --sidebar-primary: 152 72% 22%;
+  --sidebar: 210 20% 95%;
+  --sidebar-foreground: 220 30% 12%;
+  --sidebar-border: 210 15% 86%;
+  --sidebar-primary: 142 52% 36%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 210 40% 96%;
-  --sidebar-accent-foreground: 222 47% 11%;
-  --sidebar-ring: 152 72% 22%;
+  --sidebar-accent: 210 20% 88%;
+  --sidebar-accent-foreground: 220 30% 12%;
+  --sidebar-ring: 142 52% 36%;
 
-  --chart-1: 152 72% 22%;
+  --chart-1: 142 52% 36%;
   --chart-2: 38 92% 50%;
-  --chart-3: 265 60% 60%;
+  --chart-3: 262 80% 60%;
   --chart-4: 200 80% 50%;
-  --chart-5: 330 70% 55%;
+  --chart-5: 234 80% 58%;
 
-  --app-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --app-font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: Menlo, monospace;
   --radius: 0.5rem;
@@ -156,49 +176,60 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  --background: 222 47% 7%;
-  --foreground: 210 40% 95%;
-  --border: 217 33% 17%;
-  --input: 217 33% 17%;
-  --ring: 152 60% 42%;
+  /* Portal accents — brightened for dark surfaces */
+  --portal-radar: 142 65% 48%;
+  --portal-scout: 142 65% 48%;
+  --portal-lab: 262 80% 70%;
+  --portal-discovery: 38 92% 58%;
+  --portal-market: 234 85% 70%;
 
-  --card: 222 47% 10%;
-  --card-foreground: 210 40% 95%;
-  --card-border: 217 33% 17%;
+  --cta: 33 85% 52%;
+  --cta-foreground: 222 47% 6%;
 
-  --popover: 222 47% 10%;
-  --popover-foreground: 210 40% 95%;
-  --popover-border: 217 33% 17%;
+  /* Deep blue-black, never pure black (house rule) */
+  --background: 222 47% 6%;
+  --foreground: 210 20% 92%;
+  --border: 222 35% 16%;
+  --input: 222 30% 18%;
+  --ring: 142 65% 48%;
 
-  --primary: 152 60% 42%;
-  --primary-foreground: 0 0% 100%;
+  --card: 222 40% 9%;
+  --card-foreground: 210 20% 92%;
+  --card-border: 222 35% 14%;
 
-  --secondary: 217 33% 17%;
-  --secondary-foreground: 210 40% 95%;
+  --popover: 222 42% 11%;
+  --popover-foreground: 210 20% 92%;
+  --popover-border: 222 35% 16%;
 
-  --muted: 217 33% 17%;
-  --muted-foreground: 215 20% 65%;
+  --primary: 142 65% 48%;
+  --primary-foreground: 222 47% 6%;
 
-  --accent: 217 33% 17%;
-  --accent-foreground: 210 40% 95%;
+  --secondary: 222 35% 15%;
+  --secondary-foreground: 210 20% 92%;
+
+  --muted: 222 35% 14%;
+  --muted-foreground: 210 15% 58%;
+
+  --accent: 222 35% 13%;
+  --accent-foreground: 210 20% 92%;
 
   --destructive: 0 62% 55%;
   --destructive-foreground: 0 0% 100%;
 
-  --sidebar: 222 47% 9%;
-  --sidebar-foreground: 210 40% 95%;
-  --sidebar-border: 217 33% 17%;
-  --sidebar-primary: 152 60% 42%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 217 33% 17%;
-  --sidebar-accent-foreground: 210 40% 95%;
-  --sidebar-ring: 152 60% 42%;
+  --sidebar: 222 42% 8%;
+  --sidebar-foreground: 210 20% 92%;
+  --sidebar-border: 222 35% 13%;
+  --sidebar-primary: 142 65% 48%;
+  --sidebar-primary-foreground: 222 47% 6%;
+  --sidebar-accent: 222 35% 14%;
+  --sidebar-accent-foreground: 210 20% 92%;
+  --sidebar-ring: 142 65% 48%;
 
-  --chart-1: 152 60% 42%;
-  --chart-2: 38 92% 55%;
-  --chart-3: 265 60% 70%;
+  --chart-1: 142 70% 55%;
+  --chart-2: 38 92% 58%;
+  --chart-3: 262 80% 70%;
   --chart-4: 200 80% 55%;
-  --chart-5: 330 70% 60%;
+  --chart-5: 234 85% 70%;
 
   --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.2);
   --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.3);
@@ -219,10 +250,10 @@
   }
 }
 
-/* Box grid background pulse — uses new deeper primary */
+/* Box grid background pulse — canonical emerald */
 @keyframes boxPulse {
   0%, 100% { background-color: transparent; }
-  50% { background-color: hsl(152 72% 22% / 0.14); }
+  50% { background-color: hsl(142 52% 36% / 0.14); }
 }
 
 /* Marquee scrolling ticker */
@@ -281,5 +312,55 @@
     content: attr(data-placeholder);
     color: hsl(var(--muted-foreground));
     pointer-events: none;
+  }
+}
+
+/* Gradient text — EdenRadar emerald brand gradient */
+.gradient-text {
+  background: linear-gradient(135deg, hsl(152 62% 40%) 0%, hsl(142 55% 32%) 55%, hsl(160 48% 26%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dark .gradient-text {
+  background: linear-gradient(135deg, hsl(142 70% 58%) 0%, hsl(150 60% 48%) 55%, hsl(160 55% 42%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Aurora blobs — drifting brand-colored glows behind hero surfaces.
+   Ties the four portal accents together (emerald / amber / violet / indigo). */
+@keyframes auroraBlob1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
+  25%      { transform: translate(40px, -30px) scale(1.12); opacity: 0.70; }
+  50%      { transform: translate(-25px, 35px) scale(0.93); opacity: 0.60; }
+  75%      { transform: translate(30px, 15px) scale(1.07); opacity: 0.72; }
+}
+@keyframes auroraBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.42; }
+  33%      { transform: translate(-50px, 25px) scale(1.18); opacity: 0.58; }
+  66%      { transform: translate(35px, -40px) scale(0.88); opacity: 0.48; }
+}
+@keyframes auroraBlob3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+  40%      { transform: translate(-30px, -20px) scale(1.22); opacity: 0.52; }
+  80%      { transform: translate(20px, 30px) scale(0.92); opacity: 0.42; }
+}
+.aurora-blob { position: absolute; border-radius: 9999px; filter: blur(68px); pointer-events: none; }
+.aurora-blob-1 { animation: auroraBlob1 13s ease-in-out infinite; }
+.aurora-blob-2 { animation: auroraBlob2 10s ease-in-out infinite; }
+.aurora-blob-3 { animation: auroraBlob3 16s ease-in-out infinite; }
+
+/* Institution marquee rows */
+@keyframes marqueeLeft  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes marqueeRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.marquee-left  { animation: marqueeLeft 110s linear infinite; }
+.marquee-right { animation: marqueeRight 135s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob-1, .aurora-blob-2, .aurora-blob-3,
+  .marquee-left, .marquee-right, .marquee-track {
+    animation: none !important;
   }
 }
