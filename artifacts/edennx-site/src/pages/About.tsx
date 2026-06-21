@@ -7,13 +7,13 @@ const edenPrinciples = [
     letter: "E",
     title: "Earn Trust Daily",
     description:
-      "Not just at sign-up. Through rigorous data protection, consistent accountability, and keeping every promise made to researchers and industry leaders alike.",
+      "Not just at sign-up. Through rigorous data protection, consistent accountability, and following through on our commitments to researchers and industry leaders alike.",
   },
   {
     letter: "D",
     title: "Dignity in Every Interaction",
     description:
-      "Behind every asset and dataset is a person. Respect their work, honor their IP, and assume good intent.",
+      "Behind every asset and dataset is a person. Respect their work, respect their intellectual property, and assume good intent.",
   },
   {
     letter: "E",
@@ -69,20 +69,20 @@ export default function About() {
           data-testid="about-mission-panel"
           style={{
             background:
-              "linear-gradient(135deg, hsl(152 72% 22% / 0.06) 0%, hsl(152 72% 22% / 0.10) 100%)",
+              "linear-gradient(135deg, hsl(142 52% 36% / 0.06) 0%, hsl(142 52% 36% / 0.10) 100%)",
           }}
         >
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
             Our Mission
           </p>
           <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug max-w-3xl mb-6">
-            Accelerate science to patient impact by building the infrastructure
-            that biotech needs to discover, develop, and deliver breakthroughs.
+            Accelerate science to patient impact by eliminating the discovery gap
+            between university research and industry development.
           </p>
           <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
-            Thousands of licensable technologies, groundbreaking research
-            hypotheses, and critical scientific partnerships remain undiscovered
-            each year due to fragmented data and outdated workflows. EdenNX is
+            Every year, thousands of licensable technologies sit quietly inside
+            research institutions while industry teams spend months and millions
+            searching through fragmented databases and cold calls. EdenNX is
             changing that, building the connective tissue between every
             stakeholder in the biotech ecosystem.
           </p>
@@ -110,7 +110,7 @@ export default function About() {
             >
               <span
                 className="text-5xl md:text-6xl font-bold leading-none select-none w-12 md:w-16 text-center"
-                style={{ color: "hsl(152 72% 22% / 0.18)" }}
+                style={{ color: "hsl(var(--primary) / 0.18)" }}
                 aria-hidden="true"
               >
                 {item.letter}
