@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { PortalEyebrow, PortalShowcase } from "@/components/PortalBits";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 const pipelineSteps = [
@@ -57,12 +58,60 @@ const scoutTiers = [
   { name: "Enterprise", price: "Custom pricing", desc: "Custom SLA terms, custom data integrations" },
 ];
 
+// Illustrative EDEN Credibility Score panel for EdenDiscovery (no public app
+// screenshot exists for this portal). Shows the 0-100 scoring mechanic, clearly
+// labelled as a sample, not a claim about any real submission.
+function CredibilityPanel() {
+  const dims = [
+    { label: "Novelty", value: 92 },
+    { label: "Feasibility", value: 78 },
+    { label: "Evidence", value: 84 },
+  ];
+  return (
+    <div
+      className="rounded-xl border border-amber-200 dark:border-amber-800/40 bg-card p-8 reveal"
+      style={{ transitionDelay: "0.15s", boxShadow: "0 18px 48px hsl(var(--portal-discovery) / 0.16)" }}
+    >
+      <div className="flex items-center justify-between mb-6">
+        <p className="text-xs font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-400">
+          EDEN Credibility Score
+        </p>
+        <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2 py-0.5">
+          Illustrative
+        </span>
+      </div>
+      <div className="flex items-end gap-2 mb-1">
+        <span className="text-6xl font-bold leading-none" style={{ color: "hsl(var(--portal-discovery))" }}>87</span>
+        <span className="text-lg text-muted-foreground mb-1.5">/ 100</span>
+      </div>
+      <p className="text-sm font-semibold text-foreground">Sample concept submission</p>
+      <p className="text-xs text-muted-foreground mb-6">Every concept is auto-scored on submission</p>
+      <div className="space-y-4">
+        {dims.map((d) => (
+          <div key={d.label}>
+            <div className="flex items-center justify-between text-xs mb-1.5">
+              <span className="text-foreground/80 font-medium">{d.label}</span>
+              <span className="text-muted-foreground tabular-nums">{d.value}</span>
+            </div>
+            <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+              <div
+                className="h-full rounded-full"
+                style={{ width: `${d.value}%`, background: "hsl(var(--portal-discovery))" }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Products() {
   useScrollReveal();
   useSEO({
     title: "EdenRadar - The EdenNX platform",
     description:
-      "EdenRadar is the EdenNX flagship platform. Four portals: Scout, EdenLab, EdenDiscovery, and EdenMarket, purpose-built for every stakeholder in the biotech licensing ecosystem.",
+      "The EdenNX product suite: EdenRadar, EdenLab, EdenDiscovery, and EdenMarket, purpose-built for every stakeholder in the biotech licensing ecosystem.",
   });
 
   return (
@@ -70,39 +119,39 @@ export default function Products() {
       {/* Intro */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
         <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 reveal">
-          The Product
+          The Product Suite
         </p>
         <h1
           className="text-4xl md:text-5xl font-bold text-foreground mb-6 reveal"
           style={{ transitionDelay: "0.1s" }}
           data-testid="products-headline"
         >
-          EdenRadar. One platform, every stakeholder.
+          One ecosystem. Purpose-built for every stakeholder.
         </h1>
         <p
           className="text-lg text-muted-foreground max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.2s" }}
         >
-          EdenNX is the parent company. EdenRadar is our flagship product: a
-          single platform of four portals, tracking {ASSET_COUNT_LABEL} assets
-          across {TTO_COUNT_LABEL} institutions. Whether you are planting the
-          seed of a concept or closing a licensing deal, EdenRadar has a portal
-          built for your workflow.
+          EdenNX is the parent company. EdenRadar is our flagship product,
+          tracking {ASSET_COUNT_LABEL} assets across {TTO_COUNT_LABEL}
+          {" "}institutions, joined by EdenLab, EdenDiscovery, and EdenMarket.
+          Whether you are planting the seed of a concept or closing a licensing
+          deal, there is a portal built for your workflow.
         </p>
       </section>
 
-      {/* Scout */}
+      {/* EdenRadar */}
       <section
-        id="scout"
+        id="edenradar"
         className="border-t-4 border-emerald-400 bg-emerald-50/40 dark:bg-emerald-950/10 py-20"
-        data-testid="product-section-scout"
+        data-testid="product-section-edenradar"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14 mb-16">
+          <div className="grid lg:grid-cols-2 gap-14 mb-16 items-start">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3 reveal">
-                Scout
-              </p>
+              <div className="mb-3 reveal">
+                <PortalEyebrow name="EdenRadar" />
+              </div>
               <h2
                 className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
                 style={{ transitionDelay: "0.05s" }}
@@ -113,7 +162,7 @@ export default function Products() {
                 className="text-muted-foreground mb-6 reveal"
                 style={{ transitionDelay: "0.1s" }}
               >
-                EdenRadar's BD intelligence portal. For: Business Development Teams, Licensing Executives, Pharma Strategy Divisions, Life Science Investors
+                The flagship BD intelligence product. For: Business Development Teams, Licensing Executives, Pharma Strategy Divisions, Life Science Investors
               </p>
               <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[
@@ -132,19 +181,11 @@ export default function Products() {
                 ))}
               </ul>
             </div>
-            <div
-              className="rounded-xl border border-emerald-200 dark:border-emerald-800/40 bg-card p-8 reveal"
-              style={{ transitionDelay: "0.15s" }}
-            >
-              <p className="text-xs font-semibold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-4">
-                Vision
-              </p>
-              <blockquote className="text-base md:text-lg text-foreground/90 italic leading-relaxed">
-                "Scout is the platform your BD team has always needed. Instead of
-                cold calls and conference hallways, you get a continuously
-                enriched window into every major TTO on the planet."
-              </blockquote>
-            </div>
+            <PortalShowcase
+              src="/images/portal-edenradar.png"
+              alt="EdenRadar Landscape Intelligence: pipeline map, whitespace, and momentum"
+              token="--portal-radar"
+            />
           </div>
 
           {/* Pricing teaser */}
@@ -152,7 +193,7 @@ export default function Products() {
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
               <div>
                 <h3 className="text-2xl font-bold text-foreground mb-1">
-                  Scout Pricing
+                  EdenRadar Pricing
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Starting at $1,999/mo. See full pricing on EdenRadar.
@@ -190,7 +231,7 @@ export default function Products() {
                     href="https://edenradar.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-xs font-semibold bg-cta text-cta-foreground hover:opacity-90 transition-opacity w-full"
+                    className="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-xs font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity w-full"
                   >
                     Launch EdenRadar
                   </a>
@@ -208,11 +249,11 @@ export default function Products() {
         data-testid="product-section-edenlab"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14">
+          <div className="grid lg:grid-cols-2 gap-14 items-start">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-3 reveal">
-                EdenLab
-              </p>
+              <div className="mb-3 reveal">
+                <PortalEyebrow name="EdenLab" />
+              </div>
               <h2
                 className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
                 style={{ transitionDelay: "0.05s" }}
@@ -230,7 +271,7 @@ export default function Products() {
                   "11-section project canvas for structured research management",
                   "Literature synthesis across 40+ academic data sources",
                   "Evidence extraction and citation management",
-                  "Published projects visible to Scout industry buyers",
+                  "Published projects visible to EdenRadar industry buyers",
                   "Grant discovery matched to your research profile",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
@@ -246,20 +287,11 @@ export default function Products() {
                 Access: Free
               </div>
             </div>
-            <div
-              className="rounded-xl border border-violet-200 dark:border-violet-800/40 bg-card p-8 reveal"
-              style={{ transitionDelay: "0.15s" }}
-            >
-              <p className="text-xs font-semibold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-4">
-                Vision
-              </p>
-              <blockquote className="text-base md:text-lg text-foreground/90 italic leading-relaxed">
-                "EdenLab is built for the scientist who needs to move from
-                hypothesis to publication without losing the thread. A workspace
-                that organizes the complexity of research while making your work
-                visible to the world."
-              </blockquote>
-            </div>
+            <PortalShowcase
+              src="/images/portal-edenlab.png"
+              alt="EdenLab research workspace: concept-to-project tools for scientists"
+              token="--portal-lab"
+            />
           </div>
         </div>
       </section>
@@ -271,11 +303,11 @@ export default function Products() {
         data-testid="product-section-edendiscovery"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14">
+          <div className="grid lg:grid-cols-2 gap-14 items-start">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-400 mb-3 reveal">
-                EdenDiscovery
-              </p>
+              <div className="mb-3 reveal">
+                <PortalEyebrow name="EdenDiscovery" />
+              </div>
               <h2
                 className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
                 style={{ transitionDelay: "0.05s" }}
@@ -309,20 +341,7 @@ export default function Products() {
                 Access: Free
               </div>
             </div>
-            <div
-              className="rounded-xl border border-amber-200 dark:border-amber-800/40 bg-card p-8 reveal"
-              style={{ transitionDelay: "0.15s" }}
-            >
-              <p className="text-xs font-semibold tracking-widest uppercase text-amber-600 dark:text-amber-400 mb-4">
-                Vision
-              </p>
-              <blockquote className="text-base md:text-lg text-foreground/90 italic leading-relaxed">
-                "The spark of discovery is often the hardest thing to capture and
-                communicate. EdenDiscovery gives every innovator a structured
-                place to plant their idea, date-stamp it, and let the world know
-                it exists."
-              </blockquote>
-            </div>
+            <CredibilityPanel />
           </div>
         </div>
       </section>
@@ -334,11 +353,11 @@ export default function Products() {
         data-testid="product-section-edenmarket"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14">
+          <div className="grid lg:grid-cols-2 gap-14 items-start">
             <div>
-              <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400 mb-3 reveal">
-                EdenMarket
-              </p>
+              <div className="mb-3 reveal">
+                <PortalEyebrow name="EdenMarket" />
+              </div>
               <h2
                 className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal"
                 style={{ transitionDelay: "0.05s" }}
@@ -371,19 +390,11 @@ export default function Products() {
                 Access: Success-fee
               </div>
             </div>
-            <div
-              className="rounded-xl border border-indigo-200 dark:border-indigo-800/40 bg-card p-8 reveal"
-              style={{ transitionDelay: "0.15s" }}
-            >
-              <p className="text-xs font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400 mb-4">
-                Vision
-              </p>
-              <blockquote className="text-base md:text-lg text-foreground/90 italic leading-relaxed">
-                "Discovery is only half the deal. EdenMarket gives both sides a
-                confidential room to move from interest to agreement, with
-                identity revealed only when the timing is right."
-              </blockquote>
-            </div>
+            <PortalShowcase
+              src="/images/portal-edenmarket.png"
+              alt="EdenMarket: blind, NDA-gated listings for licensable biotech assets"
+              token="--portal-market"
+            />
           </div>
         </div>
       </section>

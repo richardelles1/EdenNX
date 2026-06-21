@@ -23,9 +23,6 @@
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-primary-border: var(--primary-border);
 
-  --color-cta: hsl(var(--cta));
-  --color-cta-foreground: hsl(var(--cta-foreground));
-
   --color-portal-radar: hsl(var(--portal-radar));
   --color-portal-lab: hsl(var(--portal-lab));
   --color-portal-discovery: hsl(var(--portal-discovery));
@@ -84,15 +81,10 @@
 
   /* Portal accent tokens (HSL components, no hsl() wrapper).
      Use as hsl(var(--portal-lab)) or hsl(var(--portal-lab) / 0.5). */
-  --portal-radar: 142 52% 36%;     /* EdenRadar / Scout — emerald */
-  --portal-scout: 142 52% 36%;     /* alias for Scout */
+  --portal-radar: 142 52% 36%;     /* EdenRadar — emerald (flagship) */
   --portal-lab: 262 80% 60%;       /* EdenLab — violet */
   --portal-discovery: 38 92% 50%;  /* EdenDiscovery — amber */
   --portal-market: 234 80% 58%;    /* EdenMarket — indigo */
-
-  /* Amber is the EdenRadar CTA / accent color across brand surfaces. */
-  --cta: 33 85% 44%;
-  --cta-foreground: 0 0% 100%;
 
   --background: 210 25% 97%;
   --foreground: 220 30% 12%;
@@ -182,9 +174,6 @@
   --portal-lab: 262 80% 70%;
   --portal-discovery: 38 92% 58%;
   --portal-market: 234 85% 70%;
-
-  --cta: 33 85% 52%;
-  --cta-foreground: 222 47% 6%;
 
   /* Deep blue-black, never pure black (house rule) */
   --background: 222 47% 6%;

@@ -1,10 +1,13 @@
 import { TOP_INSTITUTIONS, TTO_COUNT_LABEL } from "@/lib/platformStats";
 
-// Two counter-scrolling rows of real institutions (sourced from the live
+// Four counter-scrolling rows of real institutions (sourced from the live
 // EdenRadar database, ordered by asset volume). Replaces invented testimonials
 // with verifiable credibility. No logos, no fabricated names.
-const HALF = Math.ceil(TOP_INSTITUTIONS.length / 2);
-const ROWS = [TOP_INSTITUTIONS.slice(0, HALF), TOP_INSTITUTIONS.slice(HALF)];
+const ROW_COUNT = 4;
+const PER_ROW = Math.ceil(TOP_INSTITUTIONS.length / ROW_COUNT);
+const ROWS = Array.from({ length: ROW_COUNT }, (_, i) =>
+  TOP_INSTITUTIONS.slice(i * PER_ROW, (i + 1) * PER_ROW)
+);
 
 function Row({ names, direction }: { names: readonly string[]; direction: "marquee-left" | "marquee-right" }) {
   const doubled = [...names, ...names];
@@ -43,8 +46,9 @@ export function InstitutionMarquee() {
         </h2>
       </div>
       <div className="space-y-3">
-        <Row names={ROWS[0]} direction="marquee-left" />
-        <Row names={ROWS[1]} direction="marquee-right" />
+        {ROWS.map((names, i) => (
+          <Row key={i} names={names} direction={i % 2 === 0 ? "marquee-left" : "marquee-right"} />
+        ))}
       </div>
     </section>
   );
