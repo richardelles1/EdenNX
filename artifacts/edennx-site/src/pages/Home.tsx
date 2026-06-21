@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { AuroraBackground } from "@/components/AuroraBackground";
 import { InstitutionMarquee } from "@/components/InstitutionMarquee";
+import { PortalEyebrow } from "@/components/PortalBits";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import {
@@ -31,7 +32,7 @@ type Portal = {
 
 const portals: Portal[] = [
   {
-    name: "Scout",
+    name: "EdenRadar",
     tagline: "Industry intelligence platform",
     audience: "BD teams, licensing executives, pharma strategy, life science investors",
     features: [
@@ -41,7 +42,7 @@ const portals: Portal[] = [
     ],
     access: "From $1,999/mo",
     token: "--portal-radar",
-    anchor: "/products#scout",
+    anchor: "/products#edenradar",
   },
   {
     name: "EdenLab",
@@ -50,7 +51,7 @@ const portals: Portal[] = [
     features: [
       "11-section project canvas for structured research",
       "Literature synthesis across 40+ academic sources",
-      "Published projects visible to Scout industry buyers",
+      "Published projects visible to EdenRadar industry buyers",
     ],
     access: "Free",
     token: "--portal-lab",
@@ -94,9 +95,7 @@ function PortalCard({ portal, delay }: { portal: Portal; delay: number }) {
       style={{ transitionDelay: `${delay}s`, borderTop: `4px solid ${accent}`, background: `linear-gradient(180deg, ${accentSoft} 0%, hsl(var(--card)) 40%)` }}
       data-testid={`highlight-${portal.name.toLowerCase()}`}
     >
-      <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: accent }}>
-        {portal.name}
-      </p>
+      <PortalEyebrow name={portal.name} className="mb-3" />
       <h3 className="text-lg font-bold text-foreground mb-1">{portal.tagline}</h3>
       <p className="text-xs text-muted-foreground mb-5">For: {portal.audience}</p>
       <ul className="space-y-2.5 flex-1 mb-6">
@@ -176,14 +175,14 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="hero-cta-edenradar"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-cta text-cta-foreground hover:opacity-90 transition-opacity shadow-sm"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
               >
                 Launch EdenRadar
               </a>
               <Link
                 to="/products"
                 data-testid="hero-cta-products"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold border border-primary/40 text-primary bg-primary/5 hover:bg-primary/10 transition-colors"
               >
                 Explore the Platform
               </Link>
@@ -217,21 +216,21 @@ export default function Home() {
       {/* Product Suite — EdenRadar's four portals */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20" data-testid="product-highlights">
         <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 reveal">
-          The Product
+          The Product Suite
         </p>
         <h2
           className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          EdenRadar: one platform, four portals.
+          Four portals. One ecosystem.
         </h2>
         <p
           className="text-base text-muted-foreground max-w-2xl leading-relaxed mb-14 reveal"
           style={{ transitionDelay: "0.1s" }}
         >
-          EdenNX is the parent company. EdenRadar is our flagship product: a
-          single platform with a portal built for every stakeholder, whether you
-          are planting the seed of a concept or closing a licensing deal.
+          EdenNX is the parent company. EdenRadar is our flagship product, joined
+          by a portal built for every stakeholder, whether you are planting the
+          seed of a concept or closing a licensing deal.
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -285,7 +284,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
             data-testid="bottom-cta-edenradar"
-            className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-cta text-cta-foreground hover:opacity-90 transition-opacity shadow-sm reveal"
+            className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm reveal"
             style={{ transitionDelay: "0.1s" }}
           >
             Launch EdenRadar
