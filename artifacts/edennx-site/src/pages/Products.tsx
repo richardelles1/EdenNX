@@ -1,90 +1,41 @@
 import { Link } from "react-router-dom";
-import { Bell, Sparkles, Search, Plug, Boxes, Check, type LucideIcon } from "lucide-react";
+import { Bell, Sparkles, Search, Plug, Boxes, Building2, Radar, Database, FileText, type LucideIcon } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { PortalEyebrow, PortalShowcase } from "@/components/PortalBits";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
-// EdenRadar's "How It Works" — five real product steps with screenshots.
-const howItWorks = [
+// The EDEN data pipeline — how raw sources become deal-ready intelligence.
+const pipeline: { icon: LucideIcon; title: string; desc: string }[] = [
   {
-    num: "01",
-    step: "Search",
-    title: "The deepest search engine in tech transfer",
-    body:
-      "Search the deepest index of tech transfer assets anywhere, then run the same query across patents, clinical trials, and the literature. Narrow by stage, modality, and disease biology until only what you are hunting is left.",
-    checks: [
-      "400+ tech transfer offices indexed, with patents, clinical trials, and literature one tab away",
-      "Filter by 6 development stages, 10 modalities, and 32 biology categories",
-      "Results ranked by fit to your buyer profile, not just keyword match",
-    ],
-    img: "/images/hiw-search.png",
-    alt: "EdenRadar search with deal-focus filters and ranked results",
+    icon: Radar,
+    title: "Monitor",
+    desc: "Crawl 400+ tech transfer offices, government databases, and publication feeds, around the clock.",
   },
   {
-    num: "02",
-    step: "Deep Dive",
-    title: "Every asset, detailed and scored to fit",
-    body:
-      "Open any asset for a structured brief: a match score graded to your search, the commercial thesis, the competitive position, and the licensing and IP picture, each traced back to the evidence it was built from.",
-    checks: [
-      "Match score graded field by field against your search",
-      "Commercial thesis, competitive position, and competing assets in plain language",
-      "Licensing status, IP, and deal readiness in one view",
-    ],
-    img: "/images/hiw-deepdive.png",
-    alt: "EdenRadar asset dossier with match score and intelligence brief",
+    icon: Sparkles,
+    title: "Enrich & Score",
+    desc: "EDEN classifies therapy area, stage, and modality, then scores each asset 0 to 100 for fit.",
   },
   {
-    num: "03",
-    step: "Landscape Intelligence",
-    title: "See the whole board, not one square",
-    body:
-      "Pull back from a single asset to the market around it. The therapeutic whitespace map plots asset density across every biology and modality, so crowded lanes and open territory read at a glance.",
-    checks: [
-      "Asset density across every biology and modality, refreshed daily",
-      "Spot crowded lanes, open white space, and the modalities gaining momentum",
-      "Click any cell to drop into the underlying programs",
-    ],
-    img: "/images/hiw-landscape.png",
-    alt: "EdenRadar therapeutic whitespace matrix",
+    icon: Database,
+    title: "Index",
+    desc: "Every enriched asset is embedded into a semantic index, searchable in plain English.",
   },
   {
-    num: "04",
-    step: "Organize Discoveries",
-    title: "Move a signal all the way to a deal",
-    body:
-      "Saved assets become a working pipeline. Drag each program through your real stages, from Watching to In Discussion, with its score, notes, and licensing status riding on every card.",
-    checks: [
-      "Kanban board mirrors your real stages: Watching, Evaluating, In Discussion, On Hold, Passed",
-      "Board, grid, and export views for every workflow",
-      "Score, notes, and licensing status travel with each asset",
-    ],
-    img: "/images/hiw-organize.png",
-    alt: "EdenRadar pipeline board across deal stages",
-  },
-  {
-    num: "05",
-    step: "Set Alerts",
-    title: "Real-time alerts, delivered on demand",
-    body:
-      "Turn any saved search into a standing alert. EdenRadar watches for new matches, stage changes, and fresh activity on the programs you track, then tells you the moment something moves.",
-    checks: [
-      "Choose real-time, daily, or weekly delivery",
-      "Fires on new matches, stage changes, and licensing updates",
-      "Email and in-product, with your whole team on the same signals",
-    ],
-    img: "/images/hiw-alerts.png",
-    alt: "EdenRadar saved-search alerts",
+    icon: FileText,
+    title: "Surface",
+    desc: "Dossiers, alerts, and pipeline views put the right asset in front of the right team.",
   },
 ];
 
 const connectItems: { icon: LucideIcon; label: string; desc: string }[] = [
-  { icon: Bell, label: "Email Alerts", desc: "New matches and stage changes, in your inbox" },
-  { icon: Sparkles, label: "EDEN AI Query", desc: "Ask in plain English across the catalog" },
-  { icon: Search, label: "Search Engine", desc: "The deepest index in tech transfer" },
-  { icon: Plug, label: "API Connection", desc: "Pull assets and scores into your stack" },
-  { icon: Boxes, label: "MCP Ready", desc: "Connect EDEN to any AI assistant" },
+  { icon: Search, label: "Search Engine", desc: "The deepest search index in tech transfer, across patents, trials, and the literature." },
+  { icon: Sparkles, label: "EDEN AI Query", desc: "Ask in plain English across the entire catalog and get scored, sourced answers." },
+  { icon: Bell, label: "Email Alerts", desc: "New matches, stage changes, and licensing updates delivered to your inbox." },
+  { icon: Building2, label: "Institutional Updates", desc: "New assets from new labs, surfaced in real time as they publish." },
+  { icon: Plug, label: "API Connection", desc: "Pull assets, scores, and dossiers directly into your own stack." },
+  { icon: Boxes, label: "MCP Ready", desc: "Connect EDEN to any AI assistant through the MCP server." },
 ];
 
 const scoutTiers = [
@@ -337,11 +288,19 @@ export default function Products() {
                   </li>
                 ))}
               </ul>
-              <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300 reveal"
-                style={{ transitionDelay: "0.2s" }}
-              >
-                Access: Free
+              <div className="flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.2s" }}>
+                <span className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300">
+                  Access: Free
+                </span>
+                <a
+                  href="https://edenradar.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold bg-violet-600 text-white hover:opacity-90 transition-opacity"
+                  data-testid="visit-edenlab"
+                >
+                  Visit EdenLab →
+                </a>
               </div>
             </div>
             <PortalShowcase
@@ -390,11 +349,19 @@ export default function Products() {
                   </li>
                 ))}
               </ul>
-              <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 reveal"
-                style={{ transitionDelay: "0.2s" }}
-              >
-                Access: Free
+              <div className="flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.2s" }}>
+                <span className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300">
+                  Access: Free
+                </span>
+                <a
+                  href="https://edenradar.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold bg-amber-500 text-white hover:opacity-90 transition-opacity"
+                  data-testid="visit-edendiscovery"
+                >
+                  Visit EdenDiscovery →
+                </a>
               </div>
             </div>
             <CredibilityPanel />
@@ -439,11 +406,19 @@ export default function Products() {
                   </li>
                 ))}
               </ul>
-              <div
-                className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 reveal"
-                style={{ transitionDelay: "0.2s" }}
-              >
-                Access: Success-fee
+              <div className="flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.2s" }}>
+                <span className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300">
+                  Access: Success-fee
+                </span>
+                <a
+                  href="https://edenradar.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold bg-indigo-600 text-white hover:opacity-90 transition-opacity"
+                  data-testid="visit-edenmarket"
+                >
+                  Visit EdenMarket →
+                </a>
               </div>
             </div>
             <PortalShowcase
@@ -455,62 +430,45 @@ export default function Products() {
         </div>
       </section>
 
-      {/* How It Works — 5-step process */}
+      {/* EDEN data pipeline */}
       <section id="how-it-works" className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
-        <div className="mb-16">
+        <div className="mb-16 max-w-2xl">
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3 reveal">
             How It Works
           </p>
           <h2
-            className="text-3xl md:text-4xl font-bold text-foreground reveal"
+            className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
             style={{ transitionDelay: "0.1s" }}
             data-testid="how-it-works-headline"
           >
-            From first search to closed deal.
+            The EDEN data pipeline.
           </h2>
+          <p className="text-base text-foreground/75 leading-relaxed reveal" style={{ transitionDelay: "0.15s" }}>
+            From raw sources to deal-ready intelligence, every asset moves through
+            the same four stages.
+          </p>
         </div>
-        <div className="space-y-20 lg:space-y-28">
-          {howItWorks.map((s, i) => (
-            <div
-              key={s.num}
-              className={`grid lg:grid-cols-2 gap-10 lg:gap-14 items-center ${
-                i % 2 === 1 ? "lg:[&>*:last-child]:order-first" : ""
-              }`}
-              data-testid={`hiw-step-${i}`}
-            >
-              <div>
-                <div className="flex items-center gap-3 mb-4 reveal">
-                  <span className="h-10 w-10 rounded-full bg-primary/10 text-primary text-sm font-bold flex items-center justify-center">
-                    {s.num}
-                  </span>
-                  <span className="text-xs font-semibold tracking-widest uppercase text-primary">
-                    {s.step}
-                  </span>
+        <div className="relative grid md:grid-cols-4 gap-10 md:gap-6">
+          {/* connecting line behind the nodes (desktop) */}
+          <div className="hidden md:block absolute top-7 left-[12.5%] right-[12.5%] h-px bg-border" aria-hidden="true" />
+          {pipeline.map((stage, i) => {
+            const Icon = stage.icon;
+            return (
+              <div
+                key={stage.title}
+                className="relative reveal"
+                style={{ transitionDelay: `${i * 0.08}s` }}
+                data-testid={`pipeline-step-${i}`}
+              >
+                <div className="relative z-10 h-14 w-14 rounded-2xl bg-card border border-border text-primary flex items-center justify-center mb-5 ring-4 ring-background shadow-sm">
+                  <Icon className="h-6 w-6" strokeWidth={2} />
                 </div>
-                <h3
-                  className="text-2xl md:text-3xl font-bold text-foreground mb-4 reveal"
-                  style={{ transitionDelay: "0.05s" }}
-                >
-                  {s.title}
-                </h3>
-                <p
-                  className="text-base text-foreground/75 leading-relaxed mb-6 reveal"
-                  style={{ transitionDelay: "0.1s" }}
-                >
-                  {s.body}
-                </p>
-                <ul className="space-y-3">
-                  {s.checks.map((c) => (
-                    <li key={c} className="flex items-start gap-3 text-sm text-foreground/80 reveal">
-                      <Check className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" strokeWidth={2.5} />
-                      {c}
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-xs font-bold text-primary mb-1">Step {i + 1}</p>
+                <h3 className="text-lg font-bold text-foreground mb-2">{stage.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{stage.desc}</p>
               </div>
-              <PortalShowcase src={s.img} alt={s.alt} token="--portal-radar" />
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -536,21 +494,23 @@ export default function Products() {
               to your tools.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
+          <div className="grid sm:grid-cols-2 gap-5">
             {connectItems.map((item, i) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-border bg-card p-6 reveal"
+                  className="flex items-start gap-5 rounded-2xl border border-border bg-card p-6 reveal"
                   style={{ transitionDelay: `${i * 0.06}s` }}
                   data-testid={`connect-${i}`}
                 >
-                  <div className="h-11 w-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                    <Icon className="h-5 w-5" strokeWidth={2} />
+                  <div className="h-12 w-12 flex-shrink-0 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                    <Icon className="h-6 w-6" strokeWidth={2} />
                   </div>
-                  <p className="text-sm font-bold text-foreground mb-1">{item.label}</p>
-                  <p className="text-xs text-foreground/70 leading-relaxed">{item.desc}</p>
+                  <div>
+                    <p className="text-base font-bold text-foreground mb-1">{item.label}</p>
+                    <p className="text-sm text-foreground/70 leading-relaxed">{item.desc}</p>
+                  </div>
                 </div>
               );
             })}

@@ -5,27 +5,27 @@ import { Link } from "react-router-dom";
 const edenPrinciples = [
   {
     letter: "E",
-    title: "Earn Trust Daily",
+    title: "Expand Understanding",
     description:
-      "Not just at sign-up. Through rigorous data protection, consistent accountability, and following through on our commitments to researchers and industry leaders alike.",
+      "We design intelligence that helps innovators see patterns, surface insights, and explore the life science landscape with greater clarity and curiosity.",
   },
   {
     letter: "D",
-    title: "Dignity in Every Interaction",
+    title: "Design With Respect",
     description:
-      "Behind every asset and dataset is a person. Respect their work, respect their intellectual property, and assume good intent.",
+      "Every dataset, asset, and idea represents someone's work. We approach the ecosystem with appreciation for the people and expertise behind it.",
   },
   {
     letter: "E",
-    title: "Elevate, Don't Extract",
+    title: "Elevate the Ecosystem",
     description:
-      "Build collaborations that lift both sides: academic rigor and commercial speed, without gatekeeping or hidden agendas.",
+      "Our tools amplify what teams can discover and achieve: accelerating exploration, sharpening decisions, and opening new possibilities.",
   },
   {
     letter: "N",
-    title: "Never Bend the Truth",
+    title: "Navigate With Integrity",
     description:
-      "No cherry-picked data. No inflated asset claims. Integrity over short-term wins, always.",
+      "We value clear thinking, honest signals, and grounded analysis. Our approach is guided by transparency in how insights are surfaced and how intelligence is shaped.",
   },
 ];
 
