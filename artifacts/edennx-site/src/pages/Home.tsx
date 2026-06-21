@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { AuroraBackground } from "@/components/AuroraBackground";
-import { InstitutionMarquee } from "@/components/InstitutionMarquee";
+import { CoverageSection } from "@/components/CoverageSection";
 import { PortalEyebrow } from "@/components/PortalBits";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
@@ -10,6 +11,54 @@ import {
   ASSET_COUNT_LABEL,
   DATA_SOURCE_LABEL,
 } from "@/lib/platformStats";
+
+const FLIP_DURATION = 400;
+
+const flipWords = [
+  "Drug Discovery",
+  "Rare Disease Research",
+  "Data-Driven Decisions",
+  "Early-Stage Research",
+  "Biotech Innovation",
+  "Collaborative Science",
+  "Clinical-Stage Intelligence",
+  "Your Pipeline's Future",
+];
+
+function TextFlip({ words }: { words: string[] }) {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    let t1: ReturnType<typeof setTimeout> | undefined;
+    let t2: ReturnType<typeof setTimeout> | undefined;
+    t1 = setTimeout(function tick() {
+      setVisible(false);
+      t2 = setTimeout(() => {
+        setIndex((i) => (i + 1) % words.length);
+        setVisible(true);
+        t1 = setTimeout(tick, 3500);
+      }, FLIP_DURATION);
+    }, 3500);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [words]);
+
+  return (
+    <span
+      className="text-primary whitespace-nowrap"
+      style={{
+        display: "inline-block",
+        opacity: visible ? 1 : 0,
+        transition: `opacity ${FLIP_DURATION}ms ease`,
+      }}
+    >
+      {words[index]}
+    </span>
+  );
+}
 
 const marqueeItems = [
   `${ASSET_COUNT_LABEL} biotech assets indexed`,
@@ -23,100 +72,106 @@ const marqueeItems = [
 type Portal = {
   name: string;
   tagline: string;
-  audience: string;
-  features: string[];
+  thesis: string;
   access: string;
   token: string; // CSS var name for the portal accent
   anchor: string;
 };
 
-const portals: Portal[] = [
-  {
-    name: "EdenRadar",
-    tagline: "Industry intelligence platform",
-    audience: "BD teams, licensing executives, pharma strategy, life science investors",
-    features: [
-      `Continuous monitoring of ${TTO_COUNT_LABEL} TTOs and government databases`,
-      "Email alerts for newly published assets in your focus areas",
-      "EDEN Chat for natural language search across the catalog",
-    ],
-    access: "From $1,999/mo",
-    token: "--portal-radar",
-    anchor: "/products#edenradar",
-  },
+// EdenRadar is the flagship: it gets a large card. The other three are
+// satellites stacked beside it, so the layout itself encodes the hierarchy.
+const flagship: Portal = {
+  name: "EdenRadar",
+  tagline: "Industry intelligence platform",
+  thesis:
+    "See the full field before your first move: a continuously enriched window into every major tech transfer office on earth.",
+  access: "From $1,999/mo",
+  token: "--portal-radar",
+  anchor: "/products#edenradar",
+};
+
+const satellites: Portal[] = [
   {
     name: "EdenLab",
-    tagline: "Project-based research workspace",
-    audience: "Academic scientists, PhD teams, lab leaders, university research groups",
-    features: [
-      "11-section project canvas for structured research",
-      "Literature synthesis across 40+ academic sources",
-      "Published projects visible to EdenRadar industry buyers",
-    ],
+    tagline: "Research workspace",
+    thesis: "From hypothesis to publication without losing the thread.",
     access: "Free",
     token: "--portal-lab",
     anchor: "/products#edenlab",
   },
   {
     name: "EdenDiscovery",
-    tagline: "Concept registry and community",
-    audience: "Early-stage innovators, concept creators, independent researchers",
-    features: [
-      "Structured concept submission with a timestamped record",
-      "Automated EDEN Credibility Score rated 0 to 100",
-      "Graduation path from concept to EdenLab project",
-    ],
+    tagline: "Concept registry",
+    thesis: "Plant an idea, date-stamp it, and let the world know it exists.",
     access: "Free",
     token: "--portal-discovery",
     anchor: "/products#edendiscovery",
   },
   {
     name: "EdenMarket",
-    tagline: "Confidential deal marketplace",
-    audience: "TTOs, biotechs, and inventors connecting with BD buyers",
-    features: [
-      "NDA-gated deal rooms for licensable assets",
-      "Identity revealed on your terms, not before",
-      "Direct line from indexed asset to first conversation",
-    ],
+    tagline: "Deal marketplace",
+    thesis: "From an indexed asset to the first conversation, on your terms.",
     access: "Success-fee",
     token: "--portal-market",
     anchor: "/products#edenmarket",
   },
 ];
 
-function PortalCard({ portal, delay }: { portal: Portal; delay: number }) {
+function FlagshipCard() {
+  const accent = `hsl(var(${flagship.token}))`;
+  const accentSoft = `hsl(var(${flagship.token}) / 0.08)`;
+  return (
+    <Link
+      to={flagship.anchor}
+      className="group lg:row-span-3 rounded-2xl border border-border p-8 flex flex-col hover:shadow-lg transition-shadow reveal"
+      style={{ borderTop: `4px solid ${accent}`, background: `linear-gradient(180deg, ${accentSoft} 0%, hsl(var(--card)) 45%)` }}
+      data-testid="highlight-edenradar"
+    >
+      <div className="flex items-center justify-between mb-5">
+        <PortalEyebrow name={flagship.name} />
+        <span
+          className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full"
+          style={{ background: accentSoft, color: accent }}
+        >
+          Flagship
+        </span>
+      </div>
+      <h3 className="text-2xl font-bold text-foreground mb-3">{flagship.tagline}</h3>
+      <p className="text-base text-muted-foreground leading-relaxed max-w-md">{flagship.thesis}</p>
+
+      <div className="mt-auto pt-8">
+        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-foreground/70 mb-6">
+          <span><span className="font-bold text-foreground">{TTO_COUNT_LABEL}</span> institutions</span>
+          <span><span className="font-bold text-foreground">{ASSET_COUNT_LABEL}</span> assets</span>
+          <span><span className="font-bold text-foreground">Scored</span> daily</span>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={{ background: accentSoft, color: accent }}>
+            {flagship.access}
+          </span>
+          <span className="text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all" style={{ color: accent }}>
+            Explore EdenRadar →
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function SatelliteCard({ portal }: { portal: Portal }) {
   const accent = `hsl(var(${portal.token}))`;
-  const accentSoft = `hsl(var(${portal.token}) / 0.08)`;
   return (
     <Link
       to={portal.anchor}
-      className="group rounded-xl border border-border bg-card p-6 flex flex-col hover:shadow-md transition-shadow reveal"
-      style={{ transitionDelay: `${delay}s`, borderTop: `4px solid ${accent}`, background: `linear-gradient(180deg, ${accentSoft} 0%, hsl(var(--card)) 40%)` }}
+      className="group rounded-2xl border border-border bg-card p-6 flex flex-col justify-center hover:shadow-md transition-shadow reveal"
+      style={{ borderLeft: `4px solid ${accent}` }}
       data-testid={`highlight-${portal.name.toLowerCase()}`}
     >
-      <PortalEyebrow name={portal.name} className="mb-3" />
-      <h3 className="text-lg font-bold text-foreground mb-1">{portal.tagline}</h3>
-      <p className="text-xs text-muted-foreground mb-5">For: {portal.audience}</p>
-      <ul className="space-y-2.5 flex-1 mb-6">
-        {portal.features.map((feat) => (
-          <li key={feat} className="flex items-start gap-2.5 text-sm text-foreground/80">
-            <span className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: accent }} />
-            {feat}
-          </li>
-        ))}
-      </ul>
-      <div className="flex items-center justify-between">
-        <span
-          className="inline-block px-3 py-1 rounded-full text-xs font-semibold"
-          style={{ background: accentSoft, color: accent }}
-        >
-          {portal.access}
-        </span>
-        <span className="text-xs font-semibold group-hover:underline" style={{ color: accent }}>
-          Learn more →
-        </span>
+      <div className="flex items-center justify-between mb-2 gap-3">
+        <PortalEyebrow name={portal.name} />
+        <span className="text-xs font-medium flex-shrink-0" style={{ color: accent }}>{portal.access}</span>
       </div>
+      <p className="text-sm text-muted-foreground leading-relaxed">{portal.thesis}</p>
     </Link>
   );
 }
@@ -124,9 +179,9 @@ function PortalCard({ portal, delay }: { portal: Portal; delay: number }) {
 export default function Home() {
   useScrollReveal();
   useSEO({
-    title: "EdenNX - The intelligence backbone of modern biotech",
+    title: "EdenNX - Biotech Intelligence Infrastructure",
     description:
-      "EdenNX builds EdenRadar, the flagship platform that scores the biotech landscape daily across 400+ research institutions and 35,000+ licensable assets, from earliest research hypothesis to commercial licensing.",
+      "EdenNX is building the intelligence backbone of modern biotech. From earliest discovery to patient impact, our platform suite powers every stage of the lifecycle.",
   });
 
   return (
@@ -139,30 +194,41 @@ export default function Home() {
         {/* Content layer — pointer-events-none lets background grid receive mouse events */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24 pointer-events-none">
           <div className="max-w-4xl">
+            {/* Primary headline — EdenNX as the anchor */}
             <h1
-              className="text-6xl md:text-7xl lg:text-8xl font-bold text-foreground leading-none tracking-tight mb-6 reveal"
+              className="text-6xl md:text-7xl lg:text-8xl font-bold text-foreground leading-none tracking-tight mb-5 reveal"
               data-testid="hero-headline"
               style={{ transitionDelay: "0.1s" }}
             >
               <span className="text-primary">Eden</span>NX
             </h1>
 
-            <p
-              className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-7 reveal"
-              style={{ transitionDelay: "0.15s" }}
+            {/*
+              "Powering [word]" — w-full + overflow-hidden clips long words on narrow
+              viewports. Fixed height prevents layout shift when words swap.
+            */}
+            <div
+              className="flex items-baseline gap-3 mb-8 w-full max-w-full overflow-hidden reveal"
+              style={{
+                transitionDelay: "0.15s",
+                height: "clamp(1.75rem, 4.5vw, 3.25rem)",
+              }}
             >
-              The <span className="gradient-text">intelligence backbone</span> of modern biotech.
-            </p>
+              <span className="text-xl md:text-3xl lg:text-4xl font-light text-foreground/65 leading-none flex-shrink-0">
+                Powering
+              </span>
+              <span className="text-xl md:text-3xl lg:text-4xl font-bold leading-none min-w-0">
+                <TextFlip words={flipWords} />
+              </span>
+            </div>
 
             <p
               className="text-lg md:text-xl text-foreground/70 leading-relaxed mb-10 max-w-2xl reveal"
               data-testid="hero-subheadline"
               style={{ transitionDelay: "0.2s" }}
             >
-              EdenNX builds EdenRadar, the flagship platform that scores the
-              biotech landscape daily across {TTO_COUNT_LABEL} research
-              institutions and {ASSET_COUNT_LABEL} licensable assets. From
-              earliest research hypothesis to commercial licensing.
+              The intelligence backbone of modern biotech, from earliest research
+              hypothesis through commercial licensing.
             </p>
 
             {/* Re-enable pointer events only on interactive elements */}
@@ -170,21 +236,19 @@ export default function Home() {
               className="flex flex-wrap gap-4 reveal pointer-events-auto"
               style={{ transitionDelay: "0.3s" }}
             >
-              <a
-                href="https://edenradar.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid="hero-cta-edenradar"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
-              >
-                Launch EdenRadar
-              </a>
               <Link
                 to="/products"
                 data-testid="hero-cta-products"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold border border-primary/40 text-primary bg-primary/5 hover:bg-primary/10 transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
               >
-                Explore the Platform
+                Explore Our Products
+              </Link>
+              <Link
+                to="/team"
+                data-testid="hero-cta-team"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+              >
+                Meet the Team
               </Link>
             </div>
           </div>
@@ -233,9 +297,12 @@ export default function Home() {
           seed of a concept or closing a licensing deal.
         </p>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {portals.map((portal, i) => (
-            <PortalCard key={portal.name} portal={portal} delay={0.1 + i * 0.05} />
+        {/* Flagship spans all three rows on the right, so its height is
+            exactly the three satellite cards plus the two gaps. */}
+        <div className="grid lg:grid-cols-2 lg:grid-rows-3 gap-6">
+          <FlagshipCard />
+          {satellites.map((portal) => (
+            <SatelliteCard key={portal.name} portal={portal} />
           ))}
         </div>
       </section>
@@ -267,8 +334,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Real institution credibility */}
-      <InstitutionMarquee />
+      {/* Global coverage — globe, stats, named institutions */}
+      <CoverageSection />
 
       {/* Bottom CTA */}
       <section className="bg-primary/5 border-t border-primary/10">

@@ -26,6 +26,7 @@
     "vite": "catalog:"
   },
   "dependencies": {
+    "cobe": "^2.0.1",
     "react-router-dom": "^7.14.0"
   }
 }
