@@ -140,6 +140,27 @@ export default function Products() {
         </p>
       </section>
 
+      {/* Sticky in-page nav */}
+      <nav className="sticky top-16 z-30 bg-background/90 backdrop-blur-md border-y border-border">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex gap-7 overflow-x-auto">
+          {[
+            ["EdenRadar", "#edenradar"],
+            ["EdenLab", "#edenlab"],
+            ["EdenDiscovery", "#edendiscovery"],
+            ["EdenMarket", "#edenmarket"],
+            ["Data & API", "#api"],
+          ].map(([label, href]) => (
+            <a
+              key={href}
+              href={href}
+              className="py-4 text-sm font-semibold text-foreground/60 hover:text-primary whitespace-nowrap transition-colors"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       {/* EdenRadar */}
       <section
         id="edenradar"
@@ -249,7 +270,7 @@ export default function Products() {
         data-testid="product-section-edenlab"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14 items-start">
+          <div className="grid lg:grid-cols-2 gap-14 items-start lg:[&>*:last-child]:order-first">
             <div>
               <div className="mb-3 reveal">
                 <PortalEyebrow name="EdenLab" />
@@ -353,7 +374,7 @@ export default function Products() {
         data-testid="product-section-edenmarket"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14 items-start">
+          <div className="grid lg:grid-cols-2 gap-14 items-start lg:[&>*:last-child]:order-first">
             <div>
               <div className="mb-3 reveal">
                 <PortalEyebrow name="EdenMarket" />
@@ -413,50 +434,132 @@ export default function Products() {
             The EDEN data pipeline.
           </h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-8">
-          {pipelineSteps.map((step, i) => (
-            <div
-              key={step.step}
-              className="rounded-xl border border-border bg-card p-8 reveal"
-              style={{ transitionDelay: `${i * 0.1}s` }}
-              data-testid={`pipeline-step-${i}`}
-            >
-              <p className="text-sm font-bold text-primary mb-3">
-                Step {step.step}
+        <div className="relative">
+          {/* connecting line behind the step nodes (desktop) */}
+          <div className="hidden md:block absolute top-6 left-[12.5%] right-[12.5%] h-px bg-border" aria-hidden="true" />
+          <div className="grid md:grid-cols-4 gap-10 md:gap-6">
+            {pipelineSteps.map((step, i) => (
+              <div
+                key={step.step}
+                className="relative reveal"
+                style={{ transitionDelay: `${i * 0.08}s` }}
+                data-testid={`pipeline-step-${i}`}
+              >
+                <div className="relative z-10 h-12 w-12 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center mb-5 shadow-sm ring-4 ring-background">
+                  {step.step}
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Data & API */}
+      <section id="api" className="bg-foreground/[0.015] dark:bg-white/[0.015] border-t border-border scroll-mt-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
+          <div className="grid lg:grid-cols-2 gap-14 items-center">
+            <div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3 reveal">
+                Data &amp; API
               </p>
-              <h3 className="text-xl font-bold text-foreground mb-3">
-                {step.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                {step.description}
+              <h2
+                className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
+                style={{ transitionDelay: "0.05s" }}
+              >
+                Query EdenRadar from anywhere.
+              </h2>
+              <p
+                className="text-base text-foreground/75 leading-relaxed mb-8 reveal"
+                style={{ transitionDelay: "0.1s" }}
+              >
+                The EdenRadar API and MCP server put the full asset graph in your
+                stack and your AI tools. Search, score, and pull dossiers
+                programmatically, or connect EDEN to any assistant.
               </p>
-              <ul className="space-y-2">
-                {step.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-start gap-2 text-sm text-foreground/80">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                    {bullet}
+              <ul className="space-y-3 mb-8">
+                {[
+                  ["Free", "Search and browse, no key required"],
+                  ["Starter", "API key: enriched detail fields and deeper search"],
+                  ["Professional", "Full pipeline access and saved watchlists"],
+                  ["Enterprise", "Convergence intelligence and trend analysis"],
+                ].map(([tier, desc]) => (
+                  <li key={tier} className="flex items-start gap-3 text-sm reveal">
+                    <span className="font-semibold text-foreground w-28 flex-shrink-0">{tier}</span>
+                    <span className="text-foreground/70">{desc}</span>
                   </li>
                 ))}
               </ul>
+              <a
+                href="https://edenradar.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+              >
+                Get an API key on EdenRadar.com
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
             </div>
-          ))}
+
+            {/* Code snippet */}
+            <div
+              className="rounded-xl overflow-hidden border border-border reveal"
+              style={{ boxShadow: "0 18px 48px hsl(var(--portal-radar) / 0.12)" }}
+            >
+              <div className="flex items-center gap-2 px-4 h-10 border-b border-border bg-card">
+                <span className="h-2.5 w-2.5 rounded-full" style={{ background: "#34d399" }} />
+                <span className="text-xs font-mono text-muted-foreground">EdenRadar MCP</span>
+              </div>
+              <pre
+                className="text-[13px] leading-relaxed p-5 overflow-x-auto font-mono m-0"
+                style={{ background: "hsl(222 47% 7%)", color: "rgba(255,255,255,0.85)" }}
+              >
+{`// Search the EdenRadar asset database
+search_assets({
+  query: "CAR-T solid tumors",
+  stage: "preclinical",
+  limit: 10
+})
+
+// 35,000+ scored assets, one call away`}
+              </pre>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-primary/5 border-t border-primary/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 reveal">
+      <section className="px-6 lg:px-8 py-20">
+        <div
+          className="max-w-7xl mx-auto rounded-2xl p-10 md:p-16 text-center relative overflow-hidden reveal"
+          style={{ background: "linear-gradient(135deg, hsl(142 52% 36%) 0%, hsl(158 50% 26%) 100%)" }}
+        >
+          <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
             Ready to connect with the right science?
           </h2>
-          <Link
-            to="/contact"
-            data-testid="products-cta"
-            className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm reveal"
-            style={{ transitionDelay: "0.1s" }}
-          >
-            Get in Touch
-          </Link>
+          <p className="text-white/80 max-w-xl mx-auto mb-8">
+            Tell us what you are looking for, or jump straight into the platform.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/contact"
+              data-testid="products-cta"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-md text-base font-semibold bg-white text-primary hover:opacity-90 transition-opacity shadow-sm"
+            >
+              Get in Touch
+            </Link>
+            <a
+              href="https://edenradar.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-md text-base font-semibold border border-white/40 text-white hover:bg-white/10 transition-colors"
+            >
+              Launch EdenRadar
+            </a>
+          </div>
         </div>
       </section>
     </div>

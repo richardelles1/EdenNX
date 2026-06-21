@@ -270,6 +270,19 @@
   animation: highlightExpand 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.7s both;
 }
 
+/* Anchored sections clear the fixed navbar + sticky product subnav */
+section[id] { scroll-margin-top: 8rem; }
+
+/* Route transition — page fade on navigation */
+@keyframes pageFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.page-fade { animation: pageFade 0.35s ease both; }
+@media (prefers-reduced-motion: reduce) {
+  .page-fade { animation: none !important; }
+}
+
 /* Scroll reveal utility */
 .reveal {
   opacity: 0;
