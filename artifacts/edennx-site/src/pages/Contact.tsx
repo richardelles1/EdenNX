@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 
-const CONTACT_EMAIL = "wmohamed@edennx.com";
+const CONTACT_EMAIL = "info@edennx.com";
+
+// Web3Forms public access key. Safe to expose client-side by design (Web3Forms
+// scopes it to your account and handles spam protection server-side).
+const WEB3FORMS_ACCESS_KEY = "aa5ea71e-75c8-4ce1-967f-5497ea31b5aa";
 
 const subjects = [
   "Product Demo",
@@ -27,6 +31,8 @@ export default function Contact() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   function validate() {
@@ -55,21 +61,45 @@ export default function Contact() {
     }
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const errs = validate();
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
       return;
     }
-    const subject = encodeURIComponent(
-      `[EdenNX Contact] ${form.subject} - ${form.name}`
-    );
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\nSubject: ${form.subject}\n\n${form.message}`
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          from_name: "EdenNX Website",
+          subject: `[EdenNX Contact] ${form.subject} - ${form.name}`,
+          name: form.name,
+          email: form.email,
+          company: form.company || "Not provided",
+          inquiry_type: form.subject,
+          message: form.message,
+        }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setSubmitError(
+          data.message || "Something went wrong. Please email us directly at " + CONTACT_EMAIL + "."
+        );
+      }
+    } catch {
+      setSubmitError(
+        "We couldn't send your message. Please check your connection or email us directly at " + CONTACT_EMAIL + "."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -251,10 +281,16 @@ export default function Contact() {
                 <button
                   type="submit"
                   data-testid="button-submit"
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+                  disabled={submitting}
+                  className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {submitting ? "Sending..." : "Send Message"}
                 </button>
+                {submitError && (
+                  <p className="text-sm text-destructive" data-testid="contact-error">
+                    {submitError}
+                  </p>
+                )}
               </form>
             )}
           </div>

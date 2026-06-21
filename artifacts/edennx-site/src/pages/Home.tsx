@@ -376,7 +376,7 @@ export default function Home() {
             </p>
             <ul className="space-y-2.5 flex-1 mb-6">
               {[
-                "Structured concept submission with timestamped provenance",
+                "Structured concept submission with a timestamped record",
                 "Automated EDEN Credibility Score rated 0 to 100",
                 "Graduation path from concept to EdenLab project",
               ].map((feat) => (
