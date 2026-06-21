@@ -11,7 +11,7 @@ const pipelineSteps = [
     bullets: [
       "300+ TTO portals monitored",
       "Daily refresh on all sources",
-      "Patent filing alerts included",
+      "New asset alerts as sources publish",
     ],
   },
   {
