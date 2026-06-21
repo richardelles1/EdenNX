@@ -100,29 +100,26 @@ export default function About() {
           </h2>
         </div>
 
-        <div className="rounded-2xl border border-border overflow-hidden divide-y divide-border">
+        <div className="grid sm:grid-cols-2 gap-5">
           {edenPrinciples.map((item, i) => (
             <div
               key={item.letter + item.title}
-              className="grid grid-cols-[auto_1fr] gap-5 md:gap-8 items-start bg-background p-6 md:p-8 reveal"
+              className="group rounded-2xl border border-border bg-card p-7 md:p-8 hover:border-primary/30 transition-colors reveal"
               style={{ transitionDelay: `${i * 0.08}s` }}
               data-testid={`eden-${i}`}
             >
-              <span
-                className="text-5xl md:text-6xl font-bold leading-none select-none w-12 md:w-16 text-center"
-                style={{ color: "hsl(var(--primary) / 0.18)" }}
-                aria-hidden="true"
-              >
-                {item.letter}
-              </span>
-              <div className="pt-1">
-                <h3 className="text-base font-bold text-foreground mb-1.5">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
+              <div className="flex items-center gap-4 mb-4">
+                <span
+                  className="h-12 w-12 flex-shrink-0 rounded-xl bg-primary/10 text-primary text-2xl font-bold flex items-center justify-center"
+                  aria-hidden="true"
+                >
+                  {item.letter}
+                </span>
+                <h3 className="text-lg font-bold text-foreground">{item.title}</h3>
               </div>
+              <p className="text-sm text-foreground/75 leading-relaxed">
+                {item.description}
+              </p>
             </div>
           ))}
         </div>

@@ -304,6 +304,14 @@ export default function Contact() {
           >
             <div className="rounded-xl border border-border bg-card p-8 space-y-6">
               <h2 className="text-lg font-bold text-foreground">Contact Information</h2>
+
+              <div className="flex items-center gap-3 rounded-lg bg-primary/5 border border-primary/15 px-4 py-3">
+                <span className="h-2 w-2 rounded-full bg-primary flex-shrink-0" />
+                <p className="text-sm text-foreground/80">
+                  Typically replies within <span className="font-semibold text-foreground">1 to 2 business days</span>
+                </p>
+              </div>
+
               <div className="space-y-5">
                 <div>
                   <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground mb-1">
@@ -338,12 +346,23 @@ export default function Contact() {
                   <p className="text-sm text-foreground/80">United States</p>
                 </div>
               </div>
-              <div className="pt-4 border-t border-border">
+              <div className="pt-5 border-t border-border space-y-4">
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   For enterprise inquiries and partnership discussions, please
-                  include your company name and a brief description of your
-                  needs. Our team typically responds within 1-2 business days.
+                  include your company name and a brief description of your needs.
                 </p>
+                <a
+                  href="https://edenradar.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  data-testid="contact-launch-edenradar"
+                >
+                  Looking for the product? Launch EdenRadar
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
