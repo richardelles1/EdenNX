@@ -218,6 +218,9 @@ importers:
 
   artifacts/edennx-site:
     dependencies:
+      cobe:
+        specifier: ^2.0.1
+        version: 2.0.1
       react-router-dom:
         specifier: ^7.14.0
         version: 7.14.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1665,6 +1668,9 @@ packages:
     peerDependencies:
       react: ^18 || ^19 || ^19.0.0-rc
       react-dom: ^18 || ^19 || ^19.0.0-rc
+
+  cobe@2.0.1:
+    resolution: {integrity: sha512-aaa6vcIlaC8C1SF50LDH0Anybo/EAXnrxqe+bwvr4+YUtZydqjeBjTTD7ziCCkbRrRGSns3I3F6cZsf3W+L+ag==}
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
@@ -4356,6 +4362,8 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
+
+  cobe@2.0.1: {}
 
   colorette@2.0.20: {}
 
