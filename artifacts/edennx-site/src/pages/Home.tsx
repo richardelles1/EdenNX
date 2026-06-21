@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { AuroraBackground } from "@/components/AuroraBackground";
@@ -10,6 +11,54 @@ import {
   ASSET_COUNT_LABEL,
   DATA_SOURCE_LABEL,
 } from "@/lib/platformStats";
+
+const FLIP_DURATION = 400;
+
+const flipWords = [
+  "Drug Discovery",
+  "Rare Disease Research",
+  "Data-Driven Decisions",
+  "Early-Stage Research",
+  "Biotech Innovation",
+  "Collaborative Science",
+  "Clinical-Stage Intelligence",
+  "Your Pipeline's Future",
+];
+
+function TextFlip({ words }: { words: string[] }) {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    let t1: ReturnType<typeof setTimeout> | undefined;
+    let t2: ReturnType<typeof setTimeout> | undefined;
+    t1 = setTimeout(function tick() {
+      setVisible(false);
+      t2 = setTimeout(() => {
+        setIndex((i) => (i + 1) % words.length);
+        setVisible(true);
+        t1 = setTimeout(tick, 3500);
+      }, FLIP_DURATION);
+    }, 3500);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [words]);
+
+  return (
+    <span
+      className="text-primary whitespace-nowrap"
+      style={{
+        display: "inline-block",
+        opacity: visible ? 1 : 0,
+        transition: `opacity ${FLIP_DURATION}ms ease`,
+      }}
+    >
+      {words[index]}
+    </span>
+  );
+}
 
 const marqueeItems = [
   `${ASSET_COUNT_LABEL} biotech assets indexed`,
@@ -124,9 +173,9 @@ function PortalCard({ portal, delay }: { portal: Portal; delay: number }) {
 export default function Home() {
   useScrollReveal();
   useSEO({
-    title: "EdenNX - The intelligence backbone of modern biotech",
+    title: "EdenNX - Biotech Intelligence Infrastructure",
     description:
-      "EdenNX builds EdenRadar, the flagship platform that scores the biotech landscape daily across 400+ research institutions and 35,000+ licensable assets, from earliest research hypothesis to commercial licensing.",
+      "EdenNX is building the intelligence backbone of modern biotech. From earliest discovery to patient impact, our platform suite powers every stage of the lifecycle.",
   });
 
   return (
@@ -139,30 +188,41 @@ export default function Home() {
         {/* Content layer — pointer-events-none lets background grid receive mouse events */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24 pointer-events-none">
           <div className="max-w-4xl">
+            {/* Primary headline — EdenNX as the anchor */}
             <h1
-              className="text-6xl md:text-7xl lg:text-8xl font-bold text-foreground leading-none tracking-tight mb-6 reveal"
+              className="text-6xl md:text-7xl lg:text-8xl font-bold text-foreground leading-none tracking-tight mb-5 reveal"
               data-testid="hero-headline"
               style={{ transitionDelay: "0.1s" }}
             >
               <span className="text-primary">Eden</span>NX
             </h1>
 
-            <p
-              className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-7 reveal"
-              style={{ transitionDelay: "0.15s" }}
+            {/*
+              "Powering [word]" — w-full + overflow-hidden clips long words on narrow
+              viewports. Fixed height prevents layout shift when words swap.
+            */}
+            <div
+              className="flex items-baseline gap-3 mb-8 w-full max-w-full overflow-hidden reveal"
+              style={{
+                transitionDelay: "0.15s",
+                height: "clamp(1.75rem, 4.5vw, 3.25rem)",
+              }}
             >
-              The <span className="gradient-text">intelligence backbone</span> of modern biotech.
-            </p>
+              <span className="text-xl md:text-3xl lg:text-4xl font-light text-foreground/65 leading-none flex-shrink-0">
+                Powering
+              </span>
+              <span className="text-xl md:text-3xl lg:text-4xl font-bold leading-none min-w-0">
+                <TextFlip words={flipWords} />
+              </span>
+            </div>
 
             <p
               className="text-lg md:text-xl text-foreground/70 leading-relaxed mb-10 max-w-2xl reveal"
               data-testid="hero-subheadline"
               style={{ transitionDelay: "0.2s" }}
             >
-              EdenNX builds EdenRadar, the flagship platform that scores the
-              biotech landscape daily across {TTO_COUNT_LABEL} research
-              institutions and {ASSET_COUNT_LABEL} licensable assets. From
-              earliest research hypothesis to commercial licensing.
+              The intelligence backbone of modern biotech, from earliest research
+              hypothesis through commercial licensing.
             </p>
 
             {/* Re-enable pointer events only on interactive elements */}
@@ -170,21 +230,19 @@ export default function Home() {
               className="flex flex-wrap gap-4 reveal pointer-events-auto"
               style={{ transitionDelay: "0.3s" }}
             >
-              <a
-                href="https://edenradar.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid="hero-cta-edenradar"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
-              >
-                Launch EdenRadar
-              </a>
               <Link
                 to="/products"
                 data-testid="hero-cta-products"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold border border-primary/40 text-primary bg-primary/5 hover:bg-primary/10 transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
               >
-                Explore the Platform
+                Explore Our Products
+              </Link>
+              <Link
+                to="/team"
+                data-testid="hero-cta-team"
+                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+              >
+                Meet the Team
               </Link>
             </div>
           </div>
