@@ -6,7 +6,7 @@ import wmPhoto from "@assets/WM_phot_1775790644431.jpg";
 
 const founders = [
   {
-    name: "Wafick Mohamed",
+    name: "Wafick Mohamed, D.Sc.",
     title: "Co-Founder & Chief Executive Officer",
     photo: wmPhoto,
     linkedIn: "https://www.linkedin.com/in/wafick-mohamed-d-sc-m-sc-cqa-chrc-clssbb-pmp-81643b96",
