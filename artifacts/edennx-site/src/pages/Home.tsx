@@ -25,7 +25,7 @@ const flipWords = [
   "Licensing Deals",
   "Translational Research",
   "Technology Transfer",
-  "Smarter Business Development",
+  "Smarter Deal Flow",
   "The Next Breakthrough",
   "Concept to Patient",
   "Your Pipeline's Future",
@@ -210,8 +210,10 @@ export default function Home() {
             </h1>
 
             {/*
-              "Powering [word]" — w-full + overflow-hidden clips long words on narrow
-              viewports. Fixed height prevents layout shift when words swap.
+              "Powering [word]". The word span is a clipped flex-1 child so the
+              rotating words can never change the row's width or height: fixed
+              height stops vertical shift, flex-1 + overflow-hidden stops any
+              horizontal reflow regardless of word length.
             */}
             <div
               className="flex items-baseline gap-3 mb-8 w-full max-w-full overflow-hidden reveal"
@@ -223,7 +225,7 @@ export default function Home() {
               <span className="text-xl md:text-3xl lg:text-4xl font-light text-foreground/65 leading-none flex-shrink-0">
                 Powering
               </span>
-              <span className="text-xl md:text-3xl lg:text-4xl font-bold leading-none min-w-0">
+              <span className="text-xl md:text-3xl lg:text-4xl font-bold leading-none flex-1 min-w-0 overflow-hidden">
                 <TextFlip words={flipWords} />
               </span>
             </div>
