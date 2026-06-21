@@ -84,7 +84,7 @@ const flagship: Portal = {
   name: "EdenRadar",
   tagline: "Industry intelligence platform",
   thesis:
-    "See the full field before your first move: a continuously enriched window into every major tech transfer office on earth.",
+    `See the full field before your first move: a continuously enriched window into ${TTO_COUNT_LABEL} tech transfer offices worldwide.`,
   access: "From $1,999/mo",
   token: "--portal-radar",
   anchor: "/products#edenradar",

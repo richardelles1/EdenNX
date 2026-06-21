@@ -127,8 +127,48 @@ const TTO_MARKERS: Array<{ location: [number, number]; size: number }> = [
   { location: [-33.89, 151.19], size: 0.04 }, // Sydney
   { location: [-27.5, 153.01], size: 0.03 }, // Queensland
   { location: [-31.95, 115.86], size: 0.03 }, // Perth
+  { location: [-34.93, 138.6], size: 0.03 }, // Adelaide
   { location: [-36.85, 174.76], size: 0.03 }, // Auckland
+  { location: [-43.53, 172.64], size: 0.03 }, // Christchurch
+  // Fill — additional research hubs to even out coverage
+  { location: [19.43, -99.13], size: 0.03 }, // Mexico City
+  { location: [25.65, -100.29], size: 0.03 }, // Monterrey
+  { location: [-19.92, -43.94], size: 0.03 }, // Belo Horizonte
+  { location: [-34.9, -56.16], size: 0.03 }, // Montevideo
+  { location: [-0.18, -78.47], size: 0.03 }, // Quito
+  { location: [40.0, -83.02], size: 0.03 }, // Ohio State
+  { location: [33.42, -111.93], size: 0.03 }, // Arizona State
+  { location: [36.16, -86.78], size: 0.03 }, // Nashville
+  { location: [40.1, -88.23], size: 0.03 }, // Illinois
+  { location: [45.42, -75.7], size: 0.03 }, // Ottawa
+  { location: [53.52, -113.52], size: 0.03 }, // Edmonton
+  { location: [50.11, 8.68], size: 0.03 }, // Frankfurt
+  { location: [46.2, 6.14], size: 0.03 }, // Geneva
+  { location: [57.71, 11.97], size: 0.03 }, // Gothenburg
+  { location: [53.47, -2.23], size: 0.03 }, // Manchester
+  { location: [55.86, -4.25], size: 0.03 }, // Glasgow
+  { location: [24.71, 46.68], size: 0.03 }, // Riyadh
+  { location: [33.89, 35.5], size: 0.03 }, // Beirut
+  { location: [9.03, 38.74], size: 0.03 }, // Addis Ababa
+  { location: [14.69, -17.45], size: 0.03 }, // Dakar
+  { location: [34.02, -6.83], size: 0.03 }, // Rabat
+  { location: [33.68, 73.04], size: 0.03 }, // Islamabad
+  { location: [31.55, 74.34], size: 0.03 }, // Lahore
+  { location: [43.24, 76.89], size: 0.03 }, // Almaty
+  { location: [41.3, 69.24], size: 0.03 }, // Tashkent
+  { location: [10.82, 106.63], size: 0.03 }, // Ho Chi Minh City
+  { location: [23.13, 113.26], size: 0.03 }, // Guangzhou
+  { location: [30.57, 104.07], size: 0.03 }, // Chengdu
+  { location: [35.18, 129.08], size: 0.03 }, // Busan
+  { location: [35.18, 136.91], size: 0.03 }, // Nagoya
 ];
+
+// Shrink every marker uniformly so the globe reads as densely covered.
+const SIZE_SCALE = 0.62;
+const SCALED_MARKERS = TTO_MARKERS.map((m) => ({
+  location: m.location,
+  size: m.size * SIZE_SCALE,
+}));
 
 export function TTOGlobe({
   size = 480,
@@ -161,7 +201,7 @@ export function TTOGlobe({
       baseColor: isDark ? [0.26, 0.55, 0.4] : [0.86, 0.93, 0.88],
       markerColor: [0.4, 1, 0.62],
       glowColor: isDark ? [0.12, 0.4, 0.28] : [0.12, 0.55, 0.3],
-      markers: TTO_MARKERS,
+      markers: SCALED_MARKERS,
     } as Parameters<typeof createGlobe>[1]);
 
     let rafId: number;

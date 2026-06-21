@@ -1,6 +1,6 @@
 import { TTOGlobe } from "@/components/TTOGlobe";
 import {
-  TTO_COUNT_EXACT,
+  TTO_COUNT_LABEL,
   ASSET_COUNT_LABEL,
   DATA_SOURCE_LABEL,
   TOP_INSTITUTIONS,
@@ -18,7 +18,7 @@ const ROWS = Array.from({ length: ROW_COUNT }, (_, i) =>
 );
 
 const stats = [
-  { value: String(TTO_COUNT_EXACT), label: "research institutions" },
+  { value: TTO_COUNT_LABEL, label: "research institutions" },
   { value: ASSET_COUNT_LABEL, label: "licensable assets" },
   { value: DATA_SOURCE_LABEL, label: "live data sources" },
 ];
@@ -71,12 +71,12 @@ export function CoverageSection() {
               Global coverage
             </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-5" style={{ color: "rgba(255,255,255,0.96)" }}>
-              Watching every major lab on earth.
+              Research intelligence across six continents.
             </h2>
             <p className="text-base md:text-lg leading-relaxed max-w-md mb-10" style={{ color: "rgba(255,255,255,0.6)" }}>
-              EdenRadar continuously monitors university tech transfer offices,
-              government labs, and publication feeds across six continents, so the
-              next breakthrough surfaces the day it is published.
+              EdenRadar continuously monitors hundreds of university tech transfer
+              offices, government labs, and publication feeds worldwide, so new
+              assets surface the day they are published.
             </p>
             <div className="flex flex-wrap gap-x-10 gap-y-6">
               {stats.map((s) => (
