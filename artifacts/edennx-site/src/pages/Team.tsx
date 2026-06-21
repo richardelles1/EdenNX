@@ -17,7 +17,7 @@ const founders = [
       "He holds a Doctorate in Science, a Master of Science, and certifications including CQA, PMP, and CLSSBB.",
     ],
     quote:
-      "We are extremely proud to be part of an industry that is pushing the boundaries of science to enhance patients' lives. We will help our clients identify gaps and generate new ideas and solutions to improve their processes and products.",
+      "We're proud to stand with an industry that pushes the boundaries of science to improve patients' lives. Our mission is to lead this transformation by delivering intelligent, scalable solutions that help the life science ecosystem discover more, decide faster, and create impact with clarity and confidence.",
   },
   {
     name: "Richard Elles",

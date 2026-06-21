@@ -6,7 +6,7 @@ const values = [
   {
     title: "Integrity First",
     description:
-      "We protect your IP, honor your data, and never compromise on truth, even when it's inconvenient.",
+      "We respect your IP, honor your data, and never compromise on truth, even when it's inconvenient.",
   },
   {
     title: "Collaboration Over Ego",
@@ -41,7 +41,7 @@ const edenPrinciples = [
     letter: "D",
     title: "Dignity in Every Interaction",
     description:
-      "Behind every asset and dataset is a person. Respect their work, protect their IP, and assume good intent.",
+      "Behind every asset and dataset is a person. Respect their work, honor their IP, and assume good intent.",
   },
   {
     letter: "E",

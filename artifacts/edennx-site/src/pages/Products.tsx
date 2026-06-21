@@ -290,8 +290,8 @@ export default function Products() {
                   "Structured concept submission forms to document early-stage hypotheses",
                   "Automated EDEN Credibility Score rated 0 to 100",
                   "Public searchable community feed",
-                  "Timestamped provenance protecting your first-to-conceive claim",
-                  "Graduation path: promising concepts promoted into EdenLab projects",
+                  "Timestamped submission record (not a patent or legal filing)",
+                  "Graduation path: concepts can be promoted into EdenLab projects",
                 ].map((feat) => (
                   <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
                     <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-amber-500 flex-shrink-0" />
