@@ -19,7 +19,7 @@ const edenPrinciples = [
     letter: "E",
     title: "Elevate the Ecosystem",
     description:
-      "Our tools amplify what teams can discover and achieve: accelerating exploration, sharpening decisions, and opening new possibilities.",
+      "Our tools aim to amplify what teams can discover and achieve: accelerating exploration, sharpening decisions, and opening new possibilities.",
   },
   {
     letter: "N",
