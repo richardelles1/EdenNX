@@ -116,6 +116,53 @@ export default function Team() {
         </div>
       </section>
 
+      {/* How we work */}
+      <section className="border-t border-border py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-2xl mb-12 reveal">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
+              How We Work
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Built by operators, for operators.
+            </h2>
+            <p className="text-base text-foreground/75 leading-relaxed">
+              We have built the quality systems and run the deal teams this platform
+              is for. That shapes how we work.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                t: "Operators, not tourists",
+                d: "We design for the people doing the work because we have done it ourselves.",
+              },
+              {
+                t: "Evidence over hype",
+                d: "No cherry-picked data, no inflated claims. The intelligence has to earn trust on every screen.",
+              },
+              {
+                t: "Respect the work behind the data",
+                d: "Every asset represents someone's years of effort. We treat the ecosystem with that in mind.",
+              },
+              {
+                t: "Science to patients, faster",
+                d: "Every feature answers one question: does this help a breakthrough reach patients sooner?",
+              },
+            ].map((item, i) => (
+              <div
+                key={item.t}
+                className="rounded-2xl border border-border bg-card p-6 reveal"
+                style={{ transitionDelay: `${i * 0.07}s` }}
+              >
+                <h3 className="text-base font-bold text-foreground mb-2">{item.t}</h3>
+                <p className="text-sm text-foreground/70 leading-relaxed">{item.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Footer teaser — link back to About */}
       <section className="border-t border-border py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
