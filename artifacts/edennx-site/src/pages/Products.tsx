@@ -93,12 +93,51 @@ function CredibilityPanel() {
   );
 }
 
+// Illustrative controlled-record panel for EdenCompliance (mirrors the "Illustrative"
+// treatment used for EdenDiscovery). Shows the append-only audit trail + e-signature
+// mechanic, clearly a sample, not a claim about any real record.
+function ControlledRecordPanel() {
+  const trail = [
+    { action: "Qualification approved · e-signed", who: "A. Vance", ts: "2026-07-02 13:41" },
+    { action: "Audit AUD-118 closed · e-signed", who: "M. Rossi", ts: "2026-06-28 09:12" },
+    { action: "Recall signal matched to a vendor", who: "System", ts: "2026-06-27 05:00" },
+  ];
+  return (
+    <div
+      className="rounded-xl border bg-card p-8 reveal"
+      style={{ borderColor: "hsl(var(--portal-compliance) / 0.3)", boxShadow: "0 18px 48px hsl(var(--portal-compliance) / 0.16)", transitionDelay: "0.15s" }}
+    >
+      <div className="flex items-center justify-between mb-6">
+        <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: "hsl(var(--portal-compliance))" }}>
+          Controlled record
+        </p>
+        <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2 py-0.5">
+          Illustrative
+        </span>
+      </div>
+      <p className="text-sm font-semibold text-foreground mb-1">Every change is signed and kept.</p>
+      <p className="text-xs text-muted-foreground mb-6">Actor, timestamp, and meaning on an audit trail that cannot be altered.</p>
+      <div className="space-y-4">
+        {trail.map((t, i) => (
+          <div key={i} className="flex items-start gap-3">
+            <span className="mt-1.5 h-2 w-2 rounded-full flex-shrink-0" style={{ background: "hsl(var(--portal-compliance))" }} />
+            <div className="min-w-0">
+              <p className="text-sm text-foreground/85 leading-snug">{t.action}</p>
+              <p className="text-[11px] text-muted-foreground font-mono">{t.who} · {t.ts}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Products() {
   useScrollReveal();
   useSEO({
-    title: "EdenRadar - The EdenNX platform",
+    title: "Products - The EdenNX platform",
     description:
-      "The EdenNX product suite: EdenRadar, EdenLab, EdenDiscovery, and EdenMarket, purpose-built for every stakeholder in the biotech licensing ecosystem.",
+      "The EdenNX product suite: EdenRadar, EdenCompliance, EdenLab, EdenDiscovery, and EdenMarket — purpose-built for every stakeholder across biotech intelligence, quality, and licensing.",
   });
 
   return (
@@ -119,11 +158,12 @@ export default function Products() {
           className="text-lg text-muted-foreground max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.2s" }}
         >
-          EdenNX is the parent company. EdenRadar is our flagship product,
-          tracking {ASSET_COUNT_LABEL} assets across {TTO_COUNT_LABEL}
-          {" "}institutions, joined by EdenLab, EdenDiscovery, and EdenMarket.
-          Whether you are planting the seed of a concept or closing a licensing
-          deal, there is a portal built for your workflow.
+          EdenNX is the parent company. EdenRadar, tracking {ASSET_COUNT_LABEL} assets
+          across {TTO_COUNT_LABEL} institutions, and EdenCompliance, managing vendor
+          quality for regulated teams, are our two full platforms, joined by the emerging
+          EdenLab, EdenDiscovery, and EdenMarket. Whether you are scanning the field,
+          qualifying a supplier, or closing a licensing deal, there is a product built for
+          your workflow.
         </p>
       </section>
 
@@ -132,6 +172,7 @@ export default function Products() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex gap-7 overflow-x-auto">
           {[
             ["EdenRadar", "#edenradar"],
+            ["EdenCompliance", "#edencompliance"],
             ["EdenLab", "#edenlab"],
             ["EdenDiscovery", "#edendiscovery"],
             ["EdenMarket", "#edenmarket"],
@@ -246,6 +287,61 @@ export default function Products() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* EdenCompliance */}
+      <section
+        id="edencompliance"
+        className="border-t-4 py-20"
+        style={{ borderColor: "hsl(var(--portal-compliance))", background: "hsl(var(--portal-compliance) / 0.04)" }}
+        data-testid="product-section-edencompliance"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-14 items-start lg:[&>*:last-child]:order-first">
+            <div>
+              <div className="mb-3 reveal">
+                <PortalEyebrow name="EdenCompliance" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal" style={{ transitionDelay: "0.05s" }}>
+                Vendor quality &amp; audit management
+              </h2>
+              <p className="text-muted-foreground mb-6 reveal" style={{ transitionDelay: "0.1s" }}>
+                The controlled-record platform for regulated quality teams. For: QA and Compliance leaders in pharma, biotech, medical device, and food/beverage.
+              </p>
+              <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
+                {[
+                  "Vendor qualification tracking with a full, dated status history",
+                  "A risk-ranked audit program that flags what is overdue, due soon, or unplanned",
+                  "Findings and CAPA management with severity triage",
+                  "Append-only activity log and electronic signatures on every controlled action",
+                  "Regulation Watch: FDA and MHRA rules plus recall signals matched to your vendors",
+                  "Supplier portal, AI document reading, and board-ready briefings",
+                ].map((feat) => (
+                  <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: "hsl(var(--portal-compliance))" }} />
+                    {feat}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.2s" }}>
+                <span className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{ background: "hsl(var(--portal-compliance) / 0.12)", color: "hsl(var(--portal-compliance))" }}>
+                  From $299/mo
+                </span>
+                <a
+                  href="https://edencompliance.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+                  style={{ background: "hsl(var(--portal-compliance))" }}
+                  data-testid="visit-edencompliance"
+                >
+                  Visit EdenCompliance →
+                </a>
+              </div>
+            </div>
+            <ControlledRecordPanel />
           </div>
         </div>
       </section>

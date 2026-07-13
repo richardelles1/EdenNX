@@ -1,9 +1,10 @@
-import { Radar, FlaskConical, Lightbulb, Store, type LucideIcon } from "lucide-react";
+import { Radar, ShieldCheck, FlaskConical, Lightbulb, Store, type LucideIcon } from "lucide-react";
 
 // Portal -> accent token + lucide icon. Single source for the per-portal
 // identity used by eyebrows and showcases across Home and Products.
 export const PORTAL_META: Record<string, { token: string; Icon: LucideIcon }> = {
   EdenRadar: { token: "--portal-radar", Icon: Radar },
+  EdenCompliance: { token: "--portal-compliance", Icon: ShieldCheck },
   EdenLab: { token: "--portal-lab", Icon: FlaskConical },
   EdenDiscovery: { token: "--portal-discovery", Icon: Lightbulb },
   EdenMarket: { token: "--portal-market", Icon: Store },
