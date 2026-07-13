@@ -26,7 +26,7 @@ function StatusPill({ status, accent }: { status: string; accent: string }) {
 
 function ProductRow({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
   const accent = `hsl(var(${p.token}))`;
-  const inner = (
+  const heading = (
     <>
       <span
         className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg"
@@ -46,12 +46,34 @@ function ProductRow({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
       </span>
     </>
   );
-  const cls = "flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-muted";
-  return p.external ? (
-    <a href={p.href} target="_blank" rel="noopener noreferrer" className={cls} onClick={onNavigate} data-testid={`nav-product-${p.suffix.toLowerCase()}`}>{inner}</a>
+  const testid = `nav-product-${p.suffix.toLowerCase()}`;
+  const headLink = p.external ? (
+    <a href={p.href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3" onClick={onNavigate} data-testid={testid}>{heading}</a>
   ) : (
-    <Link to={p.href} className={cls} onClick={onNavigate} data-testid={`nav-product-${p.suffix.toLowerCase()}`}>{inner}</Link>
+    <Link to={p.href} className="flex items-start gap-3" onClick={onNavigate} data-testid={testid}>{heading}</Link>
   );
+
+  // Full products expose their info pages (how it works / features / pricing / one-pager),
+  // linked to each product's own site and opened in a new tab; the app launch sits at the end.
+  if (p.links?.length) {
+    return (
+      <div className="rounded-lg p-2.5 transition-colors hover:bg-muted/60">
+        {headLink}
+        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 pl-12 text-xs">
+          {p.links.map((l) => (
+            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="text-foreground/55 transition-colors hover:text-primary">{l.label}</a>
+          ))}
+          {p.launch && (
+            <>
+              <span className="text-foreground/20" aria-hidden>·</span>
+              <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+  return <div className="rounded-lg p-2.5 transition-colors hover:bg-muted">{headLink}</div>;
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
