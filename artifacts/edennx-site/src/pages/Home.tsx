@@ -98,6 +98,14 @@ const flagship: Portal = {
 
 const satellites: Portal[] = [
   {
+    name: "EdenCompliance",
+    tagline: "Vendor quality & audit management",
+    thesis: "Qualify vendors, run the audit program, and keep every change on a signed, unalterable record.",
+    access: "New",
+    token: "--portal-compliance",
+    anchor: "/products#edencompliance",
+  },
+  {
     name: "EdenLab",
     tagline: "Research workspace",
     thesis: "From hypothesis to publication without losing the thread.",
@@ -129,7 +137,7 @@ function FlagshipCard() {
   return (
     <Link
       to={flagship.anchor}
-      className="group lg:row-span-3 rounded-2xl border border-border p-8 flex flex-col hover:shadow-lg transition-shadow reveal"
+      className="group lg:row-span-4 rounded-2xl border border-border p-8 flex flex-col hover:shadow-lg transition-shadow reveal"
       style={{ borderTop: `4px solid ${accent}`, background: `linear-gradient(180deg, ${accentSoft} 0%, hsl(var(--card)) 45%)` }}
       data-testid="highlight-edenradar"
     >
@@ -294,20 +302,20 @@ export default function Home() {
           className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          Four products. One ecosystem.
+          Five products. One ecosystem.
         </h2>
         <p
           className="text-base text-foreground/70 max-w-2xl leading-relaxed mb-14 reveal"
           style={{ transitionDelay: "0.1s" }}
         >
-          EdenNX is the parent company. EdenRadar is our flagship product, joined
-          by a product built for every stakeholder, whether you are planting the
-          seed of a concept or closing a licensing deal.
+          EdenNX is the parent company. EdenRadar and EdenCompliance are our two
+          full platforms, joined by products for every stakeholder, whether you are
+          scanning the field, qualifying a supplier, or closing a licensing deal.
         </p>
 
         {/* Flagship spans all three rows on the right, so its height is
             exactly the three satellite cards plus the two gaps. */}
-        <div className="grid lg:grid-cols-2 lg:grid-rows-3 gap-6">
+        <div className="grid lg:grid-cols-2 lg:grid-rows-4 gap-6">
           <FlagshipCard />
           {satellites.map((portal) => (
             <SatelliteCard key={portal.name} portal={portal} />

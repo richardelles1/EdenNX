@@ -24,6 +24,7 @@
   --color-primary-border: var(--primary-border);
 
   --color-portal-radar: hsl(var(--portal-radar));
+  --color-portal-compliance: hsl(var(--portal-compliance));
   --color-portal-lab: hsl(var(--portal-lab));
   --color-portal-discovery: hsl(var(--portal-discovery));
   --color-portal-market: hsl(var(--portal-market));
@@ -81,10 +82,11 @@
 
   /* Portal accent tokens (HSL components, no hsl() wrapper).
      Use as hsl(var(--portal-lab)) or hsl(var(--portal-lab) / 0.5). */
-  --portal-radar: 142 52% 36%;     /* EdenRadar — emerald (flagship) */
-  --portal-lab: 262 80% 60%;       /* EdenLab — violet */
-  --portal-discovery: 38 92% 50%;  /* EdenDiscovery — amber */
-  --portal-market: 234 80% 58%;    /* EdenMarket — indigo */
+  --portal-radar: 142 52% 36%;       /* EdenRadar — emerald (flagship) */
+  --portal-compliance: 190 78% 34%;  /* EdenCompliance — teal (flagship) */
+  --portal-lab: 262 80% 60%;         /* EdenLab — violet */
+  --portal-discovery: 38 92% 50%;    /* EdenDiscovery — amber */
+  --portal-market: 234 80% 58%;      /* EdenMarket — indigo */
 
   --background: 210 25% 97%;
   --foreground: 220 30% 12%;
@@ -171,6 +173,7 @@
   /* Portal accents — brightened for dark surfaces */
   --portal-radar: 142 65% 48%;
   --portal-scout: 142 65% 48%;
+  --portal-compliance: 190 75% 46%;
   --portal-lab: 262 80% 70%;
   --portal-discovery: 38 92% 58%;
   --portal-market: 234 85% 70%;
@@ -316,6 +319,9 @@ section[id] { scroll-margin-top: 8rem; }
     pointer-events: none;
   }
 }
+
+/* Fraunces serif for warm editorial display moments (e.g. About > Why Now) */
+.font-display { font-family: 'Fraunces', Georgia, serif; }
 
 /* Gradient text — EdenRadar emerald brand gradient */
 .gradient-text {
