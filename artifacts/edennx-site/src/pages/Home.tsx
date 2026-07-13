@@ -81,6 +81,7 @@ type Portal = {
   thesis: string;
   access: string;
   token: string; // CSS var name for the portal accent
+  goldToken?: string; // optional secondary accent (EdenCompliance is forest + gold)
   anchor: string;
 };
 
@@ -103,6 +104,7 @@ const satellites: Portal[] = [
     thesis: "Qualify vendors, run the audit program, and keep every change on a signed, unalterable record.",
     access: "New",
     token: "--portal-compliance",
+    goldToken: "--portal-compliance-gold",
     anchor: "/products#edencompliance",
   },
   {
@@ -183,7 +185,7 @@ function SatelliteCard({ portal }: { portal: Portal }) {
     >
       <div className="flex items-center justify-between mb-2 gap-3">
         <PortalEyebrow name={portal.name} nameClassName="text-lg md:text-xl" iconClassName="h-6 w-6" />
-        <span className="text-xs font-medium flex-shrink-0" style={{ color: accent }}>{portal.access}</span>
+        <span className="text-xs font-medium flex-shrink-0" style={{ color: portal.goldToken ? `hsl(var(${portal.goldToken}))` : accent }}>{portal.access}</span>
       </div>
       <p className="text-sm text-foreground/75 leading-relaxed">{portal.thesis}</p>
     </Link>
@@ -302,15 +304,16 @@ export default function Home() {
           className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          Five products. One ecosystem.
+          Two full platforms. One company.
         </h2>
         <p
           className="text-base text-foreground/70 max-w-2xl leading-relaxed mb-14 reveal"
           style={{ transitionDelay: "0.1s" }}
         >
-          EdenNX is the parent company. EdenRadar and EdenCompliance are our two
-          full platforms, joined by products for every stakeholder, whether you are
-          scanning the field, qualifying a supplier, or closing a licensing deal.
+          EdenNX is the parent company. EdenRadar anchors a connected biotech-intelligence
+          suite, with EdenLab, EdenDiscovery, and EdenMarket sharing the same asset graph
+          from first concept to closed deal. EdenCompliance is a separate full platform,
+          built for regulated quality teams.
         </p>
 
         {/* Flagship spans all three rows on the right, so its height is

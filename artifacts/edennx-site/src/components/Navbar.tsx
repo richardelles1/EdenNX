@@ -40,7 +40,7 @@ function ProductRow({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
             <span className="text-foreground">Eden</span>
             <span style={{ color: accent }}>{p.suffix}</span>
           </span>
-          <StatusPill status={p.status} accent={accent} />
+          <StatusPill status={p.status} accent={p.goldToken ? `hsl(var(${p.goldToken}))` : accent} />
         </span>
         <span className="mt-1 block text-xs leading-snug text-foreground/60">{p.tagline}</span>
       </span>

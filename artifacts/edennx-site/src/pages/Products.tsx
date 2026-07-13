@@ -108,7 +108,7 @@ function ControlledRecordPanel() {
       style={{ borderColor: "hsl(var(--portal-compliance) / 0.3)", boxShadow: "0 18px 48px hsl(var(--portal-compliance) / 0.16)", transitionDelay: "0.15s" }}
     >
       <div className="flex items-center justify-between mb-6">
-        <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: "hsl(var(--portal-compliance))" }}>
+        <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: "hsl(var(--portal-compliance-gold))" }}>
           Controlled record
         </p>
         <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2 py-0.5">
@@ -152,18 +152,17 @@ export default function Products() {
           style={{ transitionDelay: "0.1s" }}
           data-testid="products-headline"
         >
-          One ecosystem. Purpose-built for every stakeholder.
+          Two full platforms. Purpose-built for every workflow.
         </h1>
         <p
           className="text-lg text-muted-foreground max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.2s" }}
         >
           EdenNX is the parent company. EdenRadar, tracking {ASSET_COUNT_LABEL} assets
-          across {TTO_COUNT_LABEL} institutions, and EdenCompliance, managing vendor
-          quality for regulated teams, are our two full platforms, joined by the emerging
-          EdenLab, EdenDiscovery, and EdenMarket. Whether you are scanning the field,
-          qualifying a supplier, or closing a licensing deal, there is a product built for
-          your workflow.
+          across {TTO_COUNT_LABEL} institutions, anchors a connected biotech-intelligence
+          suite with the emerging EdenLab, EdenDiscovery, and EdenMarket. EdenCompliance
+          is a separate full platform, managing vendor quality and audits for regulated
+          teams. Different jobs; one team behind them.
         </p>
       </section>
 
@@ -326,7 +325,7 @@ export default function Products() {
                 ))}
               </ul>
               <div className="flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.2s" }}>
-                <span className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{ background: "hsl(var(--portal-compliance) / 0.12)", color: "hsl(var(--portal-compliance))" }}>
+                <span className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold" style={{ background: "hsl(var(--portal-compliance-gold) / 0.16)", color: "hsl(var(--portal-compliance-gold))" }}>
                   From $299/mo
                 </span>
                 <a

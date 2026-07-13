@@ -13,7 +13,8 @@ export type Product = {
   tagline: string;     // one line for the dropdown
   status: string;      // "Live" | "New" | "Beta" | "Preview"
   tier: ProductTier;
-  token: string;       // portal accent token
+  token: string;       // portal accent token (the primary brand color)
+  goldToken?: string;  // optional secondary accent (EdenCompliance is forest + gold)
   Icon: LucideIcon;
   href: string;        // where the row heading links (learn first, not the app)
   external: boolean;   // true -> opens in a new tab
@@ -39,7 +40,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     name: "EdenCompliance", suffix: "Compliance", tagline: "Vendor qualification & audit management for regulated QA teams.",
-    status: "New", tier: "platform", token: meta("EdenCompliance").token, Icon: meta("EdenCompliance").Icon,
+    status: "New", tier: "platform", token: meta("EdenCompliance").token, goldToken: "--portal-compliance-gold", Icon: meta("EdenCompliance").Icon,
     href: `${EC}/how-it-works`, external: true, launch: { label: "Open EdenCompliance", href: EC },
     links: pages(EC, [["How it works", "/how-it-works"], ["Features", "/features"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
   },
