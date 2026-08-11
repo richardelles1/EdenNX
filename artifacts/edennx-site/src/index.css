@@ -83,7 +83,8 @@
   /* Portal accent tokens (HSL components, no hsl() wrapper).
      Use as hsl(var(--portal-lab)) or hsl(var(--portal-lab) / 0.5). */
   --portal-radar: 142 52% 36%;       /* EdenRadar — emerald (flagship) */
-  --portal-compliance: 190 78% 34%;  /* EdenCompliance — teal (flagship) */
+  --portal-compliance: 147 41% 29%;      /* EdenCompliance — forest green (flagship) */
+  --portal-compliance-gold: 41 46% 45%;  /* EdenCompliance — gold accent (readable on light) */
   --portal-lab: 262 80% 60%;         /* EdenLab — violet */
   --portal-discovery: 38 92% 50%;    /* EdenDiscovery — amber */
   --portal-market: 234 80% 58%;      /* EdenMarket — indigo */
@@ -173,7 +174,8 @@
   /* Portal accents — brightened for dark surfaces */
   --portal-radar: 142 65% 48%;
   --portal-scout: 142 65% 48%;
-  --portal-compliance: 190 75% 46%;
+  --portal-compliance: 152 46% 48%;
+  --portal-compliance-gold: 41 58% 62%;
   --portal-lab: 262 80% 70%;
   --portal-discovery: 38 92% 58%;
   --portal-market: 234 85% 70%;
