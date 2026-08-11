@@ -305,16 +305,16 @@ export default function Home() {
           className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          Two full platforms. One company.
+          Five products, concept to patient.
         </h2>
         <p
           className="text-base text-foreground/70 max-w-2xl leading-relaxed mb-14 reveal"
           style={{ transitionDelay: "0.1s" }}
         >
-          EdenNX is the parent company. EdenRadar anchors a connected biotech-intelligence
-          suite, with EdenLab, EdenDiscovery, and EdenMarket sharing the same asset graph
-          from first concept to closed deal. EdenCompliance is a separate full platform,
-          built for regulated quality teams.
+          EdenRadar anchors a connected biotech-intelligence suite: EdenLab, EdenDiscovery,
+          and EdenMarket share its asset graph from first concept to closed deal.
+          EdenCompliance is a separate full platform for regulated quality teams. One company
+          behind all five.
         </p>
 
         <div className="reveal">
