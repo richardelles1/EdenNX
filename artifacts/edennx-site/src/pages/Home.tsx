@@ -4,6 +4,7 @@ import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { AuroraBackground } from "@/components/AuroraBackground";
 import { CoverageSection } from "@/components/CoverageSection";
 import { PortalEyebrow } from "@/components/PortalBits";
+import { ProductShowcase } from "@/components/ProductShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import {
@@ -316,13 +317,8 @@ export default function Home() {
           built for regulated quality teams.
         </p>
 
-        {/* Flagship spans all three rows on the right, so its height is
-            exactly the three satellite cards plus the two gaps. */}
-        <div className="grid lg:grid-cols-2 lg:grid-rows-4 gap-6">
-          <FlagshipCard />
-          {satellites.map((portal) => (
-            <SatelliteCard key={portal.name} portal={portal} />
-          ))}
+        <div className="reveal">
+          <ProductShowcase />
         </div>
       </section>
 
