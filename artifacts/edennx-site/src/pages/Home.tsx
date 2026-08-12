@@ -17,19 +17,21 @@ const FLIP_DURATION = 400;
 
 const flipWords = [
   "Drug Discovery",
+  "Vendor Qualification",
   "Rare Disease Research",
+  "Audit Programs",
   "Data-Driven Decisions",
+  "Quality Oversight",
   "Early-Stage Research",
+  "Signed Audit Trails",
   "Biotech Innovation",
-  "Collaborative Science",
+  "Regulated Quality Teams",
   "Clinical-Stage Intelligence",
   "Licensing Deals",
-  "Translational Research",
   "Technology Transfer",
-  "Smarter Deal Flow",
-  "The Next Breakthrough",
+  "Supplier Oversight",
   "Concept to Patient",
-  "Your Pipeline's Future",
+  "The Next Breakthrough",
 ];
 
 function TextFlip({ words }: { words: string[] }) {
@@ -70,10 +72,12 @@ function TextFlip({ words }: { words: string[] }) {
 const marqueeItems = [
   `${ASSET_COUNT_LABEL} biotech assets indexed`,
   `${TTO_COUNT_LABEL} research institutions monitored`,
-  `${DATA_SOURCE_LABEL} live data sources`,
   "The biotech landscape, scored daily",
-  "From concept to patient",
   "EdenRadar by EdenNX",
+  "Vendor qualification & audit programs",
+  "Every change on a signed, unalterable record",
+  "EdenCompliance by EdenNX",
+  `${DATA_SOURCE_LABEL} live data sources`,
 ];
 
 type Portal = {
@@ -246,8 +250,8 @@ export default function Home() {
               data-testid="hero-subheadline"
               style={{ transitionDelay: "0.2s" }}
             >
-              The intelligence backbone of modern biotech, from earliest research
-              hypothesis through commercial licensing.
+              The intelligence backbone of modern biotech, from the earliest research
+              hypothesis through commercial licensing and regulated quality.
             </p>
 
             {/* Re-enable pointer events only on interactive elements */}
@@ -350,18 +354,29 @@ export default function Home() {
             className="text-2xl md:text-3xl font-bold text-foreground mb-6 reveal"
             data-testid="bottom-cta-headline"
           >
-            See the full field before your first move.
+            Start with the flagship that fits your team.
           </h2>
-          <a
-            href="https://edenradar.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="bottom-cta-edenradar"
-            className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm reveal"
-            style={{ transitionDelay: "0.1s" }}
-          >
-            Launch EdenRadar
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-3 reveal" style={{ transitionDelay: "0.1s" }}>
+            <a
+              href="https://edenradar.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="bottom-cta-edenradar"
+              className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+            >
+              Launch EdenRadar
+            </a>
+            <a
+              href="https://edencompliance.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="bottom-cta-edencompliance"
+              className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold text-white hover:opacity-90 transition-opacity shadow-sm"
+              style={{ background: "hsl(var(--portal-compliance))" }}
+            >
+              Launch EdenCompliance
+            </a>
+          </div>
         </div>
       </section>
     </div>

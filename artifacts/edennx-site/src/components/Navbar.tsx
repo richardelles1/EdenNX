@@ -184,15 +184,13 @@ export function Navbar() {
             </nav>
 
             <div className="hidden md:flex items-center gap-3">
-              <a
-                href="https://edenradar.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid="nav-launch-edenradar"
+              <Link
+                to="/products"
+                data-testid="nav-explore-products"
                 className={`inline-flex items-center font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-all duration-300 text-sm ${scrolled ? "px-4 py-1.5 rounded-full" : "px-5 py-2 rounded-md"}`}
               >
-                Launch EdenRadar
-              </a>
+                Explore Products
+              </Link>
             </div>
 
             <button
@@ -231,15 +229,14 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <a
-                href="https://edenradar.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid="nav-mobile-launch"
+              <Link
+                to="/products"
+                onClick={() => setMenuOpen(false)}
+                data-testid="nav-mobile-explore-products"
                 className="mt-1 inline-flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
               >
-                Launch EdenRadar
-              </a>
+                Explore Products
+              </Link>
             </div>
           </div>
         )}
