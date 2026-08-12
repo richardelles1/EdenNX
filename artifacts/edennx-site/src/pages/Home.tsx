@@ -31,8 +31,10 @@ export default function Home() {
         the page, and the ticker repeated figures the Coverage band already
         states further down.
       */}
+      {/* Column on mobile so the mark can lead the stack in normal flow, and a
+          single centred row on desktop where the mark is absolutely placed. */}
       <section
-        className="relative flex min-h-[88vh] items-center overflow-hidden"
+        className="relative flex min-h-[88vh] flex-col justify-center overflow-hidden pt-10 lg:block lg:pt-0"
         style={{
           // Green radiating out of the mark, plus a gentle wash across the page
           // from right to left. The previous version was faint enough to be
@@ -70,7 +72,7 @@ export default function Home() {
           }}
         />
 
-        <div className="relative mx-auto w-full max-w-7xl px-6 py-20 lg:px-8">
+        <div className="relative mx-auto flex w-full max-w-7xl items-center px-6 pb-20 lg:min-h-[88vh] lg:py-20 lg:px-8">
           <div className="max-w-full lg:max-w-[50%]">
             <h1
               className="hero-rise font-bold text-foreground"

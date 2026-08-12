@@ -272,9 +272,17 @@
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: none; }
 }
+/* Two settle keyframes because the mark is positioned differently by breakpoint:
+   absolutely and vertically centred on desktop, so it needs the -50% offset
+   carried through the animation; in normal flow on mobile, where that offset
+   would drag it off the top. */
 @keyframes heroMarkSettle {
   from { opacity: 0; transform: translateY(-50%) scale(1.05); }
   to   { opacity: var(--hero-mark-opacity, 0.52); transform: translateY(-50%) scale(1); }
+}
+@keyframes heroMarkSettleFlow {
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: var(--hero-mark-opacity, 0.52); transform: scale(1); }
 }
 .hero-rise {
   opacity: 0;
@@ -285,24 +293,38 @@
   animation: heroMarkSettle 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
-/* The hero mark. Sized off the section's height but positioned off its width,
-   so it needs a width cap or it walks left over the headline as the viewport
-   narrows. Below the desktop breakpoint the layout is a single column, so the
-   mark drops back to a watermark and the copy runs full width over it. */
+/* The hero mark. On desktop it is absolutely placed and sized off the section's
+   height, but positioned off its width, so it needs a width cap or it walks left
+   over the headline as the viewport narrows. */
 .hero-mark {
   --hero-mark-opacity: 0.7;
+  position: absolute;
+  top: 50%;
   right: 9%;
   /* Percentage of a taller section now, so this is a materially bigger mark
      than the same number would have been against the old height. */
   height: 140%;
   max-width: 44%;
 }
+
+/* Below the desktop breakpoint the hero is a single column, so the mark comes
+   out of absolute placement and takes the top of the stack in normal flow,
+   bleeding off the right edge. It leads at close to full strength rather than
+   hiding behind the copy: at phone width a watermark under text is neither a
+   readable background nor a visible mark. */
 @media (max-width: 1023px) {
   .hero-mark {
-    --hero-mark-opacity: 0.16;
-    right: -16%;
-    height: 104%;
-    max-width: 82%;
+    --hero-mark-opacity: 0.92;
+    position: static;
+    height: auto;
+    width: 74%;
+    max-width: 300px;
+    align-self: flex-end;
+    margin-right: -7%;
+    margin-bottom: 2.5rem;
+  }
+  .hero-mark-in {
+    animation-name: heroMarkSettleFlow;
   }
 }
 
@@ -397,8 +419,13 @@ section[id] { scroll-margin-top: 8rem; }
   }
   .hero-mark-in {
     opacity: var(--hero-mark-opacity, 0.52);
-    /* The keyframe normally supplies the vertical centring, so restate it here
-       where the animation is switched off. */
-    transform: translateY(-50%);
+  }
+  /* The keyframe normally supplies the vertical centring on desktop, so restate
+     it here where the animation is switched off. Mobile is in normal flow and
+     must not get the offset. */
+  @media (min-width: 1024px) {
+    .hero-mark-in {
+      transform: translateY(-50%);
+    }
   }
 }
