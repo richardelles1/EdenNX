@@ -34,8 +34,13 @@ export default function Home() {
       <section
         className="relative flex min-h-[88vh] items-center overflow-hidden"
         style={{
+          // Green radiating out of the mark, plus a gentle wash across the page
+          // from right to left. The previous version was faint enough to be
+          // invisible, which is the same as not being there.
           background:
-            "radial-gradient(72% 92% at 76% 42%, rgba(47,143,78,0.10) 0%, rgba(47,143,78,0.03) 42%, rgba(255,255,255,0) 72%), #FFFFFF",
+            "radial-gradient(56% 76% at 73% 48%, rgba(47,143,78,0.20) 0%, rgba(47,143,78,0.09) 42%, rgba(47,143,78,0) 74%)," +
+            "linear-gradient(105deg, #FFFFFF 38%, rgba(47,143,78,0.07) 100%)," +
+            "#FFFFFF",
         }}
       >
         <img
@@ -105,16 +110,16 @@ export default function Home() {
               <a
                 href="#suite"
                 data-testid="hero-cta-products"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-[15px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-[16px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
               >
                 Our products <ArrowRight className="h-4 w-4" />
               </a>
               <Link
                 to="/contact"
                 data-testid="hero-cta-contact"
-                className="inline-flex items-center rounded-full border border-foreground/15 px-6 py-3 text-[15px] font-semibold text-foreground/75 transition-colors hover:border-foreground/30 hover:text-foreground"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-[16px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
               >
-                Contact
+                Contact us <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
