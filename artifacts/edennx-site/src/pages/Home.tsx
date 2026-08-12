@@ -17,19 +17,21 @@ const FLIP_DURATION = 400;
 
 const flipWords = [
   "Drug Discovery",
+  "Vendor Qualification",
   "Rare Disease Research",
+  "Audit Programs",
   "Data-Driven Decisions",
+  "Quality Oversight",
   "Early-Stage Research",
+  "Signed Audit Trails",
   "Biotech Innovation",
-  "Collaborative Science",
+  "Regulated Quality Teams",
   "Clinical-Stage Intelligence",
   "Licensing Deals",
-  "Translational Research",
   "Technology Transfer",
-  "Smarter Deal Flow",
-  "The Next Breakthrough",
+  "Supplier Oversight",
   "Concept to Patient",
-  "Your Pipeline's Future",
+  "The Next Breakthrough",
 ];
 
 function TextFlip({ words }: { words: string[] }) {
@@ -70,10 +72,12 @@ function TextFlip({ words }: { words: string[] }) {
 const marqueeItems = [
   `${ASSET_COUNT_LABEL} biotech assets indexed`,
   `${TTO_COUNT_LABEL} research institutions monitored`,
-  `${DATA_SOURCE_LABEL} live data sources`,
   "The biotech landscape, scored daily",
-  "From concept to patient",
   "EdenRadar by EdenNX",
+  "Vendor qualification & audit programs",
+  "Every change on a signed, unalterable record",
+  "EdenCompliance by EdenNX",
+  `${DATA_SOURCE_LABEL} live data sources`,
 ];
 
 type Portal = {
@@ -246,8 +250,8 @@ export default function Home() {
               data-testid="hero-subheadline"
               style={{ transitionDelay: "0.2s" }}
             >
-              The intelligence backbone of modern biotech, from earliest research
-              hypothesis through commercial licensing.
+              The intelligence backbone of modern biotech, from the earliest research
+              hypothesis through commercial licensing and regulated quality.
             </p>
 
             {/* Re-enable pointer events only on interactive elements */}
@@ -296,24 +300,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Product Suite — EdenRadar's four portals */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-14 lg:pt-20 pb-4" data-testid="product-highlights">
-        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 reveal">
-          The Product Suite
-        </p>
-        <h2
-          className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
-          style={{ transitionDelay: "0.05s" }}
-        >
-          Five products, concept to patient.
+      {/* Product Suite intro */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-24 pb-10 lg:pb-12" data-testid="product-highlights">
+        <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-5 reveal">
+          Five products, one biotech backbone.
         </h2>
         <p
-          className="text-base text-foreground/70 max-w-2xl leading-relaxed mb-14 reveal"
-          style={{ transitionDelay: "0.1s" }}
+          className="text-lg text-foreground/80 max-w-2xl leading-relaxed reveal"
+          style={{ transitionDelay: "0.05s" }}
         >
-          EdenRadar anchors a connected biotech-intelligence suite: EdenLab, EdenDiscovery,
-          and EdenMarket share its asset graph from first concept to closed deal.
-          EdenCompliance is a separate full platform for regulated quality teams. One company
+          From spotting a newly published asset to running a signed, audited vendor
+          program, each EdenNX product owns a different part of the field. One company
           behind all five.
         </p>
       </section>
@@ -357,18 +354,29 @@ export default function Home() {
             className="text-2xl md:text-3xl font-bold text-foreground mb-6 reveal"
             data-testid="bottom-cta-headline"
           >
-            See the full field before your first move.
+            Start with the flagship that fits your team.
           </h2>
-          <a
-            href="https://edenradar.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-testid="bottom-cta-edenradar"
-            className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm reveal"
-            style={{ transitionDelay: "0.1s" }}
-          >
-            Launch EdenRadar
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-3 reveal" style={{ transitionDelay: "0.1s" }}>
+            <a
+              href="https://edenradar.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="bottom-cta-edenradar"
+              className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+            >
+              Launch EdenRadar
+            </a>
+            <a
+              href="https://edencompliance.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="bottom-cta-edencompliance"
+              className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold text-white hover:opacity-90 transition-opacity shadow-sm"
+              style={{ background: "hsl(var(--portal-compliance))" }}
+            >
+              Launch EdenCompliance
+            </a>
+          </div>
         </div>
       </section>
     </div>

@@ -33,7 +33,7 @@ const pages = (base: string, defs: [string, string][]): ProductLink[] => defs.ma
 
 export const PRODUCTS: Product[] = [
   {
-    name: "EdenRadar", suffix: "Radar", tagline: "Industry BD intelligence across 400+ tech transfer offices.",
+    name: "EdenRadar", suffix: "Radar", tagline: "Industry BD intelligence across 430+ tech transfer offices.",
     status: "Live", tier: "platform", token: meta("EdenRadar").token, Icon: meta("EdenRadar").Icon,
     href: `${ER}/how-it-works`, external: true, launch: { label: "Launch EdenRadar", href: ER },
     links: pages(ER, [["How it works", "/how-it-works"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
