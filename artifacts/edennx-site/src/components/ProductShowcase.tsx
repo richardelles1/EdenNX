@@ -126,8 +126,8 @@ function ProductRow({ p, i }: { p: Product; i: number }) {
       className="relative overflow-hidden"
       style={{
         background:
-          `radial-gradient(60% 85% at ${flip ? "18%" : "82%"} 40%, hsl(var(${p.token}) / 0.26), transparent 60%),` +
-          `linear-gradient(155deg, color-mix(in oklab, hsl(var(${p.token})) 30%, #060d0a), color-mix(in oklab, hsl(var(${p.token})) 14%, #05090a))`,
+          `radial-gradient(55% 80% at ${flip ? "18%" : "82%"} 38%, hsl(var(${p.token}) / 0.12), transparent 62%),` +
+          `linear-gradient(155deg, color-mix(in oklab, hsl(var(${p.token})) 11%, #070e0b), color-mix(in oklab, hsl(var(${p.token})) 4%, #05090a))`,
       }}
     >
       <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 py-20 sm:px-8 lg:min-h-[64vh] lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-20">
