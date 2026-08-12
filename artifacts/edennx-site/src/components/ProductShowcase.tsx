@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Check, Eye } from "lucide-react";
@@ -116,26 +117,33 @@ const INK = "#0f1a14";
 const BODY = "#374139";
 const NOTE = "#525c55";
 
-const SHOTS: Record<string, string> = {
-  EdenRadar: "/images/portal-edenradar.png",
-  // The controlled-record view, not the vendor register: it shows the
-  // append-only trail and the electronic signature the headline promises,
-  // and it survives being scaled into a card better than a dense table.
-  EdenCompliance: "/images/portal-edencompliance-record.jpg",
+// Screenshots each product already publishes on its own marketing site, so the
+// card never shows a view the product itself does not show.
+//
+// EdenRadar ships five on its how-it-works page; three of them map onto three of
+// our tiles (asset dossiers, whitespace map, pipeline board). EdenCompliance
+// ships exactly one screenshot on its built site, the program dashboard: the
+// rest of its marketing is designed vignettes rather than captures. So Radar
+// cycles and Compliance holds a single frame until it has more to show.
+const SHOTS: Record<string, string[]> = {
+  EdenRadar: ["/images/shot-radar-1.jpg", "/images/shot-radar-2.jpg", "/images/shot-radar-3.jpg"],
+  EdenCompliance: ["/images/shot-compliance-1.jpg"],
 };
 
-// The floor is taller than either screenshot's aspect, so `cover` crops the sides.
-// Anchor each shot where its meaning lives: the register reads left to right off
-// the vendor column, so it holds the left edge rather than centering.
-const SHOT_POSITION: Record<string, string> = {
-  EdenRadar: "top center",
-  EdenCompliance: "top center",
+// Shots are shown contained rather than cover-cropped, so a frame is never
+// sliced through a chart, a row, or a word. Each sits on the ground its own UI
+// uses, so the letterboxing reads as the app's own canvas rather than a gap.
+const SHOT_GROUND: Record<string, string> = {
+  EdenRadar: "#eef2f0",
+  EdenCompliance: "#0b1a12",
 };
+
+const REVEAL_MS = 600; // hold the tiles briefly, so the reveal reads as intent
+const CYCLE_MS = 2600; // long enough to take a shot in before the next one
 
 // A cursor merely crossing a card should not strobe the screenshot in and out.
 // Hold the tiles for a beat first, so the reveal reads as intent rather than
 // an accident; reverting stays instant so leaving the card feels immediate.
-const REVEAL_DELAY = "[@media(hover:hover)]:group-hover:[transition-delay:600ms]";
 
 // Layered ambient shadow at rest; a shallower shadow plus a downward nudge on
 // hover so the whole card reads as a button pressing in.
@@ -153,12 +161,31 @@ function cardStyle(p: Product) {
 }
 
 // The whole card is the link, so it can press in like a button.
-function CardLink({ p, className = "", children }: { p: Product; className?: string; children: ReactNode }) {
+function CardLink({
+  p,
+  className = "",
+  children,
+  onEnter,
+  onLeave,
+}: {
+  p: Product;
+  className?: string;
+  children: ReactNode;
+  onEnter?: () => void;
+  onLeave?: () => void;
+}) {
   const cls = `group relative flex flex-col overflow-hidden rounded-[26px] ${PRESS} ${className}`;
+  // Focus mirrors hover so the reveal is reachable from the keyboard too.
+  const handlers = {
+    onMouseEnter: onEnter,
+    onMouseLeave: onLeave,
+    onFocus: onEnter,
+    onBlur: onLeave,
+  };
   return p.cta.external ? (
-    <a href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={cardStyle(p)}>{children}</a>
+    <a href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={cardStyle(p)} {...handlers}>{children}</a>
   ) : (
-    <Link to={p.cta.href} className={cls} style={cardStyle(p)}>{children}</Link>
+    <Link to={p.cta.href} className={cls} style={cardStyle(p)} {...handlers}>{children}</Link>
   );
 }
 
@@ -229,20 +256,68 @@ function CapabilityTile({ p, c }: { p: Product; c: Capability }) {
   );
 }
 
+// Drives the floor: holds the tiles for REVEAL_MS on hover, then dissolves to the
+// screenshots and steps through them. Hover capability is checked at run time
+// rather than in CSS because the timer has to be started and stopped too; on
+// touch none of this arms, and the tiles simply stay.
+function useShotReveal(count: number) {
+  const [revealed, setRevealed] = useState(false);
+  const [index, setIndex] = useState(0);
+  const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cycleTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const stop = () => {
+    if (openTimer.current) clearTimeout(openTimer.current);
+    if (cycleTimer.current) clearInterval(cycleTimer.current);
+    openTimer.current = null;
+    cycleTimer.current = null;
+  };
+
+  useEffect(() => stop, []);
+
+  const onEnter = () => {
+    if (!window.matchMedia?.("(hover: hover)").matches) return;
+    stop();
+    openTimer.current = setTimeout(() => {
+      setRevealed(true);
+      // Stepping through frames on a timer is motion; honor the preference.
+      const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+      if (count > 1 && !reduced) {
+        cycleTimer.current = setInterval(() => setIndex((i) => (i + 1) % count), CYCLE_MS);
+      }
+    }, REVEAL_MS);
+  };
+
+  const onLeave = () => {
+    stop();
+    setRevealed(false);
+    setIndex(0);
+  };
+
+  return { revealed, index, onEnter, onLeave };
+}
+
 // Big flagship tile: copy on top, capability grid along the floor, and the real
-// screenshot cross-fading over that grid on hover. Both tiles are the same height
-// so both floors start at the same line.
+// screenshots cross-fading over that grid on hover. Both tiles are the same
+// height so both floors start at the same line.
 function BigTile({ p }: { p: Product }) {
   const caps = p.capabilities ?? [];
+  const shots = SHOTS[p.name] ?? [];
+  const { revealed, index, onEnter, onLeave } = useShotReveal(shots.length);
   return (
-    <CardLink p={p} className="min-h-[680px]">
+    <CardLink p={p} className="min-h-[680px]" onEnter={onEnter} onLeave={onLeave}>
       <div className="relative z-10 p-8 lg:p-9">
         <div className="flex items-center justify-between gap-4">
           <Wordmark p={p} />
           {/* Affordance: teaches the reveal, then gets out of the way. */}
           <span
-            className={`hidden flex-shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider transition-opacity duration-200 ${REVEAL_DELAY} [@media(hover:hover)]:inline-flex [@media(hover:hover)]:group-hover:opacity-0`}
-            style={{ background: "rgba(255,255,255,0.82)", color: NOTE, border: "1px solid rgba(15,26,20,0.08)" }}
+            className="hidden flex-shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider transition-opacity duration-200 [@media(hover:hover)]:inline-flex"
+            style={{
+              background: "rgba(255,255,255,0.82)",
+              color: NOTE,
+              border: "1px solid rgba(15,26,20,0.08)",
+              opacity: revealed ? 0 : 1,
+            }}
           >
             <Eye className="h-3 w-3" strokeWidth={2.4} /> Preview
           </span>
@@ -256,25 +331,73 @@ function BigTile({ p }: { p: Product }) {
         className="relative mt-auto h-[392px] w-full overflow-hidden lg:h-[404px]"
         style={{ borderTop: "1px solid rgba(15,26,20,0.08)", background: `hsl(var(${p.token}) / 0.03)` }}
       >
-        {/* Rest state: what the product actually does. */}
-        <div className={`grid h-full grid-cols-2 grid-rows-4 gap-2.5 p-5 transition-[opacity,transform] duration-300 ease-out ${REVEAL_DELAY} [@media(hover:hover)]:group-hover:scale-[0.985] [@media(hover:hover)]:group-hover:opacity-0`}>
+        {/* Rest state: what the product actually does. Clears a little faster
+            than the shot arrives, so the two states cross-dissolve instead of
+            both sitting at half opacity. */}
+        <div
+          className="grid h-full grid-cols-2 grid-rows-4 gap-2.5 p-5 transition-[opacity,transform] duration-[380ms] ease-out"
+          style={{ opacity: revealed ? 0 : 1, transform: revealed ? "scale(0.985)" : "scale(1)" }}
+        >
           {caps.map((c) => (
             <CapabilityTile key={c.label} p={p} c={c} />
           ))}
         </div>
 
-        {/* Hover state: the real thing. Hidden entirely where hover is absent. */}
-        <div className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out ${REVEAL_DELAY} [@media(hover:hover)]:group-hover:opacity-100`}>
-          <img
-            src={SHOTS[p.name]}
-            alt=""
-            decoding="async"
-            /* Not lazy: the reveal has to be instant on first hover, and a lazy
-               image that starts fetching on hover shows an empty floor. */
-            className="h-full w-full"
-            style={{ objectFit: "cover", objectPosition: SHOT_POSITION[p.name] ?? "top center" }}
-          />
-        </div>
+        {/* Hover state: the product's own screenshots, stacked and cross-faded.
+            Each settles from a slight overscale so a step reads as a dissolve
+            rather than a cut. */}
+        {shots.map((src, i) => (
+          <div
+            key={src}
+            aria-hidden
+            className="pointer-events-none absolute inset-0 flex items-center justify-center transition-[opacity,transform] duration-500 ease-out"
+            style={{
+              opacity: revealed && i === index ? 1 : 0,
+              transform: revealed && i === index ? "scale(1)" : "scale(1.04)",
+              background: SHOT_GROUND[p.name] ?? "#eef2f0",
+            }}
+          >
+            <img
+              src={src}
+              alt=""
+              decoding="async"
+              /* The first frame is never lazy: a lazy image that starts
+                 fetching on hover reveals an empty floor. Later frames have
+                 the reveal delay plus a full cycle before they are needed. */
+              loading={i === 0 ? "eager" : "lazy"}
+              /* Contained, not cropped: the whole frame is always visible. */
+              className="max-h-full max-w-full"
+              style={{ objectFit: "contain" }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(118% 92% at 50% 38%, transparent 52%, rgba(6,16,11,0.30) 100%)",
+              }}
+            />
+          </div>
+        ))}
+
+        {/* Which frame, of how many. Only earns its place when there is more
+            than one shot to step through. */}
+        {shots.length > 1 && (
+          <div
+            className="pointer-events-none absolute bottom-3.5 left-1/2 flex -translate-x-1/2 gap-1.5 transition-opacity duration-300"
+            style={{ opacity: revealed ? 1 : 0 }}
+          >
+            {shots.map((src, i) => (
+              <span
+                key={src}
+                className="h-1.5 rounded-full transition-all duration-300"
+                style={{
+                  width: i === index ? 16 : 6,
+                  background: i === index ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.45)",
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </CardLink>
   );
