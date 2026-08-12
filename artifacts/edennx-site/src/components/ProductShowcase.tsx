@@ -77,7 +77,7 @@ function Surface({ p, flip }: { p: Product; flip: boolean }) {
       />
       <div className={`flex ${flip ? "lg:justify-end" : "lg:justify-start"}`}>
         <div
-          className={`w-full ${isImg ? "max-w-none lg:w-[126%]" : "max-w-[660px] lg:w-[112%]"}`}
+          className={`w-full ${isImg ? "max-w-none lg:w-[126%]" : "max-w-[740px] lg:w-[120%]"}`}
           style={{
             transformOrigin: flip ? "right center" : "left center",
             transform: `rotateY(${flip ? 13 : -13}deg) rotateX(3deg)`,
@@ -112,19 +112,13 @@ function ProductRow({ p, i }: { p: Product; i: number }) {
   const flip = i % 2 === 1;
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden" style={i > 0 ? { borderTop: "1px solid rgba(255,255,255,0.05)" } : undefined}>
       <div
         aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            `radial-gradient(55% 80% at ${flip ? "18%" : "82%"} 38%, hsl(var(${p.token}) / 0.13), transparent 62%),` +
-            `linear-gradient(155deg, color-mix(in oklab, hsl(var(${p.token})) 12%, #070e0b), color-mix(in oklab, hsl(var(${p.token})) 5%, #05090a))`,
-          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)",
-          maskImage: "linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)",
-        }}
+        className="pointer-events-none absolute inset-0"
+        style={{ background: `radial-gradient(54% 78% at ${flip ? "16%" : "84%"} 42%, hsl(var(${p.token}) / 0.16), transparent 60%)` }}
       />
-      <div className="relative z-10 mx-auto grid max-w-[1240px] items-center gap-10 px-6 py-24 sm:px-8 lg:min-h-[72vh] lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-28">
+      <div className="relative z-10 mx-auto grid max-w-[1240px] items-center gap-10 px-6 py-20 sm:px-8 lg:min-h-[66vh] lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-24">
         {/* Text */}
         <div className={`reveal ${flip ? "lg:order-2" : ""}`}>
           <div className="flex items-center gap-3 mb-5">
@@ -180,10 +174,24 @@ function ProductRow({ p, i }: { p: Product; i: number }) {
 
 export function ProductShowcase() {
   return (
-    <div>
-      {PRODUCTS.map((p, i) => (
-        <ProductRow key={p.name} p={p} i={i} />
-      ))}
+    <div className="relative overflow-hidden">
+      {/* One continuous dark canvas for the whole suite, fading into the light page
+          only at the very top and bottom, so there are no bright gaps between
+          products (each product tints this ground with its own accent). */}
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(180deg, #070e0b, #05090a)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent, #000 4%, #000 96%, transparent)",
+          maskImage: "linear-gradient(to bottom, transparent, #000 4%, #000 96%, transparent)",
+        }}
+      />
+      <div className="relative z-10">
+        {PRODUCTS.map((p, i) => (
+          <ProductRow key={p.name} p={p} i={i} />
+        ))}
+      </div>
     </div>
   );
 }
