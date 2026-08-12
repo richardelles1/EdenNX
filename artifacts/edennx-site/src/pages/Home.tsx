@@ -1,83 +1,13 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { BoxGridBackground } from "@/components/BoxGridBackground";
-import { AuroraBackground } from "@/components/AuroraBackground";
+import { ArrowRight } from "lucide-react";
 import { CoverageSection } from "@/components/CoverageSection";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
-import {
-  TTO_COUNT_LABEL,
-  ASSET_COUNT_LABEL,
-  DATA_SOURCE_LABEL,
-} from "@/lib/platformStats";
 
-const FLIP_DURATION = 400;
-
-const flipWords = [
-  "Drug Discovery",
-  "Vendor Qualification",
-  "Rare Disease Research",
-  "Audit Programs",
-  "Data-Driven Decisions",
-  "Quality Oversight",
-  "Early-Stage Research",
-  "Signed Audit Trails",
-  "Biotech Innovation",
-  "Regulated Quality Teams",
-  "Clinical-Stage Intelligence",
-  "Licensing Deals",
-  "Technology Transfer",
-  "Supplier Oversight",
-  "Concept to Patient",
-  "The Next Breakthrough",
-];
-
-function TextFlip({ words }: { words: string[] }) {
-  const [index, setIndex] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    let t1: ReturnType<typeof setTimeout> | undefined;
-    let t2: ReturnType<typeof setTimeout> | undefined;
-    t1 = setTimeout(function tick() {
-      setVisible(false);
-      t2 = setTimeout(() => {
-        setIndex((i) => (i + 1) % words.length);
-        setVisible(true);
-        t1 = setTimeout(tick, 3500);
-      }, FLIP_DURATION);
-    }, 3500);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, [words]);
-
-  return (
-    <span
-      className="text-primary whitespace-nowrap"
-      style={{
-        display: "inline-block",
-        opacity: visible ? 1 : 0,
-        transition: `opacity ${FLIP_DURATION}ms ease`,
-      }}
-    >
-      {words[index]}
-    </span>
-  );
-}
-
-const marqueeItems = [
-  `${ASSET_COUNT_LABEL} biotech assets indexed`,
-  `${TTO_COUNT_LABEL} research institutions monitored`,
-  "The biotech landscape, scored daily",
-  "EdenRadar by EdenNX",
-  "Vendor qualification & audit programs",
-  "Every change on a signed, unalterable record",
-  "EdenCompliance by EdenNX",
-  `${DATA_SOURCE_LABEL} live data sources`,
-];
+// The mark, cropped tight to its artwork so a height percentage means the
+// mark's real height rather than mostly white padding.
+const MARK = "/images/eden-mark-hero.jpg";
 
 export default function Home() {
   useScrollReveal();
@@ -89,96 +19,71 @@ export default function Home() {
 
   return (
     <div className="pt-16">
-      {/* Hero */}
-      <section className="relative min-h-[72vh] flex items-center overflow-hidden bg-background">
-        <BoxGridBackground />
-        <AuroraBackground />
+      {/*
+        Hero. The mark takes the right of the frame, cropped by it, so it reads
+        as architecture rather than logo placement. It is blended with multiply,
+        which returns the backdrop wherever the artwork is white: that removes
+        the white card baked into the logo and lets it sit on the page tint
+        without keying the asset.
 
-        {/* Content layer — pointer-events-none lets background grid receive mouse events */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24 pointer-events-none">
-          <div className="max-w-4xl">
-            {/* Primary headline — EdenNX as the anchor */}
+        One statement, one action. The rotating "Powering" word and the scrolling
+        fact ticker that used to sit here are both gone: the statement carries
+        the page, and the ticker repeated figures the Coverage band already
+        states further down.
+      */}
+      <section
+        className="relative flex min-h-[76vh] items-center overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(72% 92% at 76% 42%, rgba(47,143,78,0.10) 0%, rgba(47,143,78,0.03) 42%, rgba(255,255,255,0) 72%), #FFFFFF",
+        }}
+      >
+        <img
+          src={MARK}
+          alt=""
+          aria-hidden
+          /* No -translate-y-1/2 here: Tailwind emits that as the standalone
+             `translate` property, which composes with the `transform` in the
+             entrance keyframe instead of overriding it, centring the mark twice.
+             The keyframe owns the vertical offset. */
+          className="hero-mark hero-mark-in pointer-events-none absolute top-1/2 w-auto select-none"
+          style={{ objectFit: "contain", mixBlendMode: "multiply" }}
+        />
+
+        <div className="relative mx-auto w-full max-w-7xl px-6 py-20 lg:px-8">
+          <div className="max-w-full lg:max-w-[52%]">
             <h1
-              className="text-6xl md:text-7xl lg:text-8xl font-bold text-foreground leading-none tracking-tight mb-5 reveal"
+              className="hero-rise font-bold text-foreground"
               data-testid="hero-headline"
-              style={{ transitionDelay: "0.1s" }}
-            >
-              <span className="text-primary">Eden</span>NX
-            </h1>
-
-            {/*
-              "Powering [word]". The word span is a clipped flex-1 child so the
-              rotating words can never change the row's width or height: fixed
-              height stops vertical shift, flex-1 + overflow-hidden stops any
-              horizontal reflow regardless of word length.
-            */}
-            <div
-              className="flex items-baseline gap-3 mb-8 w-full max-w-full overflow-hidden reveal"
               style={{
-                transitionDelay: "0.15s",
-                height: "clamp(1.75rem, 4.5vw, 3.25rem)",
+                fontSize: "clamp(2.4rem,4.7vw,4.2rem)",
+                lineHeight: 1.03,
+                letterSpacing: "-0.032em",
+                animationDelay: "0.18s",
               }}
             >
-              <span className="text-xl md:text-3xl lg:text-4xl font-light text-foreground/65 leading-none flex-shrink-0">
-                Powering
-              </span>
-              <span className="text-xl md:text-3xl lg:text-4xl font-bold leading-none flex-1 min-w-0 overflow-hidden">
-                <TextFlip words={flipWords} />
-              </span>
-            </div>
+              The intelligence <span className="text-primary">backbone</span> of modern biotech.
+            </h1>
 
             <p
-              className="text-lg md:text-xl text-foreground/70 leading-relaxed mb-10 max-w-2xl reveal"
+              className="hero-rise mt-6 max-w-[46ch] text-[17px] leading-relaxed text-foreground/60"
               data-testid="hero-subheadline"
-              style={{ transitionDelay: "0.2s" }}
+              style={{ animationDelay: "0.3s" }}
             >
-              The intelligence backbone of modern biotech, from the earliest research
-              hypothesis through commercial licensing and regulated quality.
+              From the first research hypothesis through commercial licensing and
+              regulated quality.
             </p>
 
-            {/* Re-enable pointer events only on interactive elements */}
-            <div
-              className="flex flex-wrap gap-4 reveal pointer-events-auto"
-              style={{ transitionDelay: "0.3s" }}
-            >
+            <div className="hero-rise mt-9" style={{ animationDelay: "0.42s" }}>
               <Link
                 to="/products"
                 data-testid="hero-cta-products"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-[15px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
               >
-                Explore Our Products
-              </Link>
-              <Link
-                to="/team"
-                data-testid="hero-cta-team"
-                className="inline-flex items-center px-6 py-3 rounded-full text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
-              >
-                Meet the Team
+                See the platform <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Marquee ticker strip */}
-      <section
-        className="border-y border-border bg-foreground/[0.02] dark:bg-white/[0.02] py-5 overflow-hidden"
-        aria-label="Key facts"
-      >
-        <div className="marquee-track select-none">
-          {[...marqueeItems, ...marqueeItems].flatMap((item, i) => [
-            <span
-              key={`item-${i}`}
-              className="px-6 text-sm font-medium text-muted-foreground whitespace-nowrap"
-            >
-              {item}
-            </span>,
-            <span
-              key={`dot-${i}`}
-              className="flex-shrink-0 h-1.5 w-1.5 rounded-full bg-primary"
-              aria-hidden="true"
-            />,
-          ])}
         </div>
       </section>
 
