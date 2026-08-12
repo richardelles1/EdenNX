@@ -60,55 +60,45 @@ const PRODUCTS: Product[] = [
   },
 ];
 
+// Every surface (the dashboard image and the vignettes alike) gets the same
+// treatment: supersized, tilted in 3D on its near (text-side) edge so it recedes
+// away from the copy, bled off the outer edge, and feathered on every edge into
+// the ground. No small framed cards.
 function Surface({ p, flip }: { p: Product; flip: boolean }) {
-  // EdenCompliance already has a dark dashboard: supersize it and let it bleed and
-  // fade into the ground (no container), rather than a small framed card.
-  if (p.name === "EdenCompliance") {
-    // Anchor the near (text-side) edge at the column boundary so it never runs
-    // into the copy; bleed only off the outer edge, tilted in 3D on that near
-    // edge like the EdenCompliance hero so it recedes away from the text.
-    const feather = "radial-gradient(135% 130% at 50% 50%, #000 62%, rgba(0,0,0,0) 100%)";
-    return (
-      <div className="relative" style={{ perspective: "1900px" }}>
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{ background: `radial-gradient(58% 64% at ${flip ? "40%" : "60%"} 50%, hsl(var(${p.token}) / 0.30), transparent 72%)` }}
-        />
-        <div className={`flex ${flip ? "lg:justify-end" : "lg:justify-start"}`}>
-          <img
-            src="/images/portal-edencompliance.png"
-            alt="EdenCompliance dashboard: vendor status, findings, and program health"
-            decoding="async"
-            className="block w-full max-w-none lg:w-[122%]"
-            style={{
-              transformOrigin: flip ? "right center" : "left center",
-              transform: `rotateY(${flip ? 15 : -15}deg) rotateX(3deg)`,
-              backfaceVisibility: "hidden",
-              willChange: "transform",
-              filter: `drop-shadow(${flip ? "-28px" : "28px"} 42px 60px rgba(0,0,0,0.6))`,
-              WebkitMaskImage: feather,
-              maskImage: feather,
-            }}
-          />
-        </div>
-      </div>
-    );
-  }
-
   const Vignette = VIGNETTES[p.name] ?? VIGNETTES.EdenRadar;
+  const isImg = p.name === "EdenCompliance";
+  const feather = "radial-gradient(128% 122% at 50% 50%, #000 55%, rgba(0,0,0,0) 100%)";
   return (
-    <div className="relative flex justify-center">
+    <div className="relative" style={{ perspective: "2000px" }}>
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: `radial-gradient(55% 62% at 50% 46%, hsl(var(${p.token}) / 0.34), transparent 72%)` }}
+        style={{ background: `radial-gradient(62% 66% at ${flip ? "40%" : "60%"} 50%, hsl(var(${p.token}) / 0.32), transparent 72%)` }}
       />
-      <div
-        className="relative"
-        style={{ transform: `perspective(2200px) rotateY(${flip ? 4 : -4}deg)`, willChange: "transform" }}
-      >
-        <Vignette />
+      <div className={`flex ${flip ? "lg:justify-end" : "lg:justify-start"}`}>
+        <div
+          className={`w-full ${isImg ? "max-w-none lg:w-[126%]" : "max-w-[660px] lg:w-[112%]"}`}
+          style={{
+            transformOrigin: flip ? "right center" : "left center",
+            transform: `rotateY(${flip ? 13 : -13}deg) rotateX(3deg)`,
+            backfaceVisibility: "hidden",
+            willChange: "transform",
+            filter: `drop-shadow(${flip ? "-26px" : "26px"} 40px 58px rgba(0,0,0,0.6))`,
+            WebkitMaskImage: feather,
+            maskImage: feather,
+          }}
+        >
+          {isImg ? (
+            <img
+              src="/images/portal-edencompliance.png"
+              alt="EdenCompliance dashboard: vendor status, findings, and program health"
+              decoding="async"
+              className="block w-full"
+            />
+          ) : (
+            <Vignette />
+          )}
+        </div>
       </div>
     </div>
   );
@@ -122,15 +112,19 @@ function ProductRow({ p, i }: { p: Product; i: number }) {
   const flip = i % 2 === 1;
 
   return (
-    <section
-      className="relative overflow-hidden"
-      style={{
-        background:
-          `radial-gradient(55% 80% at ${flip ? "18%" : "82%"} 38%, hsl(var(${p.token}) / 0.12), transparent 62%),` +
-          `linear-gradient(155deg, color-mix(in oklab, hsl(var(${p.token})) 11%, #070e0b), color-mix(in oklab, hsl(var(${p.token})) 4%, #05090a))`,
-      }}
-    >
-      <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-6 py-20 sm:px-8 lg:min-h-[64vh] lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-20">
+    <section className="relative overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{
+          background:
+            `radial-gradient(55% 80% at ${flip ? "18%" : "82%"} 38%, hsl(var(${p.token}) / 0.13), transparent 62%),` +
+            `linear-gradient(155deg, color-mix(in oklab, hsl(var(${p.token})) 12%, #070e0b), color-mix(in oklab, hsl(var(${p.token})) 5%, #05090a))`,
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)",
+        }}
+      />
+      <div className="relative z-10 mx-auto grid max-w-[1240px] items-center gap-10 px-6 py-24 sm:px-8 lg:min-h-[72vh] lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-28">
         {/* Text */}
         <div className={`reveal ${flip ? "lg:order-2" : ""}`}>
           <div className="flex items-center gap-3 mb-5">

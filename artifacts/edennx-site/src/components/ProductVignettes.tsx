@@ -8,11 +8,10 @@ import { Radar, Store, FlaskConical, Lightbulb, Lock, Check, TrendingUp, Users, 
 function VCard({ token, children }: { token: string; children: ReactNode }) {
   return (
     <div
-      className="w-full max-w-[500px] overflow-hidden rounded-2xl border"
+      className="w-full overflow-hidden rounded-2xl"
       style={{
-        borderColor: `hsl(var(${token}) / 0.4)`,
-        background: "linear-gradient(180deg, rgba(23,30,27,0.94), rgba(10,15,13,0.96))",
-        boxShadow: `0 36px 90px rgba(0,0,0,0.62), 0 0 0 1px hsl(var(${token}) / 0.16), inset 0 1px 0 rgba(255,255,255,0.08)`,
+        background: "linear-gradient(180deg, #171f1b, #0b100e)",
+        border: `1px solid hsl(var(${token}) / 0.16)`,
       }}
       aria-hidden
     >
