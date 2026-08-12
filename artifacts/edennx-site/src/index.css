@@ -250,21 +250,6 @@
   50% { background-color: hsl(142 52% 36% / 0.14); }
 }
 
-/* Marquee scrolling ticker */
-@keyframes marqueeScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.marquee-track {
-  display: flex;
-  align-items: center;
-  width: max-content;
-  animation: marqueeScroll 32s linear infinite;
-}
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
 /* Hero highlight underline reveal */
 @keyframes highlightExpand {
   from { transform: scaleX(0); }
@@ -370,7 +355,7 @@ section[id] { scroll-margin-top: 8rem; }
 
 @media (prefers-reduced-motion: reduce) {
   .aurora-blob-1, .aurora-blob-2, .aurora-blob-3,
-  .marquee-left, .marquee-right, .marquee-track {
+  .marquee-left, .marquee-right {
     animation: none !important;
   }
 }

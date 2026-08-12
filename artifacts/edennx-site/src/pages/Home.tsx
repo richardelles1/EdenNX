@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { AuroraBackground } from "@/components/AuroraBackground";
 import { CoverageSection } from "@/components/CoverageSection";
+import { IndexStrip } from "@/components/IndexStrip";
 import { PortalEyebrow } from "@/components/PortalBits";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -68,17 +69,6 @@ function TextFlip({ words }: { words: string[] }) {
     </span>
   );
 }
-
-const marqueeItems = [
-  `${ASSET_COUNT_LABEL} biotech assets indexed`,
-  `${TTO_COUNT_LABEL} research institutions monitored`,
-  "The biotech landscape, scored daily",
-  "EdenRadar by EdenNX",
-  "Vendor qualification & audit programs",
-  "Every change on a signed, unalterable record",
-  "EdenCompliance by EdenNX",
-  `${DATA_SOURCE_LABEL} live data sources`,
-];
 
 type Portal = {
   name: string;
@@ -278,27 +268,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Marquee ticker strip */}
-      <section
-        className="border-y border-border bg-foreground/[0.02] dark:bg-white/[0.02] py-5 overflow-hidden"
-        aria-label="Key facts"
-      >
-        <div className="marquee-track select-none">
-          {[...marqueeItems, ...marqueeItems].flatMap((item, i) => [
-            <span
-              key={`item-${i}`}
-              className="px-6 text-sm font-medium text-muted-foreground whitespace-nowrap"
-            >
-              {item}
-            </span>,
-            <span
-              key={`dot-${i}`}
-              className="flex-shrink-0 h-1.5 w-1.5 rounded-full bg-primary"
-              aria-hidden="true"
-            />,
-          ])}
-        </div>
-      </section>
+      {/* What the backbone covers, in the products' own visual grammar */}
+      <IndexStrip />
 
       {/* Product Suite intro */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-24 pb-10 lg:pb-12" data-testid="product-highlights">
