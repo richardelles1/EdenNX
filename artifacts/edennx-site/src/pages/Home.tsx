@@ -78,13 +78,15 @@ export default function Home() {
               className="hero-rise font-bold text-foreground"
               data-testid="hero-headline"
               style={{
-                fontSize: "clamp(2.6rem,5.1vw,4.7rem)",
+                // Sized so the line breaks after "backbone" and sets as two
+                // lines. Any larger and "on." is orphaned on a third.
+                fontSize: "clamp(2.6rem,5.2vw,4.6rem)",
                 lineHeight: 1.02,
-                letterSpacing: "-0.032em",
+                letterSpacing: "-0.034em",
                 animationDelay: "0.18s",
               }}
             >
-              The intelligence <span className="text-primary">backbone</span> of modern biotech.
+              The <span className="text-primary">backbone</span> biotech runs on.
             </h1>
 
             {/* Sized and weighted to be read, not skimmed past. The accents are
@@ -95,11 +97,10 @@ export default function Home() {
               data-testid="hero-subheadline"
               style={{ animationDelay: "0.3s" }}
             >
-              We make breakthrough science{" "}
-              <span className="font-semibold text-primary">findable</span>, and keep it{" "}
-              <span className="font-semibold text-primary">provable</span> all the way to
-              market. <span className="font-semibold text-primary">Less time</span> between
-              a discovery and the patients waiting on it.
+              <span className="font-semibold text-primary">Findable</span> science.{" "}
+              <span className="font-semibold text-primary">Provable</span> quality.{" "}
+              <span className="font-semibold text-primary">Less time</span> between a
+              discovery and the people waiting on it.
             </p>
 
             {/* Two actions, weighted rather than matched: the primary carries
