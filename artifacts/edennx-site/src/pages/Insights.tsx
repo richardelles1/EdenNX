@@ -44,10 +44,13 @@ function Card({ post, featured = false }: { post: Insight; featured?: boolean })
       href={post.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group relative flex flex-col rounded-2xl border bg-card p-6 transition-shadow hover:shadow-lg reveal ${
+      // No coloured bar across the top: a tinted strip on every card is the
+      // stock way to signal a category, and with a source badge already naming
+      // the product it was decoration doing a job that was already done. The
+      // card is a plain surface; the wordmark carries the colour.
+      className={`group relative flex flex-col rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-foreground/15 hover:shadow-[0_14px_36px_rgba(15,26,20,0.09)] reveal ${
         featured ? "md:col-span-2 md:p-8" : ""
       }`}
-      style={{ borderColor: `hsl(var(${token}) / 0.24)`, borderTop: `3px solid ${accent}` }}
       data-testid={`insight-${post.source.toLowerCase()}`}
     >
       <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">

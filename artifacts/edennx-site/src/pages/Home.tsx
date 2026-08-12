@@ -50,8 +50,23 @@ export default function Home() {
           style={{ objectFit: "contain", mixBlendMode: "multiply" }}
         />
 
+        {/* The same fine data grid the product bento stands on, so the hero and
+            the section below it share one ground rather than each inventing a
+            texture. Faded at the edges so it never reads as a pattern. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at center, rgba(15,26,20,0.055) 1px, transparent 1.5px)",
+            backgroundSize: "26px 26px",
+            WebkitMaskImage: "radial-gradient(115% 85% at 30% 45%, #000 20%, transparent 78%)",
+            maskImage: "radial-gradient(115% 85% at 30% 45%, #000 20%, transparent 78%)",
+          }}
+        />
+
         <div className="relative mx-auto w-full max-w-7xl px-6 py-20 lg:px-8">
-          <div className="max-w-full lg:max-w-[52%]">
+          <div className="max-w-full lg:max-w-[50%]">
             <h1
               className="hero-rise font-bold text-foreground"
               data-testid="hero-headline"
@@ -74,13 +89,26 @@ export default function Home() {
               regulated quality.
             </p>
 
-            <div className="hero-rise mt-9" style={{ animationDelay: "0.42s" }}>
-              <Link
-                to="/products"
+            {/* Two actions, weighted rather than matched: the primary carries
+                you down to the suite on this page, the secondary leaves it.
+                The old hero ran two identical solid greens with no hierarchy. */}
+            <div
+              className="hero-rise mt-9 flex flex-wrap items-center gap-3"
+              style={{ animationDelay: "0.42s" }}
+            >
+              <a
+                href="#suite"
                 data-testid="hero-cta-products"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-[15px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
               >
-                See the platform <ArrowRight className="h-4 w-4" />
+                Our products <ArrowRight className="h-4 w-4" />
+              </a>
+              <Link
+                to="/contact"
+                data-testid="hero-cta-contact"
+                className="inline-flex items-center rounded-full border border-foreground/15 px-6 py-3 text-[15px] font-semibold text-foreground/75 transition-colors hover:border-foreground/30 hover:text-foreground"
+              >
+                Contact
               </Link>
             </div>
           </div>
@@ -88,7 +116,12 @@ export default function Home() {
       </section>
 
       {/* Product Suite intro */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-24 pb-10 lg:pb-12" data-testid="product-highlights">
+      {/* scroll-mt clears the fixed navbar when the hero CTA jumps here. */}
+      <section
+        id="suite"
+        className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-24 pb-10 lg:pb-12 scroll-mt-24"
+        data-testid="product-highlights"
+      >
         <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-5 reveal">
           Five products, one biotech backbone.
         </h2>

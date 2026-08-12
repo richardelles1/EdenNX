@@ -291,11 +291,11 @@
    mark drops back to a watermark and the copy runs full width over it. */
 .hero-mark {
   --hero-mark-opacity: 0.7;
-  right: 3%;
-  /* Tuned against the real section height, not the mockup frame: at 142% the
-     mark crops to its middle band and the leaf disappears entirely. */
-  height: 112%;
-  max-width: 46%;
+  right: 11%;
+  /* Tuned against the real section height, not the mockup frame: past roughly
+     135% the mark crops to its middle band and the leaf disappears. */
+  height: 132%;
+  max-width: 44%;
 }
 @media (max-width: 1023px) {
   .hero-mark {
