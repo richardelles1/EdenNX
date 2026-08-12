@@ -1,4 +1,4 @@
-import { TTOGlobe } from "@/components/TTOGlobe";
+import { RecentlyIndexed } from "@/components/RecentlyIndexed";
 import {
   TTO_COUNT_LABEL,
   ASSET_COUNT_LABEL,
@@ -90,9 +90,15 @@ export function CoverageSection() {
             </div>
           </div>
 
-          {/* Globe */}
-          <div className="flex justify-center lg:justify-end">
-            <TTOGlobe size={460} isDark />
+          {/* Live-shaped proof: real assets, rotating one card at a time */}
+          <div>
+            <p
+              className="mb-4 text-[11px] font-semibold uppercase tracking-widest"
+              style={{ color: "rgba(255,255,255,0.42)" }}
+            >
+              Recently indexed
+            </p>
+            <RecentlyIndexed />
           </div>
         </div>
 
