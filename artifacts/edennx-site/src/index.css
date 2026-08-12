@@ -368,19 +368,9 @@ section[id] { scroll-margin-top: 8rem; }
 .marquee-left  { animation: marqueeLeft 110s linear infinite; }
 .marquee-right { animation: marqueeRight 135s linear infinite; }
 
-/* Product spotlight showcase */
-@keyframes showcaseFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes showcaseFadeOnly { from { opacity: 0; } to { opacity: 1; } }
-.showcase-in { animation: showcaseFade 0.5s ease both; }
-/* opacity-only so the inline perspective tilt on the visual is preserved */
-.showcase-tilt { animation: showcaseFadeOnly 0.6s ease both; }
-@keyframes showcaseProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-.showcase-progress { transform-origin: left; animation-name: showcaseProgress; animation-timing-function: linear; animation-fill-mode: forwards; }
-
 @media (prefers-reduced-motion: reduce) {
   .aurora-blob-1, .aurora-blob-2, .aurora-blob-3,
-  .marquee-left, .marquee-right, .marquee-track,
-  .showcase-in, .showcase-tilt, .showcase-progress {
+  .marquee-left, .marquee-right, .marquee-track {
     animation: none !important;
   }
 }

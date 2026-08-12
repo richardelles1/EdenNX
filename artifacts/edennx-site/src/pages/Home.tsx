@@ -297,7 +297,7 @@ export default function Home() {
       </section>
 
       {/* Product Suite — EdenRadar's four portals */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20" data-testid="product-highlights">
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-14 lg:pt-20 pb-4" data-testid="product-highlights">
         <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 reveal">
           The Product Suite
         </p>
@@ -316,11 +316,9 @@ export default function Home() {
           EdenCompliance is a separate full platform for regulated quality teams. One company
           behind all five.
         </p>
-
-        <div className="reveal">
-          <ProductShowcase />
-        </div>
       </section>
+
+      <ProductShowcase />
 
       {/* Mission — light emerald tinted panel */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20">
