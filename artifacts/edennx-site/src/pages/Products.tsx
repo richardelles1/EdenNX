@@ -10,7 +10,7 @@ const pipeline: { icon: LucideIcon; title: string; desc: string }[] = [
   {
     icon: Radar,
     title: "Monitor",
-    desc: "Crawl 400+ tech transfer offices, government databases, and publication feeds, around the clock.",
+    desc: "Crawl 430+ tech transfer offices, government databases, and publication feeds, around the clock.",
   },
   {
     icon: Sparkles,

@@ -68,7 +68,7 @@ const NOTE = "#525c55";
 
 const SHOTS: Record<string, string> = {
   EdenRadar: "/images/portal-edenradar.png",
-  EdenCompliance: "/images/portal-edencompliance-light.png",
+  EdenCompliance: "/images/portal-edencompliance-register.png",
 };
 
 // Layered ambient shadow at rest; a shallower shadow plus a downward nudge on

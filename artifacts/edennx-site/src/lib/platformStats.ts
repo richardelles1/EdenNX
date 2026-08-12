@@ -3,8 +3,8 @@
 // so the parent-company site and the product never drift. Update here when the
 // EdenRadar canon changes.
 //
-//   TTO_COUNT_EXACT     412 institutions monitored (exact)
-//   TTO_COUNT_LABEL     "400+" — always-safe display range
+//   TTO_COUNT_EXACT     latest exact reading of institutions monitored
+//   TTO_COUNT_LABEL     "430+" — display range (confirmed by Rich, 2026-08)
 //   ASSET_COUNT_LABEL   rounded-down display for the live asset total (~35,582)
 //   ASSET_COUNT_EXACT   most recent exact reading from the EdenRadar database
 //   DATA_SOURCE_LABEL   live data-source families feeding the pipeline

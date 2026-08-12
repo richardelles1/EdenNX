@@ -161,7 +161,7 @@ const TTO_MARKERS: Array<{ location: [number, number]; size: number }> = [
   { location: [30.57, 104.07], size: 0.03 }, // Chengdu
   { location: [35.18, 129.08], size: 0.03 }, // Busan
   { location: [35.18, 136.91], size: 0.03 }, // Nagoya
-  // More US tech transfer offices (where most of our 400+ are)
+  // More US tech transfer offices (where most of our 430+ are)
   { location: [40.5, -74.45], size: 0.03 }, // Rutgers
   { location: [40.8, -77.86], size: 0.03 }, // Penn State
   { location: [40.43, -86.91], size: 0.03 }, // Purdue
