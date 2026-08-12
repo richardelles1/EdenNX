@@ -118,7 +118,10 @@ const NOTE = "#525c55";
 
 const SHOTS: Record<string, string> = {
   EdenRadar: "/images/portal-edenradar.png",
-  EdenCompliance: "/images/portal-edencompliance-register.png",
+  // The controlled-record view, not the vendor register: it shows the
+  // append-only trail and the electronic signature the headline promises,
+  // and it survives being scaled into a card better than a dense table.
+  EdenCompliance: "/images/portal-edencompliance-record.jpg",
 };
 
 // The floor is taller than either screenshot's aspect, so `cover` crops the sides.
@@ -126,8 +129,13 @@ const SHOTS: Record<string, string> = {
 // the vendor column, so it holds the left edge rather than centering.
 const SHOT_POSITION: Record<string, string> = {
   EdenRadar: "top center",
-  EdenCompliance: "top left",
+  EdenCompliance: "top center",
 };
+
+// A cursor merely crossing a card should not strobe the screenshot in and out.
+// Hold the tiles for a beat first, so the reveal reads as intent rather than
+// an accident; reverting stays instant so leaving the card feels immediate.
+const REVEAL_DELAY = "[@media(hover:hover)]:group-hover:[transition-delay:600ms]";
 
 // Layered ambient shadow at rest; a shallower shadow plus a downward nudge on
 // hover so the whole card reads as a button pressing in.
@@ -187,7 +195,7 @@ function CtaRow({ p }: { p: Product }) {
       <span className="inline-flex items-center gap-1 text-[14px] font-semibold transition-[gap] group-hover:gap-2" style={{ color: headlineAccent }}>
         {p.cta.label} <ArrowUpRight className="h-4 w-4" />
       </span>
-      <span className="font-mono text-[11.5px]" style={{ color: NOTE }}>{p.note}</span>
+      <span className="font-mono text-[14px] font-medium" style={{ color: BODY }}>{p.note}</span>
     </div>
   );
 }
@@ -233,7 +241,7 @@ function BigTile({ p }: { p: Product }) {
           <Wordmark p={p} />
           {/* Affordance: teaches the reveal, then gets out of the way. */}
           <span
-            className="hidden flex-shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider transition-opacity duration-200 [@media(hover:hover)]:inline-flex [@media(hover:hover)]:group-hover:opacity-0"
+            className={`hidden flex-shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider transition-opacity duration-200 ${REVEAL_DELAY} [@media(hover:hover)]:inline-flex [@media(hover:hover)]:group-hover:opacity-0`}
             style={{ background: "rgba(255,255,255,0.82)", color: NOTE, border: "1px solid rgba(15,26,20,0.08)" }}
           >
             <Eye className="h-3 w-3" strokeWidth={2.4} /> Preview
@@ -249,14 +257,14 @@ function BigTile({ p }: { p: Product }) {
         style={{ borderTop: "1px solid rgba(15,26,20,0.08)", background: `hsl(var(${p.token}) / 0.03)` }}
       >
         {/* Rest state: what the product actually does. */}
-        <div className="grid h-full grid-cols-2 grid-rows-4 gap-2.5 p-5 transition-[opacity,transform] duration-300 ease-out [@media(hover:hover)]:group-hover:scale-[0.985] [@media(hover:hover)]:group-hover:opacity-0">
+        <div className={`grid h-full grid-cols-2 grid-rows-4 gap-2.5 p-5 transition-[opacity,transform] duration-300 ease-out ${REVEAL_DELAY} [@media(hover:hover)]:group-hover:scale-[0.985] [@media(hover:hover)]:group-hover:opacity-0`}>
           {caps.map((c) => (
             <CapabilityTile key={c.label} p={p} c={c} />
           ))}
         </div>
 
         {/* Hover state: the real thing. Hidden entirely where hover is absent. */}
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out [@media(hover:hover)]:group-hover:opacity-100">
+        <div className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out ${REVEAL_DELAY} [@media(hover:hover)]:group-hover:opacity-100`}>
           <img
             src={SHOTS[p.name]}
             alt=""
