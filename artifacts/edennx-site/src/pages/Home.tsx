@@ -85,8 +85,8 @@ export default function Home() {
               data-testid="hero-subheadline"
               style={{ animationDelay: "0.3s" }}
             >
-              From the first research hypothesis through commercial licensing and
-              regulated quality.
+              We make academic science findable, and regulated quality provable.
+              Two hard problems, one company behind both.
             </p>
 
             {/* Two actions, weighted rather than matched: the primary carries
