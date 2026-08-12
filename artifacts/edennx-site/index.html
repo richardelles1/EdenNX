@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EdenNX - The intelligence backbone of modern biotech</title>
+    <title>EdenNX | Biotech intelligence infrastructure</title>
     <meta
       name="description"
-      content="EdenNX builds EdenRadar, EdenLab, EdenDiscovery, and EdenMarket: the intelligence infrastructure of modern biotech, monitoring 430+ research institutions and 35,000+ licensable assets."
+      content="EdenNX builds the intelligence backbone of modern biotech: EdenRadar for licensing intelligence across 430+ research institutions, and EdenCompliance for vendor quality and audit records."
     />
     <meta name="theme-color" content="#0a0e1a" />
     <link rel="canonical" href="https://edennx.com/" />
@@ -45,7 +45,10 @@
       rel="stylesheet"
     />
 
-    <!-- Organization schema for rich results -->
+    <!-- Organization schema for rich results. Brands are listed so the product
+         names are associated with the company rather than only appearing as
+         body copy, and both product domains are declared as sameAs so search
+         engines tie the three sites together. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -53,8 +56,29 @@
         "name": "EdenNX",
         "url": "https://edennx.com",
         "logo": "https://edennx.com/eden-mark.png",
-        "description": "The intelligence backbone of modern biotech. EdenNX builds EdenRadar, EdenLab, EdenDiscovery, and EdenMarket.",
-        "sameAs": ["https://www.linkedin.com/company/edennx", "https://edenradar.com"]
+        "description": "The backbone biotech runs on. EdenNX builds EdenRadar for licensing intelligence across research institutions, and EdenCompliance for vendor quality and audit records.",
+        "sameAs": [
+          "https://www.linkedin.com/company/edennx",
+          "https://edenradar.com",
+          "https://edencompliance.com"
+        ],
+        "brand": [
+          {
+            "@type": "Brand",
+            "name": "EdenRadar",
+            "url": "https://edenradar.com",
+            "description": "Industry BD intelligence across university tech transfer offices."
+          },
+          {
+            "@type": "Brand",
+            "name": "EdenCompliance",
+            "url": "https://edencompliance.com",
+            "description": "Vendor qualification and audit management for regulated quality teams."
+          },
+          { "@type": "Brand", "name": "EdenLab" },
+          { "@type": "Brand", "name": "EdenDiscovery" },
+          { "@type": "Brand", "name": "EdenMarket" }
+        ]
       }
     </script>
   </head>

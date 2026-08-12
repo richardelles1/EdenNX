@@ -97,7 +97,7 @@ function Card({ post, featured = false }: { post: Insight; featured?: boolean })
 export default function Insights() {
   useScrollReveal();
   useSEO({
-    title: "Insights - EdenNX",
+    title: "Insights | Tech transfer and regulated quality",
     description:
       "Writing from across the EdenNX product suite: analysis of academic licensing, tech transfer, and regulated quality from the EdenRadar and EdenCompliance teams.",
   });

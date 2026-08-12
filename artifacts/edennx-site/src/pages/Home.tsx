@@ -4,6 +4,7 @@ import { CoverageSection } from "@/components/CoverageSection";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The mark, cropped tight to its artwork so a height percentage means the
 // mark's real height rather than mostly white padding.
@@ -12,9 +13,12 @@ const MARK = "/images/eden-mark-hero.jpg";
 export default function Home() {
   useScrollReveal();
   useSEO({
-    title: "EdenNX - Biotech Intelligence Infrastructure",
+    // The headline no longer spells out the category, so the title and
+    // description carry those terms instead. Counts come from platformStats so
+    // the meta cannot drift from the figures used on the page.
+    title: "EdenNX | Biotech intelligence infrastructure",
     description:
-      "EdenNX is building the intelligence backbone of modern biotech. From earliest discovery to patient impact, our platform suite powers every stage of the lifecycle.",
+      `The backbone biotech runs on. EdenNX builds EdenRadar for licensing intelligence across ${TTO_COUNT_LABEL} research institutions and ${ASSET_COUNT_LABEL} assets, and EdenCompliance for vendor quality and audit records.`,
   });
 
   return (

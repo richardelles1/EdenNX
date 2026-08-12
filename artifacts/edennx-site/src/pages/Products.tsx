@@ -135,7 +135,7 @@ function ControlledRecordPanel() {
 export default function Products() {
   useScrollReveal();
   useSEO({
-    title: "Products - The EdenNX platform",
+    title: "Products | EdenRadar, EdenCompliance and the EdenNX suite",
     description:
       "The EdenNX product suite: EdenRadar, EdenCompliance, EdenLab, EdenDiscovery, and EdenMarket — purpose-built for every stakeholder across biotech intelligence, quality, and licensing.",
   });

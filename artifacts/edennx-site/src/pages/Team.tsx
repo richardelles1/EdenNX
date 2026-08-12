@@ -43,7 +43,7 @@ function LinkedInIcon() {
 export default function Team() {
   useScrollReveal();
   useSEO({
-    title: "Team - EdenNX",
+    title: "Team | The founders behind EdenNX",
     description:
       "Meet the founders behind EdenNX: industry insiders building the intelligence infrastructure that biotech needs.",
   });
@@ -113,6 +113,60 @@ export default function Team() {
               </blockquote>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* Our Story */}
+      <section className="border-t border-border py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-16">
+            <div className="reveal">
+              <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
+                Our Story
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                Too many treatments never leave the lab.
+              </h2>
+            </div>
+            <div className="space-y-5 reveal" style={{ transitionDelay: "0.1s" }}>
+              <p className="text-base md:text-lg text-foreground/75 leading-relaxed">
+                Rich and Wafick come at the same health care equation from very
+                different sides. For Rich, EdenNX is the next step in a journey that
+                runs from drug development through patient advocacy and digital
+                health. He has spent much of his career working directly with patients
+                and families, often in the rare disease community, who are left
+                waiting on a cure or a treatment that may never leave the lab. A
+                PMP-certified project manager and health care strategist, he has
+                deployed management systems and led process improvement across
+                consulting firms, healthtech startups, academic institutions, and
+                research teams.
+              </p>
+              <p className="text-base md:text-lg text-foreground/75 leading-relaxed">
+                Wafick comes at it from quality and compliance. Across more than
+                seventeen years in global pharma and emerging biotech, he has built and
+                audited the systems that make sure science is done right: safely,
+                effectively, and with the end user in mind. A certified quality auditor,
+                Lean Six Sigma Black Belt, and project management professional, he has
+                led quality improvement initiatives, regulatory inspections, and
+                clinical operations from pre-clinical through Phase IV, pairing that
+                rigor with a culture of sustainability and business process built to
+                last.
+              </p>
+              <p className="text-base md:text-lg text-foreground/75 leading-relaxed">
+                The two met inside one of the country's leading health care and research
+                institutions, working the same problem from project management and
+                quality improvement. That shared discipline, business process led with
+                the user and the patient in mind, is the foundation of EdenNX.
+              </p>
+              <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-medium">
+                They share one conviction. We have a responsibility to build a better
+                system, one that is more cost efficient and more effective for the
+                patients who need it. EdenNX is about finding solutions inside a
+                challenging system, and leaving our health care culture better than we
+                found it.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

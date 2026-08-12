@@ -1,7 +1,6 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 const edenPrinciples = [
   {
@@ -33,7 +32,7 @@ const edenPrinciples = [
 export default function About() {
   useScrollReveal();
   useSEO({
-    title: "About - EdenNX",
+    title: "About EdenNX | Mission and the EDEN framework",
     description:
       "EdenNX is building the intelligence backbone of modern biotech. Our mission, values, and the EDEN framework that guides everything we do.",
   });
@@ -63,73 +62,74 @@ export default function About() {
         </p>
       </section>
 
-      {/* Founding story */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-16 lg:pb-24">
-        <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-16">
-          <div className="reveal">
-            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
-              Our Story
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
-              Most breakthrough science never leaves the university.
-            </h2>
-          </div>
-          <div className="space-y-5 reveal" style={{ transitionDelay: "0.1s" }}>
-            <p className="text-base md:text-lg text-foreground/75 leading-relaxed">
-              EdenNX started with a problem both founders kept running into from
-              opposite ends of the same industry. Inside research institutions,
-              breakthrough science was being discovered faster than it could ever
-              be licensed. Inside industry, business development teams were spending
-              months and millions hunting for those same assets through cold calls
-              and fragmented databases.
-            </p>
-            <p className="text-base md:text-lg text-foreground/75 leading-relaxed">
-              Wafick Mohamed spent his career building quality systems and scaling
-              operations across global pharma and emerging biotech. Richard Elles
-              spent his deploying strategy and management systems across healthtech,
-              consulting, and research teams. One watched the science struggle to
-              reach the market. The other watched the market struggle to find the
-              science. They were describing the same gap from two sides.
-            </p>
-            <p className="text-base md:text-lg text-foreground/90 leading-relaxed font-medium">
-              EdenNX is what they built to close it: the connective tissue between
-              the people who create breakthrough science and the people who can
-              carry it to patients.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Why now */}
-      <section className="border-y border-border bg-foreground/[0.015] dark:bg-white/[0.015]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
-          <div className="max-w-2xl mb-14 reveal">
-            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
+      {/* Why now — warm editorial sequence */}
+      <section
+        className="border-y"
+        style={{
+          background: "linear-gradient(180deg, hsl(36 40% 96%) 0%, hsl(33 34% 93%) 100%)",
+          borderColor: "hsl(33 20% 86%)",
+        }}
+      >
+        <div className="max-w-6xl mx-auto px-6 lg:px-8 py-24 lg:py-32">
+          <div className="max-w-3xl mb-12 lg:mb-16 reveal">
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-5">
               Why Now
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              The moment to build the connective tissue.
+            <h2
+              className="font-display text-4xl md:text-6xl font-medium tracking-tight mb-6"
+              style={{ color: "hsl(25 25% 14%)", lineHeight: 1.05 }}
+            >
+              The right moment to close the gap.
             </h2>
+            <p className="text-lg md:text-xl leading-relaxed" style={{ color: "hsl(25 12% 38%)" }}>
+              This is the moment to put technology to work closing the distance between
+              research and treatment, with humanity at the heart of every decision.
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-10 md:gap-8">
+
+          <div>
             {[
               {
-                t: "The data finally exists.",
-                d: `${TTO_COUNT_LABEL} institutions and ${ASSET_COUNT_LABEL} assets, scattered across hundreds of portals, patents, trials, and papers. The raw material for intelligence was already there. Nobody had assembled it.`,
+                t: "The technology is finally ready.",
+                d: "This is the perfect time to leverage technology to close the gap between research and treatment development.",
               },
               {
-                t: "AI can finally read it.",
-                d: "Modern models can classify, score, and connect assets at a scale and nuance that was out of reach a few years ago. EDEN turns scattered signals into structured intelligence.",
+                t: "AI, with humanity at the heart.",
+                d: "We believe in AI and its benefits, and we believe humanity is at the heart of health care. Blending both, we move quickly and carefully to get patients the care they need, when they need it.",
               },
               {
-                t: "The market is ready to move faster.",
-                d: "Licensing still runs on relationships and guesswork. The teams that see the whole field first will win the next decade of deals.",
+                t: "The answers already exist.",
+                d: "So many answers are buried in the catalogs of the largest institutions in the world and the smallest. It is our job and our responsibility to bring them to light, so we can all benefit.",
               },
-            ].map((item, i) => (
-              <div key={item.t} className="reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
-                <div className="h-0.5 w-10 bg-primary mb-5" />
-                <h3 className="text-lg font-bold text-foreground mb-2">{item.t}</h3>
-                <p className="text-sm text-foreground/75 leading-relaxed">{item.d}</p>
+              {
+                t: "Scattered data, one unified source.",
+                d: "Great technology everywhere also means data is scattered everywhere. This is our opportunity to bring together dozens of different output styles, formats, and distribution methods into one unified source, so we can advance together.",
+              },
+            ].map((item, i, arr) => (
+              <div
+                key={item.t}
+                className={`grid grid-cols-1 md:grid-cols-[140px_1fr] gap-2 md:gap-8 py-10 md:py-11 reveal ${
+                  i === arr.length - 1 ? "border-y" : "border-t"
+                }`}
+                style={{ transitionDelay: `${i * 0.05}s`, borderColor: "hsl(33 20% 86%)" }}
+              >
+                <div
+                  className="font-display leading-none"
+                  style={{ fontSize: "clamp(3.5rem, 7vw, 5.5rem)", fontWeight: 500, color: "hsl(142 52% 36% / 0.22)" }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <div>
+                  <h3
+                    className="font-display text-2xl md:text-3xl font-medium tracking-tight mb-3.5"
+                    style={{ color: "hsl(25 25% 14%)" }}
+                  >
+                    {item.t}
+                  </h3>
+                  <p className="text-base md:text-lg leading-relaxed max-w-2xl" style={{ color: "hsl(25 12% 38%)" }}>
+                    {item.d}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
