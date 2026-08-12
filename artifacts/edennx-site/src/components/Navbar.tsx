@@ -5,6 +5,7 @@ import { Logo } from "@/components/Logo";
 import { PLATFORM_PRODUCTS, EMERGING_PRODUCTS, type Product } from "@/lib/products";
 
 const otherLinks = [
+  { href: "/insights", label: "Insights" },
   { href: "/about", label: "About" },
   { href: "/team", label: "Team" },
   { href: "/contact", label: "Contact" },

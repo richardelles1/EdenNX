@@ -265,6 +265,47 @@
   animation-play-state: paused;
 }
 
+/* Hero entrance: one orchestrated moment on load, not scattered effects.
+   The mark settles from a fraction of a scale while the statement lines rise
+   behind it. Delays are set per element. */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes heroMarkSettle {
+  from { opacity: 0; transform: translateY(-50%) scale(1.05); }
+  to   { opacity: var(--hero-mark-opacity, 0.52); transform: translateY(-50%) scale(1); }
+}
+.hero-rise {
+  opacity: 0;
+  animation: heroRise 0.62s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+.hero-mark-in {
+  opacity: 0;
+  animation: heroMarkSettle 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* The hero mark. Sized off the section's height but positioned off its width,
+   so it needs a width cap or it walks left over the headline as the viewport
+   narrows. Below the desktop breakpoint the layout is a single column, so the
+   mark drops back to a watermark and the copy runs full width over it. */
+.hero-mark {
+  --hero-mark-opacity: 0.7;
+  right: 3%;
+  /* Tuned against the real section height, not the mockup frame: at 142% the
+     mark crops to its middle band and the leaf disappears entirely. */
+  height: 112%;
+  max-width: 46%;
+}
+@media (max-width: 1023px) {
+  .hero-mark {
+    --hero-mark-opacity: 0.16;
+    right: -16%;
+    height: 104%;
+    max-width: 82%;
+  }
+}
+
 /* Hero highlight underline reveal */
 @keyframes highlightExpand {
   from { transform: scaleX(0); }
@@ -372,5 +413,16 @@ section[id] { scroll-margin-top: 8rem; }
   .aurora-blob-1, .aurora-blob-2, .aurora-blob-3,
   .marquee-left, .marquee-right, .marquee-track {
     animation: none !important;
+  }
+  /* No entrance choreography: land in the final state. */
+  .hero-rise, .hero-mark-in {
+    animation: none !important;
+    opacity: 1;
+  }
+  .hero-mark-in {
+    opacity: var(--hero-mark-opacity, 0.52);
+    /* The keyframe normally supplies the vertical centring, so restate it here
+       where the animation is switched off. */
+    transform: translateY(-50%);
   }
 }
