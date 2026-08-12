@@ -380,29 +380,6 @@ section[id] { scroll-margin-top: 8rem; }
   background-clip: text;
 }
 
-/* Aurora blobs — drifting brand-colored glows behind hero surfaces.
-   Ties the four portal accents together (emerald / amber / violet / indigo). */
-@keyframes auroraBlob1 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
-  25%      { transform: translate(40px, -30px) scale(1.12); opacity: 0.70; }
-  50%      { transform: translate(-25px, 35px) scale(0.93); opacity: 0.60; }
-  75%      { transform: translate(30px, 15px) scale(1.07); opacity: 0.72; }
-}
-@keyframes auroraBlob2 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.42; }
-  33%      { transform: translate(-50px, 25px) scale(1.18); opacity: 0.58; }
-  66%      { transform: translate(35px, -40px) scale(0.88); opacity: 0.48; }
-}
-@keyframes auroraBlob3 {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
-  40%      { transform: translate(-30px, -20px) scale(1.22); opacity: 0.52; }
-  80%      { transform: translate(20px, 30px) scale(0.92); opacity: 0.42; }
-}
-.aurora-blob { position: absolute; border-radius: 9999px; filter: blur(68px); pointer-events: none; }
-.aurora-blob-1 { animation: auroraBlob1 13s ease-in-out infinite; }
-.aurora-blob-2 { animation: auroraBlob2 10s ease-in-out infinite; }
-.aurora-blob-3 { animation: auroraBlob3 16s ease-in-out infinite; }
-
 /* Institution marquee rows */
 @keyframes marqueeLeft  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes marqueeRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
@@ -410,7 +387,6 @@ section[id] { scroll-margin-top: 8rem; }
 .marquee-right { animation: marqueeRight 135s linear infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .aurora-blob-1, .aurora-blob-2, .aurora-blob-3,
   .marquee-left, .marquee-right, .marquee-track {
     animation: none !important;
   }
