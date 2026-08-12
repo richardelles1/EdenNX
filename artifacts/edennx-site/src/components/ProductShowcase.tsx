@@ -5,9 +5,9 @@ import { VIGNETTES } from "@/components/ProductVignettes";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as a full-scroll sequence: each product is its own hero
-// section on its own accent ground, revealed on scroll, with a native dark
-// vignette (not a screenshot) so the surface belongs to the section. Sides
-// alternate for rhythm.
+// on a light page, given a soft wash of its own accent color (never a dark band),
+// with its real product screenshot supersized and feathered in like the
+// edencompliance.com hero. Sides alternate for rhythm.
 
 type Product = {
   name: string;
@@ -60,40 +60,50 @@ const PRODUCTS: Product[] = [
   },
 ];
 
-// Every surface (the dashboard image and the vignettes alike) gets the same
-// treatment: supersized, tilted in 3D on its near (text-side) edge so it recedes
-// away from the copy, bled off the outer edge, and feathered on every edge into
-// the ground. No small framed cards.
+const INK = "#0f1a14";
+const SUB = "#4b554f";
+const META = "#6b746e";
+
+// Real product screenshots that already exist as clean, light component views.
+// Where we don't yet have one, we fall back to a native light vignette.
+const SHOTS: Record<string, string> = {
+  EdenRadar: "/images/portal-edenradar.png",
+  EdenCompliance: "/images/portal-edencompliance.png",
+};
+
+// One treatment for every surface: supersized, tilted in 3D on its near
+// (text-side) edge so it recedes from the copy, bled off the outer edge, and
+// feathered on every edge so it dissolves into the light ground.
 function Surface({ p, flip }: { p: Product; flip: boolean }) {
+  const shot = SHOTS[p.name];
   const Vignette = VIGNETTES[p.name] ?? VIGNETTES.EdenRadar;
-  const isImg = p.name === "EdenCompliance";
-  const feather = "radial-gradient(128% 122% at 50% 50%, #000 55%, rgba(0,0,0,0) 100%)";
+  const feather = "radial-gradient(120% 116% at 50% 50%, #000 60%, rgba(0,0,0,0) 100%)";
   return (
-    <div className="relative" style={{ perspective: "2000px" }}>
+    <div className="relative" style={{ perspective: "2200px" }}>
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: `radial-gradient(62% 66% at ${flip ? "40%" : "60%"} 50%, hsl(var(${p.token}) / 0.32), transparent 72%)` }}
+        style={{ background: `radial-gradient(60% 62% at ${flip ? "42%" : "58%"} 50%, hsl(var(${p.token}) / 0.18), transparent 72%)` }}
       />
       <div className={`flex ${flip ? "lg:justify-end" : "lg:justify-start"}`}>
         <div
-          className={`w-full ${isImg ? "max-w-none lg:w-[126%]" : "max-w-[740px] lg:w-[120%]"}`}
+          className="w-full max-w-none lg:w-[124%]"
           style={{
             transformOrigin: flip ? "right center" : "left center",
-            transform: `rotateY(${flip ? 13 : -13}deg) rotateX(3deg)`,
+            transform: `rotateY(${flip ? 11 : -11}deg) rotateX(2.5deg)`,
             backfaceVisibility: "hidden",
             willChange: "transform",
-            filter: `drop-shadow(${flip ? "-26px" : "26px"} 40px 58px rgba(0,0,0,0.6))`,
+            filter: `drop-shadow(${flip ? "-22px" : "22px"} 34px 60px rgba(24,44,34,0.28))`,
             WebkitMaskImage: feather,
             maskImage: feather,
           }}
         >
-          {isImg ? (
+          {shot ? (
             <img
-              src="/images/portal-edencompliance.png"
-              alt="EdenCompliance dashboard: vendor status, findings, and program health"
+              src={shot}
+              alt={`${p.name} product view`}
               decoding="async"
-              className="block w-full"
+              className="block w-full rounded-2xl"
             />
           ) : (
             <Vignette />
@@ -112,33 +122,39 @@ function ProductRow({ p, i }: { p: Product; i: number }) {
   const flip = i % 2 === 1;
 
   return (
-    <section className="relative overflow-hidden" style={i > 0 ? { borderTop: "1px solid rgba(255,255,255,0.05)" } : undefined}>
+    <section className="relative overflow-hidden">
+      {/* Soft accent wash on the light page: a gentle colored ground, never a
+          dark band, fading top and bottom so sections blend into each other. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: `radial-gradient(54% 78% at ${flip ? "16%" : "84%"} 42%, hsl(var(${p.token}) / 0.16), transparent 60%)` }}
+        style={{
+          background:
+            `radial-gradient(58% 72% at ${flip ? "16%" : "84%"} 40%, hsl(var(${p.token}) / 0.13), transparent 60%),` +
+            `linear-gradient(180deg, hsl(var(${p.token}) / 0.06), hsl(var(${p.token}) / 0.025))`,
+          WebkitMaskImage: "linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent)",
+          maskImage: "linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent)",
+        }}
       />
-      <div className="relative z-10 mx-auto grid max-w-[1240px] items-center gap-10 px-6 py-20 sm:px-8 lg:min-h-[66vh] lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-24">
+      <div className="relative z-10 mx-auto grid max-w-[1240px] items-center gap-10 px-6 py-20 sm:px-8 lg:min-h-[70vh] lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-28">
         {/* Text */}
         <div className={`reveal ${flip ? "lg:order-2" : ""}`}>
-          <div className="flex items-center gap-3 mb-5">
+          <div className="mb-5 flex items-center gap-3">
             <Icon className="h-8 w-8 flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
-            <span className="text-2xl sm:text-3xl font-bold tracking-tight">
-              <span style={{ color: "#e6ece4" }}>Eden</span>
+            <span className="text-2xl font-bold tracking-tight sm:text-3xl">
+              <span style={{ color: INK }}>Eden</span>
               <span style={{ color: accent }}>{suffix}</span>
             </span>
           </div>
-          <h3 className="font-black tracking-tight leading-[1.04] text-balance text-[2.35rem] sm:text-[3.1rem]">
-            <span style={{ color: "#f2f5ef" }}>{p.headline.pre}</span>
+          <h3 className="text-balance font-black leading-[1.04] tracking-tight text-[2.35rem] sm:text-[3.1rem]">
+            <span style={{ color: INK }}>{p.headline.pre}</span>
             <span style={{ color: headlineAccent }}>{p.headline.accent}</span>
-            <span style={{ color: "#f2f5ef" }}>{p.headline.post}</span>
+            <span style={{ color: INK }}>{p.headline.post}</span>
           </h3>
-          <p className="mt-5 max-w-lg text-[17px] leading-relaxed" style={{ color: "rgba(223,231,222,0.72)" }}>{p.sub}</p>
+          <p className="mt-5 max-w-lg text-[17px] leading-relaxed" style={{ color: SUB }}>{p.sub}</p>
           <div className="mt-6 space-y-1.5">
-            <p className="font-mono text-[12.5px] tracking-wide" style={{ color: "rgba(223,231,222,0.5)" }}>{p.meta}</p>
-            {p.price && (
-              <p className="text-[15px] font-semibold" style={{ color: headlineAccent }}>{p.price}</p>
-            )}
+            <p className="font-mono text-[12.5px] tracking-wide" style={{ color: META }}>{p.meta}</p>
+            {p.price && <p className="text-[15px] font-semibold" style={{ color: headlineAccent }}>{p.price}</p>}
           </div>
           <div className="mt-8">
             {p.cta.external ? (
@@ -146,16 +162,16 @@ function ProductRow({ p, i }: { p: Product; i: number }) {
                 href={p.cta.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[15px] font-semibold transition-opacity hover:opacity-90"
-                style={{ background: accent, color: "#08110c" }}
+                className="inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-opacity hover:opacity-90"
+                style={{ background: accent }}
               >
                 {p.cta.label} <ArrowUpRight className="h-4 w-4" />
               </a>
             ) : (
               <Link
                 to={p.cta.href}
-                className="inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[15px] font-semibold transition-opacity hover:opacity-90"
-                style={{ background: accent, color: "#08110c" }}
+                className="inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[15px] font-semibold text-white transition-opacity hover:opacity-90"
+                style={{ background: accent }}
               >
                 {p.cta.label} <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -174,24 +190,10 @@ function ProductRow({ p, i }: { p: Product; i: number }) {
 
 export function ProductShowcase() {
   return (
-    <div className="relative overflow-hidden">
-      {/* One continuous dark canvas for the whole suite, fading into the light page
-          only at the very top and bottom, so there are no bright gaps between
-          products (each product tints this ground with its own accent). */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(180deg, #070e0b, #05090a)",
-          WebkitMaskImage: "linear-gradient(to bottom, transparent, #000 4%, #000 96%, transparent)",
-          maskImage: "linear-gradient(to bottom, transparent, #000 4%, #000 96%, transparent)",
-        }}
-      />
-      <div className="relative z-10">
-        {PRODUCTS.map((p, i) => (
-          <ProductRow key={p.name} p={p} i={i} />
-        ))}
-      </div>
+    <div>
+      {PRODUCTS.map((p, i) => (
+        <ProductRow key={p.name} p={p} i={i} />
+      ))}
     </div>
   );
 }
