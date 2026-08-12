@@ -296,24 +296,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Product Suite — EdenRadar's four portals */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-14 lg:pt-20 pb-4" data-testid="product-highlights">
-        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4 reveal">
-          The Product Suite
-        </p>
-        <h2
-          className="text-3xl md:text-4xl font-bold text-foreground mb-4 reveal"
-          style={{ transitionDelay: "0.05s" }}
-        >
-          Five products, concept to patient.
+      {/* Product Suite intro */}
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-24 pb-10 lg:pb-12" data-testid="product-highlights">
+        <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-5 reveal">
+          Five products, one biotech backbone.
         </h2>
         <p
-          className="text-base text-foreground/70 max-w-2xl leading-relaxed mb-14 reveal"
-          style={{ transitionDelay: "0.1s" }}
+          className="text-lg text-foreground/80 max-w-2xl leading-relaxed reveal"
+          style={{ transitionDelay: "0.05s" }}
         >
-          EdenRadar anchors a connected biotech-intelligence suite: EdenLab, EdenDiscovery,
-          and EdenMarket share its asset graph from first concept to closed deal.
-          EdenCompliance is a separate full platform for regulated quality teams. One company
+          From spotting a newly published asset to running a signed, audited vendor
+          program, each EdenNX product owns a different part of the field. One company
           behind all five.
         </p>
       </section>
