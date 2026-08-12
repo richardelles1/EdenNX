@@ -1,14 +1,39 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check, Eye } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
+  Antenna,
+  BellRing,
+  Sparkles,
+  FileSearch,
+  SlidersHorizontal,
+  Gauge,
+  Grid3x3,
+  KanbanSquare,
+  ShieldCheck,
+  CalendarClock,
+  ClipboardList,
+  PenLine,
+  Table2,
+  Users,
+  RadioTower,
+  History,
+} from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as an asymmetric bento. Each card carries a slight wash
 // of its product's accent, presses in on hover like a button, and leads with a
-// large wordmark. EdenRadar and EdenCompliance are equal flagships whose real
-// screenshots run edge to edge along the card floor (no inner frame); the three
-// smaller products lead with a feature checklist.
+// large wordmark. EdenRadar and EdenCompliance are equal flagships: the card floor
+// carries a 2x2 grid of capability tiles at rest, and the real product screenshot
+// cross-fades over them on hover. The three smaller products lead with a checklist.
+//
+// The screenshot reveal is gated behind `@media (hover: hover)` so it never fires
+// on touch, where a :hover state would stick. Nothing load-bearing lives behind
+// the hover: the tiles carry the meaning, the screenshot is the reward.
+
+type Capability = { label: string; detail: string; Icon: LucideIcon };
 
 type Product = {
   name: string;
@@ -18,6 +43,7 @@ type Product = {
   sub: string;
   note: string;
   features?: string[];
+  capabilities?: Capability[];
   cta: { label: string; href: string; external: boolean };
 };
 
@@ -27,6 +53,17 @@ const PRODUCTS: Record<string, Product> = {
     headline: { pre: "The next biotech breakthrough is ", accent: "already published.", post: "" },
     sub: `Real-time monitoring across ${TTO_COUNT_LABEL} tech transfer offices means the right assets find you first.`,
     note: "From $1,999/mo",
+    // Sourced from edenradar.com/how-it-works (HIW_STEPS in the EdenRadar repo).
+    capabilities: [
+      { label: "Deepest TTO index", detail: `${TTO_COUNT_LABEL} offices, plus patents, trials, and literature`, Icon: Antenna },
+      { label: "Precision filters", detail: "6 development stages, 10 modalities, 32 biology categories", Icon: SlidersHorizontal },
+      { label: "Fit scoring", detail: "Ranked against your buyer profile, not keyword match", Icon: Gauge },
+      { label: "Asset dossiers", detail: "Commercial thesis, competitive position, IP and deal readiness", Icon: FileSearch },
+      { label: "Whitespace map", detail: "Asset density across every biology and modality, daily", Icon: Grid3x3 },
+      { label: "Pipeline board", detail: "Watching to In Discussion, with score and notes on each card", Icon: KanbanSquare },
+      { label: "Standing alerts", detail: "Real-time, daily, or weekly on matches and stage changes", Icon: BellRing },
+      { label: "EDEN Chat", detail: "Natural language search across the full catalog", Icon: Sparkles },
+    ],
     cta: { label: "Explore EdenRadar", href: "https://edenradar.com", external: true },
   },
   compliance: {
@@ -34,6 +71,19 @@ const PRODUCTS: Record<string, Product> = {
     headline: { pre: "Vendor quality and audits, on ", accent: "one controlled record.", post: "" },
     sub: "Qualify vendors, run the audit program, and keep every change signed and unalterable.",
     note: "From $299/mo",
+    // Sourced from edencompliance.com/features (shared/capabilities.ts in the
+    // EdenCompliance repo), one per pillar: vendor, audit, collaboration,
+    // intelligence, platform.
+    capabilities: [
+      { label: "Vendor register", detail: "Type, service, location, and status at a glance", Icon: Table2 },
+      { label: "Qualification tracking", detail: "Status and expiry per vendor, per framework", Icon: ShieldCheck },
+      { label: "Risk-based planner", detail: "Next audit proposed from risk tier and last audit", Icon: CalendarClock },
+      { label: "Findings management", detail: "Logged and classified by severity on the record", Icon: ClipboardList },
+      { label: "Vendor portal", detail: "A private portal per vendor, no account needed", Icon: Users },
+      { label: "Regulation Watch", detail: "FDA and MHRA actions matched to your vendors, daily", Icon: RadioTower },
+      { label: "Append-only trail", detail: "Who, when, and the before and after, on every change", Icon: History },
+      { label: "Electronic sign-off", detail: "Re-authenticate to approve a vendor or lock an audit", Icon: PenLine },
+    ],
     cta: { label: "Explore EdenCompliance", href: "https://edencompliance.com", external: true },
   },
   market: {
@@ -69,6 +119,14 @@ const NOTE = "#525c55";
 const SHOTS: Record<string, string> = {
   EdenRadar: "/images/portal-edenradar.png",
   EdenCompliance: "/images/portal-edencompliance-register.png",
+};
+
+// The floor is taller than either screenshot's aspect, so `cover` crops the sides.
+// Anchor each shot where its meaning lives: the register reads left to right off
+// the vendor column, so it holds the left edge rather than centering.
+const SHOT_POSITION: Record<string, string> = {
+  EdenRadar: "top center",
+  EdenCompliance: "top left",
 };
 
 // Layered ambient shadow at rest; a shallower shadow plus a downward nudge on
@@ -134,19 +192,81 @@ function CtaRow({ p }: { p: Product }) {
   );
 }
 
-// Big flagship tile: copy on top, real screenshot running edge to edge along the
-// floor, both tiles the same height so both images start at the same line.
-function BigTile({ p }: { p: Product }) {
+// One capability: an accent-chipped icon on the left, a short bold label and a
+// supporting line on the right. Horizontal so eight fit the floor without the
+// card growing unreasonably tall. The tile is washed in the product's own accent
+// so each flagship floor reads in its own color, and EdenCompliance takes its
+// gold for the glyph the way its own site does.
+function CapabilityTile({ p, c }: { p: Product; c: Capability }) {
+  const glyph = p.goldToken ? `hsl(var(${p.goldToken}))` : `hsl(var(${p.token}))`;
   return (
-    <CardLink p={p} className="min-h-[560px]">
+    <div
+      className="flex items-start gap-3 rounded-xl px-3.5 py-3"
+      style={{
+        background: `hsl(var(${p.token}) / 0.06)`,
+        border: `1px solid hsl(var(${p.token}) / 0.18)`,
+      }}
+    >
+      <span
+        className="mt-[1px] flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg"
+        style={{ background: `hsl(var(${p.token}) / 0.14)` }}
+      >
+        <c.Icon className="h-[15px] w-[15px]" strokeWidth={2.2} style={{ color: glyph }} />
+      </span>
+      <span className="min-w-0">
+        <span className="block text-[12.5px] font-bold leading-tight" style={{ color: INK }}>{c.label}</span>
+        <span className="mt-1 block text-[11.5px] leading-snug" style={{ color: NOTE }}>{c.detail}</span>
+      </span>
+    </div>
+  );
+}
+
+// Big flagship tile: copy on top, capability grid along the floor, and the real
+// screenshot cross-fading over that grid on hover. Both tiles are the same height
+// so both floors start at the same line.
+function BigTile({ p }: { p: Product }) {
+  const caps = p.capabilities ?? [];
+  return (
+    <CardLink p={p} className="min-h-[680px]">
       <div className="relative z-10 p-8 lg:p-9">
-        <Wordmark p={p} />
+        <div className="flex items-center justify-between gap-4">
+          <Wordmark p={p} />
+          {/* Affordance: teaches the reveal, then gets out of the way. */}
+          <span
+            className="hidden flex-shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider transition-opacity duration-200 [@media(hover:hover)]:inline-flex [@media(hover:hover)]:group-hover:opacity-0"
+            style={{ background: "rgba(255,255,255,0.82)", color: NOTE, border: "1px solid rgba(15,26,20,0.08)" }}
+          >
+            <Eye className="h-3 w-3" strokeWidth={2.4} /> Preview
+          </span>
+        </div>
         <div className="mt-6"><Headline p={p} cls="text-[1.9rem] lg:text-[2.35rem] max-w-[16ch]" /></div>
         <p className="mt-4 max-w-[42ch] text-[16px] leading-relaxed" style={{ color: BODY }}>{p.sub}</p>
         <CtaRow p={p} />
       </div>
-      <div className="mt-auto h-[300px] w-full overflow-hidden lg:h-[340px]" style={{ borderTop: "1px solid rgba(15,26,20,0.08)" }}>
-        <img src={SHOTS[p.name]} alt="" decoding="async" className="h-full w-full" style={{ objectFit: "cover", objectPosition: "top" }} />
+
+      <div
+        className="relative mt-auto h-[392px] w-full overflow-hidden lg:h-[404px]"
+        style={{ borderTop: "1px solid rgba(15,26,20,0.08)", background: `hsl(var(${p.token}) / 0.03)` }}
+      >
+        {/* Rest state: what the product actually does. */}
+        <div className="grid h-full grid-cols-2 grid-rows-4 gap-2.5 p-5 transition-[opacity,transform] duration-300 ease-out [@media(hover:hover)]:group-hover:scale-[0.985] [@media(hover:hover)]:group-hover:opacity-0">
+          {caps.map((c) => (
+            <CapabilityTile key={c.label} p={p} c={c} />
+          ))}
+        </div>
+
+        {/* Hover state: the real thing. Hidden entirely where hover is absent. */}
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out [@media(hover:hover)]:group-hover:opacity-100">
+          <img
+            src={SHOTS[p.name]}
+            alt=""
+            decoding="async"
+            /* Not lazy: the reveal has to be instant on first hover, and a lazy
+               image that starts fetching on hover shows an empty floor. */
+            className="h-full w-full"
+            style={{ objectFit: "cover", objectPosition: SHOT_POSITION[p.name] ?? "top center" }}
+          />
+        </div>
       </div>
     </CardLink>
   );
