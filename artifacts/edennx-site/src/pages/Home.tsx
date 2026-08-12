@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { BoxGridBackground } from "@/components/BoxGridBackground";
 import { AuroraBackground } from "@/components/AuroraBackground";
 import { CoverageSection } from "@/components/CoverageSection";
-import { IndexStrip } from "@/components/IndexStrip";
-import { PortalEyebrow } from "@/components/PortalBits";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
@@ -70,122 +68,16 @@ function TextFlip({ words }: { words: string[] }) {
   );
 }
 
-type Portal = {
-  name: string;
-  tagline: string;
-  thesis: string;
-  access: string;
-  token: string; // CSS var name for the portal accent
-  goldToken?: string; // optional secondary accent (EdenCompliance is forest + gold)
-  anchor: string;
-};
-
-// EdenRadar is the flagship: it gets a large card. The other three are
-// satellites stacked beside it, so the layout itself encodes the hierarchy.
-const flagship: Portal = {
-  name: "EdenRadar",
-  tagline: "Industry intelligence platform",
-  thesis:
-    `See the full field before your first move: a continuously enriched window into ${TTO_COUNT_LABEL} tech transfer offices worldwide.`,
-  access: "From $1,999/mo",
-  token: "--portal-radar",
-  anchor: "/products#edenradar",
-};
-
-const satellites: Portal[] = [
-  {
-    name: "EdenCompliance",
-    tagline: "Vendor quality & audit management",
-    thesis: "Qualify vendors, run the audit program, and keep every change on a signed, unalterable record.",
-    access: "New",
-    token: "--portal-compliance",
-    goldToken: "--portal-compliance-gold",
-    anchor: "/products#edencompliance",
-  },
-  {
-    name: "EdenLab",
-    tagline: "Research workspace",
-    thesis: "From hypothesis to publication without losing the thread.",
-    access: "Free",
-    token: "--portal-lab",
-    anchor: "/products#edenlab",
-  },
-  {
-    name: "EdenDiscovery",
-    tagline: "Concept registry",
-    thesis: "Plant an idea, date-stamp it, and let the world know it exists.",
-    access: "Free",
-    token: "--portal-discovery",
-    anchor: "/products#edendiscovery",
-  },
-  {
-    name: "EdenMarket",
-    tagline: "Deal marketplace",
-    thesis: "From an indexed asset to the first conversation, on your terms.",
-    access: "Success-fee",
-    token: "--portal-market",
-    anchor: "/products#edenmarket",
-  },
+const marqueeItems = [
+  `${ASSET_COUNT_LABEL} biotech assets indexed`,
+  `${TTO_COUNT_LABEL} research institutions monitored`,
+  "The biotech landscape, scored daily",
+  "EdenRadar by EdenNX",
+  "Vendor qualification & audit programs",
+  "Every change on a signed, unalterable record",
+  "EdenCompliance by EdenNX",
+  `${DATA_SOURCE_LABEL} live data sources`,
 ];
-
-function FlagshipCard() {
-  const accent = `hsl(var(${flagship.token}))`;
-  const accentSoft = `hsl(var(${flagship.token}) / 0.08)`;
-  return (
-    <Link
-      to={flagship.anchor}
-      className="group lg:row-span-4 rounded-2xl border border-border p-8 flex flex-col hover:shadow-lg transition-shadow reveal"
-      style={{ borderTop: `4px solid ${accent}`, background: `linear-gradient(180deg, ${accentSoft} 0%, hsl(var(--card)) 45%)` }}
-      data-testid="highlight-edenradar"
-    >
-      <div className="flex items-center justify-between mb-4">
-        <PortalEyebrow name={flagship.name} nameClassName="text-2xl md:text-3xl" iconClassName="h-7 w-7" />
-        <span
-          className="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full"
-          style={{ background: accentSoft, color: accent }}
-        >
-          Flagship
-        </span>
-      </div>
-      <h3 className="text-lg font-semibold text-foreground/90 mb-3">{flagship.tagline}</h3>
-      <p className="text-base text-foreground/75 leading-relaxed max-w-md">{flagship.thesis}</p>
-
-      <div className="mt-auto pt-8">
-        <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-foreground/75 mb-6">
-          <span><span className="font-bold text-foreground">{TTO_COUNT_LABEL}</span> institutions</span>
-          <span><span className="font-bold text-foreground">{ASSET_COUNT_LABEL}</span> assets</span>
-          <span><span className="font-bold text-foreground">Scored</span> daily</span>
-        </div>
-        <div className="flex items-center justify-between">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold" style={{ background: accentSoft, color: accent }}>
-            {flagship.access}
-          </span>
-          <span className="text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all" style={{ color: accent }}>
-            Explore EdenRadar →
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function SatelliteCard({ portal }: { portal: Portal }) {
-  const accent = `hsl(var(${portal.token}))`;
-  return (
-    <Link
-      to={portal.anchor}
-      className="group rounded-2xl border border-border bg-card p-6 flex flex-col justify-center hover:shadow-md transition-shadow reveal"
-      style={{ borderLeft: `4px solid ${accent}` }}
-      data-testid={`highlight-${portal.name.toLowerCase()}`}
-    >
-      <div className="flex items-center justify-between mb-2 gap-3">
-        <PortalEyebrow name={portal.name} nameClassName="text-lg md:text-xl" iconClassName="h-6 w-6" />
-        <span className="text-xs font-medium flex-shrink-0" style={{ color: portal.goldToken ? `hsl(var(${portal.goldToken}))` : accent }}>{portal.access}</span>
-      </div>
-      <p className="text-sm text-foreground/75 leading-relaxed">{portal.thesis}</p>
-    </Link>
-  );
-}
 
 export default function Home() {
   useScrollReveal();
@@ -268,8 +160,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What the backbone covers, in the products' own visual grammar */}
-      <IndexStrip />
+      {/* Marquee ticker strip */}
+      <section
+        className="border-y border-border bg-foreground/[0.02] dark:bg-white/[0.02] py-5 overflow-hidden"
+        aria-label="Key facts"
+      >
+        <div className="marquee-track select-none">
+          {[...marqueeItems, ...marqueeItems].flatMap((item, i) => [
+            <span
+              key={`item-${i}`}
+              className="px-6 text-sm font-medium text-muted-foreground whitespace-nowrap"
+            >
+              {item}
+            </span>,
+            <span
+              key={`dot-${i}`}
+              className="flex-shrink-0 h-1.5 w-1.5 rounded-full bg-primary"
+              aria-hidden="true"
+            />,
+          ])}
+        </div>
+      </section>
 
       {/* Product Suite intro */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-24 pb-10 lg:pb-12" data-testid="product-highlights">
