@@ -22,6 +22,7 @@ import {
   History,
 } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
+import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as an asymmetric bento. Each card carries a slight wash
@@ -117,17 +118,27 @@ const INK = "#0f1a14";
 const BODY = "#374139";
 const NOTE = "#525c55";
 
-// Screenshots each product already publishes on its own marketing site, so the
-// card never shows a view the product itself does not show.
+// What each product already shows on its own marketing site, so the card never
+// invents a view the product itself does not present.
 //
-// EdenRadar ships five on its how-it-works page; three of them map onto three of
-// our tiles (asset dossiers, whitespace map, pipeline board). EdenCompliance
-// ships exactly one screenshot on its built site, the program dashboard: the
-// rest of its marketing is designed vignettes rather than captures. So Radar
-// cycles and Compliance holds a single frame until it has more to show.
-const SHOTS: Record<string, string[]> = {
-  EdenRadar: ["/images/shot-radar-1.jpg", "/images/shot-radar-2.jpg", "/images/shot-radar-3.jpg"],
-  EdenCompliance: ["/images/shot-compliance-1.jpg"],
+// EdenRadar markets with screenshots: three of the five on its how-it-works page
+// are used, matching three of the tiles. EdenCompliance markets with one
+// screenshot plus designed vignettes, so its frames mix the two: the program
+// dashboard, then its own record and register vignettes, ported in
+// ComplianceVignettes.
+type Frame = { img: string } | { node: ReactNode };
+
+const FRAMES: Record<string, Frame[]> = {
+  EdenRadar: [
+    { img: "/images/shot-radar-1.jpg" },
+    { img: "/images/shot-radar-2.jpg" },
+    { img: "/images/shot-radar-3.jpg" },
+  ],
+  EdenCompliance: [
+    { img: "/images/shot-compliance-1.jpg" },
+    { node: <RecordLedger /> },
+    { node: <VendorRegister /> },
+  ],
 };
 
 // Shots are shown contained rather than cover-cropped, so a frame is never
@@ -302,7 +313,7 @@ function useShotReveal(count: number) {
 // height so both floors start at the same line.
 function BigTile({ p }: { p: Product }) {
   const caps = p.capabilities ?? [];
-  const shots = SHOTS[p.name] ?? [];
+  const shots = FRAMES[p.name] ?? [];
   const { revealed, index, onEnter, onLeave } = useShotReveal(shots.length);
   return (
     <CardLink p={p} className="min-h-[680px]" onEnter={onEnter} onLeave={onLeave}>
@@ -346,29 +357,35 @@ function BigTile({ p }: { p: Product }) {
         {/* Hover state: the product's own screenshots, stacked and cross-faded.
             Each settles from a slight overscale so a step reads as a dissolve
             rather than a cut. */}
-        {shots.map((src, i) => (
+        {shots.map((frame, i) => (
           <div
-            key={src}
+            key={i}
             aria-hidden
             className="pointer-events-none absolute inset-0 flex items-center justify-center transition-[opacity,transform] duration-500 ease-out"
             style={{
               opacity: revealed && i === index ? 1 : 0,
               transform: revealed && i === index ? "scale(1)" : "scale(1.04)",
               background: SHOT_GROUND[p.name] ?? "#eef2f0",
+              // Vignettes are laid out, not scaled, so they need room to breathe.
+              padding: "img" in frame ? 0 : 18,
             }}
           >
-            <img
-              src={src}
-              alt=""
-              decoding="async"
-              /* The first frame is never lazy: a lazy image that starts
-                 fetching on hover reveals an empty floor. Later frames have
-                 the reveal delay plus a full cycle before they are needed. */
-              loading={i === 0 ? "eager" : "lazy"}
-              /* Contained, not cropped: the whole frame is always visible. */
-              className="max-h-full max-w-full"
-              style={{ objectFit: "contain" }}
-            />
+            {"img" in frame ? (
+              <img
+                src={frame.img}
+                alt=""
+                decoding="async"
+                /* The first frame is never lazy: a lazy image that starts
+                   fetching on hover reveals an empty floor. Later frames have
+                   the reveal delay plus a full cycle before they are needed. */
+                loading={i === 0 ? "eager" : "lazy"}
+                /* Contained, not cropped: the whole frame is always visible. */
+                className="max-h-full max-w-full"
+                style={{ objectFit: "contain" }}
+              />
+            ) : (
+              frame.node
+            )}
             <div
               className="absolute inset-0"
               style={{
@@ -386,9 +403,9 @@ function BigTile({ p }: { p: Product }) {
             className="pointer-events-none absolute bottom-3.5 left-1/2 flex -translate-x-1/2 gap-1.5 transition-opacity duration-300"
             style={{ opacity: revealed ? 1 : 0 }}
           >
-            {shots.map((src, i) => (
+            {shots.map((_, i) => (
               <span
-                key={src}
+                key={i}
                 className="h-1.5 rounded-full transition-all duration-300"
                 style={{
                   width: i === index ? 16 : 6,
