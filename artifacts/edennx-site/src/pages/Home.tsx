@@ -32,7 +32,7 @@ export default function Home() {
         states further down.
       */}
       <section
-        className="relative flex min-h-[76vh] items-center overflow-hidden"
+        className="relative flex min-h-[88vh] items-center overflow-hidden"
         style={{
           background:
             "radial-gradient(72% 92% at 76% 42%, rgba(47,143,78,0.10) 0%, rgba(47,143,78,0.03) 42%, rgba(255,255,255,0) 72%), #FFFFFF",
@@ -71,8 +71,8 @@ export default function Home() {
               className="hero-rise font-bold text-foreground"
               data-testid="hero-headline"
               style={{
-                fontSize: "clamp(2.4rem,4.7vw,4.2rem)",
-                lineHeight: 1.03,
+                fontSize: "clamp(2.6rem,5.1vw,4.7rem)",
+                lineHeight: 1.02,
                 letterSpacing: "-0.032em",
                 animationDelay: "0.18s",
               }}
@@ -80,13 +80,16 @@ export default function Home() {
               The intelligence <span className="text-primary">backbone</span> of modern biotech.
             </h1>
 
+            {/* Sized and weighted to be read, not skimmed past: 17px at 60%
+                opacity was under-contrast for a line this load-bearing. */}
             <p
-              className="hero-rise mt-6 max-w-[46ch] text-[17px] leading-relaxed text-foreground/60"
+              className="hero-rise mt-7 max-w-[42ch] text-[19px] leading-[1.55] text-foreground/75 md:text-[21px]"
               data-testid="hero-subheadline"
               style={{ animationDelay: "0.3s" }}
             >
-              We make academic science findable, and regulated quality provable.
-              Two hard problems, one company behind both.
+              We make breakthrough science findable, and keep it provable all the
+              way to market. Less time between a discovery and the patients
+              waiting on it.
             </p>
 
             {/* Two actions, weighted rather than matched: the primary carries
