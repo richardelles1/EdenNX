@@ -80,16 +80,19 @@ export default function Home() {
               The intelligence <span className="text-primary">backbone</span> of modern biotech.
             </h1>
 
-            {/* Sized and weighted to be read, not skimmed past: 17px at 60%
-                opacity was under-contrast for a line this load-bearing. */}
+            {/* Sized and weighted to be read, not skimmed past. The accents are
+                the three words the sentence turns on: the two outcomes and the
+                payoff. Kept to three so they stay emphasis rather than pattern. */}
             <p
-              className="hero-rise mt-7 max-w-[42ch] text-[19px] leading-[1.55] text-foreground/75 md:text-[21px]"
+              className="hero-rise mt-7 max-w-[40ch] text-[22px] leading-[1.5] text-foreground/85 md:text-[25px]"
               data-testid="hero-subheadline"
               style={{ animationDelay: "0.3s" }}
             >
-              We make breakthrough science findable, and keep it provable all the
-              way to market. Less time between a discovery and the patients
-              waiting on it.
+              We make breakthrough science{" "}
+              <span className="font-semibold text-primary">findable</span>, and keep it{" "}
+              <span className="font-semibold text-primary">provable</span> all the way to
+              market. <span className="font-semibold text-primary">Less time</span> between
+              a discovery and the patients waiting on it.
             </p>
 
             {/* Two actions, weighted rather than matched: the primary carries
