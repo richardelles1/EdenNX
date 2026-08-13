@@ -293,6 +293,19 @@
   animation: heroMarkSettle 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
+/* The wordmark is set to the width of the text column, which is the full width
+   on mobile and half of it on desktop. One clamp cannot serve both: a mobile
+   value large enough to fill a phone overflows the half-width column on a small
+   laptop. Two rules, one per layout. */
+.hero-wordmark {
+  font-size: clamp(2.5rem, 24vw, 8rem);
+}
+@media (min-width: 1024px) {
+  .hero-wordmark {
+    font-size: clamp(3.2rem, 11vw, 10.5rem);
+  }
+}
+
 /* The hero mark. On desktop it is absolutely placed and sized off the section's
    height, but positioned off its width, so it needs a width cap or it walks left
    over the headline as the viewport narrows. */

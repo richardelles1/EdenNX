@@ -316,7 +316,7 @@ function BigTile({ p }: { p: Product }) {
   const shots = FRAMES[p.name] ?? [];
   const { revealed, index, onEnter, onLeave } = useShotReveal(shots.length);
   return (
-    <CardLink p={p} className="min-h-[680px]" onEnter={onEnter} onLeave={onLeave}>
+    <CardLink p={p} className="lg:min-h-[680px]" onEnter={onEnter} onLeave={onLeave}>
       <div className="relative z-10 p-8 lg:p-9">
         <div className="flex items-center justify-between gap-4">
           <Wordmark p={p} />
@@ -339,7 +339,11 @@ function BigTile({ p }: { p: Product }) {
       </div>
 
       <div
-        className="relative mt-auto h-[392px] w-full overflow-hidden lg:h-[404px]"
+        // Fixed height on desktop so both flagship floors start on the same
+        // line. On mobile the column is half the width, so a fixed height
+        // squeezes eight tiles into a space built for a wider grid: let it grow
+        // to its content there instead.
+        className="relative mt-auto h-auto w-full overflow-hidden lg:h-[404px]"
         style={{ borderTop: "1px solid rgba(15,26,20,0.08)", background: `hsl(var(${p.token}) / 0.03)` }}
       >
         {/* Rest state: what the product actually does. Clears a little faster

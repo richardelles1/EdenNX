@@ -38,7 +38,10 @@ export default function Home() {
       {/* Column on mobile so the mark can lead the stack in normal flow, and a
           single centred row on desktop where the mark is absolutely placed. */}
       <section
-        className="relative flex min-h-[112vh] flex-col justify-center overflow-hidden pt-10 lg:block lg:pt-0"
+        // 112vh is sized around the desktop mark. On mobile the mark is a
+        // 300px block in normal flow, so the same height would leave the stack
+        // floating in a screen and a bit of empty space.
+        className="relative flex min-h-0 flex-col justify-center overflow-hidden pb-4 pt-10 lg:block lg:min-h-[112vh] lg:pb-0 lg:pt-0"
         style={{
           // Green radiating out of the mark, plus a gentle wash across the page
           // from right to left. The previous version was faint enough to be
@@ -95,9 +98,9 @@ export default function Home() {
                 spent the page's most valuable line on something the visitor
                 already knew from the URL. */}
             <div
-              className="hero-rise font-bold leading-[0.86] tracking-[-0.045em]"
+              className="hero-wordmark hero-rise font-bold leading-[0.86] tracking-[-0.045em]"
               data-testid="hero-wordmark"
-              style={{ fontSize: "clamp(3.2rem,11vw,10.5rem)", animationDelay: "0.1s" }}
+              style={{ animationDelay: "0.1s" }}
             >
               <span className="text-primary">Eden</span>
               <span className="text-foreground">NX</span>
