@@ -38,7 +38,7 @@ export default function Home() {
       {/* Column on mobile so the mark can lead the stack in normal flow, and a
           single centred row on desktop where the mark is absolutely placed. */}
       <section
-        className="relative flex min-h-[96vh] flex-col justify-center overflow-hidden pt-10 lg:block lg:pt-0"
+        className="relative flex min-h-[112vh] flex-col justify-center overflow-hidden pt-10 lg:block lg:pt-0"
         style={{
           // Green radiating out of the mark, plus a gentle wash across the page
           // from right to left. The previous version was faint enough to be
@@ -87,7 +87,7 @@ export default function Home() {
           }}
         />
 
-        <div className="relative mx-auto flex w-full max-w-7xl items-center px-6 pb-20 lg:min-h-[96vh] lg:py-20 lg:px-8">
+        <div className="relative mx-auto flex w-full max-w-7xl items-center px-6 pb-20 lg:min-h-[112vh] lg:py-20 lg:px-8">
           <div className="max-w-full lg:max-w-[50%]">
             {/* The company name set to the width of the text column, above the
                 claim rather than instead of it. It is a div, not a heading, so
