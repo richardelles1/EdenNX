@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { PLATFORM_PRODUCTS, EMERGING_PRODUCTS, type Product } from "@/lib/products";
-import { LabPreview, DiscoveryPreview } from "@/components/SuiteVignettes";
+import { PRODUCTS, type Product } from "@/lib/products";
+import { DETAIL } from "@/lib/productDetail";
 
 // The products mega-menu: a quiet list on the left, a preview of the selected
 // product on the right. Hovering or focusing a row swaps the preview.
@@ -11,24 +11,55 @@ import { LabPreview, DiscoveryPreview } from "@/components/SuiteVignettes";
 // very different maturity look identical. Here accent colour does one job:
 // showing which row is selected. The preview carries the interest.
 
-type Preview =
-  | { img: string; position: string }
-  /* No screenshot exists for these two, so they use the designed product
-     surfaces built for the Products page rather than a mark on an empty panel.
-     Illustrative data, real layout, and no invented screenshot. */
-  | { Vignette: React.FC };
-
-const PREVIEWS: Record<string, Preview> = {
+/* No screenshot is published for EdenLab or EdenDiscovery. Rather than draw an
+   interface to fill the panel, those two show their own facts set as type: the
+   eleven canvas sections, or the three criteria a concept is scored on. Same
+   source as the Products page, so the two never drift. */
+const PREVIEWS: Record<string, { img: string; position: string }> = {
   EdenRadar: { img: "/images/shot-radar-2.jpg", position: "left top" },
   // The analytics row rather than the dashboard's greeting: three donuts read
   // far better than "Good evening, Dana" at preview size.
   EdenCompliance: { img: "/images/shot-compliance-analytics.jpg", position: "center top" },
-  EdenMarket: { img: "/images/portal-edenmarket.png", position: "right center" },
-  EdenLab: { Vignette: LabPreview },
-  EdenDiscovery: { Vignette: DiscoveryPreview },
+  EdenMarket: { img: "/images/shot-market-listings.jpg", position: "center top" },
 };
 
-const ALL = [...PLATFORM_PRODUCTS, ...EMERGING_PRODUCTS];
+function FactsPreview({ p }: { p: Product }) {
+  const facts = DETAIL[p.name]?.facts;
+  const accent = `hsl(var(${p.token}))`;
+  if (!facts) return null;
+
+  return (
+    <div className="flex h-full flex-col justify-center px-5 py-4">
+      <p className="font-mono text-[9.5px] uppercase tracking-[0.16em]" style={{ color: accent }}>
+        {facts.eyebrow}
+      </p>
+
+      {facts.index && (
+        <ol className="mt-3 grid grid-cols-2 gap-x-5">
+          {facts.index.map((label, i) => (
+            <li key={label} className="flex items-baseline gap-2 border-b border-border/70 py-[3px]">
+              <span className="font-mono text-[9px] tabular-nums text-foreground/30">{String(i + 1).padStart(2, "0")}</span>
+              <span className="truncate text-[11px] text-foreground/80">{label}</span>
+            </li>
+          ))}
+        </ol>
+      )}
+
+      {facts.columns && (
+        <dl className="mt-3 space-y-2.5">
+          {facts.columns.map((c) => (
+            <div key={c.label} className="border-t pt-1.5" style={{ borderColor: accent }}>
+              <dt className="text-[12.5px] font-semibold tracking-tight text-foreground">{c.label}</dt>
+              <dd className="mt-0.5 text-[11px] leading-snug text-foreground/60">{c.desc}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  );
+}
+
+const ALL = PRODUCTS;
 
 function Row({
   p,
@@ -77,19 +108,14 @@ function Row({
 function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
   const accent = `hsl(var(${p.token}))`;
   const preview = PREVIEWS[p.name];
-  const isVignette = "Vignette" in preview;
 
   return (
     <div className="flex h-full flex-col">
       <div
-        className="relative h-[214px] overflow-hidden rounded-xl border border-border bg-white"
-        style={isVignette ? undefined : { background: "hsl(var(--muted) / 0.5)" }}
+        className="relative h-[214px] overflow-hidden rounded-xl border border-border"
+        style={{ background: preview ? "hsl(var(--muted) / 0.5)" : "hsl(var(--card))" }}
       >
-        {isVignette ? (
-          /* Sized to fill the box edge to edge, like the screenshots beside it,
-             rather than inset and cropped behind a fade. */
-          <preview.Vignette />
-        ) : (
+        {preview ? (
           <img
             src={preview.img}
             alt=""
@@ -100,6 +126,8 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
             className="h-full w-full"
             style={{ objectFit: "cover", objectPosition: preview.position }}
           />
+        ) : (
+          <FactsPreview p={p} />
         )}
       </div>
 
@@ -141,30 +169,23 @@ export function ProductsMenu({ onNavigate }: { onNavigate: () => void }) {
   // panel while its image fetches. The cost lands on opening the menu, not on
   // page load, since this component only mounts when the menu is open.
   useEffect(() => {
-    for (const preview of Object.values(PREVIEWS)) {
-      if ("img" in preview) new Image().src = preview.img;
-    }
+    for (const preview of Object.values(PREVIEWS)) new Image().src = preview.img;
   }, []);
 
   return (
     <div className="w-[860px] max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-border bg-background shadow-2xl">
       <div className="grid grid-cols-[300px_1fr]">
+        {/* One list. Splitting it into "Platforms" and "Emerging" sorted the
+            suite into a queue with two at the front and three trailing, which
+            is a roadmap rather than a description. Each row carries its own
+            status, which is the current state without the narrative. */}
         <div className="border-r border-border py-3">
-          <GroupLabel>Platforms</GroupLabel>
+          <GroupLabel>The suite</GroupLabel>
           <div className="flex flex-col px-1.5">
-            {PLATFORM_PRODUCTS.map((p) => (
+            {ALL.map((p) => (
               <Row key={p.name} p={p} selected={p.name === selectedName}
                    onSelect={() => setSelectedName(p.name)} onNavigate={onNavigate} />
             ))}
-          </div>
-          <div className="mt-2">
-            <GroupLabel>Emerging</GroupLabel>
-            <div className="flex flex-col px-1.5">
-              {EMERGING_PRODUCTS.map((p) => (
-                <Row key={p.name} p={p} selected={p.name === selectedName}
-                     onSelect={() => setSelectedName(p.name)} onNavigate={onNavigate} />
-              ))}
-            </div>
           </div>
         </div>
 
