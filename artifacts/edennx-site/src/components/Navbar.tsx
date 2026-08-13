@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { ProductsMenu } from "@/components/ProductsMenu";
 import { PLATFORM_PRODUCTS, EMERGING_PRODUCTS, type Product } from "@/lib/products";
 
 const otherLinks = [
@@ -179,39 +180,9 @@ export function Navbar() {
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`} />
                 </button>
 
-                {/* Laid out the way the home bento lays the suite out: the two
-                    platforms side by side, the three emerging products in a row
-                    beneath. A single vertical list of five gave equal weight to
-                    products that are not equal. */}
                 {productsOpen && (
                   <div className="absolute left-0 top-full pt-3" data-testid="nav-products-menu">
-                    <div className="w-[720px] max-w-[calc(100vw-2rem)] rounded-2xl border border-border bg-background/98 p-4 shadow-2xl backdrop-blur-xl">
-                      <SectionLabel>Platforms</SectionLabel>
-                      {/* The two flagships sit side by side; a platform without
-                          its own info links, currently EdenMarket, spans the row
-                          rather than being left as a half-width orphan. */}
-                      <div className="grid grid-cols-2 gap-2.5">
-                        {PLATFORM_PRODUCTS.map((p) => (
-                          <div key={p.name} className={p.links?.length ? "" : "col-span-2"}>
-                            <ProductRow p={p} onNavigate={() => setProductsOpen(false)} />
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="mt-4">
-                        <SectionLabel>Emerging</SectionLabel>
-                        <div className="grid grid-cols-2 gap-2.5">
-                          {EMERGING_PRODUCTS.map((p) => <ProductRow key={p.name} p={p} compact onNavigate={() => setProductsOpen(false)} />)}
-                        </div>
-                      </div>
-
-                      <div className="mt-4 border-t border-border pt-3">
-                        <Link to="/products" onClick={() => setProductsOpen(false)} className="flex items-center justify-between rounded-lg px-2 py-1.5 text-[14px] font-semibold text-primary transition-colors hover:bg-muted" data-testid="nav-products-all">
-                          Compare the full suite
-                          <span aria-hidden>→</span>
-                        </Link>
-                      </div>
-                    </div>
+                    <ProductsMenu onNavigate={() => setProductsOpen(false)} />
                   </div>
                 )}
               </div>

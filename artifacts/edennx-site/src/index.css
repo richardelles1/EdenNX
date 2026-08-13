@@ -288,6 +288,17 @@
   animation: heroMarkSettle 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
+/* Products menu: the preview cross-fades as you move down the product list.
+   The only effect in the menu, deliberately: a nav is a wayfinding surface, and
+   anything that moves while someone is aiming at a link is friction. */
+@keyframes previewFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.preview-fade {
+  animation: previewFade 0.18s ease-out both;
+}
+
 /* The wordmark is set to the width of the text column, which is the full width
    on mobile and half of it on desktop. One clamp cannot serve both: a mobile
    value large enough to fill a phone overflows the half-width column on a small
@@ -420,6 +431,9 @@ section[id] { scroll-margin-top: 8rem; }
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-left, .marquee-right, .marquee-track {
+    animation: none !important;
+  }
+  .preview-fade {
     animation: none !important;
   }
   /* No entrance choreography: land in the final state. */
