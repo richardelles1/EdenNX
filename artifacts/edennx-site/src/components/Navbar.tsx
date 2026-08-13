@@ -25,48 +25,74 @@ function StatusPill({ status, accent }: { status: string; accent: string }) {
   );
 }
 
-function ProductRow({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
+// Product entry. Platforms get a tinted card carrying their own accent, the way
+// the home bento does, so the menu and the page describe the suite the same
+// way; emerging products get a compact card with the tagline only.
+function ProductRow({
+  p,
+  onNavigate,
+  compact = false,
+}: {
+  p: Product;
+  onNavigate: () => void;
+  compact?: boolean;
+}) {
   const accent = `hsl(var(${p.token}))`;
+  const testid = `nav-product-${p.suffix.toLowerCase()}`;
+
   const heading = (
     <>
       <span
-        className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg"
-        style={{ background: `hsl(var(${p.token}) / 0.1)` }}
+        className="flex flex-shrink-0 items-center justify-center rounded-xl"
+        style={{
+          background: `hsl(var(${p.token}) / 0.12)`,
+          border: `1px solid hsl(var(${p.token}) / 0.18)`,
+          height: compact ? 32 : 38,
+          width: compact ? 32 : 38,
+        }}
       >
-        <p.Icon className="h-5 w-5" strokeWidth={2.25} style={{ color: accent }} />
+        <p.Icon className={compact ? "h-4 w-4" : "h-[18px] w-[18px]"} strokeWidth={2.25} style={{ color: accent }} />
       </span>
       <span className="min-w-0">
-        <span className="flex items-center gap-2">
-          <span className="text-sm font-bold tracking-tight leading-none">
+        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className={`font-bold tracking-tight leading-none ${compact ? "text-[14px]" : "text-[15.5px]"}`}>
             <span className="text-foreground">Eden</span>
             <span style={{ color: accent }}>{p.suffix}</span>
           </span>
           <StatusPill status={p.status} accent={p.goldToken ? `hsl(var(${p.goldToken}))` : accent} />
         </span>
-        <span className="mt-1 block text-xs leading-snug text-foreground/60">{p.tagline}</span>
+        <span className={`mt-1.5 block leading-snug text-foreground/70 ${compact ? "text-[12px]" : "text-[12.5px]"}`}>
+          {p.tagline}
+        </span>
       </span>
     </>
   );
-  const testid = `nav-product-${p.suffix.toLowerCase()}`;
+
   const headLink = p.external ? (
     <a href={p.href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3" onClick={onNavigate} data-testid={testid}>{heading}</a>
   ) : (
     <Link to={p.href} className="flex items-start gap-3" onClick={onNavigate} data-testid={testid}>{heading}</Link>
   );
 
-  // Full products expose their info pages (how it works / features / pricing / one-pager),
-  // linked to each product's own site and opened in a new tab; the app launch sits at the end.
-  if (p.links?.length) {
+  const shell = {
+    background: `hsl(var(${p.token}) / 0.045)`,
+    border: `1px solid hsl(var(${p.token}) / 0.16)`,
+  };
+
+  // Full products expose their info pages (how it works / features / pricing /
+  // one-pager), linked to each product's own site and opened in a new tab; the
+  // app launch sits at the end.
+  if (p.links?.length && !compact) {
     return (
-      <div className="rounded-lg p-2.5 transition-colors hover:bg-muted/60">
+      <div className="rounded-xl p-3.5 transition-shadow hover:shadow-md" style={shell}>
         {headLink}
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 pl-12 text-xs">
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px]">
           {p.links.map((l) => (
-            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="text-foreground/55 transition-colors hover:text-primary">{l.label}</a>
+            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="font-medium text-foreground/65 transition-colors hover:text-primary">{l.label}</a>
           ))}
           {p.launch && (
             <>
-              <span className="text-foreground/20" aria-hidden>·</span>
+              <span className="text-foreground/25" aria-hidden>·</span>
               <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
             </>
           )}
@@ -74,11 +100,15 @@ function ProductRow({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
       </div>
     );
   }
-  return <div className="rounded-lg p-2.5 transition-colors hover:bg-muted">{headLink}</div>;
+  return (
+    <div className="rounded-xl p-3 transition-shadow hover:shadow-md" style={shell}>
+      {headLink}
+    </div>
+  );
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="px-2.5 pb-1 pt-1 text-[11px] font-semibold uppercase tracking-wider text-foreground/40">{children}</p>;
+  return <p className="pb-2 pt-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-foreground/45">{children}</p>;
 }
 
 export function Navbar() {
@@ -143,26 +173,40 @@ export function Navbar() {
                   aria-expanded={productsOpen}
                   aria-haspopup="true"
                   data-testid="nav-products-trigger"
-                  className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isProductsRoute || productsOpen ? "text-primary" : "text-foreground/70"}`}
+                  className={`flex items-center gap-1 text-[15px] font-semibold tracking-tight transition-colors hover:text-primary ${isProductsRoute || productsOpen ? "text-primary" : "text-foreground/85"}`}
                 >
                   Products
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`} />
                 </button>
 
+                {/* Laid out the way the home bento lays the suite out: the two
+                    platforms side by side, the three emerging products in a row
+                    beneath. A single vertical list of five gave equal weight to
+                    products that are not equal. */}
                 {productsOpen && (
                   <div className="absolute left-0 top-full pt-3" data-testid="nav-products-menu">
-                    <div className="w-[560px] max-w-[calc(100vw-2rem)] rounded-2xl border border-border bg-background/98 backdrop-blur-xl shadow-xl p-3">
+                    <div className="w-[720px] max-w-[calc(100vw-2rem)] rounded-2xl border border-border bg-background/98 p-4 shadow-2xl backdrop-blur-xl">
                       <SectionLabel>Platforms</SectionLabel>
-                      <div className="flex flex-col">
-                        {PLATFORM_PRODUCTS.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setProductsOpen(false)} />)}
+                      {/* The two flagships sit side by side; a platform without
+                          its own info links, currently EdenMarket, spans the row
+                          rather than being left as a half-width orphan. */}
+                      <div className="grid grid-cols-2 gap-2.5">
+                        {PLATFORM_PRODUCTS.map((p) => (
+                          <div key={p.name} className={p.links?.length ? "" : "col-span-2"}>
+                            <ProductRow p={p} onNavigate={() => setProductsOpen(false)} />
+                          </div>
+                        ))}
                       </div>
-                      <div className="my-2 border-t border-border" />
-                      <SectionLabel>Emerging</SectionLabel>
-                      <div className="flex flex-col">
-                        {EMERGING_PRODUCTS.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setProductsOpen(false)} />)}
+
+                      <div className="mt-4">
+                        <SectionLabel>Emerging</SectionLabel>
+                        <div className="grid grid-cols-2 gap-2.5">
+                          {EMERGING_PRODUCTS.map((p) => <ProductRow key={p.name} p={p} compact onNavigate={() => setProductsOpen(false)} />)}
+                        </div>
                       </div>
-                      <div className="mt-2 border-t border-border pt-2">
-                        <Link to="/products" onClick={() => setProductsOpen(false)} className="flex items-center justify-between rounded-lg px-2.5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-muted" data-testid="nav-products-all">
+
+                      <div className="mt-4 border-t border-border pt-3">
+                        <Link to="/products" onClick={() => setProductsOpen(false)} className="flex items-center justify-between rounded-lg px-2 py-1.5 text-[14px] font-semibold text-primary transition-colors hover:bg-muted" data-testid="nav-products-all">
                           Compare the full suite
                           <span aria-hidden>→</span>
                         </Link>
@@ -177,7 +221,7 @@ export function Navbar() {
                   key={link.href}
                   to={link.href}
                   data-testid={`nav-link-${link.label.toLowerCase()}`}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === link.href ? "text-primary" : "text-foreground/70"}`}
+                  className={`text-[15px] font-semibold tracking-tight transition-colors hover:text-primary ${location.pathname === link.href ? "text-primary" : "text-foreground/85"}`}
                 >
                   {link.label}
                 </Link>
@@ -188,7 +232,9 @@ export function Navbar() {
               <Link
                 to="/products"
                 data-testid="nav-explore-products"
-                className={`inline-flex items-center font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-all duration-300 text-sm ${scrolled ? "px-4 py-1.5 rounded-full" : "px-5 py-2 rounded-md"}`}
+                // Pill at both sizes: the hero's buttons are pills, and a square
+                // corner up here that rounds off on scroll read as two designs.
+                className={`inline-flex items-center rounded-full bg-primary font-semibold text-primary-foreground shadow-sm transition-all duration-300 hover:opacity-90 ${scrolled ? "px-4 py-1.5 text-[14px]" : "px-5 py-2.5 text-[15px]"}`}
               >
                 Explore Products
               </Link>
@@ -225,7 +271,7 @@ export function Navbar() {
                   key={link.href}
                   to={link.href}
                   data-testid={`nav-mobile-link-${link.label.toLowerCase()}`}
-                  className={`rounded-lg px-2.5 py-2 text-base font-medium transition-colors ${location.pathname === link.href ? "text-primary" : "text-foreground/70"}`}
+                  className={`rounded-lg px-2.5 py-2 text-base font-semibold transition-colors ${location.pathname === link.href ? "text-primary" : "text-foreground/85"}`}
                 >
                   {link.label}
                 </Link>
