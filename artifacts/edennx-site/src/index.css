@@ -299,11 +299,16 @@
 .hero-mark {
   --hero-mark-opacity: 0.7;
   position: absolute;
-  top: 50%;
+  /* Half of the 124% height below is 62%, so placing the centre at 62% puts the
+     mark's top edge exactly flush with the top of the section, at any viewport
+     height, since both are percentages of the same box. Nothing is clipped off
+     the leaf tip; the whole overhang falls at the bottom, which is the edge
+     that carries the fade. */
+  top: 62%;
   right: 9%;
-  /* Percentage of a taller section now, so this is a materially bigger mark
-     than the same number would have been against the old height. */
-  height: 140%;
+  /* Against the taller section this is still a bigger mark in absolute terms
+     than the old 140% of a shorter one, with far less clipped off the top. */
+  height: 124%;
   max-width: 44%;
   /* The mark is taller than the section, so the section's overflow clips it
      with a hard horizontal line across the artwork. Fade the bottom of the
