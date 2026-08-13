@@ -41,7 +41,7 @@ export default function Home() {
         // 112vh is sized around the desktop mark. On mobile the mark is a
         // 300px block in normal flow, so the same height would leave the stack
         // floating in a screen and a bit of empty space.
-        className="relative flex min-h-0 flex-col justify-center overflow-hidden pb-4 pt-10 lg:block lg:min-h-[112vh] lg:pb-0 lg:pt-0"
+        className="relative flex min-h-0 flex-col justify-center overflow-hidden pb-10 pt-16 lg:block lg:min-h-[112vh] lg:pb-0 lg:pt-0"
         style={{
           // Green radiating out of the mark, plus a gentle wash across the page
           // from right to left. The previous version was faint enough to be
