@@ -78,8 +78,24 @@ export default function Home() {
 
         <div className="relative mx-auto flex w-full max-w-7xl items-center px-6 pb-20 lg:min-h-[88vh] lg:py-20 lg:px-8">
           <div className="max-w-full lg:max-w-[50%]">
+            {/* The company name set to the width of the text column, above the
+                claim rather than instead of it. It is a div, not a heading, so
+                the h1 stays the claim: the old hero made the name the h1, which
+                spent the page's most valuable line on something the visitor
+                already knew from the URL. */}
+            <div
+              className="hero-rise font-bold leading-[0.86] tracking-[-0.045em]"
+              data-testid="hero-wordmark"
+              style={{ fontSize: "clamp(3.2rem,11vw,10.5rem)", animationDelay: "0.1s" }}
+            >
+              <span className="text-primary">Eden</span>
+              <span className="text-foreground">NX</span>
+            </div>
+
+            {/* A full headline line of air between the name and the claim, so
+                they read as two separate statements rather than one stack. */}
             <h1
-              className="hero-rise font-bold text-foreground"
+              className="hero-rise mt-10 font-bold text-foreground lg:mt-24"
               data-testid="hero-headline"
               style={{
                 // Sized so the line breaks after "backbone" and sets as two
@@ -87,7 +103,7 @@ export default function Home() {
                 fontSize: "clamp(2.6rem,5.2vw,4.6rem)",
                 lineHeight: 1.02,
                 letterSpacing: "-0.034em",
-                animationDelay: "0.18s",
+                animationDelay: "0.24s",
               }}
             >
               The <span className="text-primary">backbone</span> biotech runs on.
@@ -99,7 +115,7 @@ export default function Home() {
             <p
               className="hero-rise mt-7 max-w-[40ch] text-[22px] leading-[1.5] text-foreground/85 md:text-[25px]"
               data-testid="hero-subheadline"
-              style={{ animationDelay: "0.3s" }}
+              style={{ animationDelay: "0.38s" }}
             >
               <span className="font-semibold text-primary">Findable</span> science.{" "}
               <span className="font-semibold text-primary">Provable</span> quality.{" "}
@@ -112,7 +128,7 @@ export default function Home() {
                 The old hero ran two identical solid greens with no hierarchy. */}
             <div
               className="hero-rise mt-9 flex flex-wrap items-center gap-3"
-              style={{ animationDelay: "0.42s" }}
+              style={{ animationDelay: "0.5s" }}
             >
               <a
                 href="#suite"
@@ -140,16 +156,18 @@ export default function Home() {
         className="max-w-7xl mx-auto px-6 lg:px-8 pt-16 lg:pt-24 pb-10 lg:pb-12 scroll-mt-24"
         data-testid="product-highlights"
       >
+        {/* "Backbone" belongs to the hero now, so this heading leads with the
+            problem instead of repeating the metaphor, and the body picks up the
+            hero's three beats to show how the five products deliver them. */}
         <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-5 reveal">
-          Five products, one biotech backbone.
+          Built for every step that slows science down.
         </h2>
         <p
           className="text-lg text-foreground/80 max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          From spotting a newly published asset to running a signed, audited vendor
-          program, each EdenNX product owns a different part of the field. One company
-          behind all five.
+          Find the science. Prove the quality. Move it to market. Each product owns a
+          different stretch of the same road, and one company builds all five.
         </p>
       </section>
 
