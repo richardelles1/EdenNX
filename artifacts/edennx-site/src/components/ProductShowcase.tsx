@@ -350,7 +350,11 @@ function BigTile({ p }: { p: Product }) {
             than the shot arrives, so the two states cross-dissolve instead of
             both sitting at half opacity. */}
         <div
-          className="grid h-full grid-cols-2 grid-rows-4 gap-2.5 p-5 transition-[opacity,transform] duration-[380ms] ease-out"
+          // Four fixed rows only at the width they were drawn for. Narrower than
+          // that, the rows stay a fixed height while the wrapped text needs
+          // more, so every tile spills over the one beneath it. One column on a
+          // phone, two from sm, and the fixed 2x4 grid only from lg.
+          className="grid h-full grid-cols-1 gap-2.5 p-5 transition-[opacity,transform] duration-[380ms] ease-out sm:grid-cols-2 lg:grid-rows-4"
           style={{ opacity: revealed ? 0 : 1, transform: revealed ? "scale(0.985)" : "scale(1)" }}
         >
           {caps.map((c) => (

@@ -337,11 +337,17 @@
     --hero-mark-opacity: 0.92;
     position: static;
     height: auto;
-    width: 74%;
-    max-width: 300px;
+    /* The mark is nearly twice as tall as it is wide, so a width that looks
+       modest still eats most of a phone screen: at 300px it stood over 500px
+       tall and pushed the name and the claim below the fold. Sized off the
+       viewport height instead, so it stays an accent above the copy rather
+       than a full screen of its own. */
+    width: auto;
+    height: 38vh;
+    max-height: 340px;
     align-self: flex-end;
-    margin-right: -7%;
-    margin-bottom: 2.5rem;
+    margin-right: -6%;
+    margin-bottom: 1.75rem;
     -webkit-mask-image: none;
     mask-image: none;
   }
