@@ -305,6 +305,13 @@
      than the same number would have been against the old height. */
   height: 140%;
   max-width: 44%;
+  /* The mark is taller than the section, so the section's overflow clips it
+     with a hard horizontal line across the artwork. Fade the bottom of the
+     image itself rather than covering it, so it dissolves instead of stopping.
+     Desktop only: on mobile the mark sits in flow and is not clipped, and a
+     fade there would just cut the base off the leaf. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 97%);
+  mask-image: linear-gradient(to bottom, #000 68%, transparent 97%);
 }
 
 /* Below the desktop breakpoint the hero is a single column, so the mark comes
@@ -322,6 +329,8 @@
     align-self: flex-end;
     margin-right: -7%;
     margin-bottom: 2.5rem;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
   .hero-mark-in {
     animation-name: heroMarkSettleFlow;

@@ -76,6 +76,17 @@ export default function Home() {
           }}
         />
 
+        {/* Settles the hero into the section below instead of ending on a hard
+            edge between the white ground and the page tint. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0) 0%, hsl(var(--background) / 0.55) 62%, hsl(var(--background)) 100%)",
+          }}
+        />
+
         <div className="relative mx-auto flex w-full max-w-7xl items-center px-6 pb-20 lg:min-h-[88vh] lg:py-20 lg:px-8">
           <div className="max-w-full lg:max-w-[50%]">
             {/* The company name set to the width of the text column, above the
