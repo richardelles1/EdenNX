@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 import {
   SORTED_INSIGHTS,
   countBySource,
@@ -96,11 +97,7 @@ function Card({ post, featured = false }: { post: Insight; featured?: boolean })
 
 export default function Insights() {
   useScrollReveal();
-  useSEO({
-    title: "Insights | Tech transfer and regulated quality",
-    description:
-      "Writing from across the EdenNX product suite: analysis of academic licensing, tech transfer, and regulated quality from the EdenRadar and EdenCompliance teams.",
-  });
+  useSEO(ROUTE_META["/insights"]);
 
   const [filter, setFilter] = useState<Filter>("All");
   const posts = useMemo(

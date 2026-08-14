@@ -5,10 +5,16 @@
 // Mirrored by hand from each product's `shared/blogPosts.ts`. Titles, standfirsts,
 // descriptions, tags, dates, and read times are copied verbatim, never rewritten.
 //
-// A browser fetch from edennx.com to either product's site is blocked by their
-// CORS policy, so this cannot be live today. If each product exposes a
-// /blog.json with Access-Control-Allow-Origin for edennx.com, this file becomes
-// the fallback and the page updates itself.
+// This cannot update itself, and CORS is no longer the reason. Both sites now
+// send Access-Control-Allow-Origin: *, but neither publishes anything a machine
+// can read: /blog.json, /rss.xml and /feed.xml all fall through to the SPA
+// shell, the blog index renders client-side, and every post serves the same
+// site-level og:title and og:description rather than its own. There is nothing
+// to fetch.
+//
+// Until one of them ships a real feed, this file only changes when a person
+// changes it, which is exactly how five EdenCompliance posts went missing from
+// the parent site for a fortnight.
 //
 // Refresh: re-mirror when either product publishes.
 
@@ -42,7 +48,7 @@ export const INSIGHTS: Insight[] = [
   {
     source: "EdenCompliance",
     title: "What we mean by a controlled record",
-    lede: "Nothing is deleted, everything is attributable, and the history is checkable. Here is what each of those actually means.",
+    lede: "A plain account of what a controlled record is: append-only history, what a signature captures, what a hash chain proves, and where the line sits.",
     date: "2026-08-12",
     tag: "Platform",
     readTime: "5 min read",
@@ -119,6 +125,51 @@ export const INSIGHTS: Insight[] = [
     tag: "Announcement",
     readTime: "4 min read",
     url: `${ER}/edenradar-is-live`,
+  },
+  {
+    source: "EdenCompliance",
+    title: "EdenCompliance is live.",
+    lede: "Vendor quality, audits, and a two-way vendor portal on one controlled record.",
+    date: "2026-08-12",
+    tag: "Announcement",
+    readTime: "4 min read",
+    url: `${EC}/edencompliance-is-live`,
+  },
+  {
+    source: "EdenCompliance",
+    title: "Noticing the cause",
+    lede: "When a for cause supplier audit is warranted: the trigger categories worth naming in advance, and the one category attention alone cannot cover.",
+    date: "2026-08-10",
+    tag: "Practice",
+    readTime: "5 min read",
+    url: `${EC}/for-cause-triggers`,
+  },
+  {
+    source: "EdenCompliance",
+    title: "Two questions",
+    lede: "An approved vendor list is a document issued from a live register. What it takes to prove any past version of it, and who approved what.",
+    date: "2026-08-07",
+    tag: "Explainer",
+    readTime: "5 min read",
+    url: `${EC}/two-questions`,
+  },
+  {
+    source: "EdenCompliance",
+    title: "Nobody's job",
+    lede: "Vendor requalification lapses because the follow-up sits between roles. Why reminders do not fix it, and what changes when the request is shared.",
+    date: "2026-08-05",
+    tag: "Practice",
+    readTime: "4 min read",
+    url: `${EC}/nobodys-job`,
+  },
+  {
+    source: "EdenCompliance",
+    title: "What a spreadsheet cannot do",
+    lede: "Vendor qualification tracking in a spreadsheet works until somebody asks about the past. The precise point it breaks, and when it is still the right tool.",
+    date: "2026-08-03",
+    tag: "Perspective",
+    readTime: "4 min read",
+    url: `${EC}/what-a-spreadsheet-cannot-do`,
   },
 ];
 

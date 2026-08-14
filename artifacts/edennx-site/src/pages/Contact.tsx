@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 
 const CONTACT_EMAIL = "info@edennx.com";
 
@@ -17,11 +18,7 @@ const subjects = [
 
 export default function Contact() {
   useScrollReveal();
-  useSEO({
-    title: "Contact EdenNX | Demos and partnerships",
-    description:
-      "Get in touch with EdenNX. Whether you're interested in a product demo, a partnership, or just want to learn more, we'd love to hear from you.",
-  });
+  useSEO(ROUTE_META["/contact"]);
 
   const [form, setForm] = useState({
     name: "",

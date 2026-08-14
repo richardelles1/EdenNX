@@ -1,5 +1,6 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 
 const LAST_UPDATED = "June 21, 2026";
 const CONTACT_EMAIL = "info@edennx.com";
@@ -46,10 +47,7 @@ const sections = [
 
 export default function Privacy() {
   useScrollReveal();
-  useSEO({
-    title: "Privacy Policy - EdenNX",
-    description: "How EdenNX collects, uses, and protects the information you share with us.",
-  });
+  useSEO(ROUTE_META["/privacy"]);
 
   return (
     <div className="pt-16">

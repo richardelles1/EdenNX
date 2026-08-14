@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 import { ShieldCheck } from "lucide-react";
 import { ProductCanvas } from "@/components/ProductCanvas";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
@@ -24,11 +25,7 @@ const path = [
 
 export default function Products() {
   useScrollReveal();
-  useSEO({
-    title: "Products | EdenRadar, EdenCompliance and the EdenNX suite",
-    description:
-      "The five EdenNX products: EdenRadar for biotech BD intelligence across 430+ tech transfer offices, EdenCompliance for vendor quality and audits on a controlled record, plus EdenMarket, EdenLab, and EdenDiscovery.",
-  });
+  useSEO(ROUTE_META["/products"]);
 
   return (
     // overflow-x-clip as a backstop: nothing on this page should ever be able

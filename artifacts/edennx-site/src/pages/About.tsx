@@ -1,5 +1,6 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 import { Link } from "react-router-dom";
 
 const edenPrinciples = [
@@ -31,11 +32,7 @@ const edenPrinciples = [
 
 export default function About() {
   useScrollReveal();
-  useSEO({
-    title: "About EdenNX | Mission and the EDEN framework",
-    description:
-      "EdenNX is building the intelligence backbone of modern biotech. Our mission, values, and the EDEN framework that guides everything we do.",
-  });
+  useSEO(ROUTE_META["/about"]);
 
   return (
     <div className="pt-16">

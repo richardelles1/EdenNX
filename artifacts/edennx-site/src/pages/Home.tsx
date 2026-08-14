@@ -4,6 +4,7 @@ import { CoverageSection } from "@/components/CoverageSection";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The mark, cropped tight to its artwork so a height percentage means the
@@ -12,14 +13,7 @@ const MARK = "/images/eden-mark-hero.jpg";
 
 export default function Home() {
   useScrollReveal();
-  useSEO({
-    // The headline no longer spells out the category, so the title and
-    // description carry those terms instead. Counts come from platformStats so
-    // the meta cannot drift from the figures used on the page.
-    title: "EdenNX | Biotech intelligence infrastructure",
-    description:
-      `The backbone biotech runs on. EdenNX builds EdenRadar for licensing intelligence across ${TTO_COUNT_LABEL} research institutions and ${ASSET_COUNT_LABEL} assets, and EdenCompliance for vendor quality and audit records.`,
-  });
+  useSEO(ROUTE_META["/"]);
 
   return (
     <div className="pt-16">

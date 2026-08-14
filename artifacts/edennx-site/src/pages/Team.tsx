@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 import headshot1 from "@assets/Headshot_1776710302062.jfif";
 import wmPhoto from "@assets/WM_phot_1775790644431.jpg";
 
@@ -42,11 +43,7 @@ function LinkedInIcon() {
 
 export default function Team() {
   useScrollReveal();
-  useSEO({
-    title: "Team | The founders behind EdenNX",
-    description:
-      "Meet the founders behind EdenNX: industry insiders building the intelligence infrastructure that biotech needs.",
-  });
+  useSEO(ROUTE_META["/team"]);
 
   return (
     <div className="pt-16">
