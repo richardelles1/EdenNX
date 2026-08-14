@@ -12,20 +12,6 @@ const otherLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-// Status pill: "New" and "Live" carry the product accent (available now); the rest
-// read as quiet, in-development labels.
-function StatusPill({ status, accent }: { status: string; accent: string }) {
-  const lit = status === "New" || status === "Live";
-  return (
-    <span
-      className="rounded-full px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
-      style={lit ? { background: `${accent.replace(")", " / 0.12)")}`, color: accent } : undefined}
-    >
-      <span className={lit ? "" : "text-foreground/45"}>{status}</span>
-    </span>
-  );
-}
-
 // Product entry for the mobile sheet: a tinted card carrying the product's own
 // accent, the way the home bento does, so the menu and the page describe the
 // suite the same way.
@@ -55,12 +41,9 @@ function ProductRow({
         <p.Icon className={compact ? "h-4 w-4" : "h-[18px] w-[18px]"} strokeWidth={2.25} style={{ color: accent }} />
       </span>
       <span className="min-w-0">
-        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span className={`font-bold tracking-tight leading-none ${compact ? "text-[14px]" : "text-[15.5px]"}`}>
-            <span className="text-foreground">Eden</span>
-            <span style={{ color: accent }}>{p.suffix}</span>
-          </span>
-          <StatusPill status={p.status} accent={p.goldToken ? `hsl(var(${p.goldToken}))` : accent} />
+        <span className={`block font-bold tracking-tight leading-none ${compact ? "text-[14px]" : "text-[15.5px]"}`}>
+          <span className="text-foreground">Eden</span>
+          <span style={{ color: accent }}>{p.suffix}</span>
         </span>
         <span className={`mt-1.5 block leading-snug text-foreground/70 ${compact ? "text-[12px]" : "text-[12.5px]"}`}>
           {p.tagline}
@@ -162,11 +145,23 @@ export function Navbar() {
             </Link>
 
             <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-              {/* Products mega-menu */}
-              <div className="relative" onMouseEnter={openProducts} onMouseLeave={scheduleClose}>
-                <button
-                  type="button"
-                  onClick={() => setProductsOpen((v) => !v)}
+              {/* Products mega-menu. The trigger is a link, not a toggle: a
+                  click goes to the page and hover opens the menu, so the two
+                  intentions stop competing for the same gesture.
+                  Focus opens it too, and focus leaving the group closes it, so
+                  the menu is still reachable without a mouse. */}
+              <div
+                className="relative"
+                onMouseEnter={openProducts}
+                onMouseLeave={scheduleClose}
+                onFocus={openProducts}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) setProductsOpen(false);
+                }}
+              >
+                <Link
+                  to="/products"
+                  onClick={() => setProductsOpen(false)}
                   aria-expanded={productsOpen}
                   aria-haspopup="true"
                   data-testid="nav-products-trigger"
@@ -174,7 +169,7 @@ export function Navbar() {
                 >
                   Products
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`} />
-                </button>
+                </Link>
 
                 {productsOpen && (
                   <div className="absolute left-0 top-full pt-3" data-testid="nav-products-menu">

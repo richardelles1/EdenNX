@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
-import { PortalEyebrow } from "@/components/PortalBits";
+import { ShieldCheck } from "lucide-react";
 import { ProductCanvas } from "@/components/ProductCanvas";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 const ER = "https://edenradar.com";
 const EC = "https://edencompliance.com";
+
+// EdenCompliance is forest green plus gold. On a dark panel the gold is the
+// half that reads.
+const GOLD = "hsl(var(--portal-compliance-gold))";
 
 // How the four intelligence products connect, as EdenRadar describes the path
 // on its own research page. This is a workflow that exists today, not a
@@ -61,7 +65,7 @@ export default function Products() {
               style={{ transitionDelay: "0.05s" }}
               data-testid="how-it-connects-headline"
             >
-              One path, from an idea to a deal.
+              A connected path, in service of our mission and our people.
             </h2>
             <p className="mt-3 text-base leading-relaxed text-foreground/75 reveal" style={{ transitionDelay: "0.1s" }}>
               Four of the products are one road, not four tools. A concept registered on day one can end as a licensed
@@ -69,65 +73,172 @@ export default function Products() {
             </p>
           </div>
 
-          <ol className="relative grid gap-10 md:grid-cols-4 md:gap-6">
-            <div aria-hidden className="absolute left-[12.5%] right-[12.5%] top-[15px] hidden h-px bg-border md:block" />
+          {/* Reveal sits on the list, not the tiles: .reveal owns the transition
+              property, and putting it on a tile would swallow the tile's own
+              hover transition. */}
+          <ol className="grid gap-4 reveal md:grid-cols-4">
             {path.map((s, i) => (
-              <li key={s.step} className="relative reveal" style={{ transitionDelay: `${i * 0.08}s` }} data-testid={`path-step-${i}`}>
-                <span
-                  className="relative z-10 mb-5 flex h-[31px] w-[31px] items-center justify-center rounded-full font-mono text-[11px] font-semibold tabular-nums text-white ring-4 ring-background"
-                  style={{ background: `hsl(var(${s.token}))` }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="text-base font-bold tracking-tight text-foreground">{s.step}</h3>
-                <p className="mt-1 text-[12.5px] font-semibold" style={{ color: `hsl(var(${s.token}))` }}>{s.product}</p>
-                <p className="mt-2 text-sm leading-relaxed text-foreground/70">{s.desc}</p>
+              <li
+                key={s.step}
+                className="glass-tile p-6"
+                style={{ ["--glass-accent" as string]: `hsl(var(${s.token}))` }}
+                data-testid={`path-step-${i}`}
+              >
+                <span aria-hidden className="glass-num">{String(i + 1).padStart(2, "0")}</span>
+                <div className="relative">
+                  <p className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: `hsl(var(${s.token}))` }}>
+                    {s.product}
+                  </p>
+                  <h3 className="mt-3 text-[17px] font-bold leading-snug tracking-tight text-foreground">{s.step}</h3>
+                  <p className="mt-2 text-[13.5px] leading-relaxed text-foreground/80">{s.desc}</p>
+                </div>
               </li>
             ))}
           </ol>
 
           {/* EdenCompliance genuinely sits outside that chain, and saying so is
-              more useful than implying five products are one funnel. */}
-          <div className="mt-14 rounded-2xl border border-border bg-card p-6 reveal lg:p-8">
-            <div className="mb-3">
-              <PortalEyebrow name="EdenCompliance" />
+              more useful than implying five products are one funnel.
+              Dark, because the panel should carry the weight the product does:
+              this is the thing running underneath the work. The ruling is a
+              ledger, which is what an append-only record is. */}
+          <div
+            className="relative mt-14 overflow-hidden rounded-2xl reveal"
+            style={{ background: "linear-gradient(120deg, hsl(147 34% 24%) 0%, hsl(152 36% 17%) 100%)" }}
+          >
+            <div className="grid gap-9 p-7 lg:grid-cols-[1.15fr_1fr] lg:gap-14 lg:p-10">
+              <div>
+                <span className="mb-4 flex items-center gap-2.5">
+                  <ShieldCheck className="h-[22px] w-[22px]" strokeWidth={2.25} style={{ color: GOLD }} />
+                  <span className="text-lg font-bold tracking-tight">
+                    <span className="text-white">Eden</span>
+                    <span style={{ color: GOLD }}>Compliance</span>
+                  </span>
+                </span>
+                <p className="text-[15.5px] leading-relaxed text-white/85">
+                  EdenCompliance is deliberately not on that road. It serves quality teams rather than deal teams, and
+                  it is a separate platform with its own customers, its own pricing, and its own site. What it shares
+                  with the rest is the company building it and the belief that the record underneath the work matters
+                  as much as the work.
+                </p>
+              </div>
+
+              {/* The three properties of that record, which are the presence the
+                  product brings. Its own three claims, verbatim. */}
+              <dl className="grid gap-5 self-center">
+                {[
+                  ["Append-only", "Entries cannot be edited or deleted, ever."],
+                  ["Hash-chained", "Every entry SHA-256 sealed to the one before it."],
+                  ["E-signed", "Re-authenticated signatures on each approval and sign-off."],
+                ].map(([term, def]) => (
+                  <div key={term} className="border-l-2 pl-4" style={{ borderColor: GOLD }}>
+                    <dt className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em]" style={{ color: GOLD }}>
+                      {term}
+                    </dt>
+                    <dd className="mt-1.5 text-[13.5px] leading-relaxed text-white/75">{def}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
-            <p className="max-w-3xl text-[15px] leading-relaxed text-foreground/80">
-              EdenCompliance is deliberately not on that road. It serves quality teams rather than deal teams, and it is
-              a separate platform with its own customers, its own pricing, and its own site. What it shares with the
-              rest is the company building it and the belief that the record underneath the work matters as much as the
-              work.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="px-6 py-20 lg:px-8">
+      {/* CTA. Centred copy in a wide box left most of it empty, so the two
+          platforms move out of a footnote and become the right-hand column,
+          which is also where someone who already knows what they want goes. */}
+      <section className="relative overflow-hidden bg-foreground/[0.015] dark:bg-white/[0.015]">
+        {/* No card. A rounded box directly under the EdenCompliance box was two
+            boxes stacked, and its edges sat wider than the content above it
+            because a max-width box and a max-width column with padding are not
+            the same width. This is a full-bleed band that rises out of the
+            section above it, so there is no edge to mismatch.
+            The first stop carries the green at zero alpha rather than
+            `transparent`, which some engines interpolate through transparent
+            black and haze grey on the way down. */}
         <div
-          className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl p-10 text-center reveal md:p-16"
-          style={{ background: "linear-gradient(135deg, hsl(142 52% 36%) 0%, hsl(158 50% 26%) 100%)" }}
-        >
-          <h2 className="mb-4 text-2xl font-bold tracking-tight text-white md:text-4xl">Tell us what you are working on.</h2>
-          <p className="mx-auto mb-8 max-w-xl text-white/80">
-            We will point you at the right product, or build toward the one you need.
-          </p>
-          <Link
-            to="/contact"
-            data-testid="products-cta"
-            className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-base font-semibold text-primary shadow-sm transition-opacity hover:opacity-90"
-          >
-            Get in Touch
-          </Link>
-          {/* Both platforms, weighted the same. The old CTA sent everyone to
-              EdenRadar, which made one of two live products the default. */}
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm font-semibold text-white/75">
-            <a href={ER} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">
-              edenradar.com →
-            </a>
-            <a href={EC} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-white">
-              edencompliance.com →
-            </a>
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background: [
+              "linear-gradient(180deg,",
+              // Eased rather than linear. A straight two-stop alpha ramp reads
+              // as a visible edge, because the eye is far more sensitive to the
+              // first few percent of opacity than to the last few. These stops
+              // approximate a smoothstep, so the green arrives without a line.
+              "hsl(146 46% 38% / 0) 0px,",
+              "hsl(146 46% 38% / 0.02) 22px,",
+              "hsl(146 46% 38% / 0.08) 44px,",
+              "hsl(146 46% 38% / 0.20) 66px,",
+              "hsl(146 46% 38% / 0.40) 88px,",
+              "hsl(146 46% 38% / 0.62) 108px,",
+              "hsl(146 46% 38% / 0.81) 126px,",
+              "hsl(146 46% 38% / 0.94) 142px,",
+              "hsl(146 46% 38%) 156px,",
+              // Fixed lengths, not percentages: the band is far taller when the
+              // two columns stack, and a percentage fade would stretch down over
+              // the copy on narrow screens.
+              "hsl(152 49% 31%) 62%,",
+              "hsl(158 52% 23%) 100%)",
+            ].join(" "),
+          }}
+        />
+        {/* The same dot grid the home hero uses, so the two greens read as one
+            surface rather than two flat gradients. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage: "radial-gradient(circle at center, rgba(255,255,255,0.10) 1px, transparent 1.5px)",
+            backgroundSize: "22px 22px",
+            maskImage: "radial-gradient(120% 80% at 20% 62%, #000 15%, transparent 80%)",
+            WebkitMaskImage: "radial-gradient(120% 80% at 20% 62%, #000 15%, transparent 80%)",
+          }}
+        />
+
+        {/* Top padding clears the 156px fade, so the copy always lands on solid
+            green rather than part way through the transition. */}
+        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-40 lg:px-8 lg:pb-28 lg:pt-44">
+          <div className="grid gap-10 reveal lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight text-white md:text-[2.4rem] md:leading-[1.12]">
+                Tell us what you are working on.
+              </h2>
+              <p className="mt-4 max-w-md text-[15.5px] leading-relaxed text-white/80">
+                We will point you at the right product, or build toward the one you need.
+              </p>
+              <Link
+                to="/contact"
+                data-testid="products-cta"
+                className="mt-7 inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-[15px] font-semibold text-primary shadow-sm transition-opacity hover:opacity-90"
+              >
+                Get in Touch
+              </Link>
+            </div>
+
+            {/* Both platforms, weighted the same. The old CTA sent everyone to
+                EdenRadar, which made one of two live products the default. */}
+            <div className="grid gap-3">
+              {[
+                { name: "EdenRadar", host: "edenradar.com", href: ER, line: `Biotech BD intelligence across ${TTO_COUNT_LABEL} tech transfer offices.` },
+                { name: "EdenCompliance", host: "edencompliance.com", href: EC, line: "Vendor quality and audits, on a record an inspector can read." },
+              ].map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-xl border border-white/15 bg-white/[0.07] p-5 transition-colors hover:border-white/35 hover:bg-white/[0.12]"
+                >
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-[15.5px] font-bold tracking-tight text-white">{s.name}</span>
+                    <span className="font-mono text-[11px] text-white/55 transition-colors group-hover:text-white/85">
+                      {s.host} ↗
+                    </span>
+                  </span>
+                  <span className="mt-1.5 block text-[13px] leading-relaxed text-white/70">{s.line}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -11,54 +11,9 @@ import { DETAIL } from "@/lib/productDetail";
 // very different maturity look identical. Here accent colour does one job:
 // showing which row is selected. The preview carries the interest.
 
-/* No screenshot is published for EdenLab or EdenDiscovery. Rather than draw an
-   interface to fill the panel, those two show their own facts set as type: the
-   eleven canvas sections, or the three criteria a concept is scored on. Same
-   source as the Products page, so the two never drift. */
-const PREVIEWS: Record<string, { img: string; position: string }> = {
-  EdenRadar: { img: "/images/shot-radar-2.jpg", position: "left top" },
-  // The analytics row rather than the dashboard's greeting: three donuts read
-  // far better than "Good evening, Dana" at preview size.
-  EdenCompliance: { img: "/images/shot-compliance-analytics.jpg", position: "center top" },
-  EdenMarket: { img: "/images/shot-market-listings.jpg", position: "center top" },
-};
-
-function FactsPreview({ p }: { p: Product }) {
-  const facts = DETAIL[p.name]?.facts;
-  const accent = `hsl(var(${p.token}))`;
-  if (!facts) return null;
-
-  return (
-    <div className="flex h-full flex-col justify-center px-5 py-4">
-      <p className="font-mono text-[9.5px] uppercase tracking-[0.16em]" style={{ color: accent }}>
-        {facts.eyebrow}
-      </p>
-
-      {facts.index && (
-        <ol className="mt-3 grid grid-cols-2 gap-x-5">
-          {facts.index.map((label, i) => (
-            <li key={label} className="flex items-baseline gap-2 border-b border-border/70 py-[3px]">
-              <span className="font-mono text-[9px] tabular-nums text-foreground/30">{String(i + 1).padStart(2, "0")}</span>
-              <span className="truncate text-[11px] text-foreground/80">{label}</span>
-            </li>
-          ))}
-        </ol>
-      )}
-
-      {facts.columns && (
-        <dl className="mt-3 space-y-2.5">
-          {facts.columns.map((c) => (
-            <div key={c.label} className="border-t pt-1.5" style={{ borderColor: accent }}>
-              <dt className="text-[12.5px] font-semibold tracking-tight text-foreground">{c.label}</dt>
-              <dd className="mt-0.5 text-[11px] leading-snug text-foreground/60">{c.desc}</dd>
-            </div>
-          ))}
-        </dl>
-      )}
-    </div>
-  );
-}
-
+/* Every product now has a photograph, so the menu shows the same one the
+   Products page does. Hovering a row previews exactly what you land on, and
+   there is no special case for the products without a screenshot. */
 const ALL = PRODUCTS;
 
 function Row({
@@ -85,9 +40,6 @@ function Row({
         <span className="text-foreground">Eden</span>
         <span style={{ color: accent }}>{p.suffix}</span>
       </span>
-      <span className="ml-auto text-[10px] font-semibold uppercase tracking-wider text-foreground/40">
-        {p.status}
-      </span>
     </>
   );
 
@@ -107,28 +59,21 @@ function Row({
 
 function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
   const accent = `hsl(var(${p.token}))`;
-  const preview = PREVIEWS[p.name];
+  const detail = DETAIL[p.name];
 
   return (
     <div className="flex h-full flex-col">
-      <div
-        className="relative h-[214px] overflow-hidden rounded-xl border border-border"
-        style={{ background: preview ? "hsl(var(--muted) / 0.5)" : "hsl(var(--card))" }}
-      >
-        {preview ? (
-          <img
-            src={preview.img}
-            alt=""
-            aria-hidden
-            /* Not lazy: only the selected preview is mounted, so lazy just
-               leaves the panel empty on the first hover of each product. */
-            decoding="async"
-            className="h-full w-full"
-            style={{ objectFit: "cover", objectPosition: preview.position }}
-          />
-        ) : (
-          <FactsPreview p={p} />
-        )}
+      <div className="relative h-[214px] overflow-hidden rounded-xl border border-border bg-muted">
+        <img
+          src={detail.photo}
+          alt=""
+          aria-hidden
+          /* Not lazy: only the selected preview is mounted, so lazy just leaves
+             the panel empty on the first hover of each product. */
+          decoding="async"
+          className="h-full w-full"
+          style={{ objectFit: "cover", objectPosition: "center" }}
+        />
       </div>
 
       <p className="mt-4 text-[14px] leading-relaxed text-foreground/75">{p.tagline}</p>
@@ -169,7 +114,7 @@ export function ProductsMenu({ onNavigate }: { onNavigate: () => void }) {
   // panel while its image fetches. The cost lands on opening the menu, not on
   // page load, since this component only mounts when the menu is open.
   useEffect(() => {
-    for (const preview of Object.values(PREVIEWS)) new Image().src = preview.img;
+    for (const d of Object.values(DETAIL)) new Image().src = d.photo;
   }, []);
 
   return (
