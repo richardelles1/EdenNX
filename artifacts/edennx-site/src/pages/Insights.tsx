@@ -20,9 +20,16 @@ type Filter = "All" | InsightSource;
 
 const FILTERS: Filter[] = ["All", "EdenRadar", "EdenCompliance"];
 
+// EdenRadar is emerald and EdenCompliance is forest green, which are four
+// degrees of hue apart and all but identical in a grid of small cards: the one
+// cue meant to tell the two sources apart was doing nothing. EdenCompliance is
+// forest *and* gold, and gold is the half of it that reads on a light surface,
+// so its cards take the gold. Green against amber separates at a glance, and
+// neither product has borrowed a colour it does not own.
 function accentOf(source: InsightSource) {
   const meta = PORTAL_META[source] ?? PORTAL_META.EdenRadar;
-  return { accent: `hsl(var(${meta.token}))`, token: meta.token, Icon: meta.Icon };
+  const token = source === "EdenCompliance" ? "--portal-compliance-gold" : meta.token;
+  return { accent: `hsl(var(${token}))`, token, Icon: meta.Icon };
 }
 
 function SourceBadge({ source }: { source: InsightSource }) {
@@ -39,7 +46,7 @@ function SourceBadge({ source }: { source: InsightSource }) {
 }
 
 function Card({ post, featured = false }: { post: Insight; featured?: boolean }) {
-  const { accent, token } = accentOf(post.source);
+  const { accent } = accentOf(post.source);
   return (
     <a
       href={post.url}
@@ -48,47 +55,55 @@ function Card({ post, featured = false }: { post: Insight; featured?: boolean })
       // No coloured bar across the top: a tinted strip on every card is the
       // stock way to signal a category, and with a source badge already naming
       // the product it was decoration doing a job that was already done. The
-      // card is a plain surface; the wordmark carries the colour.
-      className={`group relative flex flex-col rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-foreground/15 hover:shadow-[0_14px_36px_rgba(15,26,20,0.09)] reveal ${
+      // card is a plain surface until you touch it, then it takes the colour of
+      // whichever product wrote the piece.
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-foreground/15 hover:shadow-[0_14px_36px_rgba(15,26,20,0.09)] reveal ${
         featured ? "md:col-span-2 md:p-8" : ""
       }`}
+      style={{ ["--bloom-color" as string]: accent }}
       data-testid={`insight-${post.source.toLowerCase()}`}
     >
-      <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+      <span aria-hidden className="bloom" />
+
+      {/* Source only. The category pill beside it made two labels above every
+          headline, and Data or Explainer is weak signal next to the name of the
+          product that wrote the piece. */}
+      <div className="relative mb-4">
         <SourceBadge source={post.source} />
-        <span
-          className="rounded-full px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wider"
-          style={{ background: `hsl(var(${token}) / 0.1)`, color: accent }}
-        >
-          {post.tag}
-        </span>
       </div>
 
+      {/* The headline is the page. Everything else on a card is scaffolding
+          around it, so it gets the size and the tightest tracking. */}
       <h2
-        className={`font-bold tracking-tight text-foreground ${
-          featured ? "text-2xl md:text-3xl leading-tight" : "text-lg leading-snug"
+        className={`relative font-bold tracking-tight text-foreground ${
+          featured ? "text-[28px] md:text-[40px] leading-[1.08]" : "text-[21px] leading-[1.18]"
         }`}
       >
         {post.title}
       </h2>
 
       <p
-        className={`mt-3 leading-relaxed text-foreground/70 ${featured ? "text-base md:text-lg max-w-2xl" : "text-sm"}`}
+        className={`relative mt-3 leading-relaxed text-foreground/70 ${
+          featured ? "text-base md:text-lg max-w-2xl" : "text-[14px]"
+        }`}
       >
         {post.lede}
       </p>
 
       {/* The source badge already names the product, so the link stays short
           enough not to wrap in a one-third-width card. */}
-      <div className="mt-auto flex items-center gap-2 pt-6 text-xs text-muted-foreground">
+      <div className="relative mt-auto flex items-center gap-2 pt-6 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
         <span className="whitespace-nowrap">{formatDate(post.date)}</span>
         <span aria-hidden>·</span>
         <span className="whitespace-nowrap">{post.readTime}</span>
+        {/* The arrow travels on hover instead of the gap widening. Animating
+            gap reflows the row; a transform on the glyph does not. */}
         <span
-          className="ml-auto inline-flex flex-shrink-0 items-center gap-1 text-[13px] font-semibold transition-[gap] group-hover:gap-2"
+          className="ml-auto inline-flex flex-shrink-0 items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider"
           style={{ color: accent }}
         >
-          Read <ArrowUpRight className="h-4 w-4" />
+          Read
+          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
       </div>
     </a>

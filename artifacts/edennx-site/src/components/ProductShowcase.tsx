@@ -2,25 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Check, Eye } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import {
-  Antenna,
-  BellRing,
-  Sparkles,
-  FileSearch,
-  SlidersHorizontal,
-  Gauge,
-  Grid3x3,
-  KanbanSquare,
-  ShieldCheck,
-  CalendarClock,
-  ClipboardList,
-  PenLine,
-  Table2,
-  Users,
-  RadioTower,
-  History,
-} from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
@@ -35,7 +16,7 @@ import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 // on touch, where a :hover state would stick. Nothing load-bearing lives behind
 // the hover: the tiles carry the meaning, the screenshot is the reward.
 
-type Capability = { label: string; detail: string; Icon: LucideIcon };
+type Capability = { label: string; detail: string };
 
 type Product = {
   name: string;
@@ -57,14 +38,14 @@ const PRODUCTS: Record<string, Product> = {
     note: "From $1,999/mo",
     // Sourced from edenradar.com/how-it-works (HIW_STEPS in the EdenRadar repo).
     capabilities: [
-      { label: "Deepest TTO index", detail: `${TTO_COUNT_LABEL} offices, plus patents, trials, and literature`, Icon: Antenna },
-      { label: "Precision filters", detail: "6 development stages, 10 modalities, 32 biology categories", Icon: SlidersHorizontal },
-      { label: "Fit scoring", detail: "Ranked against your buyer profile, not keyword match", Icon: Gauge },
-      { label: "Asset dossiers", detail: "Commercial thesis, competitive position, IP and deal readiness", Icon: FileSearch },
-      { label: "Whitespace map", detail: "Asset density across every biology and modality, daily", Icon: Grid3x3 },
-      { label: "Pipeline board", detail: "Watching to In Discussion, with score and notes on each card", Icon: KanbanSquare },
-      { label: "Standing alerts", detail: "Real-time, daily, or weekly on matches and stage changes", Icon: BellRing },
-      { label: "EDEN Chat", detail: "Natural language search across the full catalog", Icon: Sparkles },
+      { label: "Deepest TTO index", detail: `${TTO_COUNT_LABEL} offices, plus patents, trials, and literature` },
+      { label: "Precision filters", detail: "6 development stages, 10 modalities, 32 biology categories" },
+      { label: "Fit scoring", detail: "Ranked against your buyer profile, not keyword match" },
+      { label: "Asset dossiers", detail: "Commercial thesis, competitive position, IP and deal readiness" },
+      { label: "Whitespace map", detail: "Asset density across every biology and modality, daily" },
+      { label: "Pipeline board", detail: "Watching to In Discussion, with score and notes on each card" },
+      { label: "Standing alerts", detail: "Real-time, daily, or weekly on matches and stage changes" },
+      { label: "EDEN Chat", detail: "Natural language search across the full catalog" },
     ],
     cta: { label: "Explore EdenRadar", href: "https://edenradar.com", external: true },
   },
@@ -77,14 +58,14 @@ const PRODUCTS: Record<string, Product> = {
     // EdenCompliance repo), one per pillar: vendor, audit, collaboration,
     // intelligence, platform.
     capabilities: [
-      { label: "Vendor register", detail: "Type, service, location, and status at a glance", Icon: Table2 },
-      { label: "Qualification tracking", detail: "Status and expiry per vendor, per framework", Icon: ShieldCheck },
-      { label: "Risk-based planner", detail: "Next audit proposed from risk tier and last audit", Icon: CalendarClock },
-      { label: "Findings management", detail: "Logged and classified by severity on the record", Icon: ClipboardList },
-      { label: "Vendor portal", detail: "A private portal per vendor, no account needed", Icon: Users },
-      { label: "Regulation Watch", detail: "FDA and MHRA actions matched to your vendors, daily", Icon: RadioTower },
-      { label: "Append-only trail", detail: "Who, when, and the before and after, on every change", Icon: History },
-      { label: "Electronic sign-off", detail: "Re-authenticate to approve a vendor or lock an audit", Icon: PenLine },
+      { label: "Vendor register", detail: "Type, service, location, and status at a glance" },
+      { label: "Qualification tracking", detail: "Status and expiry per vendor, per framework" },
+      { label: "Risk-based planner", detail: "Next audit proposed from risk tier and last audit" },
+      { label: "Findings management", detail: "Logged and classified by severity on the record" },
+      { label: "Vendor portal", detail: "A private portal per vendor, no account needed" },
+      { label: "Regulation Watch", detail: "FDA and MHRA actions matched to your vendors, daily" },
+      { label: "Append-only trail", detail: "Who, when, and the before and after, on every change" },
+      { label: "Electronic sign-off", detail: "Re-authenticate to approve a vendor or lock an audit" },
     ],
     cta: { label: "Explore EdenCompliance", href: "https://edencompliance.com", external: true },
   },
@@ -238,31 +219,29 @@ function CtaRow({ p }: { p: Product }) {
   );
 }
 
-// One capability: an accent-chipped icon on the left, a short bold label and a
-// supporting line on the right. Horizontal so eight fit the floor without the
-// card growing unreasonably tall. The tile is washed in the product's own accent
-// so each flagship floor reads in its own color, and EdenCompliance takes its
-// gold for the glyph the way its own site does.
+// One capability: a short accent rule, a bold label, a supporting line.
+//
+// The icons are gone. Each tile used to carry a Lucide glyph in a tinted
+// square, which meant sixteen of them across the two flagships, chosen for
+// availability rather than meaning: an antenna for the index, a grid for the
+// whitespace map, a kanban square for the pipeline. Nobody reads those as
+// anything, and at 15px they are a smudge of colour beside the label that does
+// the actual work. The rule marks the tile and carries the product's colour,
+// which is the same treatment the Products page tiles use, so the two pages
+// now describe a capability the same way.
 function CapabilityTile({ p, c }: { p: Product; c: Capability }) {
-  const glyph = p.goldToken ? `hsl(var(${p.goldToken}))` : `hsl(var(${p.token}))`;
+  const rule = p.goldToken ? `hsl(var(${p.goldToken}))` : `hsl(var(${p.token}))`;
   return (
     <div
-      className="flex items-start gap-3 rounded-xl px-3.5 py-3"
+      className="rounded-xl px-3.5 py-3"
       style={{
         background: `hsl(var(${p.token}) / 0.06)`,
         border: `1px solid hsl(var(${p.token}) / 0.18)`,
       }}
     >
-      <span
-        className="mt-[1px] flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg"
-        style={{ background: `hsl(var(${p.token}) / 0.14)` }}
-      >
-        <c.Icon className="h-[15px] w-[15px]" strokeWidth={2.2} style={{ color: glyph }} />
-      </span>
-      <span className="min-w-0">
-        <span className="block text-[12.5px] font-bold leading-tight" style={{ color: INK }}>{c.label}</span>
-        <span className="mt-1 block text-[11.5px] leading-snug" style={{ color: NOTE }}>{c.detail}</span>
-      </span>
+      <span aria-hidden className="mb-2.5 block h-[2px] w-7 rounded-full" style={{ background: rule }} />
+      <span className="block text-[12.5px] font-bold leading-tight" style={{ color: INK }}>{c.label}</span>
+      <span className="mt-1 block text-[11.5px] leading-snug" style={{ color: NOTE }}>{c.detail}</span>
     </div>
   );
 }

@@ -397,6 +397,46 @@ button:hover .rail-word[data-on="false"] > span {
   user-select: none;
 }
 
+/* Insight cards: a wash of the product's colour spreading out of the top-left
+   corner on hover.
+   Lifted from EdenRadar's asset cards, which do exactly this on their result
+   grid: a small circle pinned to the corner, scaled up hard and held at very
+   low opacity, so the card warms rather than lighting up. Slower here than
+   there, because a reading page should feel unhurried where a search result
+   should feel responsive.
+   A scaled circle rather than an animated background-position, because
+   transform runs on the compositor and a moving gradient does not. */
+.bloom {
+  position: absolute;
+  top: -30px;
+  left: -30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--bloom-color);
+  opacity: 0;
+  transform: scale(1);
+  transform-origin: center;
+  pointer-events: none;
+  transition:
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s ease;
+}
+@media (hover: hover) {
+  .group:hover .bloom {
+    transform: scale(30);
+    opacity: 0.15;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bloom {
+    transition: opacity 0.2s ease;
+  }
+  .group:hover .bloom {
+    transform: scale(30);
+  }
+}
+
 /* Links out to each product's own pages, as real targets rather than a row of
    small grey text. */
 .link-pill {

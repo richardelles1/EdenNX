@@ -105,8 +105,21 @@ export default function Team() {
                 ))}
               </div>
 
-              <blockquote className="mt-auto rounded-xl border-l-4 border-primary/40 bg-primary/5 p-5">
-                <p className="text-sm italic text-foreground/85 leading-relaxed">"{member.quote}"</p>
+              {/* A hairline and a size change, not a tinted box with a fat left
+                  border. The old treatment was the stock pull-quote: four
+                  pixels of colour and a wash of the same colour behind it,
+                  which announces "this is a quote" twice while making the words
+                  harder to read than the body copy above them. Here the type
+                  does it. */}
+              <blockquote className="mt-auto border-t border-border pt-6">
+                <p className="text-[17px] leading-relaxed tracking-tight text-foreground/90">
+                  <span aria-hidden className="mr-0.5 font-bold text-primary">&ldquo;</span>
+                  {member.quote}
+                  <span aria-hidden className="ml-0.5 font-bold text-primary">&rdquo;</span>
+                </p>
+                <footer className="mt-3 text-[12.5px] font-semibold text-foreground/45">
+                  {member.name.split(",")[0]}
+                </footer>
               </blockquote>
             </article>
           ))}
