@@ -83,7 +83,7 @@ export default function Products() {
                 style={{ ["--glass-accent" as string]: `hsl(var(${s.token}))` }}
                 data-testid={`path-step-${i}`}
               >
-                <span aria-hidden className="glass-num">{String(i + 1).padStart(2, "0")}</span>
+                <span aria-hidden className="glass-mark">{String(i + 1).padStart(2, "0")}</span>
                 <div className="relative">
                   <p className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: `hsl(var(${s.token}))` }}>
                     {s.product}

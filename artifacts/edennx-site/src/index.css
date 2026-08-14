@@ -384,7 +384,10 @@ button:hover .rail-word[data-on="false"] > span {
       0 18px 42px color-mix(in srgb, var(--glass-accent) 20%, transparent);
   }
 }
-.glass-num {
+/* The character a glass tile is marked with. A step number on the Products
+   path, a letter of the framework on About. Set large, bled off the top-right
+   corner and held very faint, so it reads as a watermark rather than a badge. */
+.glass-mark {
   position: absolute;
   top: -10px;
   right: 8px;
@@ -395,6 +398,34 @@ button:hover .rail-word[data-on="false"] > span {
   color: color-mix(in srgb, var(--glass-accent) 15%, transparent);
   pointer-events: none;
   user-select: none;
+}
+
+/* Film grain over the whole site.
+   Every large surface here is a CSS gradient: the hero wash, the green CTA
+   band, the dark EdenCompliance panel. Gradients interpolate mathematically,
+   so at scale they are perfectly smooth in a way nothing physical is, and that
+   smoothness is the specific thing that reads as "generated" rather than
+   "designed". A few percent of noise over the top gives them a surface.
+   Fixed rather than scrolling, so it behaves like grain in the lens instead of
+   texture printed on the page. pointer-events: none so it never swallows a
+   click, and aria-hidden by virtue of being a pseudo-element. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+/* Slightly stronger on dark, where flat panels show their banding more. */
+.dark body::after {
+  opacity: 0.045;
+}
+/* Printing grain wastes ink and helps nobody. */
+@media print {
+  body::after { display: none; }
 }
 
 /* Insight cards: a wash of the product's colour spreading out of the top-left
@@ -413,6 +444,11 @@ button:hover .rail-word[data-on="false"] > span {
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  /* A flat fill, deliberately. Scaled this far the circle's edge crosses a card
+     or a row as a near-straight line, so the wash lands as a clean block of
+     colour with a defined edge rather than a soft glow. That hard edge is the
+     effect: it tiles the list into panels as the cursor moves down it. A radial
+     falloff was tried and read as generic. */
   background: var(--bloom-color);
   opacity: 0;
   transform: scale(1);

@@ -195,7 +195,7 @@ export default function Team() {
               is for. That shapes how we work.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 t: "Operators, not tourists",
@@ -214,13 +214,15 @@ export default function Team() {
                 d: "Every feature answers one question: does this help a breakthrough reach patients sooner?",
               },
             ].map((item, i) => (
-              <div
-                key={item.t}
-                className="rounded-2xl border border-border bg-card p-6 reveal"
-                style={{ transitionDelay: `${i * 0.07}s` }}
-              >
-                <h3 className="text-base font-bold text-foreground mb-2">{item.t}</h3>
-                <p className="text-sm text-foreground/70 leading-relaxed">{item.d}</p>
+              // Rule tiles, not glass. These four are peers, not a sequence,
+              // and there is no letter or numeral for a glass tile to carry:
+              // numbering them 01 to 04 would imply an order that does not
+              // exist. Same treatment as the capability tiles on Home and
+              // Products, which is what a set of peers gets.
+              <div key={item.t} className="reveal" style={{ transitionDelay: `${i * 0.07}s` }}>
+                <div aria-hidden className="h-[2px] w-full bg-primary" />
+                <h3 className="mt-3.5 text-base font-semibold leading-snug tracking-tight text-foreground">{item.t}</h3>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-foreground/80">{item.d}</p>
               </div>
             ))}
           </div>

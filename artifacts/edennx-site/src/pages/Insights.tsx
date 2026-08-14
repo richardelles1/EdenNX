@@ -45,70 +45,92 @@ function SourceBadge({ source }: { source: InsightSource }) {
   );
 }
 
-function Card({ post, featured = false }: { post: Insight; featured?: boolean }) {
+// A bento rather than a uniform grid. Fifteen identical cards reads as an
+// archive and a single list reads as a changelog; tiles of four different sizes
+// read as a publication that has a view about what matters.
+//
+// The sizes cycle on a fixed pattern rather than anything derived from the
+// posts, because nothing in the data ranks them: they are all just writing, and
+// inventing an importance score to drive a layout would be a lie told in CSS.
+// The cycle sums to whole rows, so the grid tiles cleanly at any count, and
+// dense auto-flow backfills whatever the last partial row leaves.
+type Variant = "lead" | "tall" | "wide" | "normal";
+
+const CYCLE: Variant[] = ["tall", "normal", "normal", "wide", "normal", "normal"];
+
+function variantAt(i: number): Variant {
+  return i === 0 ? "lead" : CYCLE[(i - 1) % CYCLE.length];
+}
+
+const SPAN: Record<Variant, string> = {
+  lead: "lg:col-span-2 lg:row-span-2",
+  tall: "lg:row-span-2",
+  wide: "lg:col-span-2",
+  normal: "",
+};
+
+const TITLE: Record<Variant, string> = {
+  lead: "text-[27px] leading-[1.08] md:text-[38px]",
+  tall: "text-[22px] leading-[1.15]",
+  wide: "text-[22px] leading-[1.15]",
+  normal: "text-[19px] leading-[1.2]",
+};
+
+function BentoCard({ post, variant }: { post: Insight; variant: Variant }) {
   const { accent } = accentOf(post.source);
+  const big = variant === "lead";
   return (
     <a
       href={post.url}
       target="_blank"
       rel="noopener noreferrer"
-      // No coloured bar across the top: a tinted strip on every card is the
-      // stock way to signal a category, and with a source badge already naming
-      // the product it was decoration doing a job that was already done. The
-      // card is a plain surface until you touch it, then it takes the colour of
-      // whichever product wrote the piece.
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-foreground/15 hover:shadow-[0_14px_36px_rgba(15,26,20,0.09)] reveal ${
-        featured ? "md:col-span-2 md:p-8" : ""
-      }`}
+      // No coloured bar across the top: a tinted strip is the stock way to
+      // signal a category, and with a source badge already naming the product
+      // it was decoration doing a job that was already done. The card is a
+      // plain surface until you touch it, then it takes the colour of whichever
+      // product wrote the piece.
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-foreground/15 hover:shadow-[0_14px_36px_rgba(15,26,20,0.09)] ${
+        big ? "md:p-9" : ""
+      } ${SPAN[variant]}`}
       style={{ ["--bloom-color" as string]: accent }}
       data-testid={`insight-${post.source.toLowerCase()}`}
     >
       <span aria-hidden className="bloom" />
 
-      {/* Source only. The category pill beside it made two labels above every
-          headline, and Data or Explainer is weak signal next to the name of the
-          product that wrote the piece. */}
-      <div className="relative mb-4">
+      <div className="relative mb-4 flex items-center gap-3">
         <SourceBadge source={post.source} />
+        {big && (
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-foreground/35">Latest</span>
+        )}
       </div>
 
-      {/* The headline is the page. Everything else on a card is scaffolding
-          around it, so it gets the size and the tightest tracking. */}
-      <h2
-        className={`relative font-bold tracking-tight text-foreground ${
-          featured ? "text-[28px] md:text-[40px] leading-[1.08]" : "text-[21px] leading-[1.18]"
-        }`}
-      >
-        {post.title}
-      </h2>
+      {/* The headline is the page. Everything else is scaffolding around it. */}
+      <h2 className={`relative font-bold tracking-tight text-foreground ${TITLE[variant]}`}>{post.title}</h2>
 
       <p
         className={`relative mt-3 leading-relaxed text-foreground/70 ${
-          featured ? "text-base md:text-lg max-w-2xl" : "text-[14px]"
+          big ? "max-w-2xl text-base md:text-lg" : "text-[13.5px]"
         }`}
       >
         {post.lede}
       </p>
 
-      {/* The source badge already names the product, so the link stays short
-          enough not to wrap in a one-third-width card. */}
       <div className="relative mt-auto flex items-center gap-2 pt-6 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
         <span className="whitespace-nowrap">{formatDate(post.date)}</span>
         <span aria-hidden>·</span>
         <span className="whitespace-nowrap">{post.readTime}</span>
         {/* The arrow travels on hover instead of the gap widening. Animating
             gap reflows the row; a transform on the glyph does not. */}
-        <span
-          className="ml-auto inline-flex flex-shrink-0 items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider"
+        <ArrowUpRight
+          className="ml-auto h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           style={{ color: accent }}
-        >
-          Read
-          <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </span>
+        />
       </div>
     </a>
   );
 }
+
+
 
 export default function Insights() {
   useScrollReveal();
@@ -172,10 +194,15 @@ export default function Insights() {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-20 lg:pb-28">
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {/* Row height is a floor, not a fixture: minmax lets a tile grow past the
+          unit if its standfirst runs long, so a two-unit tile is roughly, not
+          exactly, twice a one-unit tile. Dense flow backfills the gaps the
+          taller tiles leave. Below lg everything collapses to one column and
+          the spans stop applying, which is the only sane phone layout. */}
+      <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8 lg:pb-28">
+        <div className="grid gap-5 reveal md:grid-cols-2 lg:grid-cols-3 lg:[grid-auto-flow:dense] lg:[grid-auto-rows:minmax(188px,auto)]">
           {posts.map((post, i) => (
-            <Card key={post.url} post={post} featured={i === 0 && filter === "All"} />
+            <BentoCard key={post.url} post={post} variant={variantAt(i)} />
           ))}
         </div>
       </section>

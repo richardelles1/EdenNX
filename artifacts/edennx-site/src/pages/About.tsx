@@ -171,26 +171,28 @@ export default function About() {
           </h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-5">
+        {/* The letters carry the framework, so they are set large and faint in
+            the corner of each tile rather than boxed in a chip beside the
+            title: read across the row they spell EDEN, which a 48px square
+            never let them do. Same glass treatment as the four steps on the
+            Products page, where the character in the corner also means
+            something. Reveal sits on the grid, not the tiles, because .reveal
+            owns the transition property and would swallow the tile's own. */}
+        <div className="grid gap-4 reveal sm:grid-cols-2">
           {edenPrinciples.map((item, i) => (
             <div
               key={item.letter + item.title}
-              className="group rounded-2xl border border-border bg-card p-7 md:p-8 hover:border-primary/30 transition-colors reveal"
-              style={{ transitionDelay: `${i * 0.08}s` }}
+              className="glass-tile p-7 md:p-8"
+              style={{ ["--glass-accent" as string]: "hsl(var(--primary))" }}
               data-testid={`eden-${i}`}
             >
-              <div className="flex items-center gap-4 mb-4">
-                <span
-                  className="h-12 w-12 flex-shrink-0 rounded-xl bg-primary/10 text-primary text-2xl font-bold flex items-center justify-center"
-                  aria-hidden="true"
-                >
-                  {item.letter}
-                </span>
-                <h3 className="text-lg font-bold text-foreground">{item.title}</h3>
+              <span aria-hidden className="glass-mark">{item.letter}</span>
+              <div className="relative">
+                <h3 className="text-lg font-bold tracking-tight text-foreground">{item.title}</h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-foreground/75">
+                  {item.description}
+                </p>
               </div>
-              <p className="text-sm text-foreground/75 leading-relaxed">
-                {item.description}
-              </p>
             </div>
           ))}
         </div>
