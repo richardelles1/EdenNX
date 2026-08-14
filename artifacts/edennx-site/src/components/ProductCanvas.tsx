@@ -27,7 +27,7 @@ function Panel({ p, d }: { p: Product; d: Detail }) {
           /* Not lazy: only the selected photo is mounted, so lazy loading leaves
              an empty frame on the first view of each product. */
           decoding="async"
-          className="aspect-[3/2] w-full"
+          className="aspect-[3/2] w-full max-w-full"
           style={{ objectFit: "cover" }}
         />
       </div>
@@ -129,14 +129,24 @@ export function ProductCanvas() {
 
   return (
     <div className="relative grid gap-10 lg:grid-cols-[292px_1fr] lg:gap-14">
-      <div className="relative lg:sticky lg:top-28 lg:self-start">
+      {/* min-w-0 on both columns. A grid item's automatic minimum is its
+          content, so without this the rail's wordmarks set a floor wider than a
+          phone, the whole grid grows past the viewport, and everything in the
+          panel inherits that width. The photograph is just the widest thing in
+          there, which is why it was the part visibly spilling off the right. */}
+      <div className="relative min-w-0 lg:sticky lg:top-28 lg:self-start">
         {/* Set as the logo lockup at display size rather than an icon, a label
             and a status chip. Unselected products go flat and lose their colour
             entirely; selection is the moment the two-tone wordmark lights up.
             Colour does one job and the type does the rest. */}
+        {/* Wraps on small screens rather than scrolling sideways. The five
+            wordmarks measure 527px at mobile size against roughly 342px of
+            usable width on a 390px phone, so as a horizontal scroller EdenLab
+            and EdenDiscovery sat off the edge with nothing to say they were
+            there. Two lines shows all five. */}
         <nav
           aria-label="Products"
-          className="flex gap-x-5 overflow-x-auto lg:flex-col lg:gap-x-0 lg:gap-y-2.5 lg:overflow-visible"
+          className="flex min-w-0 flex-wrap gap-x-4 gap-y-1.5 lg:flex-col lg:flex-nowrap lg:gap-x-0 lg:gap-y-2.5"
           data-testid="product-rail"
         >
           {PRODUCTS.map((p) => {
@@ -157,7 +167,7 @@ export function ProductCanvas() {
                     transition off before it could play. */}
                 <span
                   data-on={on}
-                  className="rail-word block whitespace-nowrap text-[15px] font-bold tracking-tight lg:text-[27px] lg:leading-[1.1]"
+                  className="rail-word block whitespace-nowrap text-[14px] font-bold tracking-tight lg:text-[27px] lg:leading-[1.1]"
                 >
                   <span className="rail-eden">Eden</span>
                   <span className="rail-suffix">{p.suffix}</span>

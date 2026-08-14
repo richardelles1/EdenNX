@@ -31,7 +31,9 @@ export default function Products() {
   });
 
   return (
-    <div className="pt-16">
+    // overflow-x-clip as a backstop: nothing on this page should ever be able
+    // to scroll the body sideways on a phone, whatever a future edit adds.
+    <div className="overflow-x-clip pt-16">
       {/* Intro */}
       <section className="mx-auto max-w-7xl px-6 pb-12 pt-24 lg:px-8 lg:pb-16 lg:pt-32">
         <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary reveal">The Product Suite</p>
