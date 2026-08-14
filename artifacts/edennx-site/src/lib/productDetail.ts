@@ -43,7 +43,10 @@ export const DETAIL: Record<string, Detail> = {
       { label: "Deal pipeline", desc: "Watching through In Discussion, in board, grid, and export views." },
       { label: "Standing alerts", desc: "Real-time, daily, or weekly on new matches, stage changes, and licensing updates." },
     ],
-    term: "From $1,999/mo",
+    // Per-seat as of this revision. edenradar.com still publishes the older
+    // tiered pricing ($1,999 for one seat, $8,999 for five); it is being
+    // corrected there separately, so the two sites disagree until it lands.
+    term: "$499/seat/mo",
     note: "Every paid plan starts with a 3-day free trial.",
     primary: { label: "Launch EdenRadar", href: ER },
   },

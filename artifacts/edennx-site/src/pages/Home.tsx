@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { CoverageSection } from "@/components/CoverageSection";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
@@ -106,29 +105,30 @@ export default function Home() {
               className="hero-rise mt-10 font-bold text-foreground lg:mt-24"
               data-testid="hero-headline"
               style={{
-                // Sized so the line breaks after "backbone" and sets as two
-                // lines. Any larger and "on." is orphaned on a third.
-                fontSize: "clamp(2.6rem,5.2vw,4.6rem)",
-                lineHeight: 1.02,
+                // A word longer than the line it replaced, so it steps down a
+                // little to keep the same two-line set on desktop.
+                fontSize: "clamp(2.4rem,4.6vw,4.05rem)",
+                lineHeight: 1.04,
                 letterSpacing: "-0.034em",
                 animationDelay: "0.24s",
               }}
             >
-              The <span className="text-primary">backbone</span> biotech runs on.
+              The <span className="text-primary">intelligence backbone</span> of modern biotech
             </h1>
 
-            {/* Sized and weighted to be read, not skimmed past. The accents are
-                the three words the sentence turns on: the two outcomes and the
-                payoff. Kept to three so they stay emphasis rather than pattern. */}
+            {/* The accent lands on the three nouns only: discovery, quality,
+                visibility. One per product family, and the verbs around them
+                stay in body ink so the three outcomes are what the eye picks
+                up rather than most of the sentence. */}
             <p
-              className="hero-rise mt-7 max-w-[40ch] text-[22px] leading-[1.5] text-foreground/85 md:text-[25px]"
+              className="hero-rise mt-7 max-w-[44ch] text-[21px] leading-[1.5] text-foreground/85 md:text-[24px]"
               data-testid="hero-subheadline"
               style={{ animationDelay: "0.38s" }}
             >
-              <span className="font-semibold text-primary">Findable</span> science.{" "}
-              <span className="font-semibold text-primary">Provable</span> quality.{" "}
-              <span className="font-semibold text-primary">Less time</span> between a
-              discovery and the people waiting on it.
+              Transforming <span className="font-semibold text-primary">discovery</span>, elevating{" "}
+              <span className="font-semibold text-primary">quality</span>, and delivering end-to-end{" "}
+              <span className="font-semibold text-primary">visibility</span> through intelligent
+              tracking.
             </p>
 
             {/* Two actions, weighted rather than matched: the primary carries
@@ -194,52 +194,54 @@ export default function Home() {
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
             Our Mission
           </p>
+          {/* The old version framed the mission entirely as the licensing gap,
+              which is EdenRadar's problem rather than the company's. This spans
+              the lifecycle: discovery, then quality, then release. */}
           <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug max-w-3xl mb-6">
-            Accelerate science to patient impact by eliminating the discovery gap
-            between university research and industry development.
+            Accelerate science to patient impact.
           </p>
           <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
-            Every year, thousands of licensable technologies sit quietly inside
-            research institutions while industry teams spend months and millions
-            searching through fragmented databases and cold calls. EdenNX changes
-            that, building the connective tissue between every stakeholder in the
-            biotech ecosystem.
+            Discover smarter, qualify faster, and track every step across the biotech lifecycle.
+            From opportunities across {TTO_COUNT_LABEL} tech transfer offices, to audit-ready vendor
+            management, to release into clinic and market. Every stakeholder, every stage.
           </p>
         </div>
       </section>
 
-      {/* Global coverage — globe, stats, named institutions */}
-      <CoverageSection />
+      {/* The global coverage section lived here: the institution counts, the
+          indexed-asset totals and the named universities. All of it is
+          EdenRadar's, and on the parent site it made one product speak for the
+          company. It belongs on edenradar.com, which already carries it. */}
 
       {/* Bottom CTA */}
       <section className="bg-primary/5 border-t border-primary/10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 text-center">
+          {/* One action, and not a product launch. This used to read "Start with
+              the flagship that fits your team" over two buttons, which made two
+              of the products stand in for the company on the last thing anyone
+              reads. Sending people to us keeps the parent site introducing the
+              suite rather than routing traffic to one half of it. */}
           <h2
-            className="text-2xl md:text-3xl font-bold text-foreground mb-6 reveal"
+            className="text-2xl md:text-3xl font-bold text-foreground mb-3 reveal"
             data-testid="bottom-cta-headline"
           >
-            Start with the flagship that fits your team.
+            Tell us what you are working on.
           </h2>
+          <p
+            className="mx-auto mb-7 max-w-xl text-base leading-relaxed text-foreground/70 reveal"
+            style={{ transitionDelay: "0.05s" }}
+          >
+            We will point you at the right product across the suite, or build toward the one you
+            need.
+          </p>
           <div className="flex flex-wrap items-center justify-center gap-3 reveal" style={{ transitionDelay: "0.1s" }}>
-            <a
-              href="https://edenradar.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid="bottom-cta-edenradar"
-              className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-sm"
+            <Link
+              to="/contact"
+              data-testid="bottom-cta-contact"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
             >
-              Launch EdenRadar
-            </a>
-            <a
-              href="https://edencompliance.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid="bottom-cta-edencompliance"
-              className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold text-white hover:opacity-90 transition-opacity shadow-sm"
-              style={{ background: "hsl(var(--portal-compliance))" }}
-            >
-              Launch EdenCompliance
-            </a>
+              Contact us <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -6,7 +6,6 @@ import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
 import {
   SORTED_INSIGHTS,
-  countBySource,
   formatDate,
   type Insight,
   type InsightSource,
@@ -14,11 +13,10 @@ import {
 
 // One reading room for the writing across the suite. EdenNX publishes nothing
 // here: every card links out to the product that wrote it, which is the point.
-// Filtering is by product, because on this site the product is the subject.
+// The page is grouped by product rather than filtered, so both are always on it.
 
-type Filter = "All" | InsightSource;
-
-const FILTERS: Filter[] = ["All", "EdenRadar", "EdenCompliance"];
+// Group order matches the product order used everywhere else on the site.
+const SOURCES: InsightSource[] = ["EdenRadar", "EdenCompliance"];
 
 // EdenRadar is emerald and EdenCompliance is forest green, which are four
 // degrees of hue apart and all but identical in a grid of small cards: the one
@@ -32,121 +30,72 @@ function accentOf(source: InsightSource) {
   return { accent: `hsl(var(${token}))`, token, Icon: meta.Icon };
 }
 
-function SourceBadge({ source }: { source: InsightSource }) {
-  const { accent, Icon } = accentOf(source);
-  return (
-    <span className="inline-flex items-center gap-1.5">
-      <Icon className="h-4 w-4 flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
-      <span className="text-[13px] font-bold tracking-tight leading-none">
-        <span className="text-foreground">Eden</span>
-        <span style={{ color: accent }}>{source.slice(4)}</span>
-      </span>
-    </span>
-  );
-}
 
-// A bento rather than a uniform grid. Fifteen identical cards reads as an
-// archive and a single list reads as a changelog; tiles of four different sizes
-// read as a publication that has a view about what matters.
+// Two parallel feeds, one per product, rather than one grid.
 //
-// The sizes cycle on a fixed pattern rather than anything derived from the
-// posts, because nothing in the data ranks them: they are all just writing, and
-// inventing an importance score to drive a layout would be a lie told in CSS.
-// The cycle sums to whole rows, so the grid tiles cleanly at any count, and
-// dense auto-flow backfills whatever the last partial row leaves.
-type Variant = "lead" | "tall" | "wide" | "normal";
-
-const CYCLE: Variant[] = ["tall", "normal", "normal", "wide", "normal", "normal"];
-
-function variantAt(i: number): Variant {
-  return i === 0 ? "lead" : CYCLE[(i - 1) % CYCLE.length];
-}
-
-const SPAN: Record<Variant, string> = {
-  lead: "lg:col-span-2 lg:row-span-2",
-  tall: "lg:row-span-2",
-  wide: "lg:col-span-2",
-  normal: "",
-};
-
-const TITLE: Record<Variant, string> = {
-  lead: "text-[27px] leading-[1.08] md:text-[38px]",
-  tall: "text-[22px] leading-[1.15]",
-  wide: "text-[22px] leading-[1.15]",
-  normal: "text-[19px] leading-[1.2]",
-};
-
-function BentoCard({ post, variant }: { post: Insight; variant: Variant }) {
-  const { accent } = accentOf(post.source);
-  const big = variant === "lead";
+// A grid of fifteen always ends on a ragged row, and that gap was what read as
+// unbalanced. Two columns cannot: each feed simply runs its own length, and the
+// nine-against-six difference shows as one column ending sooner, which is true
+// rather than broken.
+//
+// A row, not a card: source mark on the left, headline and standfirst to the
+// right, date and read time underneath. No boxes, hairlines between entries.
+function FeedRow({ post }: { post: Insight }) {
+  const { accent, Icon } = accentOf(post.source);
   return (
-    <a
-      href={post.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      // No coloured bar across the top: a tinted strip is the stock way to
-      // signal a category, and with a source badge already naming the product
-      // it was decoration doing a job that was already done. The card is a
-      // plain surface until you touch it, then it takes the colour of whichever
-      // product wrote the piece.
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-foreground/15 hover:shadow-[0_14px_36px_rgba(15,26,20,0.09)] ${
-        big ? "md:p-9" : ""
-      } ${SPAN[variant]}`}
-      style={{ ["--bloom-color" as string]: accent }}
-      data-testid={`insight-${post.source.toLowerCase()}`}
-    >
-      <span aria-hidden className="bloom" />
-
-      <div className="relative mb-4 flex items-center gap-3">
-        <SourceBadge source={post.source} />
-        {big && (
-          <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-foreground/35">Latest</span>
-        )}
-      </div>
-
-      {/* The headline is the page. Everything else is scaffolding around it. */}
-      <h2 className={`relative font-bold tracking-tight text-foreground ${TITLE[variant]}`}>{post.title}</h2>
-
-      <p
-        className={`relative mt-3 leading-relaxed text-foreground/70 ${
-          big ? "max-w-2xl text-base md:text-lg" : "text-[13.5px]"
-        }`}
+    <li>
+      <a
+        href={post.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative flex gap-4 overflow-hidden rounded-xl border-b border-border px-4 py-5 transition-colors hover:bg-foreground/[0.015]"
+        style={{ ["--bloom-color" as string]: accent }}
+        data-testid={`insight-${post.source.toLowerCase()}`}
       >
-        {post.lede}
-      </p>
+        <span aria-hidden className="bloom" />
 
-      <div className="relative mt-auto flex items-center gap-2 pt-6 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
-        <span className="whitespace-nowrap">{formatDate(post.date)}</span>
-        <span aria-hidden>·</span>
-        <span className="whitespace-nowrap">{post.readTime}</span>
-        {/* The arrow travels on hover instead of the gap widening. Animating
-            gap reflows the row; a transform on the glyph does not. */}
-        <ArrowUpRight
-          className="ml-auto h-4 w-4 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        <Icon
+          className="relative mt-[3px] h-[17px] w-[17px] flex-shrink-0"
+          strokeWidth={2.25}
           style={{ color: accent }}
         />
-      </div>
-    </a>
+
+        <span className="relative min-w-0 flex-1">
+          <span className="block text-[17px] font-bold leading-snug tracking-tight text-foreground">
+            {post.title}
+          </span>
+          <span className="mt-1.5 block text-[13.5px] leading-relaxed text-foreground/65">
+            {post.lede}
+          </span>
+          <span className="mt-2.5 block font-mono text-[10.5px] uppercase tracking-[0.14em] text-foreground/40">
+            {formatDate(post.date)} · {post.readTime}
+          </span>
+        </span>
+
+        <ArrowUpRight
+          className="relative mt-[3px] h-4 w-4 flex-shrink-0 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
+          style={{ color: accent }}
+        />
+      </a>
+    </li>
   );
 }
-
-
 
 export default function Insights() {
   useScrollReveal();
   useSEO(ROUTE_META["/insights"]);
 
-  const [filter, setFilter] = useState<Filter>("All");
-  const posts = useMemo(
-    () => (filter === "All" ? SORTED_INSIGHTS : SORTED_INSIGHTS.filter((p) => p.source === filter)),
-    [filter]
+  // Both groups, always. The filter chips are gone: with the page grouped by
+  // product they were a control for something the layout already did, and a
+  // default of "All" over a mixed stream was the thing that read as random.
+  const groups = useMemo(
+    () =>
+      SOURCES.map((source) => ({
+        source,
+        posts: SORTED_INSIGHTS.filter((p) => p.source === source),
+      })),
+    []
   );
-
-  const counts: Record<Filter, number> = {
-    All: SORTED_INSIGHTS.length,
-    EdenRadar: countBySource("EdenRadar"),
-    EdenCompliance: countBySource("EdenCompliance"),
-  };
 
   return (
     <div className="pt-16">
@@ -166,44 +115,34 @@ export default function Insights() {
         </p>
       </section>
 
-      {/* Filter by product, which on this site is the subject matter */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">
-        <div className="flex flex-wrap gap-2 reveal" role="group" aria-label="Filter insights by product">
-          {FILTERS.map((f) => {
-            const active = filter === f;
-            const accent = f === "All" ? "hsl(var(--primary))" : accentOf(f).accent;
+      {/* Two feeds side by side. Each column heads with its wordmark and count,
+          so the page says two products are writing without a sentence. On
+          narrow screens they stack, which is the same reading order. */}
+      <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8 lg:pb-28">
+        <div className="grid gap-x-12 gap-y-14 lg:grid-cols-2">
+          {groups.map(({ source, posts }) => {
+            const { accent, Icon } = accentOf(source);
             return (
-              <button
-                key={f}
-                type="button"
-                onClick={() => setFilter(f)}
-                aria-pressed={active}
-                data-testid={`filter-${f.toLowerCase()}`}
-                className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors"
-                style={{
-                  borderColor: active ? accent : "hsl(var(--border))",
-                  background: active ? accent : "transparent",
-                  color: active ? "#fff" : "hsl(var(--foreground) / 0.75)",
-                }}
-              >
-                {f}
-                <span className={active ? "opacity-80" : "opacity-55"}>{counts[f]}</span>
-              </button>
+              <div key={source} data-testid={`insights-group-${source.toLowerCase()}`}>
+                <div className="mb-2 flex items-center gap-2.5 border-t-2 pt-5 reveal" style={{ borderColor: accent }}>
+                  <Icon className="h-[19px] w-[19px] flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
+                  <h2 className="text-[19px] font-bold tracking-tight">
+                    <span className="text-foreground">Eden</span>
+                    <span style={{ color: accent }}>{source.slice(4)}</span>
+                  </h2>
+                  <span className="ml-auto font-mono text-[11px] uppercase tracking-wider text-foreground/40">
+                    {posts.length} {posts.length === 1 ? "piece" : "pieces"}
+                  </span>
+                </div>
+
+                <ul className="reveal">
+                  {posts.map((post) => (
+                    <FeedRow key={post.url} post={post} />
+                  ))}
+                </ul>
+              </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* Row height is a floor, not a fixture: minmax lets a tile grow past the
-          unit if its standfirst runs long, so a two-unit tile is roughly, not
-          exactly, twice a one-unit tile. Dense flow backfills the gaps the
-          taller tiles leave. Below lg everything collapses to one column and
-          the spans stop applying, which is the only sane phone layout. */}
-      <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8 lg:pb-28">
-        <div className="grid gap-5 reveal md:grid-cols-2 lg:grid-cols-3 lg:[grid-auto-flow:dense] lg:[grid-auto-rows:minmax(188px,auto)]">
-          {posts.map((post, i) => (
-            <BentoCard key={post.url} post={post} variant={variantAt(i)} />
-          ))}
         </div>
       </section>
     </div>

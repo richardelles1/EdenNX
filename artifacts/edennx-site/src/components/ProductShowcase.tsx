@@ -35,7 +35,7 @@ const PRODUCTS: Record<string, Product> = {
     name: "EdenRadar", token: "--portal-radar",
     headline: { pre: "The next biotech breakthrough is ", accent: "already published.", post: "" },
     sub: `Real-time monitoring across ${TTO_COUNT_LABEL} tech transfer offices means the right assets find you first.`,
-    note: "From $1,999/mo",
+    note: "$499/seat/mo",
     // Sourced from edenradar.com/how-it-works (HIW_STEPS in the EdenRadar repo).
     capabilities: [
       { label: "Deepest TTO index", detail: `${TTO_COUNT_LABEL} offices, plus patents, trials, and literature` },
