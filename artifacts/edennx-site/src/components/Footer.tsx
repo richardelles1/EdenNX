@@ -49,8 +49,8 @@ export function Footer() {
               <Logo iconClassName="h-8 w-auto" wordmarkClassName="text-lg font-bold tracking-tight" />
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mt-4 max-w-xs">
-              The intelligence backbone of modern biotech, from earliest research hypothesis through
-              commercial licensing and regulated quality.
+              The intelligence backbone of modern biotech, from the first research hypothesis
+              through qualification, quality and release.
             </p>
             <div className="flex items-center gap-3 mt-5">
               <a

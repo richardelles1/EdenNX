@@ -8,25 +8,25 @@ const edenPrinciples = [
     letter: "E",
     title: "Expand Understanding",
     description:
-      "We design intelligence that helps innovators see patterns, surface insights, and explore the life science landscape with greater clarity and curiosity.",
+      "We design intelligence that helps teams see the whole picture: what is being discovered, what is being qualified, and what is ready to move. Clarity at every stage, not only the first.",
   },
   {
     letter: "D",
     title: "Design With Respect",
     description:
-      "Every dataset, asset, and idea represents someone's work. We approach the ecosystem with appreciation for the people and expertise behind it.",
+      "Every dataset, every record, and every audit represents someone's work. We approach the ecosystem with appreciation for the people and expertise behind it.",
   },
   {
     letter: "E",
     title: "Elevate the Ecosystem",
     description:
-      "Our tools aim to amplify what teams can discover and achieve: accelerating exploration, sharpening decisions, and opening new possibilities.",
+      "Our tools amplify what teams can achieve: finding the science faster, proving the quality with less friction, and reaching release with confidence.",
   },
   {
     letter: "N",
     title: "Navigate With Integrity",
     description:
-      "We value clear thinking, honest signals, and grounded analysis. Our approach is guided by transparency in how insights are surfaced and how intelligence is shaped.",
+      "We value clear thinking, honest signals, and grounded analysis, with transparency in how insights are surfaced and in how every record is kept.",
   },
 ];
 
@@ -52,14 +52,16 @@ export default function About() {
           className="text-lg text-muted-foreground max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.2s" }}
         >
-          EdenNX is building the intelligence backbone of modern biotech.
-          From earliest discovery hypothesis through commercial licensing and
-          patient delivery, we build the infrastructure that powers every stage
-          of the lifecycle.
+          EdenNX is building the intelligence backbone of modern biotech. From
+          the first research hypothesis through qualification, quality and
+          release, we build the infrastructure that carries a discovery all the
+          way to a patient.
         </p>
       </section>
 
-      {/* Why now — warm editorial sequence */}
+      {/* Why now — warm band. Type is the site's own (DM Sans bold, section
+          scale); only the ground is different, so the section reads as a change
+          of pace rather than as a page from another site. */}
       <section
         className="border-y"
         style={{
@@ -73,8 +75,8 @@ export default function About() {
               Why Now
             </p>
             <h2
-              className="font-display text-4xl md:text-6xl font-medium tracking-tight mb-6"
-              style={{ color: "hsl(25 25% 14%)", lineHeight: 1.05 }}
+              className="text-3xl md:text-4xl font-bold tracking-tight mb-6"
+              style={{ color: "hsl(25 25% 14%)", lineHeight: 1.1 }}
             >
               The right moment to close the distance.
             </h2>
@@ -92,7 +94,7 @@ export default function About() {
             {[
               {
                 t: "The answers already exist.",
-                d: "Buried in catalogs, registers and records across thousands of institutions, large and small. It is our job and our responsibility to bring them to light, so we can all benefit.",
+                d: "Scattered across the institutions that made them, the vendors who supply them, and the records that prove them. Bringing those together is the work, and it is our job and our responsibility to do it.",
               },
               {
                 t: "Proof has to travel with the work.",
@@ -111,14 +113,14 @@ export default function About() {
                 style={{ transitionDelay: `${i * 0.05}s`, borderColor: "hsl(33 20% 86%)" }}
               >
                 <div
-                  className="font-display leading-none"
-                  style={{ fontSize: "clamp(3.5rem, 7vw, 5.5rem)", fontWeight: 500, color: "hsl(142 52% 36% / 0.22)" }}
+                  className="leading-none"
+                  style={{ fontSize: "clamp(2.75rem, 5vw, 4rem)", fontWeight: 800, letterSpacing: "-0.03em", color: "hsl(142 52% 36% / 0.22)" }}
                 >
                   {String(i + 1).padStart(2, "0")}
                 </div>
                 <div>
                   <h3
-                    className="font-display text-2xl md:text-3xl font-medium tracking-tight mb-3.5"
+                    className="text-xl md:text-2xl font-bold tracking-tight mb-3.5"
                     style={{ color: "hsl(25 25% 14%)" }}
                   >
                     {item.t}
@@ -177,55 +179,14 @@ export default function About() {
         </div>
       </section>
 
-      {/* How we work. Moved here from the Team page, where it sat under a
-          heading about who the founders are while saying nothing about them.
-          It belongs beside the framework: both are statements of principle. */}
-      <section className="border-t border-border py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-12 max-w-2xl reveal">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary">
-              How We Work
-            </p>
-            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              Built by operators, for operators.
-            </h2>
-            <p className="text-base leading-relaxed text-foreground/75">
-              We have built the quality systems and run the deal teams these products are for. That
-              shapes how we work.
-            </p>
-          </div>
-          <div className="grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                t: "Operators, not tourists",
-                d: "We design for the people doing the work because we have done it ourselves.",
-              },
-              {
-                t: "Evidence over hype",
-                d: "No cherry-picked data, no inflated claims. The intelligence has to earn trust on every screen.",
-              },
-              {
-                t: "Respect the work behind the data",
-                d: "Every asset represents someone's years of effort. We treat the ecosystem with that in mind.",
-              },
-              {
-                t: "Science to patients, faster",
-                d: "Every feature answers one question: does this help a breakthrough reach patients sooner?",
-              },
-            ].map((item, i) => (
-              // Rule tiles, not glass: four peers, no sequence, and no letter or
-              // numeral for a glass tile to carry.
-              <div key={item.t} className="reveal" style={{ transitionDelay: `${i * 0.07}s` }}>
-                <div aria-hidden className="h-[2px] w-full bg-primary" />
-                <h3 className="mt-3.5 text-base font-semibold leading-snug tracking-tight text-foreground">
-                  {item.t}
-                </h3>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-foreground/80">{item.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* The "How we work" grid lived here: four values under "Built by
+          operators, for operators". Removed as redundant. "Respect the work
+          behind the data" restated Design With Respect almost word for word,
+          "Evidence over hype" restated Navigate With Integrity, "Science to
+          patients, faster" restated the home-page mission, and "Operators, not
+          tourists" restated this page's own headline and the whole Team page.
+          Its one piece of evidence, that we have built these systems and run
+          these deal teams ourselves, moved into the paragraph below. */}
 
       {/* What the company is. The page used to end on a link to the Team page,
           so a reader could finish About having read about the industry, the
@@ -243,9 +204,9 @@ export default function About() {
             <p className="mt-4 text-base leading-relaxed text-foreground/70 md:text-lg">
               We build and run every product in it: EdenRadar for finding science, EdenCompliance
               for proving quality, and EdenMarket, EdenLab and EdenDiscovery for the stretches
-              between. Each one is a working product with its own customers and its own site. What
-              they share is a company that has done this work, and a belief that the record
-              underneath the science matters as much as the science.
+              between. Each one is a working product with its own customers and its own site. We
+              have built the quality systems and run the deal teams these products are for, and we
+              believe the record underneath the science matters as much as the science.
             </p>
           </div>
         </div>
