@@ -57,6 +57,12 @@ export default function About() {
           release, we build the infrastructure that carries a discovery all the
           way to a patient.
         </p>
+        <p
+          className="mt-5 text-lg text-foreground/80 max-w-2xl leading-relaxed reveal"
+          style={{ transitionDelay: "0.28s" }}
+        >
+          We have built the quality systems and run the deal teams these products are for.
+        </p>
       </section>
 
       {/* Why now — warm band. Type is the site's own (DM Sans bold, section
@@ -187,31 +193,14 @@ export default function About() {
           patients, faster" restated the home-page mission, and "Operators, not
           tourists" restated this page's own headline and the whole Team page.
           Its one piece of evidence, that we have built these systems and run
-          these deal teams ourselves, moved into the paragraph below. */}
+          these deal teams ourselves, is now the second line of the intro. */}
 
-      {/* What the company is. The page used to end on a link to the Team page,
-          so a reader could finish About having read about the industry, the
-          moment and the framework, but never a plain sentence about EdenNX
-          itself. */}
-      <section className="border-t border-border py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="max-w-3xl reveal">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary">
-              In short
-            </p>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-              EdenNX is the company behind the suite.
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-foreground/70 md:text-lg">
-              We build and run every product in it: EdenRadar for finding science, EdenCompliance
-              for proving quality, and EdenMarket, EdenLab and EdenDiscovery for the stretches
-              between. Each one is a working product with its own customers and its own site. We
-              have built the quality systems and run the deal teams these products are for, and we
-              believe the record underneath the science matters as much as the science.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* An "In short" section closed the page here: a heading saying EdenNX is
+          the company behind the suite, over a paragraph naming all five
+          products. Cut. The label apologised for the page's own length, and the
+          product list was an inventory that /products does properly. What the
+          company is belongs at the top, so the one sentence worth keeping moved
+          into the intro. */}
 
       {/* Team teaser */}
       <section className="border-t border-border py-20">
