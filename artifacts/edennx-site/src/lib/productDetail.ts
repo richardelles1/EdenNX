@@ -54,7 +54,7 @@ export const DETAIL: Record<string, Detail> = {
   EdenCompliance: {
     photo: "/images/photo-compliance.jpg",
     photoAlt: "Two colleagues reviewing a document together by a window",
-    title: "Vendor quality and audit management",
+    title: "Vendor qualification and audit management",
     audience:
       "For QA and compliance leaders in pharma, biotech, medical device, and food and beverage who need the rigor of an eQMS without the year of configuration.",
     features: [

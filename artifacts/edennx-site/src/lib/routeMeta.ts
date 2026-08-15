@@ -20,12 +20,12 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     // description carry those terms instead. Counts come from platformStats so
     // the meta cannot drift from the figures used on the page.
     title: "EdenNX | Biotech intelligence infrastructure",
-    description: `The backbone biotech runs on. EdenNX builds EdenRadar for licensing intelligence across ${TTO_COUNT_LABEL} research institutions and ${ASSET_COUNT_LABEL} assets, and EdenCompliance for vendor quality and audit records.`,
+    description: `The backbone biotech runs on. EdenNX builds EdenRadar for licensing intelligence across ${TTO_COUNT_LABEL} research institutions and ${ASSET_COUNT_LABEL} assets, and EdenCompliance for vendor qualification and audit records.`,
   },
   "/products": {
     title: "Products | EdenRadar, EdenCompliance and the EdenNX suite",
     description:
-      "The five EdenNX products: EdenRadar for biotech BD intelligence across 430+ tech transfer offices, EdenCompliance for vendor quality and audits on a controlled record, plus EdenMarket, EdenLab, and EdenDiscovery.",
+      "The five EdenNX products: EdenRadar for biotech BD intelligence across 430+ tech transfer offices, EdenCompliance for vendor qualification and audits on a controlled record, plus EdenMarket, EdenLab, and EdenDiscovery.",
   },
   "/about": {
     title: "About EdenNX | Mission and the EDEN framework",

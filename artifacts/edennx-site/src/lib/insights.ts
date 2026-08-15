@@ -118,7 +118,7 @@ export const INSIGHTS: Insight[] = [
   {
     source: "EdenCompliance",
     title: "EdenCompliance is live.",
-    lede: "Vendor quality, audits, and a two-way vendor portal on one controlled record.",
+    lede: "Vendor qualification, audits, and a two-way vendor portal on one controlled record.",
     date: "2026-08-12",
     readTime: "4 min read",
     url: `${EC}/edencompliance-is-live`,

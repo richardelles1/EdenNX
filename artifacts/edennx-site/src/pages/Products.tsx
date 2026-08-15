@@ -43,7 +43,7 @@ export default function Products() {
         </h1>
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground reveal" style={{ transitionDelay: "0.2s" }}>
           EdenNX is the parent company. EdenRadar tracks {ASSET_COUNT_LABEL} assets across {TTO_COUNT_LABEL}{" "}
-          institutions for the teams doing biotech deals, and EdenCompliance runs vendor quality and audits for
+          institutions for the teams doing biotech deals, and EdenCompliance runs vendor qualification and audits for
           regulated teams, on a record an inspector can read. EdenMarket, EdenLab, and EdenDiscovery each own a
           different stretch of the road between a discovery and the people waiting on it.
         </p>
@@ -219,7 +219,7 @@ export default function Products() {
             <div className="grid gap-3">
               {[
                 { name: "EdenRadar", host: "edenradar.com", href: ER, line: `Biotech BD intelligence across ${TTO_COUNT_LABEL} tech transfer offices.` },
-                { name: "EdenCompliance", host: "edencompliance.com", href: EC, line: "Vendor quality and audits, on a record an inspector can read." },
+                { name: "EdenCompliance", host: "edencompliance.com", href: EC, line: "Vendor qualification and audits, on a record an inspector can read." },
               ].map((s) => (
                 <a
                   key={s.name}

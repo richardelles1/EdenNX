@@ -51,7 +51,7 @@ const PRODUCTS: Record<string, Product> = {
   },
   compliance: {
     name: "EdenCompliance", token: "--portal-compliance", goldToken: "--portal-compliance-gold",
-    headline: { pre: "Vendor quality and audits, on ", accent: "one controlled record.", post: "" },
+    headline: { pre: "Vendor qualification and audits, on ", accent: "one controlled record.", post: "" },
     sub: "Qualify vendors, run the audit program, and keep every change signed and unalterable.",
     note: "From $299/mo",
     // Sourced from edencompliance.com/features (shared/capabilities.ts in the
