@@ -101,9 +101,10 @@ export default function About() {
             className="mt-5 text-lg leading-relaxed text-muted-foreground reveal"
             style={{ transitionDelay: "0.2s" }}
           >
-            That work is scattered by default. The science sits with the institutions that did it,
-            the evidence sits with the partners who supplied it, and the people who need both are
-            left assembling the picture by hand. We build the software that holds it together.
+            That work is scattered by default. A discovery is found in one system, qualified in
+            another and released through a third, and none of them share a record, so the teams
+            doing the work rebuild the same picture at every stage. We build the software that
+            keeps it in one piece.
           </p>
           <p
             className="mt-5 text-lg leading-relaxed text-foreground/85 reveal"
