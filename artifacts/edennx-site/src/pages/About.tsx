@@ -16,6 +16,13 @@ const SECTION = "py-16 md:py-24"; //  96px between sections
 const HEAD = "mb-10"; //              40px from a heading block to its content
 const ROW = "py-7"; //                28px inside a row, so rows read as a list
 
+// One measure for the whole page. This is prose, not a dashboard: set across a
+// 1280px container it needed two and three column tracks to fill the width, and
+// those tracks went ragged the moment two items were not the same length. A
+// single 768px column removes both problems at once, and the section grounds
+// still run full bleed so the page reads wide even though the reading does not.
+const COL = "mx-auto w-full max-w-3xl";
+
 // Three convictions, not three steps. They carried 01/02/03 before, which
 // promised a sequence the content does not have: these are parallel beliefs and
 // any of them could come first.
@@ -70,27 +77,30 @@ export default function About() {
       {/* Claim. The headline runs the full measure rather than sitting in a
           half-empty row, and the two supporting paragraphs sit beneath it in
           two columns, so the width is used by content instead of padding. */}
-      <section className={`max-w-7xl mx-auto px-6 lg:px-8 ${SECTION}`}>
-        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-5 reveal">
-          Founded 2026
-        </p>
-        <h1
-          className="max-w-4xl text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] text-foreground reveal"
-          style={{ transitionDelay: "0.06s" }}
-          data-testid="about-headline"
-        >
-          Built by industry insiders, for the industry.
-        </h1>
-        <div
-          className="mt-10 grid gap-x-14 gap-y-5 md:grid-cols-2 reveal"
-          style={{ transitionDelay: "0.14s" }}
-        >
-          <p className="text-lg leading-relaxed text-muted-foreground">
+      <section className={`px-6 lg:px-8 ${SECTION}`}>
+        <div className={COL}>
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-5 reveal">
+            Founded 2026
+          </p>
+          <h1
+            className="text-4xl md:text-5xl font-bold tracking-tight leading-[1.05] text-foreground reveal"
+            style={{ transitionDelay: "0.06s" }}
+            data-testid="about-headline"
+          >
+            Built by industry insiders, for the industry.
+          </h1>
+          <p
+            className="mt-8 text-lg leading-relaxed text-muted-foreground reveal"
+            style={{ transitionDelay: "0.14s" }}
+          >
             EdenNX is building the intelligence backbone of modern biotech. From the first research
             hypothesis through qualification, quality and release, we build the infrastructure that
             carries a discovery all the way to a patient.
           </p>
-          <p className="text-lg leading-relaxed text-foreground/85">
+          <p
+            className="mt-5 text-lg leading-relaxed text-foreground/85 reveal"
+            style={{ transitionDelay: "0.2s" }}
+          >
             We have built the quality systems and run the deal teams these products are for.
           </p>
         </div>
@@ -100,29 +110,29 @@ export default function About() {
           serif treatment that has since been removed, tan appears nowhere else
           on this site, and it marked this section as special without any reason
           for it being so. Hairlines and type carry the list instead. */}
-      <section className={`max-w-7xl mx-auto px-6 lg:px-8 ${SECTION} border-t border-border`}>
-        <div className={`${HEAD} reveal`}>
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
-            Why Now
-          </p>
-          <h2 className="max-w-2xl text-3xl md:text-4xl font-bold tracking-tight leading-[1.1] text-foreground">
-            The right moment to close the distance.
-          </h2>
-        </div>
-        <div className="reveal" style={{ transitionDelay: "0.06s" }}>
-          {beliefs.map((item, i) => (
-            <div
-              key={item.t}
-              className={`grid gap-x-14 gap-y-2 border-t border-border md:grid-cols-[minmax(0,0.72fr)_1.28fr] ${ROW} ${
-                i === beliefs.length - 1 ? "border-b" : ""
-              }`}
-            >
-              <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground">
-                {item.t}
-              </h3>
-              <p className="text-base leading-relaxed text-muted-foreground">{item.d}</p>
-            </div>
-          ))}
+      <section className={`px-6 lg:px-8 ${SECTION} border-t border-border`}>
+        <div className={COL}>
+          <div className={`${HEAD} reveal`}>
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
+              Why Now
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight leading-[1.1] text-foreground">
+              The right moment to close the distance.
+            </h2>
+          </div>
+          <div className="reveal" style={{ transitionDelay: "0.06s" }}>
+            {beliefs.map((item, i) => (
+              <div
+                key={item.t}
+                className={`border-t border-border ${ROW} ${i === beliefs.length - 1 ? "border-b" : ""}`}
+              >
+                <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground">
+                  {item.t}
+                </h3>
+                <p className="mt-2 text-base leading-relaxed text-muted-foreground">{item.d}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -137,41 +147,45 @@ export default function About() {
           it. The tint is the site's own emerald rather than an unrelated
           colour. */}
       <section className="border-y border-primary/10 bg-primary/[0.035]">
-        <div className={`max-w-7xl mx-auto px-6 lg:px-8 ${SECTION}`}>
-          <div className={`${HEAD} reveal`}>
-            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
-              Our Principles
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-              The EDEN framework.
-            </h2>
-          </div>
+        <div className={`px-6 lg:px-8 ${SECTION}`}>
+          <div className={COL}>
+            <div className={`${HEAD} reveal`}>
+              <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
+                Our Principles
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+                The EDEN framework.
+              </h2>
+            </div>
 
-          <div>
-            {edenPrinciples.map((item, i) => (
-              <div
-                key={item.letter + item.title}
-                className={`grid items-baseline gap-x-8 gap-y-1 border-t border-primary/15 md:grid-cols-[124px_minmax(0,0.78fr)_1.22fr] ${ROW} reveal ${
-                  i === edenPrinciples.length - 1 ? "border-b" : ""
-                }`}
-                style={{ transitionDelay: `${i * 0.06}s` }}
-                data-testid={`eden-${i}`}
-              >
-                <span
-                  aria-hidden
-                  className="font-bold leading-[0.8] tracking-[-0.05em] text-primary/[0.28]"
-                  style={{ fontSize: "clamp(4rem, 7.5vw, 6.75rem)" }}
+            <div>
+              {edenPrinciples.map((item, i) => (
+                <div
+                  key={item.letter + item.title}
+                  className={`grid grid-cols-[64px_1fr] gap-x-6 border-t border-primary/15 sm:grid-cols-[92px_1fr] ${ROW} reveal ${
+                    i === edenPrinciples.length - 1 ? "border-b" : ""
+                  }`}
+                  style={{ transitionDelay: `${i * 0.06}s` }}
+                  data-testid={`eden-${i}`}
                 >
-                  {item.letter}
-                </span>
-                <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground">
-                  {item.title}
-                </h3>
-                <p className="text-base leading-relaxed text-muted-foreground">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+                  <span
+                    aria-hidden
+                    className="font-bold leading-[0.78] tracking-[-0.05em] text-primary/[0.28]"
+                    style={{ fontSize: "clamp(3.25rem, 8vw, 4.75rem)" }}
+                  >
+                    {item.letter}
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
