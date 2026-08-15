@@ -93,18 +93,16 @@ export default function About() {
             className="mt-8 text-lg leading-relaxed text-muted-foreground reveal"
             style={{ transitionDelay: "0.14s" }}
           >
-            EdenNX is building the intelligence backbone of modern biotech. From the first research
-            hypothesis through qualification, quality and release, we build the infrastructure that
-            carries a discovery all the way to a patient.
+            EdenNX is the intelligence backbone of modern biotech. Our products cover the full
+            lifecycle: research, qualification, quality, and release.
           </p>
           <p
             className="mt-5 text-lg leading-relaxed text-muted-foreground reveal"
             style={{ transitionDelay: "0.2s" }}
           >
-            That work is scattered by default. A discovery is found in one system, qualified in
-            another and released through a third, and none of them share a record, so the teams
-            doing the work rebuild the same picture at every stage. We build the software that
-            keeps it in one piece.
+            That lifecycle runs on disconnected systems. A programme is assessed in one, qualified
+            in another, and released through a third, and none of them share a record. Teams
+            reconstruct the same evidence at every stage.
           </p>
           <p
             className="mt-5 text-lg leading-relaxed text-foreground/85 reveal"
