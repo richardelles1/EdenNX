@@ -142,7 +142,7 @@ export default function About() {
           stays on the home page. */}
 
       {/* EDEN Acronym */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-24 lg:pt-28">
         <div className="mb-12 reveal">
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
             Our Principles
@@ -152,13 +152,14 @@ export default function About() {
           </h2>
         </div>
 
-        {/* The letters carry the framework, so they are set large and faint in
-            the corner of each tile rather than boxed in a chip beside the
-            title: read across the row they spell EDEN, which a 48px square
-            never let them do. Same glass treatment as the four steps on the
-            Products page, where the character in the corner also means
-            something. Reveal sits on the grid, not the tiles, because .reveal
-            owns the transition property and would swallow the tile's own. */}
+        {/* The letters carry the framework, so they are set large and faint at
+            the top of each tile rather than boxed in a chip beside the title:
+            read across the row they spell EDEN, which a 48px square never let
+            them do. Top left, not right: the letter is a marker for what
+            follows, so it sits where the eye starts rather than in the opposite
+            corner from the words it labels. Reveal sits on the grid, not the
+            tiles, because .reveal owns the transition property and would
+            swallow the tile's own. */}
         <div className="grid gap-4 reveal sm:grid-cols-2">
           {edenPrinciples.map((item, i) => (
             <div
@@ -167,7 +168,7 @@ export default function About() {
               style={{ ["--glass-accent" as string]: "hsl(var(--primary))" }}
               data-testid={`eden-${i}`}
             >
-              <span aria-hidden className="glass-mark">{item.letter}</span>
+              <span aria-hidden className="glass-mark glass-mark-left">{item.letter}</span>
               <div className="relative">
                 <h3 className="text-lg font-bold tracking-tight text-foreground">{item.title}</h3>
                 <p className="mt-2.5 text-sm leading-relaxed text-foreground/75">

@@ -400,6 +400,17 @@ button:hover .rail-word[data-on="false"] > span {
   user-select: none;
 }
 
+/* Top-left variant. The mark leads the tile, so the content is nudged clear of
+   it rather than overlapping: at 78px the letter would otherwise sit behind the
+   title. */
+.glass-mark-left {
+  right: auto;
+  left: 10px;
+}
+.glass-mark-left ~ * {
+  padding-top: 2.35rem;
+}
+
 /* Film grain over the whole site.
    Every large surface here is a CSS gradient: the hero wash, the green CTA
    band, the dark EdenCompliance panel. Gradients interpolate mathematically,
