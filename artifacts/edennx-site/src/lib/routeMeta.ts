@@ -28,14 +28,9 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       "The five EdenNX products: EdenRadar for biotech BD intelligence across 430+ tech transfer offices, EdenCompliance for vendor qualification and audits on a controlled record, plus EdenMarket, EdenLab, and EdenDiscovery.",
   },
   "/about": {
-    title: "About EdenNX | Mission and the EDEN framework",
+    title: "About EdenNX | The founders, the mission and the EDEN framework",
     description:
-      "EdenNX is building the intelligence backbone of modern biotech. Our mission, values, and the EDEN framework that guides everything we do.",
-  },
-  "/team": {
-    title: "Team | The founders behind EdenNX",
-    description:
-      "Meet the founders behind EdenNX: industry insiders building the intelligence infrastructure that biotech needs.",
+      "EdenNX is the intelligence backbone of modern biotech. Meet the founders, and read the mission and the EDEN framework behind the product suite.",
   },
   "/insights": {
     title: "Insights | Tech transfer and regulated quality",

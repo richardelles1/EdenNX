@@ -17,7 +17,6 @@ const columns: { heading: string; links: { label: string; to?: string; href?: st
     links: [
       { label: "About", to: "/about" },
       { label: "Insights", to: "/insights" },
-      { label: "Team", to: "/team" },
       { label: "Contact", to: "/contact" },
     ],
   },

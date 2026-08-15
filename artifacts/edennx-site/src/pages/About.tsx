@@ -2,6 +2,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
 import { Link } from "react-router-dom";
+import headshot1 from "@assets/Headshot_1776710302062.jfif";
+import wmPhoto from "@assets/WM_phot_1775790644431.jpg";
 
 // One spacing scale, used by every section on the page.
 //
@@ -40,6 +42,47 @@ const beliefs = [
     d: "We believe in AI and its benefits, and we believe humanity is at the heart of health care. Blending both, we move quickly and carefully to get patients the care they need, when they need it.",
   },
 ];
+
+
+// The founders, moved here from /team. The page claims the company is built by
+// industry insiders; these two CVs are the evidence for that claim, and keeping
+// the claim and its proof on separate pages weakened both. /team now redirects
+// here so no existing link or ranking breaks.
+const founders = [
+  {
+    name: "Wafick Mohamed, D.Sc.",
+    title: "Co-Founder & Chief Executive Officer",
+    photo: wmPhoto,
+    linkedIn: "https://www.linkedin.com/in/wafick-mohamed-d-sc-m-sc-cqa-chrc-clssbb-pmp-81643b96",
+    bio: [
+      "Dr. Wafick Mohamed is a biotech executive, entrepreneur, and educator dedicated to advancing science for patient impact. With extensive experience across global pharma and emerging biotech, he specializes in building quality systems, scaling operations, and leading organizations from the ground up.",
+      "As Founder and CEO of WKM Consulting Services LLC, Dr. Mohamed has launched and shaped multiple innovative companies. He also serves as a professor of research and entrepreneurship, mentoring the next generation of scientific and business leaders.",
+      "He holds a Doctorate in Science, a Master of Science, and certifications including CQA, PMP, and CLSSBB.",
+    ],
+    quote:
+      "We're proud to stand with an industry that pushes the boundaries of science to improve patients' lives. Our mission is to lead this transformation by delivering intelligent, scalable solutions that help the life science ecosystem discover more, decide faster, and create impact with clarity and confidence.",
+  },
+  {
+    name: "Richard Elles",
+    title: "Co-Founder & Chief Operating Officer",
+    photo: headshot1,
+    linkedIn: "https://www.linkedin.com/in/richard-elles-pmp",
+    bio: [
+      "Richard Elles is a dynamic healthcare leader with a diverse background in strategy development, corporate leadership, patient advocacy, and process improvement. A dedicated and PMP-certified Project Manager, Rich has deployed extensive management systems across consulting firms, healthtech startups, academic institutions, and research teams.",
+      "As the founder of Oriva, Inc., Rich has harnessed the power of cutting-edge technology to redefine philanthropic development. He is a two-time Ironman and leverages his experience in endurance sports to connect with corporate wellness initiatives to power new giving trends. Rich completed his Bachelor's Degree in Business at Drexel University before earning a Master's Degree in Public Administration from Villanova University.",
+    ],
+    quote:
+      "We are thrilled to bring new energy and laser focus to an industry in need of organization as it drives innovation. The opportunity to create in biotech and research spaces is matched only by the promise of what success will unlock for patients and consumers worldwide.",
+  },
+];
+
+function LinkedInIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.333 6.617c1.326 0 2.598.523 3.536 1.455a4.95 4.95 0 0 1 1.464 3.51v5.794H15v-5.793c0-.44-.176-.86-.488-1.17a1.673 1.673 0 0 0-2.357 0 1.65 1.65 0 0 0-.488 1.17v5.793H8.333v-5.793c0-1.317.527-2.58 1.465-3.511a5.02 5.02 0 0 1 3.535-1.455M5 7.445H1.667v9.932H5zM3.333 4.967C4.253 4.967 5 4.226 5 3.31s-.746-1.655-1.667-1.655A1.66 1.66 0 0 0 1.667 3.31a1.66 1.66 0 0 0 1.666 1.656" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
 
 const edenPrinciples = [
   {
@@ -110,6 +153,77 @@ export default function About() {
           >
             We have built the quality systems and run the deal teams these products are for.
           </p>
+        </div>
+      </section>
+
+      {/* The people, directly under the claim they are the evidence for. The
+          headline says the company is built by industry insiders; putting the
+          two CVs immediately beneath it means the reader meets the proof before
+          the argument rather than three sections after it. */}
+      <section id="people" className={`px-6 lg:px-8 ${SECTION} border-t border-border scroll-mt-24`}>
+        <div className={COL}>
+          <div className={`${HEAD} reveal`}>
+            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
+              The People
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+              Meet the founders.
+            </h2>
+          </div>
+
+          <div>
+            {founders.map((f, i) => (
+              <article
+                key={f.name}
+                className={`border-t border-border ${ROW} reveal`}
+                style={{ transitionDelay: `${i * 0.08}s` }}
+                data-testid={`founder-${i}`}
+              >
+                <div className="flex items-start gap-5">
+                  <img
+                    src={f.photo}
+                    alt={f.name}
+                    loading="lazy"
+                    className="h-28 w-24 flex-shrink-0 rounded-xl border border-border object-cover object-top sm:h-32 sm:w-28"
+                  />
+                  <div className="min-w-0">
+                    <h3 className="text-xl font-bold tracking-tight text-foreground">{f.name}</h3>
+                    <p className="mt-1 text-sm font-semibold text-primary">{f.title}</p>
+                    <a
+                      href={f.linkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2.5 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                    >
+                      <LinkedInIcon />
+                      LinkedIn
+                    </a>
+                  </div>
+                </div>
+
+                <div className="mt-5 space-y-3">
+                  {f.bio.map((para, j) => (
+                    <p key={j} className="text-base leading-relaxed text-muted-foreground">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+
+                {/* A hairline and a size change, not a tinted box with a fat
+                    left border: the type carries it. */}
+                <blockquote className="mt-6 border-t border-border pt-5">
+                  <p className="text-[17px] leading-relaxed tracking-tight text-foreground/90">
+                    <span aria-hidden className="mr-0.5 font-bold text-primary">&ldquo;</span>
+                    {f.quote}
+                    <span aria-hidden className="ml-0.5 font-bold text-primary">&rdquo;</span>
+                  </p>
+                  <footer className="mt-3 text-[12.5px] font-semibold text-foreground/45">
+                    {f.name.split(",")[0]}
+                  </footer>
+                </blockquote>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -213,21 +327,9 @@ export default function About() {
           company is belongs at the top, so the one sentence worth keeping moved
           into the intro. */}
 
-      {/* Team teaser */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <p className="text-muted-foreground mb-4 text-sm">Curious who's behind EdenNX?</p>
-          <Link
-            to="/team"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:opacity-80 transition-opacity"
-          >
-            Meet the Founders
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="m9 18 6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-        </div>
-      </section>
+      {/* The team teaser lived here, pointing at /team. Both pages used to end
+          by linking to the other, which is how you can tell neither stood on
+          its own: they were one page's worth of content split in half. */}
     </div>
   );
 }
