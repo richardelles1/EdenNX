@@ -179,12 +179,12 @@ export default function About() {
                 style={{ transitionDelay: `${i * 0.08}s` }}
                 data-testid={`founder-${i}`}
               >
-                <div className="flex items-start gap-5">
+                <div className="flex items-start gap-5 sm:gap-6">
                   <img
                     src={f.photo}
                     alt={f.name}
                     loading="lazy"
-                    className="h-28 w-24 flex-shrink-0 rounded-xl border border-border object-cover object-top sm:h-32 sm:w-28"
+                    className="h-36 w-32 flex-shrink-0 rounded-xl border border-border object-cover object-top sm:h-44 sm:w-36"
                   />
                   <div className="min-w-0">
                     <h3 className="text-xl font-bold tracking-tight text-foreground">{f.name}</h3>
@@ -326,6 +326,30 @@ export default function About() {
           product list was an inventory that /products does properly. What the
           company is belongs at the top, so the one sentence worth keeping moved
           into the intro. */}
+
+      {/* A quiet close. The page used to end on a teaser to /team; with that
+          merged in, it ran off the framework straight into the footer with
+          nothing to do next. One line and one link, deliberately lighter than
+          the CTAs on the home and products pages: this is the About page, and
+          the reader is here to understand the company, not to be sold. */}
+      <section className={`px-6 lg:px-8 ${SECTION} border-t border-border`}>
+        <div className={`${COL} text-center reveal`}>
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">Talk to us.</h2>
+          <p className="mx-auto mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
+            Tell us what you are working on and we will direct you to the right product across the
+            suite, or build toward the one you need.
+          </p>
+          <Link
+            to="/contact"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-[15px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
+          >
+            Contact us
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </div>
+      </section>
 
       {/* The team teaser lived here, pointing at /team. Both pages used to end
           by linking to the other, which is how you can tell neither stood on
