@@ -98,8 +98,16 @@ export default function About() {
             carries a discovery all the way to a patient.
           </p>
           <p
-            className="mt-5 text-lg leading-relaxed text-foreground/85 reveal"
+            className="mt-5 text-lg leading-relaxed text-muted-foreground reveal"
             style={{ transitionDelay: "0.2s" }}
+          >
+            That work is scattered by default. The science sits with the institutions that did it,
+            the evidence sits with the partners who supplied it, and the people who need both are
+            left assembling the picture by hand. We build the software that holds it together.
+          </p>
+          <p
+            className="mt-5 text-lg leading-relaxed text-foreground/85 reveal"
+            style={{ transitionDelay: "0.26s" }}
           >
             We have built the quality systems and run the deal teams these products are for.
           </p>
