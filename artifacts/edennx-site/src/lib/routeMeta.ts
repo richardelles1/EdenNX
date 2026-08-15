@@ -40,7 +40,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   "/contact": {
     title: "Contact EdenNX | Demos and partnerships",
     description:
-      "Get in touch with EdenNX. Whether you're interested in a product demo, a partnership, or just want to learn more, we'd love to hear from you.",
+      "Contact EdenNX about a product demo, a partnership, or a question about the product suite. We reply within one to two business days.",
   },
   "/privacy": {
     title: "Privacy Policy - EdenNX",

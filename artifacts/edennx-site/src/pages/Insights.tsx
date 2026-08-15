@@ -110,7 +110,7 @@ export default function Insights() {
           className="text-lg md:text-xl text-foreground/70 leading-relaxed max-w-2xl reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          The teams behind our platforms write about what the field actually looks
+          The teams behind our platforms write about what the field looks
           like from inside the data. Every piece lives on the product that wrote it.
         </p>
       </section>

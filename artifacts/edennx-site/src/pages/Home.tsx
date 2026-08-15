@@ -231,7 +231,7 @@ export default function Home() {
             className="mx-auto mb-7 max-w-xl text-base leading-relaxed text-foreground/70 reveal"
             style={{ transitionDelay: "0.05s" }}
           >
-            We will point you at the right product across the suite, or build toward the one you
+            We will direct you to the right product across the suite, or build toward the one you
             need.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 reveal" style={{ transitionDelay: "0.1s" }}>

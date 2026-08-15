@@ -38,8 +38,8 @@ const beliefs = [
     d: "A discovery is only worth what you can evidence about it. Quality is not the paperwork that follows the science; it is part of the science, and it should be as easy to keep as it is to claim.",
   },
   {
-    t: "AI, with humanity at the heart.",
-    d: "We believe in AI and its benefits, and we believe humanity is at the heart of health care. Blending both, we move quickly and carefully to get patients the care they need, when they need it.",
+    t: "AI does the reading. People make the call.",
+    d: "AI does real work in these products: it reads the documents, ranks the exposures, and answers the questions. Every consequential decision still passes through a person, because that is what the work requires.",
   },
 ];
 

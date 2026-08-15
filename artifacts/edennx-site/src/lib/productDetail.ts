@@ -36,7 +36,7 @@ export const DETAIL: Record<string, Detail> = {
     audience:
       "For business development teams, licensing executives, pharma strategy divisions, and life science investors who need to know what is available before their competitors do.",
     features: [
-      { label: "The deepest index", desc: `${TTO_COUNT_LABEL} tech transfer offices, with patents, trials, and the literature one tab away.` },
+      { label: "The deepest index", desc: `${TTO_COUNT_LABEL} tech transfer offices, with patents, trials, and the literature alongside.` },
       { label: "Precise filtering", desc: "Six development stages, ten modalities, and thirty-two biology categories." },
       { label: "Scored dossiers", desc: "Commercial thesis, competitive position, IP and licensing, each traced to its evidence." },
       { label: "Whitespace map", desc: "Asset density across every biology and modality, refreshed daily." },

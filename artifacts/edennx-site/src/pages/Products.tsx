@@ -45,7 +45,7 @@ export default function Products() {
           EdenNX is the parent company. EdenRadar tracks {ASSET_COUNT_LABEL} assets across {TTO_COUNT_LABEL}{" "}
           institutions for the teams doing biotech deals, and EdenCompliance runs vendor qualification and audits for
           regulated teams, on a record an inspector can read. EdenMarket, EdenLab, and EdenDiscovery each own a
-          different stretch of the road between a discovery and the people waiting on it.
+          different stretch of the road between a discovery and its arrival in the clinic.
         </p>
       </section>
 
@@ -203,7 +203,7 @@ export default function Products() {
                 Tell us what you are working on.
               </h2>
               <p className="mt-4 max-w-md text-[15.5px] leading-relaxed text-white/80">
-                We will point you at the right product, or build toward the one you need.
+                We will direct you to the right product, or build toward the one you need.
               </p>
               <Link
                 to="/contact"
