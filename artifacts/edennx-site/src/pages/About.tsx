@@ -4,6 +4,7 @@ import { ROUTE_META } from "@/lib/routeMeta";
 import { Link } from "react-router-dom";
 import headshot1 from "@assets/Headshot_1776710302062.jfif";
 import wmPhoto from "@assets/WM_phot_1775790644431.jpg";
+import marquisLogo from "@assets/marquis-whos-who.png";
 
 // One spacing scale, used by every section on the page.
 //
@@ -59,6 +60,13 @@ const founders = [
       "As Founder and CEO of WKM Consulting Services LLC, Dr. Mohamed has launched and shaped multiple innovative companies. He also serves as a professor of research and entrepreneurship, mentoring the next generation of scientific and business leaders.",
       "He holds a Doctorate in Science, a Master of Science, and certifications including CQA, PMP, and CLSSBB.",
     ],
+    // Wording taken from the EdenNX announcement of the recognition and Dr Mohamed's own quote in
+    // it, not composed here. A claim about a named person needs a source: RICO marketing/CLAIMS.md.
+    recognition: {
+      logo: marquisLogo,
+      alt: "Marquis Who's Who",
+      note: "Selected for inclusion in Marquis Who's Who in America, recognizing a career advancing science and innovation across the biotechnology and pharmaceutical sectors.",
+    },
     quote:
       "We're proud to stand with an industry that pushes the boundaries of science to improve patients' lives. Our mission is to lead this transformation by delivering intelligent, scalable solutions that help the life science ecosystem discover more, decide faster, and create impact with clarity and confidence.",
   },
@@ -208,6 +216,18 @@ export default function About() {
                     </p>
                   ))}
                 </div>
+
+                {/* The supplied artwork is black on opaque white with no alpha, so it gets its own
+                    white card rather than a filter. A third-party mark belongs on its own ground,
+                    and this way it survives a dark surface without inverting someone's logo. */}
+                {f.recognition && (
+                  <div className="mt-6 flex items-start gap-4 border-t border-border pt-5">
+                    <span className="inline-flex shrink-0 items-center rounded-lg border border-border bg-white px-3 py-2">
+                      <img src={f.recognition.logo} alt={f.recognition.alt} loading="lazy" className="h-6 w-auto" />
+                    </span>
+                    <p className="text-[13.5px] leading-relaxed text-muted-foreground">{f.recognition.note}</p>
+                  </div>
+                )}
 
                 {/* A hairline and a size change, not a tinted box with a fat
                     left border: the type carries it. */}
