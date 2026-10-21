@@ -288,9 +288,9 @@ function Headline({ p, cls }: { p: Product; cls: string }) {
 function CtaRow({ p }: { p: Product }) {
   const headlineAccent = p.goldToken ? `hsl(var(${p.goldToken}))` : `hsl(var(${p.token}))`;
   return (
-    <div className="mt-5 flex items-center gap-3">
+    <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1">
       {p.cta && (
-        <span className="inline-flex items-center gap-1 text-[14px] font-semibold transition-[gap] group-hover:gap-2" style={{ color: headlineAccent }}>
+        <span className="inline-flex items-center gap-1 whitespace-nowrap text-[14px] font-semibold transition-[gap] group-hover:gap-2" style={{ color: headlineAccent }}>
           {p.cta.label} <ArrowUpRight className="h-4 w-4" />
         </span>
       )}
