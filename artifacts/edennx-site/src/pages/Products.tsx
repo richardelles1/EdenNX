@@ -396,7 +396,7 @@ export default function Products() {
             </div>
             <PortalShowcase
               src="/images/shot-trials-1.jpg"
-              alt="EdenTrials Insights: trials by country on a world map, with the corpus counts above"
+              alt="EdenTrials homepage: tracked changes to studies, each showing the old and new value"
               token="--portal-trials"
             />
           </div>

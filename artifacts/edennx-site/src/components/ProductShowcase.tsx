@@ -58,7 +58,6 @@ type Product = {
   features?: string[];
   capabilities?: Capability[];
   cta: { label: string; href: string; external: boolean } | null; // null: no link yet (Beta)
-  logo?: string;   // optional lockup image in place of the icon wordmark
   badge?: string;  // e.g. "Beta"
 };
 
@@ -122,7 +121,6 @@ const PRODUCTS: Record<string, Product> = {
   },
   br: {
     name: "EdenBR", token: "--portal-br", badge: "Beta",
-    logo: "/images/br-lockup.png",
     headline: { pre: "See where every batch sits, and ", accent: "why it is waiting.", post: "" },
     sub: "Batch-record tracking for QA teams. It tracks the batch; the release decision stays with your quality unit.",
     note: "",
@@ -185,7 +183,7 @@ const FRAMES: Record<string, Frame[]> = {
     { img: "/images/shot-radar-2.jpg" },
     { img: "/images/shot-radar-3.jpg" },
   ],
-  EdenTrials: [{ img: "/images/shot-trials-1.jpg" }],
+  EdenTrials: [{ img: "/images/shot-trials-1.jpg" }, { img: "/images/shot-trials-2.jpg" }, { img: "/images/shot-trials-3.jpg" }],
   EdenBR: [{ img: "/images/shot-br-1.jpg" }, { img: "/images/shot-br-2.jpg" }],
   EdenCompliance: [
     { img: "/images/shot-compliance-1.jpg" },
@@ -262,22 +260,15 @@ function Wordmark({ p }: { p: Product }) {
   const accent = `hsl(var(${p.token}))`;
   const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
   const suffix = p.name.slice(4);
-  if (p.logo) {
-    return (
-      <span className="inline-flex items-center gap-3">
-        <img src={p.logo} alt={p.name} className="h-11 w-auto" decoding="async" />
-        {p.badge && (
-          <span className="rounded-full px-2 py-0.5 text-[10.5px] font-bold uppercase tracking-wider" style={{ background: `hsl(var(${p.token}) / 0.12)`, color: accent, border: `1px solid hsl(var(${p.token}) / 0.25)` }}>{p.badge}</span>
-        )}
-      </span>
-    );
-  }
   return (
     <span className="inline-flex items-center gap-2.5">
       <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: `hsl(var(${p.token}) / 0.12)`, border: `1px solid hsl(var(${p.token}) / 0.2)` }}>
         <Icon className="h-[22px] w-[22px]" strokeWidth={2.25} style={{ color: accent }} />
       </span>
       <span className="text-[22px] font-bold tracking-tight" style={{ color: INK }}>Eden<span style={{ color: accent }}>{suffix}</span></span>
+      {p.badge && (
+        <span className="rounded-full px-2 py-0.5 text-[10.5px] font-bold uppercase tracking-wider" style={{ background: `hsl(var(${p.token}) / 0.12)`, color: accent, border: `1px solid hsl(var(${p.token}) / 0.25)` }}>{p.badge}</span>
+      )}
     </span>
   );
 }
