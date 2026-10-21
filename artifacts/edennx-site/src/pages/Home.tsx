@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { ProductShowcase } from "@/components/ProductShowcase";
+import { ProductCanvas } from "@/components/ProductCanvas";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
@@ -166,7 +166,7 @@ export default function Home() {
       >
         {/* "Backbone" belongs to the hero now, so this heading leads with the
             problem instead of repeating the metaphor, and the body picks up the
-            hero's three beats to show how the five products deliver them. */}
+            hero's three beats to show how the products deliver them. */}
         <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-5 reveal">
           Built for every step that slows science down.
         </h2>
@@ -174,12 +174,15 @@ export default function Home() {
           className="text-lg text-foreground/80 max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          Find the science. Prove the quality. Move it to market. Each product owns a
-          different stretch of the same road, and one company builds all five.
+          EdenRadar finds the asset. EdenCompliance qualifies the vendors and runs the audits
+          behind it. EdenTrials keeps the trial registry record and what changed in it. EdenBR
+          (Beta) tracks where a batch sits. EdenLab, EdenDiscovery and EdenMarket are emerging.
         </p>
       </section>
 
-      <ProductShowcase />
+      <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-8 lg:pb-24" data-testid="product-canvas">
+        <ProductCanvas />
+      </section>
 
       {/* Mission — light emerald tinted panel */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20">

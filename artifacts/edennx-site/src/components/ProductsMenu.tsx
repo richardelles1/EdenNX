@@ -114,7 +114,7 @@ export function ProductsMenu({ onNavigate }: { onNavigate: () => void }) {
   // panel while its image fetches. The cost lands on opening the menu, not on
   // page load, since this component only mounts when the menu is open.
   useEffect(() => {
-    for (const d of Object.values(DETAIL)) new Image().src = d.photo;
+    for (const d of Object.values(DETAIL)) if (d.photo) new Image().src = d.photo;
   }, []);
 
   return (

@@ -88,6 +88,8 @@
   --portal-lab: 262 80% 60%;         /* EdenLab — violet */
   --portal-discovery: 38 92% 50%;    /* EdenDiscovery — amber */
   --portal-market: 234 80% 58%;      /* EdenMarket — indigo */
+  --portal-trials: 192 72% 34%;      /* EdenTrials — teal */
+  --portal-br: 212 58% 30%;          /* EdenBR — navy */
 
   --background: 210 25% 97%;
   --foreground: 220 30% 12%;
@@ -179,6 +181,8 @@
   --portal-lab: 262 80% 70%;
   --portal-discovery: 38 92% 58%;
   --portal-market: 234 85% 70%;
+  --portal-trials: 192 70% 52%;
+  --portal-br: 212 70% 66%;
 
   /* Deep blue-black, never pure black (house rule) */
   --background: 222 47% 6%;

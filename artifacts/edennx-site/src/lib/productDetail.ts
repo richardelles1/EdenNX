@@ -13,11 +13,11 @@ import { TTO_COUNT_LABEL } from "@/lib/platformStats";
 export type Feature = { label: string; desc: string };
 
 export type Detail = {
-  photo: string;
-  photoAlt: string;
+  photo?: string; // Beta products have no photograph yet; the panel shows the mark instead
+  photoAlt?: string;
   title: string;
   audience: string;
-  features: Feature[]; // always six
+  features: Feature[]; // six where the claims register supports six
   /** The headline commercial term, shown as a pill. */
   term: string;
   /** The qualifier beside it. Never restates the term. */
@@ -68,6 +68,34 @@ export const DETAIL: Record<string, Detail> = {
     term: "From $299/mo",
     note: "Additional seats from $99. No setup fee.",
     primary: { label: "Open EdenCompliance", href: EC },
+  },
+
+  EdenTrials: {
+    title: "Trial registry records, with the change record kept",
+    audience: "For teams that need to know what a registry said, and what it said before.",
+    features: [
+      { label: "One vocabulary", desc: "570,000+ trial registry records, resolved into a single vocabulary." },
+      { label: "The change record", desc: "A registry overwrites what it said yesterday. We keep the copies." },
+      { label: "What changed, and when", desc: "Every change is recorded against the earlier copy, and tracked daily." },
+      { label: "Coverage, stated", desc: "Coverage, not completeness: how complete each register is varies, and the product says so." },
+      { label: "Joined to the rest", desc: "Literature, molecules, patents, sponsors and sites sit beside each trial." },
+      { label: "Not a data sale", desc: "The records stay the registries'. You pay for the platform built on them." },
+    ],
+    term: "Beta",
+    note: "Not open for sign-up yet.",
+    primary: { label: "", href: "" },
+  },
+
+  EdenBR: {
+    title: "Batch tracking that leaves the release decision to people",
+    audience: "For manufacturing and quality teams that need to see where a batch sits.",
+    features: [
+      { label: "Where a batch sits", desc: "Tracks the position of each batch." },
+      { label: "No release decision", desc: "Never makes or records the release decision. That stays with the people accountable for it." },
+    ],
+    term: "Beta",
+    note: "Not open for sign-up yet.",
+    primary: { label: "", href: "" },
   },
 
   EdenMarket: {

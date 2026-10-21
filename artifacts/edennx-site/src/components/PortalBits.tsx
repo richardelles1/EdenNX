@@ -1,4 +1,4 @@
-import { Radar, ShieldCheck, FlaskConical, Lightbulb, Store, type LucideIcon } from "lucide-react";
+import { Radar, ShieldCheck, FlaskConical, Lightbulb, Store, Globe, Layers, type LucideIcon } from "lucide-react";
 
 // Portal -> accent token + lucide icon. Single source for the per-portal
 // identity used by eyebrows and showcases across Home and Products.
@@ -8,6 +8,8 @@ export const PORTAL_META: Record<string, { token: string; Icon: LucideIcon }> = 
   EdenLab: { token: "--portal-lab", Icon: FlaskConical },
   EdenDiscovery: { token: "--portal-discovery", Icon: Lightbulb },
   EdenMarket: { token: "--portal-market", Icon: Store },
+  EdenTrials: { token: "--portal-trials", Icon: Globe },
+  EdenBR: { token: "--portal-br", Icon: Layers },
 };
 
 // Eyebrow lockup: a portal-colored icon plus the wordmark split two-tone,

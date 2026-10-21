@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { PRODUCTS, type Product } from "@/lib/products";
+import { SUITE as PRODUCTS, MARKS, type Product } from "@/lib/products";
 import { DETAIL, type Detail } from "@/lib/productDetail";
 
 
-// One canvas for the whole suite: a rail of all five products on the left, the
+// One canvas for the whole suite: a rail of every product on the left, the
 // selected product on the right. Nothing stacks and nothing scrolls between
-// products, which is what lets all five sit as peers.
+// products, which is what lets every product sit as a peer.
 //
 // Every panel is the identical shape: photograph, six capabilities, access, and
 // a link out. No product gets extra room. Depth lives on each product's own
@@ -20,7 +20,8 @@ function Panel({ p, d }: { p: Product; d: Detail }) {
     <div key={p.name} className="panel-swap">
       {/* Every photograph is cropped to the same 3:2, so switching products
           never moves the content below it. */}
-      <div className="overflow-hidden rounded-2xl border" style={{ borderColor: `hsl(var(${p.token}) / 0.25)` }}>
+      <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: `hsl(var(${p.token}) / 0.25)` }}>
+        {d.photo ? (
         <img
           src={d.photo}
           alt={d.photoAlt}
@@ -30,6 +31,17 @@ function Panel({ p, d }: { p: Product; d: Detail }) {
           className="aspect-[3/2] w-full max-w-full"
           style={{ objectFit: "cover" }}
         />
+        ) : (
+          /* Beta products have no photograph yet: a tinted field, same 3:2. */
+          <div className="aspect-[3/2] w-full" style={{ background: `hsl(var(${p.token}) / 0.07)` }} />
+        )}
+        {MARKS[p.name] ? (
+          <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="absolute right-4 top-4 h-14 w-14 object-contain md:h-16 md:w-16" />
+        ) : (
+          <span className="absolute right-4 top-4 flex h-14 w-14 items-center justify-center rounded-xl md:h-16 md:w-16" style={{ background: "rgba(255,255,255,0.82)", border: `1px solid hsl(var(${p.token}) / 0.2)` }}>
+            <p.Icon className="h-7 w-7" strokeWidth={2.25} style={{ color: accent }} />
+          </span>
+        )}
       </div>
 
       <h2 className="mt-8 text-3xl font-bold tracking-tight text-foreground md:text-[2.4rem] md:leading-[1.1]">
@@ -61,6 +73,7 @@ function Panel({ p, d }: { p: Product; d: Detail }) {
       </div>
 
       <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
+        {d.primary.href ? (
         <a
           href={d.primary.href}
           target="_blank"
@@ -71,6 +84,7 @@ function Panel({ p, d }: { p: Product; d: Detail }) {
         >
           {d.primary.label} →
         </a>
+        ) : null}
         {/* One terms line. It used to carry an access chip beside the price, so
             EdenRadar read "Paid · From $1,999/mo", which says the same thing
             twice and the weaker way round. */}
@@ -124,7 +138,7 @@ export function ProductCanvas() {
   // Warm every photograph once the canvas mounts. Only the selected one is in
   // the DOM, so without this each first switch shows an empty frame.
   useEffect(() => {
-    for (const d of Object.values(DETAIL)) new Image().src = d.photo;
+    for (const d of Object.values(DETAIL)) if (d.photo) new Image().src = d.photo;
   }, []);
 
   return (
@@ -143,7 +157,7 @@ export function ProductCanvas() {
             wordmarks measure 527px at mobile size against roughly 342px of
             usable width on a 390px phone, so as a horizontal scroller EdenLab
             and EdenDiscovery sat off the edge with nothing to say they were
-            there. Two lines shows all five. */}
+            there. Two lines shows every product. */}
         <nav
           aria-label="Products"
           className="flex min-w-0 flex-wrap gap-x-4 gap-y-1.5 lg:flex-col lg:flex-nowrap lg:gap-x-0 lg:gap-y-2.5"

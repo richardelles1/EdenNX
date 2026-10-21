@@ -58,3 +58,27 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
+// The canvas and the cards list the whole suite, EdenTrials and EdenBR (Beta,
+// no link yet) included. PRODUCTS above stays the nav menu's list, unchanged.
+export const BETA_PRODUCTS: Product[] = [
+  {
+    name: "EdenTrials", suffix: "Trials", tagline: "Trial registry records in one vocabulary, with the change record kept.",
+    token: meta("EdenTrials").token, Icon: meta("EdenTrials").Icon,
+    href: "/products#edentrials", external: false,
+  },
+  {
+    name: "EdenBR", suffix: "BR", tagline: "Tracks where a batch sits. Never makes the release decision.",
+    token: meta("EdenBR").token, Icon: meta("EdenBR").Icon,
+    href: "/products#edenbr", external: false,
+  },
+];
+
+export const SUITE: Product[] = [PRODUCTS[0], PRODUCTS[1], ...BETA_PRODUCTS, ...PRODUCTS.slice(2)];
+
+export const MARKS: Record<string, string> = {
+  EdenRadar: "/images/marks/mark-radar.png",
+  EdenCompliance: "/images/marks/mark-compliance.png",
+  EdenTrials: "/images/marks/mark-trials.png",
+  EdenBR: "/images/marks/mark-br.png",
+};
+

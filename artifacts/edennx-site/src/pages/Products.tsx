@@ -3,7 +3,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
 import { ShieldCheck } from "lucide-react";
-import { ProductCanvas } from "@/components/ProductCanvas";
+import { ProductShowcase } from "@/components/ProductShowcase";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 const ER = "https://edenradar.com";
@@ -39,19 +39,20 @@ export default function Products() {
           style={{ transitionDelay: "0.1s" }}
           data-testid="products-headline"
         >
-          Five products. Five different jobs.
+          Four products, and three more emerging.
         </h1>
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground reveal" style={{ transitionDelay: "0.2s" }}>
           EdenNX is the parent company. EdenRadar tracks {ASSET_COUNT_LABEL} assets across {TTO_COUNT_LABEL}{" "}
-          institutions for the teams doing biotech deals, and EdenCompliance runs vendor qualification and audits for
-          regulated teams, on a record an inspector can read. EdenMarket, EdenLab, and EdenDiscovery each own a
-          different stretch of the road between a discovery and its arrival in the clinic.
+          institutions for the teams doing biotech deals. EdenCompliance runs vendor qualification and audits for
+          regulated teams, on a record an inspector can read. EdenTrials holds 570,000+ trial registry records in one
+          vocabulary and keeps the copies a registry overwrites. EdenBR, in Beta, tracks where a batch sits and leaves
+          the release decision to people. EdenLab, EdenDiscovery, and EdenMarket are emerging.
         </p>
       </section>
 
       {/* The canvas: every product on one surface */}
       <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-8 lg:pb-32" data-testid="product-canvas">
-        <ProductCanvas />
+        <ProductShowcase />
       </section>
 
       {/* How the intelligence products connect */}

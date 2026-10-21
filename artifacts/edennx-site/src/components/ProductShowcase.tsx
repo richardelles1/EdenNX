@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Check, Eye } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
+import { MARKS } from "@/lib/products";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as an asymmetric bento. Each card carries a slight wash
@@ -28,6 +29,7 @@ type Product = {
   features?: string[];
   capabilities?: Capability[];
   cta: { label: string; href: string; external: boolean };
+  beta?: boolean; // Beta: no link yet, the card is not clickable
 };
 
 const PRODUCTS: Record<string, Product> = {
@@ -68,6 +70,22 @@ const PRODUCTS: Record<string, Product> = {
       { label: "Electronic sign-off", detail: "Re-authenticate to approve a vendor or lock an audit" },
     ],
     cta: { label: "Explore EdenCompliance", href: "https://edencompliance.com", external: true },
+  },
+  trials: {
+    name: "EdenTrials", token: "--portal-trials", beta: true,
+    headline: { pre: "A registry overwrites what it said yesterday. ", accent: "We keep the copies.", post: "" },
+    sub: "So we can say what changed, and when. Trial registry records in one vocabulary, with changes tracked daily.",
+    note: "Beta",
+    features: ["570,000+ trial registry records", "Changes tracked daily", "Coverage stated, not implied"],
+    cta: { label: "In Beta", href: "", external: false },
+  },
+  br: {
+    name: "EdenBR", token: "--portal-br", beta: true,
+    headline: { pre: "Where a batch sits, ", accent: "never the release decision.", post: "" },
+    sub: "EdenBR tracks where a batch sits. The release decision stays with the people accountable for it.",
+    note: "Beta",
+    features: ["Tracks where a batch sits", "Never makes the release decision", "Never records the release decision"],
+    cta: { label: "In Beta", href: "", external: false },
   },
   market: {
     name: "EdenMarket", token: "--portal-market",
@@ -174,6 +192,9 @@ function CardLink({
     onFocus: onEnter,
     onBlur: onLeave,
   };
+  if (p.beta) {
+    return <div className={cls.replace(PRESS, "")} style={cardStyle(p)}>{children}</div>;
+  }
   return p.cta.external ? (
     <a href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={cardStyle(p)} {...handlers}>{children}</a>
   ) : (
@@ -195,6 +216,23 @@ function Wordmark({ p }: { p: Product }) {
   );
 }
 
+// The product's mark at the card's top right, where the Preview pill sits.
+// Products with a transparent mark show it; the rest keep their existing icon.
+function CornerMark({ p }: { p: Product }) {
+  const [failed, setFailed] = useState(false);
+  const src = MARKS[p.name];
+  const accent = `hsl(var(${p.token}))`;
+  const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
+  if (src && !failed) {
+    return <img src={src} alt="" aria-hidden decoding="async" onError={() => setFailed(true)} className="h-12 w-12 flex-shrink-0 object-contain" />;
+  }
+  return (
+    <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl" style={{ background: `hsl(var(${p.token}) / 0.12)`, border: `1px solid hsl(var(${p.token}) / 0.2)` }}>
+      <Icon className="h-6 w-6" strokeWidth={2.25} style={{ color: accent }} />
+    </span>
+  );
+}
+
 function Headline({ p, cls }: { p: Product; cls: string }) {
   const accent = `hsl(var(${p.token}))`;
   const headlineAccent = p.goldToken ? `hsl(var(${p.goldToken}))` : accent;
@@ -209,6 +247,13 @@ function Headline({ p, cls }: { p: Product; cls: string }) {
 
 function CtaRow({ p }: { p: Product }) {
   const headlineAccent = p.goldToken ? `hsl(var(${p.goldToken}))` : `hsl(var(${p.token}))`;
+  if (p.beta) {
+    return (
+      <div className="mt-5 flex items-center gap-3">
+        <span className="rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider" style={{ background: `hsl(var(${p.token}) / 0.12)`, color: headlineAccent }}>Beta</span>
+      </div>
+    );
+  }
   return (
     <div className="mt-5 flex items-center gap-3">
       <span className="inline-flex items-center gap-1 text-[14px] font-semibold transition-[gap] group-hover:gap-2" style={{ color: headlineAccent }}>
@@ -311,6 +356,7 @@ function BigTile({ p }: { p: Product }) {
           >
             <Eye className="h-3 w-3" strokeWidth={2.4} /> Preview
           </span>
+          <CornerMark p={p} />
         </div>
         <div className="mt-6"><Headline p={p} cls="text-[1.9rem] lg:text-[2.35rem] max-w-[16ch]" /></div>
         <p className="mt-4 max-w-[42ch] text-[16px] leading-relaxed" style={{ color: BODY }}>{p.sub}</p>
@@ -413,7 +459,10 @@ function MiniTile({ p }: { p: Product }) {
   return (
     <CardLink p={p} className="min-h-[360px]">
       <div className="relative z-10 flex flex-1 flex-col p-7">
-        <Wordmark p={p} />
+        <div className="flex items-center justify-between gap-4">
+          <Wordmark p={p} />
+          <CornerMark p={p} />
+        </div>
         <div className="mt-5"><Headline p={p} cls="text-[1.4rem]" /></div>
         <p className="mt-3 max-w-[34ch] text-[14px] leading-relaxed" style={{ color: BODY }}>{p.sub}</p>
         <ul className="mt-5 space-y-2.5">
@@ -451,6 +500,10 @@ export function ProductShowcase() {
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
             <BigTile p={PRODUCTS.radar} />
             <BigTile p={PRODUCTS.compliance} />
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6">
+            <MiniTile p={PRODUCTS.trials} />
+            <MiniTile p={PRODUCTS.br} />
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             <MiniTile p={PRODUCTS.market} />
