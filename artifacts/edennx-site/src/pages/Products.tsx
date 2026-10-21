@@ -161,7 +161,7 @@ export default function Products() {
           EdenNX is the parent company. EdenRadar, tracking {ASSET_COUNT_LABEL} university assets,
           anchors a connected biotech-intelligence suite with the emerging EdenLab, EdenDiscovery,
           and EdenMarket. EdenTrials is a global clinical-trial record. EdenCompliance manages
-          vendor quality and audits for regulated teams, and EdenBR, in beta, tracks where every
+          vendor quality and audits for regulated teams, and EdenBR (Beta) tracks where every
           batch sits. Different jobs; one team behind them.
         </p>
       </section>
@@ -421,7 +421,7 @@ export default function Products() {
                 Batch-record tracking
               </h2>
               <p className="text-muted-foreground mb-6 reveal" style={{ transitionDelay: "0.1s" }}>
-                Tracks where each batch sits and why it is waiting. It never makes or records the release decision; that stays with your quality unit. For: QA and manufacturing quality teams.
+                Batch-record tracking for QA teams: where every batch sits, and why it is waiting. It never makes or records the release decision; that stays with your quality unit. For: QA and manufacturing quality teams.
               </p>
               <ul className="space-y-3 mb-2 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[

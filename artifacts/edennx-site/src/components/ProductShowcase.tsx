@@ -122,7 +122,7 @@ const PRODUCTS: Record<string, Product> = {
   br: {
     name: "EdenBR", token: "--portal-br", badge: "Beta",
     headline: { pre: "See where every batch sits, and ", accent: "why it is waiting.", post: "" },
-    sub: "Batch-record tracking for QA teams. It tracks the batch; the release decision stays with your quality unit.",
+    sub: "Batch-record tracking for QA teams: where every batch sits. The release decision stays with your quality unit.",
     note: "",
     // From the product's own navigation and Command Center.
     capabilities: [
