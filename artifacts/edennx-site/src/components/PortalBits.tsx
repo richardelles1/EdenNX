@@ -12,6 +12,10 @@ export const PORTAL_META: Record<string, { token: string; Icon: LucideIcon }> = 
   EdenBR: { token: "--portal-br", Icon: Layers },
 };
 
+// The accent as text colour: the token's -ink variant where index.css defines
+// one (the accents too light to read as type), else the token itself.
+export const ink = (token: string) => `hsl(var(${token}-ink, var(${token})))`;
+
 // Eyebrow lockup: a portal-colored icon plus the wordmark split two-tone,
 // "Eden" in the foreground color and the suffix in the portal accent, echoing
 // the EdenNX logo treatment.
@@ -27,7 +31,7 @@ export function PortalEyebrow({
   iconClassName?: string;
 }) {
   const meta = PORTAL_META[name] ?? PORTAL_META.EdenRadar;
-  const accent = `hsl(var(${meta.token}))`;
+  const accent = ink(meta.token);
   const suffix = name.startsWith("Eden") ? name.slice(4) : name;
   const { Icon } = meta;
   return (

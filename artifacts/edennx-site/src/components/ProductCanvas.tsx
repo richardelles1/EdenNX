@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SUITE as PRODUCTS, MARKS, markStyle, type Product } from "@/lib/products";
 import { DETAIL, type Detail } from "@/lib/productDetail";
-
+import { ink } from "@/components/PortalBits";
 
 // One canvas for the whole suite: a rail of every product on the left, the
 // selected product on the right. Nothing stacks and nothing scrolls between
@@ -14,7 +14,8 @@ import { DETAIL, type Detail } from "@/lib/productDetail";
 /* --------------------------------- Panel --------------------------------- */
 
 function Panel({ p, d }: { p: Product; d: Detail }) {
-  const accent = `hsl(var(${p.token}))`;
+  // Ink, not the raw accent: it colours type and carries white button text.
+  const accent = ink(p.token);
 
   return (
     <div key={p.name} className="panel-swap">
@@ -101,7 +102,7 @@ function Panel({ p, d }: { p: Product; d: Detail }) {
           than a row of small grey text. */}
       {p.links?.length ? (
         <div className="mt-8 border-t border-border pt-7">
-          <p className="mb-3.5 font-mono text-[10.5px] font-semibold uppercase tracking-[0.18em] text-foreground/45">
+          <p className="mb-3.5 font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground/65">
             On {p.name}.com
           </p>
           <div className="flex flex-wrap gap-2.5">
@@ -165,7 +166,7 @@ export function ProductCanvas() {
         >
           {PRODUCTS.map((p) => {
             const on = p.name === selected;
-            const accent = `hsl(var(${p.token}))`;
+            const accent = ink(p.token);
             return (
               <button
                 key={p.name}

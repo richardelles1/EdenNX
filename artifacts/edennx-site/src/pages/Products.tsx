@@ -4,7 +4,8 @@ import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
 import { ShieldCheck } from "lucide-react";
 import { ProductShowcase } from "@/components/ProductShowcase";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { ink } from "@/components/PortalBits";
 
 const ER = "https://edenradar.com";
 const EC = "https://edencompliance.com";
@@ -85,7 +86,7 @@ export default function Products() {
               >
                 <span aria-hidden className="glass-mark">{String(i + 1).padStart(2, "0")}</span>
                 <div className="relative">
-                  <p className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: `hsl(var(${s.token}))` }}>
+                  <p className="font-mono text-[12px] font-semibold uppercase tracking-[0.16em]" style={{ color: ink(s.token) }}>
                     {s.product}
                   </p>
                   <h3 className="mt-3 text-[17px] font-bold leading-snug tracking-tight text-foreground">{s.step}</h3>
@@ -218,7 +219,7 @@ export default function Products() {
                 EdenRadar, which made one of two live products the default. */}
             <div className="grid gap-3">
               {[
-                { name: "EdenRadar", host: "edenradar.com", href: ER, line: `Biotech BD intelligence across ${TTO_COUNT_LABEL} tech transfer offices.` },
+                { name: "EdenRadar", host: "edenradar.com", href: ER, line: `Biotech BD intelligence across ${ASSET_COUNT_LABEL} university assets.` },
                 { name: "EdenTrials", host: "edentrials.com", href: "https://edentrials.com", line: "Trial registry records in one vocabulary, with the change record kept." },
                 { name: "EdenCompliance", host: "edencompliance.com", href: EC, line: "Vendor qualification and audits, on a record an inspector can read." },
               ].map((s) => (
@@ -238,6 +239,14 @@ export default function Products() {
                   <span className="mt-1.5 block text-[13px] leading-relaxed text-white/70">{s.line}</span>
                 </a>
               ))}
+              {/* Beta: listed with the rest, not linked. */}
+              <div className="rounded-xl border border-white/15 bg-white/[0.04] p-5">
+                <span className="flex items-center justify-between gap-3">
+                  <span className="text-[15.5px] font-bold tracking-tight text-white">EdenBR</span>
+                  <span className="font-mono text-[12px] uppercase tracking-wider text-white/70">Beta</span>
+                </span>
+                <span className="mt-1.5 block text-[13px] leading-relaxed text-white/70">Tracks where a batch sits. The release decision stays with your quality unit.</span>
+              </div>
             </div>
           </div>
         </div>

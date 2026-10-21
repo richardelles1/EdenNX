@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SUITE, MARKS, markStyle, type Product } from "@/lib/products";
 import { DETAIL } from "@/lib/productDetail";
+import { ink } from "@/components/PortalBits";
 
 // The products mega-menu: a quiet list on the left, a preview of the selected
 // product on the right. Hovering or focusing a row swaps the preview.
@@ -27,7 +28,7 @@ function Row({
   onSelect: () => void;
   onNavigate: () => void;
 }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   const inner = (
     <>
       <span
@@ -66,7 +67,7 @@ function Row({
 }
 
 function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   const detail = DETAIL[p.name];
 
   return (
@@ -117,7 +118,7 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
 
 function GroupLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="px-4 pb-1.5 pt-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-foreground/40">
+    <p className="px-4 pb-1.5 pt-1 font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground/65">
       {children}
     </p>
   );

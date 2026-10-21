@@ -4,7 +4,6 @@ import { ProductCanvas } from "@/components/ProductCanvas";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The mark, cropped tight to its artwork so a height percentage means the
 // mark's real height rather than mostly white padding.
@@ -205,7 +204,7 @@ export default function Home() {
           </p>
           <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
             Discover smarter, qualify faster, and track every step across the biotech lifecycle.
-            From opportunities across {TTO_COUNT_LABEL} tech transfer offices, to audit-ready vendor
+            From opportunities at university tech transfer offices, to audit-ready vendor
             management, to release into clinic and market. Every stakeholder, every stage.
           </p>
         </div>

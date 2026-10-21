@@ -32,7 +32,7 @@ const pages = (base: string, defs: [string, string][]): ProductLink[] => defs.ma
 
 export const PRODUCTS: Product[] = [
   {
-    name: "EdenRadar", suffix: "Radar", tagline: "Industry BD intelligence across 430+ tech transfer offices.",
+    name: "EdenRadar", suffix: "Radar", tagline: "Industry BD intelligence from university tech transfer offices.",
     token: meta("EdenRadar").token, Icon: meta("EdenRadar").Icon,
     href: `${ER}/how-it-works`, external: true, launch: { label: "Launch EdenRadar", href: ER },
     links: pages(ER, [["How it works", "/how-it-works"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
@@ -60,8 +60,8 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
-// The canvas and the cards list the whole suite, EdenTrials and EdenBR (Beta,
-// no link yet) included. PRODUCTS above stays the nav menu's list, unchanged.
+// EdenTrials and EdenBR (Beta, no link yet). SUITE below is the whole suite in
+// display order, and is what the menus, canvas and cards list.
 export const BETA_PRODUCTS: Product[] = [
   {
     name: "EdenTrials", suffix: "Trials", tagline: "Trial registry records in one vocabulary, with the change record kept.",

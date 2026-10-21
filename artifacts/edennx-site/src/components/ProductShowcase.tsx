@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Check } from "lucide-react";
-import { PORTAL_META } from "@/components/PortalBits";
+import { PORTAL_META, ink } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
 import { MARKS, markStyle } from "@/lib/products";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as an asymmetric bento. Each card carries a slight wash
 // of its product's accent, presses in on hover like a button, and leads with a
@@ -36,11 +36,11 @@ const PRODUCTS: Record<string, Product> = {
   radar: {
     name: "EdenRadar", token: "--portal-radar",
     headline: { pre: "The next biotech breakthrough is ", accent: "already published.", post: "" },
-    sub: `Real-time monitoring across ${TTO_COUNT_LABEL} tech transfer offices means the right assets find you first.`,
+    sub: "Real-time monitoring of university tech transfer offices means the right assets find you first.",
     note: "$499/seat/mo",
     // Sourced from edenradar.com/how-it-works (HIW_STEPS in the EdenRadar repo).
     capabilities: [
-      { label: "Deepest TTO index", detail: `${TTO_COUNT_LABEL} offices, plus patents, trials, and literature` },
+      { label: "Deepest TTO index", detail: `${ASSET_COUNT_LABEL} university assets, plus patents, trials, and literature` },
       { label: "Precision filters", detail: "6 development stages, 10 modalities, 32 biology categories" },
       { label: "Fit scoring", detail: "Ranked against your buyer profile, not keyword match" },
       { label: "Asset dossiers", detail: "Commercial thesis, competitive position, IP and deal readiness" },
@@ -76,16 +76,17 @@ const PRODUCTS: Record<string, Product> = {
     headline: { pre: "A registry overwrites what it said yesterday. ", accent: "We keep the copies.", post: "" },
     sub: "So we can say what changed, and when. Trial registry records in one vocabulary, with changes tracked daily.",
     note: "",
-    // The product's own navigation and screens, as capabilities.
+    // Sourced from the portal's own navigation and screen copy (PORTAL_NAV in
+    // the EdenTrials repo, client/src/components/portal/PortalShell.tsx).
     capabilities: [
-      { label: "Global registry record", detail: "Each trial's record from its national registry, in one vocabulary" },
-      { label: "Identified companies", detail: "Sponsors and companies resolved across registers" },
-      { label: "Search and filters", detail: "Narrow by condition, phase, status, sponsor and country" },
-      { label: "Change record", detail: "What a registry said before, kept beside what it says now" },
-      { label: "Watches and alerts", detail: "Standing watches that alert you when a trial changes" },
-      { label: "Country map", detail: "Where trials and sites sit, on a map" },
-      { label: "Sponsor and molecule views", detail: "A page for each sponsor and molecule, with its trials" },
-      { label: "Eden assistant", detail: "Ask questions of the corpus in plain language" },
+      { label: "The Record", detail: "Everything that arrived, and everything that moved" },
+      { label: "Changes recorded", detail: "Every difference between one reading of a trial and the next" },
+      { label: "Alerts", detail: "Save the question, and a trial that fits later is caught" },
+      { label: "Search", detail: "Every captured field, by area, phase, status, country and registry" },
+      { label: "Registry", detail: "A page for every company, sponsor, molecule and country" },
+      { label: "Insights", detail: "The whole corpus counted, with a live board by term or filter" },
+      { label: "Ask Eden", detail: "Questions in words, answered from the corpus, trials cited" },
+      { label: "Report", detail: "Name a field once, then read it written up or cut it yourself" },
     ],
     cta: { label: "Explore EdenTrials", href: "https://edentrials.com", external: true },
   },
@@ -94,15 +95,19 @@ const PRODUCTS: Record<string, Product> = {
     headline: { pre: "Where a batch sits, ", accent: "never the release decision.", post: "" },
     sub: "EdenBR tracks where a batch sits. The release decision stays with the people accountable for it.",
     note: "Beta",
+    // Sourced from the app's own navigation (PINNED and NAV_GROUPS in the
+    // EdenBR repo, src/components/app/AppShell.tsx). Reviewer queue, schedule
+    // and tasks are views of the Command Center there, not screens, so they
+    // are not listed as separate capabilities.
     capabilities: [
-      { label: "Command Center", detail: "One view of every batch and where it stands" },
+      { label: "Command Center", detail: "A board of every batch and where it stands" },
       { label: "Needs attention", detail: "What is waiting or overdue, surfaced first" },
-      { label: "Reviewer queue", detail: "The batches waiting on each reviewer" },
-      { label: "Schedule", detail: "Planned steps and due dates across batches" },
-      { label: "Quality events", detail: "Events linked to the batch they affect" },
-      { label: "Tasks and alerts", detail: "Assigned tasks, with an alert when something slips" },
+      { label: "Quality events", detail: "Quality events, on their own screen" },
+      { label: "Manufacturers and campaigns", detail: "Batches by manufacturer, campaign, product and component" },
       { label: "History", detail: "A dated record of what happened to each batch" },
-      { label: "Reports", detail: "Batch status and review reports" },
+      { label: "Reports and brief", detail: "Batch reports, and a monthly brief" },
+      { label: "Alerts", detail: "Every alert in one place" },
+      { label: "Eden AI", detail: "Narrates only what is in your records" },
     ],
     cta: { label: "In Beta", href: "", external: false },
   },
@@ -222,7 +227,7 @@ function CardLink({
 }
 
 function Wordmark({ p }: { p: Product }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
   const suffix = p.name.slice(4);
   return (
@@ -240,7 +245,7 @@ function Wordmark({ p }: { p: Product }) {
 function CornerMark({ p }: { p: Product }) {
   const [failed, setFailed] = useState(false);
   const src = MARKS[p.name];
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
   if (src && !failed) {
     return <img src={src} alt="" aria-hidden decoding="async" onError={() => setFailed(true)} className="flex-shrink-0 object-contain" style={markStyle(p.name, 56)} />;
@@ -253,8 +258,7 @@ function CornerMark({ p }: { p: Product }) {
 }
 
 function Headline({ p, cls }: { p: Product; cls: string }) {
-  const accent = `hsl(var(${p.token}))`;
-  const headlineAccent = p.goldToken ? `hsl(var(${p.goldToken}))` : accent;
+  const headlineAccent = ink(p.goldToken ?? p.token);
   return (
     <h3 className={`text-balance font-black leading-[1.08] tracking-tight ${cls}`}>
       <span style={{ color: INK }}>{p.headline.pre}</span>
@@ -265,7 +269,7 @@ function Headline({ p, cls }: { p: Product; cls: string }) {
 }
 
 function CtaRow({ p }: { p: Product }) {
-  const headlineAccent = p.goldToken ? `hsl(var(${p.goldToken}))` : `hsl(var(${p.token}))`;
+  const headlineAccent = ink(p.goldToken ?? p.token);
   if (p.beta) {
     return (
       <div className="mt-5 flex items-center gap-3">
@@ -463,7 +467,7 @@ function BigTile({ p }: { p: Product }) {
 
 // Smaller product: leads with a feature checklist instead of a screenshot.
 function MiniTile({ p }: { p: Product }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   return (
     <CardLink p={p} className="min-h-[360px]">
       <div className="relative z-10 flex flex-1 flex-col p-7">

@@ -88,7 +88,7 @@ export function Footer() {
           {/* Link columns */}
           {columns.map((col) => (
             <div key={col.heading}>
-              <p className="text-xs font-semibold tracking-widest uppercase text-foreground/50 mb-4">
+              <p className="text-xs font-semibold tracking-widest uppercase text-foreground/65 mb-4">
                 {col.heading}
               </p>
               <ul className="space-y-2.5">

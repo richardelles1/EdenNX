@@ -91,11 +91,20 @@
   --portal-trials: 192 72% 34%;      /* EdenTrials — teal */
   --portal-br: 212 58% 30%;          /* EdenBR — navy */
 
+  /* Ink variants: the same hue, dark enough to read as text on the page tint
+     and on white (4.5:1 or better). Fills keep the tokens above; type and
+     small marks use these. Accents already past 4.5:1 have no ink variant,
+     so ink() falls back to the token itself. */
+  --portal-radar-ink: 142 52% 32%;
+  --portal-compliance-gold-ink: 41 46% 36%;
+  --portal-discovery-ink: 38 92% 31%;
+  --portal-trials-ink: 192 72% 32%;
+
   --background: 210 25% 97%;
   --foreground: 220 30% 12%;
   --border: 210 15% 86%;
   --input: 210 20% 75%;
-  --ring: 142 52% 36%;
+  --ring: 142 52% 32%;
 
   --card: 0 0% 100%;
   --card-foreground: 220 30% 12%;
@@ -105,7 +114,9 @@
   --popover-foreground: 220 30% 12%;
   --popover-border: 210 15% 84%;
 
-  --primary: 142 52% 36%;
+  /* One step darker than the Radar emerald (36%), so white on a green button
+     and green text on the page tint both clear 4.5:1. */
+  --primary: 142 52% 32%;
   --primary-foreground: 0 0% 100%;
 
   --secondary: 210 20% 92%;
@@ -320,8 +331,10 @@
 .rail-word > span {
   transition: color 0.34s cubic-bezier(0.22, 1, 0.36, 1);
 }
+/* Unselected names stay flat but readable: they are the rail's only controls,
+   so they hold 4.5:1 on the page tint rather than fading to a whisper. */
 .rail-word[data-on="false"] > span {
-  color: hsl(var(--foreground) / 0.25);
+  color: hsl(var(--foreground) / 0.62);
 }
 .rail-word[data-on="true"] .rail-eden {
   color: hsl(var(--foreground));
@@ -330,7 +343,7 @@
   color: var(--rail-accent);
 }
 button:hover .rail-word[data-on="false"] > span {
-  color: hsl(var(--foreground) / 0.5);
+  color: hsl(var(--foreground) / 0.85);
 }
 
 /* Feature tiles. No box: the rule across the head of each column is the whole

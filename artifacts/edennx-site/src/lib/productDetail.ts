@@ -1,4 +1,4 @@
-import { TTO_COUNT_LABEL } from "@/lib/platformStats";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // One standardized record per product. Every product gets exactly the same
 // shape: a photograph, six capabilities, an access line, and links out. Nothing
@@ -36,7 +36,7 @@ export const DETAIL: Record<string, Detail> = {
     audience:
       "For business development teams, licensing executives, pharma strategy divisions, and life science investors who need to know what is available before their competitors do.",
     features: [
-      { label: "The deepest index", desc: `${TTO_COUNT_LABEL} tech transfer offices, with patents, trials, and the literature alongside.` },
+      { label: "The deepest index", desc: `${ASSET_COUNT_LABEL} university assets, with patents, trials, and the literature alongside.` },
       { label: "Precise filtering", desc: "Six development stages, ten modalities, and thirty-two biology categories." },
       { label: "Scored dossiers", desc: "Commercial thesis, competitive position, IP and licensing, each traced to its evidence." },
       { label: "Whitespace map", desc: "Asset density across every biology and modality, refreshed daily." },
@@ -73,11 +73,15 @@ export const DETAIL: Record<string, Detail> = {
   EdenTrials: {
     title: "Trial registry records, with the change record kept",
     audience: "For teams that need to know what a registry said, and what it said before.",
+    // Six, like every panel: four from the claims register (the country count
+    // is Tex's figure of 21 Oct 2026) and two from the portal's own screens.
     features: [
       { label: "One vocabulary", desc: "Trial registry records from many registers, resolved into a single vocabulary." },
       { label: "The change record", desc: "A registry overwrites what it said yesterday. We keep the copies." },
       { label: "Daily change tracking", desc: "So we can say what changed, and when." },
-      { label: "244 countries and territories", desc: "Coverage, not completeness: how complete each register is varies." },
+      { label: "215 countries and territories", desc: "Coverage, not completeness: how complete each register is varies." },
+      { label: "Alerts", desc: "Save the question once. A trial registered later that fits it is caught." },
+      { label: "Ask Eden", desc: "Ask the record in words. Every answer cites the trials it used." },
     ],
     term: "Live",
     note: "Sign up at edentrials.com.",
@@ -91,6 +95,9 @@ export const DETAIL: Record<string, Detail> = {
       { label: "Tracks where every batch sits", desc: "The position of each batch, at a glance." },
       { label: "Shows why a batch is waiting", desc: "The reason a batch has not moved, next to the batch." },
       { label: "Release decision stays with your quality unit", desc: "EdenBR never makes or records it." },
+      { label: "Command Center", desc: "A board of every batch, with what needs attention surfaced first." },
+      { label: "Quality events", desc: "Quality events on their own screen, beside the batches." },
+      { label: "History", desc: "A dated record of what happened to each batch." },
     ],
     term: "Beta",
     note: "Not open for sign-up yet.",
