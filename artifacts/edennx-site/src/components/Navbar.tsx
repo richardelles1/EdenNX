@@ -2,71 +2,80 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Logo } from "@/components/Logo";
-import { PLATFORM_PRODUCTS, EMERGING_PRODUCTS, type Product } from "@/lib/products";
+import { ProductsMenu } from "@/components/ProductsMenu";
+import { PRODUCTS, type Product } from "@/lib/products";
 
 const otherLinks = [
   { href: "/insights", label: "Insights" },
   { href: "/about", label: "About" },
-  { href: "/team", label: "Team" },
   { href: "/contact", label: "Contact" },
 ];
 
-// Status pill: "New" and "Live" carry the product accent (available now); the rest
-// read as quiet, in-development labels.
-function StatusPill({ status, accent }: { status: string; accent: string }) {
-  const lit = status === "New" || status === "Live";
-  return (
-    <span
-      className="rounded-full px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
-      style={lit ? { background: `${accent.replace(")", " / 0.12)")}`, color: accent } : undefined}
-    >
-      <span className={lit ? "" : "text-foreground/45"}>{status}</span>
-    </span>
-  );
-}
-
-function ProductRow({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
+// Product entry for the mobile sheet: a tinted card carrying the product's own
+// accent, the way the home bento does, so the menu and the page describe the
+// suite the same way.
+function ProductRow({
+  p,
+  onNavigate,
+  compact = false,
+}: {
+  p: Product;
+  onNavigate: () => void;
+  compact?: boolean;
+}) {
   const accent = `hsl(var(${p.token}))`;
+  const testid = `nav-product-${p.suffix.toLowerCase()}`;
+
   const heading = (
     <>
       <span
-        className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg"
-        style={{ background: `hsl(var(${p.token}) / 0.1)` }}
+        className="flex flex-shrink-0 items-center justify-center rounded-xl"
+        style={{
+          background: `hsl(var(${p.token}) / 0.12)`,
+          border: `1px solid hsl(var(${p.token}) / 0.18)`,
+          height: compact ? 32 : 38,
+          width: compact ? 32 : 38,
+        }}
       >
-        <p.Icon className="h-5 w-5" strokeWidth={2.25} style={{ color: accent }} />
+        <p.Icon className={compact ? "h-4 w-4" : "h-[18px] w-[18px]"} strokeWidth={2.25} style={{ color: accent }} />
       </span>
       <span className="min-w-0">
-        <span className="flex items-center gap-2">
-          <span className="text-sm font-bold tracking-tight leading-none">
-            <span className="text-foreground">Eden</span>
-            <span style={{ color: accent }}>{p.suffix}</span>
-          </span>
-          <StatusPill status={p.status} accent={p.goldToken ? `hsl(var(${p.goldToken}))` : accent} />
+        <span className={`block font-bold tracking-tight leading-none ${compact ? "text-[14px]" : "text-[15.5px]"}`}>
+          <span className="text-foreground">Eden</span>
+          <span style={{ color: accent }}>{p.suffix}</span>
         </span>
-        <span className="mt-1 block text-xs leading-snug text-foreground/60">{p.tagline}</span>
+        <span className={`mt-1.5 block leading-snug text-foreground/70 ${compact ? "text-[12px]" : "text-[12.5px]"}`}>
+          {p.tagline}
+        </span>
       </span>
     </>
   );
-  const testid = `nav-product-${p.suffix.toLowerCase()}`;
+
   const headLink = p.external ? (
     <a href={p.href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3" onClick={onNavigate} data-testid={testid}>{heading}</a>
   ) : (
     <Link to={p.href} className="flex items-start gap-3" onClick={onNavigate} data-testid={testid}>{heading}</Link>
   );
 
-  // Full products expose their info pages (how it works / features / pricing / one-pager),
-  // linked to each product's own site and opened in a new tab; the app launch sits at the end.
-  if (p.links?.length) {
+  const shell = {
+    background: `hsl(var(${p.token}) / 0.045)`,
+    border: `1px solid hsl(var(${p.token}) / 0.16)`,
+  };
+
+  // Full products expose their info pages (how it works / features / pricing /
+  // one-pager), linked to each product's own site and opened in a new tab; the
+  // app launch sits at the end.
+  if (p.links?.length && !compact) {
     return (
-      <div className="rounded-lg p-2.5 transition-colors hover:bg-muted/60">
+      <div className="rounded-xl p-3.5 transition-shadow hover:shadow-md" style={shell}>
         {headLink}
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 pl-12 text-xs">
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px]">
           {p.links.map((l) => (
-            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="text-foreground/55 transition-colors hover:text-primary">{l.label}</a>
+            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="font-medium text-foreground/65 transition-colors hover:text-primary">{l.label}</a>
           ))}
           {p.launch && (
             <>
-              <span className="text-foreground/20" aria-hidden>·</span>
+              <span className="text-foreground/25" aria-hidden>·</span>
               <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
             </>
           )}
@@ -74,11 +83,11 @@ function ProductRow({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
       </div>
     );
   }
-  return <div className="rounded-lg p-2.5 transition-colors hover:bg-muted">{headLink}</div>;
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="px-2.5 pb-1 pt-1 text-[11px] font-semibold uppercase tracking-wider text-foreground/40">{children}</p>;
+  return (
+    <div className="rounded-xl p-3 transition-shadow hover:shadow-md" style={shell}>
+      {headLink}
+    </div>
+  );
 }
 
 export function Navbar() {
@@ -135,39 +144,35 @@ export function Navbar() {
             </Link>
 
             <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-              {/* Products mega-menu */}
-              <div className="relative" onMouseEnter={openProducts} onMouseLeave={scheduleClose}>
-                <button
-                  type="button"
-                  onClick={() => setProductsOpen((v) => !v)}
+              {/* Products mega-menu. The trigger is a link, not a toggle: a
+                  click goes to the page and hover opens the menu, so the two
+                  intentions stop competing for the same gesture.
+                  Focus opens it too, and focus leaving the group closes it, so
+                  the menu is still reachable without a mouse. */}
+              <div
+                className="relative"
+                onMouseEnter={openProducts}
+                onMouseLeave={scheduleClose}
+                onFocus={openProducts}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) setProductsOpen(false);
+                }}
+              >
+                <Link
+                  to="/products"
+                  onClick={() => setProductsOpen(false)}
                   aria-expanded={productsOpen}
                   aria-haspopup="true"
                   data-testid="nav-products-trigger"
-                  className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isProductsRoute || productsOpen ? "text-primary" : "text-foreground/70"}`}
+                  className={`flex items-center gap-1 text-[15px] font-semibold tracking-tight transition-colors hover:text-primary ${isProductsRoute || productsOpen ? "text-primary" : "text-foreground/85"}`}
                 >
                   Products
                   <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`} />
-                </button>
+                </Link>
 
                 {productsOpen && (
                   <div className="absolute left-0 top-full pt-3" data-testid="nav-products-menu">
-                    <div className="w-[560px] max-w-[calc(100vw-2rem)] rounded-2xl border border-border bg-background/98 backdrop-blur-xl shadow-xl p-3">
-                      <SectionLabel>Platforms</SectionLabel>
-                      <div className="flex flex-col">
-                        {PLATFORM_PRODUCTS.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setProductsOpen(false)} />)}
-                      </div>
-                      <div className="my-2 border-t border-border" />
-                      <SectionLabel>Emerging</SectionLabel>
-                      <div className="flex flex-col">
-                        {EMERGING_PRODUCTS.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setProductsOpen(false)} />)}
-                      </div>
-                      <div className="mt-2 border-t border-border pt-2">
-                        <Link to="/products" onClick={() => setProductsOpen(false)} className="flex items-center justify-between rounded-lg px-2.5 py-2 text-sm font-semibold text-primary transition-colors hover:bg-muted" data-testid="nav-products-all">
-                          Compare the full suite
-                          <span aria-hidden>→</span>
-                        </Link>
-                      </div>
-                    </div>
+                    <ProductsMenu onNavigate={() => setProductsOpen(false)} />
                   </div>
                 )}
               </div>
@@ -177,7 +182,7 @@ export function Navbar() {
                   key={link.href}
                   to={link.href}
                   data-testid={`nav-link-${link.label.toLowerCase()}`}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === link.href ? "text-primary" : "text-foreground/70"}`}
+                  className={`text-[15px] font-semibold tracking-tight transition-colors hover:text-primary ${location.pathname === link.href ? "text-primary" : "text-foreground/85"}`}
                 >
                   {link.label}
                 </Link>
@@ -188,7 +193,9 @@ export function Navbar() {
               <Link
                 to="/products"
                 data-testid="nav-explore-products"
-                className={`inline-flex items-center font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-all duration-300 text-sm ${scrolled ? "px-4 py-1.5 rounded-full" : "px-5 py-2 rounded-md"}`}
+                // Pill at both sizes: the hero's buttons are pills, and a square
+                // corner up here that rounds off on scroll read as two designs.
+                className={`inline-flex items-center rounded-full bg-primary font-semibold text-primary-foreground shadow-sm transition-all duration-300 hover:opacity-90 ${scrolled ? "px-4 py-1.5 text-[14px]" : "px-5 py-2.5 text-[15px]"}`}
               >
                 Explore Products
               </Link>
@@ -214,10 +221,10 @@ export function Navbar() {
         {menuOpen && (
           <div className="absolute top-full left-4 right-4 mt-2 max-h-[80vh] overflow-y-auto rounded-2xl bg-background/98 backdrop-blur-md border border-border shadow-lg" data-testid="nav-mobile-menu">
             <div className="px-4 py-4 flex flex-col gap-1">
-              <p className="px-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-foreground/40">Platforms</p>
-              {PLATFORM_PRODUCTS.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setMenuOpen(false)} />)}
-              <p className="px-2 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-wider text-foreground/40">Emerging</p>
-              {EMERGING_PRODUCTS.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setMenuOpen(false)} />)}
+              {/* One list, matching the desktop menu: each row carries its own
+                  status instead of being filed under a roadmap heading. */}
+              <p className="px-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-foreground/40">The suite</p>
+              {PRODUCTS.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setMenuOpen(false)} />)}
               <Link to="/products" className="mt-1 rounded-lg px-2.5 py-2 text-sm font-semibold text-primary" onClick={() => setMenuOpen(false)}>Compare the full suite →</Link>
               <div className="my-1 border-t border-border" />
               {otherLinks.map((link) => (
@@ -225,7 +232,7 @@ export function Navbar() {
                   key={link.href}
                   to={link.href}
                   data-testid={`nav-mobile-link-${link.label.toLowerCase()}`}
-                  className={`rounded-lg px-2.5 py-2 text-base font-medium transition-colors ${location.pathname === link.href ? "text-primary" : "text-foreground/70"}`}
+                  className={`rounded-lg px-2.5 py-2 text-base font-semibold transition-colors ${location.pathname === link.href ? "text-primary" : "text-foreground/85"}`}
                 >
                   {link.label}
                 </Link>

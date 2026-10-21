@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 
 const CONTACT_EMAIL = "info@edennx.com";
 
@@ -17,11 +18,7 @@ const subjects = [
 
 export default function Contact() {
   useScrollReveal();
-  useSEO({
-    title: "Contact - EdenNX",
-    description:
-      "Get in touch with EdenNX. Whether you're interested in a product demo, a partnership, or just want to learn more, we'd love to hear from you.",
-  });
+  useSEO(ROUTE_META["/contact"]);
 
   const [form, setForm] = useState({
     name: "",
@@ -119,9 +116,8 @@ export default function Contact() {
             className="text-lg text-muted-foreground max-w-xl leading-relaxed reveal"
             style={{ transitionDelay: "0.1s" }}
           >
-            Whether you're interested in a product demo, a partnership, or just
-            want to learn more about what we're building, we'd love to hear from
-            you.
+            For a product demo, a partnership, or a question about the product
+            suite, send us a message.
           </p>
         </div>
 
@@ -358,7 +354,7 @@ export default function Contact() {
                   className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                   data-testid="contact-launch-edenradar"
                 >
-                  Looking for the product? Launch EdenRadar
+                  Launch EdenRadar
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
