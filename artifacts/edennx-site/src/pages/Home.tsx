@@ -163,6 +163,16 @@ export default function Home() {
             >
               Launch EdenCompliance
             </a>
+            <a
+              href="https://edentrials.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="bottom-cta-edentrials"
+              className="inline-flex items-center px-8 py-3.5 rounded-md text-base font-semibold text-white hover:opacity-90 transition-opacity shadow-sm"
+              style={{ background: "hsl(var(--portal-trials))" }}
+            >
+              Launch EdenTrials
+            </a>
           </div>
         </div>
       </section>

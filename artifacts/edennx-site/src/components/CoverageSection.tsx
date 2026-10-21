@@ -73,9 +73,10 @@ export function CoverageSection() {
               Research intelligence across six continents.
             </h2>
             <p className="text-base md:text-lg leading-relaxed max-w-md mb-10" style={{ color: "rgba(255,255,255,0.6)" }}>
-              EdenRadar continuously monitors hundreds of university tech transfer
-              offices, government labs, and publication feeds worldwide, so new
-              assets surface the day they are published.
+              EdenTrials follows clinical-trial registries worldwide, and EdenRadar
+              monitors university tech transfer offices, government labs, and
+              publication feeds, so new trials and new assets surface the day they
+              are published.
             </p>
             <div className="flex flex-wrap gap-x-10 gap-y-6">
               {stats.map((s) => (
