@@ -1,6 +1,5 @@
 import { RecentlyIndexed } from "@/components/RecentlyIndexed";
 import {
-  TTO_COUNT_LABEL,
   ASSET_COUNT_LABEL,
   DATA_SOURCE_LABEL,
   TOP_INSTITUTIONS,
@@ -18,8 +17,8 @@ const ROWS = Array.from({ length: ROW_COUNT }, (_, i) =>
 );
 
 const stats = [
-  { value: TTO_COUNT_LABEL, label: "research institutions" },
-  { value: ASSET_COUNT_LABEL, label: "licensable assets" },
+  { value: "560,000+", label: "trial registry records" },
+  { value: ASSET_COUNT_LABEL, label: "university assets" },
   { value: DATA_SOURCE_LABEL, label: "live data sources" },
 ];
 

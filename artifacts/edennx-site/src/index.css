@@ -28,6 +28,8 @@
   --color-portal-lab: hsl(var(--portal-lab));
   --color-portal-discovery: hsl(var(--portal-discovery));
   --color-portal-market: hsl(var(--portal-market));
+  --color-portal-trials: hsl(var(--portal-trials));
+  --color-portal-br: hsl(var(--portal-br));
 
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
@@ -88,6 +90,8 @@
   --portal-lab: 262 80% 60%;         /* EdenLab — violet */
   --portal-discovery: 38 92% 50%;    /* EdenDiscovery — amber */
   --portal-market: 234 80% 58%;      /* EdenMarket — indigo */
+  --portal-trials: 212 72% 41%;      /* EdenTrials — blue (its own --primary) */
+  --portal-br: 214 64% 23%;          /* EdenBR — navy (its own --primary) */
 
   --background: 210 25% 97%;
   --foreground: 220 30% 12%;
@@ -179,6 +183,8 @@
   --portal-lab: 262 80% 70%;
   --portal-discovery: 38 92% 58%;
   --portal-market: 234 85% 70%;
+  --portal-trials: 212 80% 62%;
+  --portal-br: 214 70% 66%;
 
   /* Deep blue-black, never pure black (house rule) */
   --background: 222 47% 6%;
