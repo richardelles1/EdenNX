@@ -25,7 +25,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   "/products": {
     title: "Products | EdenRadar, EdenCompliance and the EdenNX suite",
     description:
-      "The five EdenNX products: EdenRadar for biotech BD intelligence across 430+ tech transfer offices, EdenCompliance for vendor qualification and audits on a controlled record, plus EdenMarket, EdenLab, and EdenDiscovery.",
+      `The EdenNX products: EdenRadar for biotech BD intelligence across ${ASSET_COUNT_LABEL} university assets, EdenCompliance for vendor qualification and audits on a controlled record, EdenTrials for trial registry records in one vocabulary, and EdenBR in Beta. EdenLab, EdenDiscovery and EdenMarket are emerging.`,
   },
   "/about": {
     title: "About EdenNX | The founders, the mission and the EDEN framework",

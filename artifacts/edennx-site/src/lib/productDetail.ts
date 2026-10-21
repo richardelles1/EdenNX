@@ -76,10 +76,8 @@ export const DETAIL: Record<string, Detail> = {
     features: [
       { label: "One vocabulary", desc: "Trial registry records from many registers, resolved into a single vocabulary." },
       { label: "The change record", desc: "A registry overwrites what it said yesterday. We keep the copies." },
-      { label: "What changed, and when", desc: "Every change is recorded against the earlier copy, and tracked daily." },
-      { label: "244 countries and territories", desc: "Coverage, not completeness: how complete each register is varies, and the product says so." },
-      { label: "Joined to the rest", desc: "Literature, molecules, patents, sponsors and sites sit beside each trial." },
-      { label: "Not a data sale", desc: "The records stay the registries'. You pay for the platform built on them." },
+      { label: "Daily change tracking", desc: "So we can say what changed, and when." },
+      { label: "244 countries and territories", desc: "Coverage, not completeness: how complete each register is varies." },
     ],
     term: "Live",
     note: "Sign up at edentrials.com.",

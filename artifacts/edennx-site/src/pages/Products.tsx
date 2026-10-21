@@ -42,7 +42,7 @@ export default function Products() {
           Four products, and three more emerging.
         </h1>
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground reveal" style={{ transitionDelay: "0.2s" }}>
-          EdenNX is the parent company. EdenRadar tracks 34,000+ university assets for the teams doing biotech deals. EdenCompliance runs vendor qualification and audits for
+          EdenNX is the parent company. EdenRadar tracks {ASSET_COUNT_LABEL} university assets for the teams doing biotech deals. EdenCompliance runs vendor qualification and audits for
           regulated teams, on a record an inspector can read. EdenTrials holds trial registry records in one
           vocabulary and keeps the copies a registry overwrites. EdenBR, in Beta, tracks where a batch sits and leaves
           the release decision to people. EdenLab, EdenDiscovery, and EdenMarket are emerging.
