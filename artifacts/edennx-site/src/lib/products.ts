@@ -48,7 +48,8 @@ export const PRODUCTS: Product[] = [
   {
     name: "EdenTrials", suffix: "Trials", tagline: "A global clinical-trial record across every national registry.",
     status: "Live", tier: "platform", token: meta("EdenTrials").token, Icon: meta("EdenTrials").Icon,
-    href: ET, external: true, launch: { label: "Open EdenTrials", href: ET },
+    href: `${ET}/how-it-works`, external: true, launch: { label: "Launch EdenTrials", href: ET },
+    links: pages(ET, [["How it works", "/how-it-works"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
   },
   {
     name: "EdenBR", suffix: "BR", tagline: "Batch-record tracking for QA teams: where every batch sits.",

@@ -152,17 +152,17 @@ export default function Products() {
           style={{ transitionDelay: "0.1s" }}
           data-testid="products-headline"
         >
-          Two full platforms. Purpose-built for every workflow.
+          Four products. Four different jobs.
         </h1>
         <p
           className="text-lg text-muted-foreground max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.2s" }}
         >
           EdenNX is the parent company. EdenRadar, tracking {ASSET_COUNT_LABEL} university assets,
-          anchors a connected biotech-intelligence
-          suite with the emerging EdenLab, EdenDiscovery, and EdenMarket. EdenCompliance
-          is a separate full platform, managing vendor quality and audits for regulated
-          teams. Different jobs; one team behind them.
+          anchors a connected biotech-intelligence suite with the emerging EdenLab, EdenDiscovery,
+          and EdenMarket. EdenTrials is a global clinical-trial record. EdenCompliance manages
+          vendor quality and audits for regulated teams, and EdenBR, in beta, tracks where every
+          batch sits. Different jobs; one team behind them.
         </p>
       </section>
 
