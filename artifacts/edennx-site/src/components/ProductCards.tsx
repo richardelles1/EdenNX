@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { ink } from "@/components/PortalBits";
 import { MARKS, markStyle } from "@/lib/products";
+import { RADAR_TOP, RADAR_BOTTOM } from "@/lib/radarDots";
 import { PRODUCTS, FRAMES, SHOT_GROUND, useShotReveal, type Product } from "@/components/ProductShowcase";
 
 // Two redesigns of the product cards, same content as ProductShowcase (headline,
@@ -78,9 +80,24 @@ function Terms({ p }: { p: Product }) {
 
 /* ------------------------------- A: Index -------------------------------- */
 
-function IndexRow({ p }: { p: Product }) {
+function Capabilities({ p }: { p: Product }) {
   return (
-    <article className="ix-row reveal grid gap-10 py-14 lg:grid-cols-12 lg:gap-16 lg:py-20" data-testid={`ix-${p.name.toLowerCase()}`}>
+    <dl className="grid gap-x-10 sm:grid-cols-2">
+      {(p.capabilities ?? []).map((c) => (
+        <div key={c.label} className="border-t border-foreground/10 py-4">
+          <dt className="text-[15px] font-semibold leading-snug text-foreground">{c.label}</dt>
+          <dd className="mt-1 text-[14px] leading-relaxed text-foreground/70">{c.detail}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+// `pinned` rows mount after the page's scroll-reveal observer has run, so they
+// are drawn visible rather than waiting for a reveal that never comes.
+function IndexRow({ p, right, pinned = false }: { p: Product; right?: ReactNode; pinned?: boolean }) {
+  return (
+    <article className={`ix-row ${pinned ? "visible" : "reveal"} grid gap-10 py-14 lg:grid-cols-12 lg:gap-16 lg:py-20`} data-testid={`ix-${p.name.toLowerCase()}`}>
       <div className="lg:col-span-5">
         <div className="flex items-center gap-3">
           <Mark p={p} size={40} />
@@ -93,15 +110,114 @@ function IndexRow({ p }: { p: Product }) {
           <Terms p={p} />
         </div>
       </div>
-      <dl className="grid gap-x-10 sm:grid-cols-2 lg:col-span-7 lg:pt-2">
-        {(p.capabilities ?? []).map((c) => (
-          <div key={c.label} className="border-t border-foreground/10 py-4">
-            <dt className="text-[15px] font-semibold leading-snug text-foreground">{c.label}</dt>
-            <dd className="mt-1 text-[14px] leading-relaxed text-foreground/70">{c.detail}</dd>
-          </div>
-        ))}
-      </dl>
+      <div className="relative lg:col-span-7 lg:pt-2">{right ?? <Capabilities p={p} />}</div>
     </article>
+  );
+}
+
+/* ---------------------- A: EdenRadar lockup reveal ----------------------- */
+
+// The EdenRadar lockup, drawn live so each part can move on its own: the dot
+// globe's two domes, the wordmark, and the line under it. Built from our dot
+// globe with live text until Amelia supplies the lockup as layered vector art.
+// `t` runs 0 (lockup whole) to 1 (lockup gone): the domes part up and down, and
+// the wordmark fades and settles, opening the way the features come in.
+const DOME_X = 257.5; // left edge of a dome 485 wide, centred in 1000
+const DOME_K = 5.27;  // dot box (100) to lockup units, across
+const DOME_KY = 3.9;  // and down, flatter, as in the lockup
+
+function RadarLockup({ t }: { t: number }) {
+  const part = t * 190;
+  // The wordmark is gone before the features are legible, so the two never sit
+  // on top of each other at half strength.
+  const fade = Math.max(0, 1 - t * 3);
+  const dome = (dots: [number, number, number][], dy: number) =>
+    dots.map(([cx, cy, r], i) => <circle key={i} cx={DOME_X + cx * DOME_K} cy={cy * DOME_KY + dy} r={r * 2.6} />);
+  return (
+    <svg viewBox="0 0 1000 720" className="pointer-events-none absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 overflow-visible" aria-hidden>
+      <g fill="#26744a">
+        <g style={{ transform: `translateY(${-part}px)`, opacity: Math.max(0, 1 - t * 1.25) }}>{dome(RADAR_TOP, 52)}</g>
+        <g style={{ transform: `translateY(${part}px)`, opacity: Math.max(0, 1 - t * 1.25) }}>{dome(RADAR_BOTTOM, 300)}</g>
+      </g>
+      <g style={{ opacity: fade, transform: `scale(${1 - t * 0.06})`, transformOrigin: "500px 360px" }}>
+        <text x="500" y="408" textAnchor="middle" textLength="800" lengthAdjust="spacingAndGlyphs" fontSize="178" fontWeight="800" letterSpacing="-2">
+          <tspan fill="#222222">Eden</tspan>
+          <tspan fill="#26744a">Radar</tspan>
+        </text>
+        <text x="500" y="478" textAnchor="middle" textLength="640" lengthAdjust="spacing" fontSize="42" fontWeight="500" fill="#26744a" letterSpacing="10">
+          BIOTECH INNOVATION ENGINE
+        </text>
+      </g>
+    </svg>
+  );
+}
+
+// Pins the EdenRadar row while the page scrolls through 130% of a screen, and
+// maps that scroll to the reveal. Scroll-linked rather than timed, so the reader
+// drives it and can stop or reverse it. Desktop with motion allowed only: on a
+// phone, or with reduced motion, it is the plain row. The features are in the
+// page throughout (only clipped), so assistive tech reads them at any point.
+function RadarRevealRow({ p }: { p: Product }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [on, setOn] = useState(false);
+  const [t, setT] = useState(0);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
+    const sync = () => setOn(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (!on) return;
+    let raf = 0;
+    const tick = () => {
+      raf = 0;
+      const el = ref.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const span = r.height - window.innerHeight;
+      // Hold the whole lockup for the first 15% of the pin, open across the
+      // next 60%, then hold the features before the row lets go.
+      const raw = Math.min(1, Math.max(0, (-r.top / span - 0.15) / 0.6));
+      setT(raw * raw * (3 - 2 * raw));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    tick();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [on]);
+
+  if (!on) return <IndexRow p={p} />;
+  const open = 50 * (1 - t);
+  return (
+    <div ref={ref} style={{ height: "230vh" }} data-testid="radar-reveal">
+      <div className="sticky top-0 flex h-screen items-center">
+        <div className="w-full">
+          <IndexRow
+            p={p}
+            pinned
+            right={
+              <>
+                <div style={{ clipPath: `inset(${open}% 0 ${open}% 0)`, opacity: Math.min(1, Math.max(0, (t - 0.3) / 0.5)) }}>
+                  <Capabilities p={p} />
+                </div>
+                <RadarLockup t={t} />
+              </>
+            }
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -137,9 +253,7 @@ function IndexEmerging() {
 export function ProductCardsA() {
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-8" data-testid="cards-a">
-      {FLAGSHIPS.map((p) => (
-        <IndexRow key={p.name} p={p} />
-      ))}
+      {FLAGSHIPS.map((p) => (p === PRODUCTS.radar ? <RadarRevealRow key={p.name} p={p} /> : <IndexRow key={p.name} p={p} />))}
       <IndexEmerging />
     </div>
   );

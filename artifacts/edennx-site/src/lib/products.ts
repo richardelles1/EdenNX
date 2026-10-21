@@ -78,9 +78,8 @@ export const BETA_PRODUCTS: Product[] = [
 
 export const SUITE: Product[] = [PRODUCTS[0], PRODUCTS[1], ...BETA_PRODUCTS, ...PRODUCTS.slice(2)];
 
-// Marks are cropped to their ink and square. The Radar mark is edenradar.com's own
-// nav logo (the radar arcs, white on its green square): the dot globe from the
-// brand kit read as loose dots at card size.
+// Marks are cropped to their ink and square. The Radar mark is the dot globe from
+// the EdenRadar lockup, without the wordmark band.
 export function markStyle(_name: string, size: number): { width: number; height: number } {
   return { width: size, height: size };
 }
