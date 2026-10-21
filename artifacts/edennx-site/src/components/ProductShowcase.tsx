@@ -122,7 +122,7 @@ const PRODUCTS: Record<string, Product> = {
   br: {
     name: "EdenBR", token: "--portal-br", badge: "Beta",
     headline: { pre: "See where every batch sits, and ", accent: "why it is waiting.", post: "" },
-    sub: "Batch-record tracking for QA teams. It tracks the batch; the release decision stays with your quality unit.",
+    sub: "Batch-record tracking for QA teams: where every batch sits. The release decision stays with your quality unit.",
     note: "",
     // From the product's own navigation and Command Center.
     capabilities: [
@@ -186,7 +186,7 @@ const FRAMES: Record<string, Frame[]> = {
   EdenTrials: [{ img: "/images/shot-trials-1.jpg" }, { img: "/images/shot-trials-2.jpg" }, { img: "/images/shot-trials-3.jpg" }],
   EdenBR: [{ img: "/images/shot-br-1.jpg" }, { img: "/images/shot-br-2.jpg" }],
   EdenCompliance: [
-    { img: "/images/shot-compliance-1.jpg" },
+    { img: "/images/shot-compliance-3.jpg" },
     { node: <RecordLedger /> },
     { node: <VendorRegister /> },
   ],
