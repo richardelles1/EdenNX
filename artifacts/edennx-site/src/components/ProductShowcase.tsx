@@ -17,9 +17,9 @@ import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 // on touch, where a :hover state would stick. Nothing load-bearing lives behind
 // the hover: the tiles carry the meaning, the screenshot is the reward.
 
-type Capability = { label: string; detail: string };
+export type Capability = { label: string; detail: string };
 
-type Product = {
+export type Product = {
   name: string;
   token: string;
   goldToken?: string;
@@ -32,7 +32,7 @@ type Product = {
   beta?: boolean; // Beta: no link yet, the card is not clickable
 };
 
-const PRODUCTS: Record<string, Product> = {
+export const PRODUCTS: Record<string, Product> = {
   radar: {
     name: "EdenRadar", token: "--portal-radar",
     headline: { pre: "The next biotech breakthrough is ", accent: "already published.", post: "" },
@@ -149,9 +149,9 @@ const NOTE = "#525c55";
 // screenshot plus designed vignettes, so its frames mix the two: the program
 // dashboard, then its own record and register vignettes, ported in
 // ComplianceVignettes.
-type Frame = { img: string } | { node: ReactNode };
+export type Frame = { img: string } | { node: ReactNode };
 
-const FRAMES: Record<string, Frame[]> = {
+export const FRAMES: Record<string, Frame[]> = {
   EdenRadar: [
     { img: "/images/shot-radar-1.jpg" },
     { img: "/images/shot-radar-2.jpg" },
@@ -167,7 +167,7 @@ const FRAMES: Record<string, Frame[]> = {
 // Shots are shown contained rather than cover-cropped, so a frame is never
 // sliced through a chart, a row, or a word. Each sits on the ground its own UI
 // uses, so the letterboxing reads as the app's own canvas rather than a gap.
-const SHOT_GROUND: Record<string, string> = {
+export const SHOT_GROUND: Record<string, string> = {
   EdenRadar: "#eef2f0",
   EdenCompliance: "#0b1a12",
 };
@@ -318,7 +318,7 @@ function CapabilityTile({ p, c }: { p: Product; c: Capability }) {
 // screenshots and steps through them. Hover capability is checked at run time
 // rather than in CSS because the timer has to be started and stopped too; on
 // touch none of this arms, and the tiles simply stay.
-function useShotReveal(count: number) {
+export function useShotReveal(count: number) {
   const [revealed, setRevealed] = useState(false);
   const [index, setIndex] = useState(0);
   const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

@@ -50,6 +50,12 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     title: "Terms of Service - EdenNX",
     description: "The terms that govern your use of the EdenNX website.",
   },
+  // Preview only (card placement and directions); never merged to main.
+  "/preview/home-cards-a": { title: "Preview: home led by cards, A", description: "Preview." },
+  "/preview/home-cards-b": { title: "Preview: home led by cards, B", description: "Preview." },
+  "/preview/products-a": { title: "Preview: products, cards A", description: "Preview." },
+  "/preview/products-b": { title: "Preview: products, cards B", description: "Preview." },
+  "/preview/products-scroller": { title: "Preview: products, scroller", description: "Preview." },
 };
 
 /** The routes the build prerenders. 404 is deliberately not one of them. */
