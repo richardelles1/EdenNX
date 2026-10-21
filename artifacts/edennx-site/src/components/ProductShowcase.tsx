@@ -76,7 +76,17 @@ const PRODUCTS: Record<string, Product> = {
     headline: { pre: "A registry overwrites what it said yesterday. ", accent: "We keep the copies.", post: "" },
     sub: "So we can say what changed, and when. Trial registry records in one vocabulary, with changes tracked daily.",
     note: "",
-    features: ["Trial registry records, one vocabulary", "Changes tracked daily", "244 countries and territories"],
+    // The product's own navigation and screens, as capabilities.
+    capabilities: [
+      { label: "Global registry record", detail: "Each trial's record from its national registry, in one vocabulary" },
+      { label: "Identified companies", detail: "Sponsors and companies resolved across registers" },
+      { label: "Search and filters", detail: "Narrow by condition, phase, status, sponsor and country" },
+      { label: "Change record", detail: "What a registry said before, kept beside what it says now" },
+      { label: "Watches and alerts", detail: "Standing watches that alert you when a trial changes" },
+      { label: "Country map", detail: "Where trials and sites sit, on a map" },
+      { label: "Sponsor and molecule views", detail: "A page for each sponsor and molecule, with its trials" },
+      { label: "Eden assistant", detail: "Ask questions of the corpus in plain language" },
+    ],
     cta: { label: "Explore EdenTrials", href: "https://edentrials.com", external: true },
   },
   br: {
@@ -84,7 +94,16 @@ const PRODUCTS: Record<string, Product> = {
     headline: { pre: "Where a batch sits, ", accent: "never the release decision.", post: "" },
     sub: "EdenBR tracks where a batch sits. The release decision stays with the people accountable for it.",
     note: "Beta",
-    features: ["Tracks where every batch sits", "Shows why a batch is waiting", "Release decision stays with your quality unit"],
+    capabilities: [
+      { label: "Command Center", detail: "One view of every batch and where it stands" },
+      { label: "Needs attention", detail: "What is waiting or overdue, surfaced first" },
+      { label: "Reviewer queue", detail: "The batches waiting on each reviewer" },
+      { label: "Schedule", detail: "Planned steps and due dates across batches" },
+      { label: "Quality events", detail: "Events linked to the batch they affect" },
+      { label: "Tasks and alerts", detail: "Assigned tasks, with an alert when something slips" },
+      { label: "History", detail: "A dated record of what happened to each batch" },
+      { label: "Reports", detail: "Batch status and review reports" },
+    ],
     cta: { label: "In Beta", href: "", external: false },
   },
   market: {
@@ -311,6 +330,7 @@ function useShotReveal(count: number) {
   useEffect(() => stop, []);
 
   const onEnter = () => {
+    if (!count) return; // no screenshots to reveal: the tiles stay
     if (!window.matchMedia?.("(hover: hover)").matches) return;
     stop();
     openTimer.current = setTimeout(() => {
@@ -489,9 +509,9 @@ export function ProductShowcase() {
             <BigTile p={PRODUCTS.radar} />
             <BigTile p={PRODUCTS.compliance} />
           </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6">
-            <MiniTile p={PRODUCTS.trials} />
-            <MiniTile p={PRODUCTS.br} />
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+            <BigTile p={PRODUCTS.trials} />
+            <BigTile p={PRODUCTS.br} />
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             <MiniTile p={PRODUCTS.market} />
