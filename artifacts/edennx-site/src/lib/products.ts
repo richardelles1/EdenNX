@@ -29,6 +29,7 @@ const meta = (name: string) => PORTAL_META[name] ?? PORTAL_META.EdenRadar;
 // are listed (verified live): EdenRadar has no /features page, so it is omitted there.
 const ER = "https://edenradar.com";
 const EC = "https://edencompliance.com";
+const ET = "https://edentrials.com";
 const pages = (base: string, defs: [string, string][]): ProductLink[] => defs.map(([label, slug]) => ({ label, href: `${base}${slug}` }));
 
 export const PRODUCTS: Product[] = [
@@ -43,6 +44,16 @@ export const PRODUCTS: Product[] = [
     status: "New", tier: "platform", token: meta("EdenCompliance").token, goldToken: "--portal-compliance-gold", Icon: meta("EdenCompliance").Icon,
     href: `${EC}/how-it-works`, external: true, launch: { label: "Open EdenCompliance", href: EC },
     links: pages(EC, [["How it works", "/how-it-works"], ["Features", "/features"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
+  },
+  {
+    name: "EdenTrials", suffix: "Trials", tagline: "A global clinical-trial record across every national registry.",
+    status: "Live", tier: "platform", token: meta("EdenTrials").token, Icon: meta("EdenTrials").Icon,
+    href: ET, external: true, launch: { label: "Open EdenTrials", href: ET },
+  },
+  {
+    name: "EdenBR", suffix: "BR", tagline: "Batch-record tracking for QA teams: where every batch sits.",
+    status: "Beta", tier: "platform", token: meta("EdenBR").token, Icon: meta("EdenBR").Icon,
+    href: "/products#edenbr", external: false,
   },
   {
     name: "EdenMarket", suffix: "Market", tagline: "NDA-gated marketplace for licensable biotech assets.",

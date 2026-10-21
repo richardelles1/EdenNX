@@ -20,6 +20,17 @@ import {
   Users,
   RadioTower,
   History,
+  Globe2,
+  Building2,
+  Search,
+  GitCompareArrows,
+  Bell,
+  MapPin,
+  Columns3,
+  UserCheck,
+  CalendarDays,
+  BarChart3,
+  ListChecks,
 } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
@@ -46,7 +57,9 @@ type Product = {
   note: string;
   features?: string[];
   capabilities?: Capability[];
-  cta: { label: string; href: string; external: boolean };
+  cta: { label: string; href: string; external: boolean } | null; // null: no link yet (Beta)
+  logo?: string;   // optional lockup image in place of the icon wordmark
+  badge?: string;  // e.g. "Beta"
 };
 
 const PRODUCTS: Record<string, Product> = {
@@ -87,6 +100,44 @@ const PRODUCTS: Record<string, Product> = {
       { label: "Electronic sign-off", detail: "Re-authenticate to approve a vendor or lock an audit", Icon: PenLine },
     ],
     cta: { label: "Explore EdenCompliance", href: "https://edencompliance.com", external: true },
+  },
+  trials: {
+    name: "EdenTrials", token: "--portal-trials",
+    headline: { pre: "Every national registry, in ", accent: "one record.", post: "" },
+    sub: "A global clinical-trial record, with what changed between one look and the next kept on file.",
+    note: "edentrials.com",
+    // Capabilities are the product's own screens (portal nav: Insights, Search,
+    // Registry, Watches, Activity, Eden). Figures only from CLAIMS.md.
+    capabilities: [
+      { label: "Global registry record", detail: "560,000+ registry records from 244 countries and territories", Icon: Globe2 },
+      { label: "Identified companies", detail: "3,389+ companies matched to the trials they sponsor", Icon: Building2 },
+      { label: "Search and filters", detail: "By area, country, compound or company, in one box", Icon: Search },
+      { label: "Change record", detail: "Each observation kept; what changed is recorded", Icon: GitCompareArrows },
+      { label: "Watches and alerts", detail: "Standing watches on new and changed trials", Icon: Bell },
+      { label: "Country map", detail: "Trials by country, one click into the list", Icon: MapPin },
+      { label: "Sponsor and molecule views", detail: "A company's or a compound's trials in one place", Icon: BarChart3 },
+      { label: "Eden assistant", detail: "Ask in plain language, with the records behind each answer", Icon: Sparkles },
+    ],
+    cta: { label: "Explore EdenTrials", href: "https://edentrials.com", external: true },
+  },
+  br: {
+    name: "EdenBR", token: "--portal-br", badge: "Beta",
+    logo: "/images/br-lockup.png",
+    headline: { pre: "See where every batch sits, and ", accent: "why it is waiting.", post: "" },
+    sub: "Batch-record tracking for QA teams. It tracks the batch; the release decision stays with your quality unit.",
+    note: "",
+    // From the product's own navigation and Command Center.
+    capabilities: [
+      { label: "Command Center", detail: "Every batch on one board, by stage and urgency", Icon: Columns3 },
+      { label: "Needs attention", detail: "Aging, expiring and waiting-on-a-part, flagged", Icon: ListChecks },
+      { label: "Reviewer queue", detail: "What each reviewer has to sign off next", Icon: UserCheck },
+      { label: "Schedule", detail: "Batches and reviews laid out by date", Icon: CalendarDays },
+      { label: "Quality events", detail: "Logged against the batch they affect", Icon: ClipboardList },
+      { label: "Tasks and alerts", detail: "Your own work, and what has changed", Icon: Bell },
+      { label: "History", detail: "Who changed what, and when", Icon: History },
+      { label: "Reports", detail: "Export and print from the same record", Icon: Table2 },
+    ],
+    cta: null,
   },
   market: {
     name: "EdenMarket", token: "--portal-market",
@@ -134,6 +185,8 @@ const FRAMES: Record<string, Frame[]> = {
     { img: "/images/shot-radar-2.jpg" },
     { img: "/images/shot-radar-3.jpg" },
   ],
+  EdenTrials: [{ img: "/images/shot-trials-1.jpg" }],
+  EdenBR: [{ img: "/images/shot-br-1.jpg" }],
   EdenCompliance: [
     { img: "/images/shot-compliance-1.jpg" },
     { node: <RecordLedger /> },
@@ -147,6 +200,8 @@ const FRAMES: Record<string, Frame[]> = {
 const SHOT_GROUND: Record<string, string> = {
   EdenRadar: "#eef2f0",
   EdenCompliance: "#0b1a12",
+  EdenTrials: "#0a0d12",
+  EdenBR: "#eef2f5",
 };
 
 const REVEAL_MS = 600; // hold the tiles briefly, so the reveal reads as intent
@@ -193,6 +248,9 @@ function CardLink({
     onFocus: onEnter,
     onBlur: onLeave,
   };
+  if (!p.cta) {
+    return <div className={cls} style={cardStyle(p)} {...handlers} tabIndex={0}>{children}</div>;
+  }
   return p.cta.external ? (
     <a href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={cardStyle(p)} {...handlers}>{children}</a>
   ) : (
@@ -204,6 +262,16 @@ function Wordmark({ p }: { p: Product }) {
   const accent = `hsl(var(${p.token}))`;
   const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
   const suffix = p.name.slice(4);
+  if (p.logo) {
+    return (
+      <span className="inline-flex items-center gap-3">
+        <img src={p.logo} alt={p.name} className="h-11 w-auto" decoding="async" />
+        {p.badge && (
+          <span className="rounded-full px-2 py-0.5 text-[10.5px] font-bold uppercase tracking-wider" style={{ background: `hsl(var(${p.token}) / 0.12)`, color: accent, border: `1px solid hsl(var(${p.token}) / 0.25)` }}>{p.badge}</span>
+        )}
+      </span>
+    );
+  }
   return (
     <span className="inline-flex items-center gap-2.5">
       <span className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: `hsl(var(${p.token}) / 0.12)`, border: `1px solid hsl(var(${p.token}) / 0.2)` }}>
@@ -230,10 +298,12 @@ function CtaRow({ p }: { p: Product }) {
   const headlineAccent = p.goldToken ? `hsl(var(${p.goldToken}))` : `hsl(var(${p.token}))`;
   return (
     <div className="mt-5 flex items-center gap-3">
-      <span className="inline-flex items-center gap-1 text-[14px] font-semibold transition-[gap] group-hover:gap-2" style={{ color: headlineAccent }}>
-        {p.cta.label} <ArrowUpRight className="h-4 w-4" />
-      </span>
-      <span className="font-mono text-[14px] font-medium" style={{ color: BODY }}>{p.note}</span>
+      {p.cta && (
+        <span className="inline-flex items-center gap-1 text-[14px] font-semibold transition-[gap] group-hover:gap-2" style={{ color: headlineAccent }}>
+          {p.cta.label} <ArrowUpRight className="h-4 w-4" />
+        </span>
+      )}
+      {p.note && <span className="font-mono text-[14px] font-medium" style={{ color: BODY }}>{p.note}</span>}
     </div>
   );
 }
@@ -339,14 +409,14 @@ function BigTile({ p }: { p: Product }) {
       </div>
 
       <div
-        className="relative mt-auto h-[392px] w-full overflow-hidden lg:h-[404px]"
+        className="relative mt-auto w-full overflow-hidden sm:h-[392px] lg:h-[404px]"
         style={{ borderTop: "1px solid rgba(15,26,20,0.08)", background: `hsl(var(${p.token}) / 0.03)` }}
       >
         {/* Rest state: what the product actually does. Clears a little faster
             than the shot arrives, so the two states cross-dissolve instead of
             both sitting at half opacity. */}
         <div
-          className="grid h-full grid-cols-2 grid-rows-4 gap-2.5 p-5 transition-[opacity,transform] duration-[380ms] ease-out"
+          className="grid grid-cols-1 gap-2.5 p-5 sm:h-full sm:grid-cols-2 sm:grid-rows-4 transition-[opacity,transform] duration-[380ms] ease-out"
           style={{ opacity: revealed ? 0 : 1, transform: revealed ? "scale(0.985)" : "scale(1)" }}
         >
           {caps.map((c) => (
@@ -464,6 +534,10 @@ export function ProductShowcase() {
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
             <BigTile p={PRODUCTS.radar} />
             <BigTile p={PRODUCTS.compliance} />
+          </div>
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+            <BigTile p={PRODUCTS.trials} />
+            <BigTile p={PRODUCTS.br} />
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             <MiniTile p={PRODUCTS.market} />
