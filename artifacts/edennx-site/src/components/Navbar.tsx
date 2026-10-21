@@ -66,7 +66,7 @@ function ProductRow({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
           ))}
           {p.launch && (
             <>
-              <span className="hidden text-foreground/20 sm:inline" aria-hidden>·</span>
+              <span className="text-foreground/20" aria-hidden>·</span>
               <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
             </>
           )}
