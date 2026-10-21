@@ -14,7 +14,9 @@ import NotFound from "@/pages/not-found";
 
 const base = import.meta.env.BASE_URL;
 
-function AppShell() {
+// Exported so the build-time renderer can mount it under a StaticRouter. The
+// browser entry keeps using App, which supplies the BrowserRouter.
+export function AppShell() {
   const location = useLocation();
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">

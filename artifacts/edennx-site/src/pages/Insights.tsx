@@ -1,11 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 import {
   SORTED_INSIGHTS,
-  countBySource,
   formatDate,
   type Insight,
   type InsightSource,
@@ -13,103 +13,89 @@ import {
 
 // One reading room for the writing across the suite. EdenNX publishes nothing
 // here: every card links out to the product that wrote it, which is the point.
-// Filtering is by product, because on this site the product is the subject.
+// The page is grouped by product rather than filtered, so both are always on it.
 
-type Filter = "All" | InsightSource;
+// Group order matches the product order used everywhere else on the site.
+const SOURCES: InsightSource[] = ["EdenRadar", "EdenCompliance"];
 
-const FILTERS: Filter[] = ["All", "EdenRadar", "EdenCompliance"];
-
+// EdenRadar is emerald and EdenCompliance is forest green, which are four
+// degrees of hue apart and all but identical in a grid of small cards: the one
+// cue meant to tell the two sources apart was doing nothing. EdenCompliance is
+// forest *and* gold, and gold is the half of it that reads on a light surface,
+// so its cards take the gold. Green against amber separates at a glance, and
+// neither product has borrowed a colour it does not own.
 function accentOf(source: InsightSource) {
   const meta = PORTAL_META[source] ?? PORTAL_META.EdenRadar;
-  return { accent: `hsl(var(${meta.token}))`, token: meta.token, Icon: meta.Icon };
+  const token = source === "EdenCompliance" ? "--portal-compliance-gold" : meta.token;
+  return { accent: `hsl(var(${token}))`, token, Icon: meta.Icon };
 }
 
-function SourceBadge({ source }: { source: InsightSource }) {
-  const { accent, Icon } = accentOf(source);
+
+// Two parallel feeds, one per product, rather than one grid.
+//
+// A grid of fifteen always ends on a ragged row, and that gap was what read as
+// unbalanced. Two columns cannot: each feed simply runs its own length, and the
+// nine-against-six difference shows as one column ending sooner, which is true
+// rather than broken.
+//
+// A row, not a card: source mark on the left, headline and standfirst to the
+// right, date and read time underneath. No boxes, hairlines between entries.
+function FeedRow({ post }: { post: Insight }) {
+  const { accent, Icon } = accentOf(post.source);
   return (
-    <span className="inline-flex items-center gap-1.5">
-      <Icon className="h-4 w-4 flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
-      <span className="text-[13px] font-bold tracking-tight leading-none">
-        <span className="text-foreground">Eden</span>
-        <span style={{ color: accent }}>{source.slice(4)}</span>
-      </span>
-    </span>
-  );
-}
-
-function Card({ post, featured = false }: { post: Insight; featured?: boolean }) {
-  const { accent, token } = accentOf(post.source);
-  return (
-    <a
-      href={post.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`group relative flex flex-col rounded-2xl border bg-card p-6 transition-shadow hover:shadow-lg reveal ${
-        featured ? "md:col-span-2 md:p-8" : ""
-      }`}
-      style={{ borderColor: `hsl(var(${token}) / 0.24)`, borderTop: `3px solid ${accent}` }}
-      data-testid={`insight-${post.source.toLowerCase()}`}
-    >
-      <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">
-        <SourceBadge source={post.source} />
-        <span
-          className="rounded-full px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wider"
-          style={{ background: `hsl(var(${token}) / 0.1)`, color: accent }}
-        >
-          {post.tag}
-        </span>
-      </div>
-
-      <h2
-        className={`font-bold tracking-tight text-foreground ${
-          featured ? "text-2xl md:text-3xl leading-tight" : "text-lg leading-snug"
-        }`}
+    <li>
+      <a
+        href={post.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative flex gap-4 overflow-hidden rounded-xl border-b border-border px-4 py-5 transition-colors hover:bg-foreground/[0.015]"
+        style={{ ["--bloom-color" as string]: accent }}
+        data-testid={`insight-${post.source.toLowerCase()}`}
       >
-        {post.title}
-      </h2>
+        <span aria-hidden className="bloom" />
 
-      <p
-        className={`mt-3 leading-relaxed text-foreground/70 ${featured ? "text-base md:text-lg max-w-2xl" : "text-sm"}`}
-      >
-        {post.lede}
-      </p>
-
-      {/* The source badge already names the product, so the link stays short
-          enough not to wrap in a one-third-width card. */}
-      <div className="mt-auto flex items-center gap-2 pt-6 text-xs text-muted-foreground">
-        <span className="whitespace-nowrap">{formatDate(post.date)}</span>
-        <span aria-hidden>·</span>
-        <span className="whitespace-nowrap">{post.readTime}</span>
-        <span
-          className="ml-auto inline-flex flex-shrink-0 items-center gap-1 text-[13px] font-semibold transition-[gap] group-hover:gap-2"
+        <Icon
+          className="relative mt-[3px] h-[17px] w-[17px] flex-shrink-0"
+          strokeWidth={2.25}
           style={{ color: accent }}
-        >
-          Read <ArrowUpRight className="h-4 w-4" />
+        />
+
+        <span className="relative min-w-0 flex-1">
+          <span className="block text-[17px] font-bold leading-snug tracking-tight text-foreground">
+            {post.title}
+          </span>
+          <span className="mt-1.5 block text-[13.5px] leading-relaxed text-foreground/65">
+            {post.lede}
+          </span>
+          <span className="mt-2.5 block font-mono text-[10.5px] uppercase tracking-[0.14em] text-foreground/40">
+            {formatDate(post.date)} · {post.readTime}
+          </span>
         </span>
-      </div>
-    </a>
+
+        <ArrowUpRight
+          className="relative mt-[3px] h-4 w-4 flex-shrink-0 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
+          style={{ color: accent }}
+        />
+      </a>
+    </li>
   );
 }
 
 export default function Insights() {
   useScrollReveal();
-  useSEO({
-    title: "Insights - EdenNX",
-    description:
-      "Writing from across the EdenNX product suite: analysis of academic licensing, tech transfer, and regulated quality from the EdenRadar and EdenCompliance teams.",
-  });
+  useSEO(ROUTE_META["/insights"]);
 
-  const [filter, setFilter] = useState<Filter>("All");
-  const posts = useMemo(
-    () => (filter === "All" ? SORTED_INSIGHTS : SORTED_INSIGHTS.filter((p) => p.source === filter)),
-    [filter]
+  // Both groups, always. The filter chips are gone: with the page grouped by
+  // product they were a control for something the layout already did, and a
+  // default of "All" over a mixed stream was the thing that read as random.
+  const groups = useMemo(
+    () =>
+      SOURCES.map((source) => ({
+        source,
+        posts: SORTED_INSIGHTS.filter((p) => p.source === source),
+      })),
+    []
   );
-
-  const counts: Record<Filter, number> = {
-    All: SORTED_INSIGHTS.length,
-    EdenRadar: countBySource("EdenRadar"),
-    EdenCompliance: countBySource("EdenCompliance"),
-  };
 
   return (
     <div className="pt-16">
@@ -124,44 +110,39 @@ export default function Insights() {
           className="text-lg md:text-xl text-foreground/70 leading-relaxed max-w-2xl reveal"
           style={{ transitionDelay: "0.05s" }}
         >
-          The teams behind our platforms write about what the field actually looks
+          The teams behind our platforms write about what the field looks
           like from inside the data. Every piece lives on the product that wrote it.
         </p>
       </section>
 
-      {/* Filter by product, which on this site is the subject matter */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-10">
-        <div className="flex flex-wrap gap-2 reveal" role="group" aria-label="Filter insights by product">
-          {FILTERS.map((f) => {
-            const active = filter === f;
-            const accent = f === "All" ? "hsl(var(--primary))" : accentOf(f).accent;
+      {/* Two feeds side by side. Each column heads with its wordmark and count,
+          so the page says two products are writing without a sentence. On
+          narrow screens they stack, which is the same reading order. */}
+      <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8 lg:pb-28">
+        <div className="grid gap-x-12 gap-y-14 lg:grid-cols-2">
+          {groups.map(({ source, posts }) => {
+            const { accent, Icon } = accentOf(source);
             return (
-              <button
-                key={f}
-                type="button"
-                onClick={() => setFilter(f)}
-                aria-pressed={active}
-                data-testid={`filter-${f.toLowerCase()}`}
-                className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors"
-                style={{
-                  borderColor: active ? accent : "hsl(var(--border))",
-                  background: active ? accent : "transparent",
-                  color: active ? "#fff" : "hsl(var(--foreground) / 0.75)",
-                }}
-              >
-                {f}
-                <span className={active ? "opacity-80" : "opacity-55"}>{counts[f]}</span>
-              </button>
+              <div key={source} data-testid={`insights-group-${source.toLowerCase()}`}>
+                <div className="mb-2 flex items-center gap-2.5 border-t-2 pt-5 reveal" style={{ borderColor: accent }}>
+                  <Icon className="h-[19px] w-[19px] flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
+                  <h2 className="text-[19px] font-bold tracking-tight">
+                    <span className="text-foreground">Eden</span>
+                    <span style={{ color: accent }}>{source.slice(4)}</span>
+                  </h2>
+                  <span className="ml-auto font-mono text-[11px] uppercase tracking-wider text-foreground/40">
+                    {posts.length} {posts.length === 1 ? "piece" : "pieces"}
+                  </span>
+                </div>
+
+                <ul className="reveal">
+                  {posts.map((post) => (
+                    <FeedRow key={post.url} post={post} />
+                  ))}
+                </ul>
+              </div>
             );
           })}
-        </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-20 lg:pb-28">
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post, i) => (
-            <Card key={post.url} post={post} featured={i === 0 && filter === "All"} />
-          ))}
         </div>
       </section>
     </div>

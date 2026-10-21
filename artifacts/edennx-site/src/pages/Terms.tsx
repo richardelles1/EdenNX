@@ -1,5 +1,6 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
+import { ROUTE_META } from "@/lib/routeMeta";
 
 const LAST_UPDATED = "June 21, 2026";
 const CONTACT_EMAIL = "info@edennx.com";
@@ -51,10 +52,7 @@ const sections = [
 
 export default function Terms() {
   useScrollReveal();
-  useSEO({
-    title: "Terms of Service - EdenNX",
-    description: "The terms that govern your use of the EdenNX website.",
-  });
+  useSEO(ROUTE_META["/terms"]);
 
   return (
     <div className="pt-16">
