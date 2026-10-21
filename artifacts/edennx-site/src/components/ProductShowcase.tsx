@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Check } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
-import { MARKS } from "@/lib/products";
+import { MARKS, markStyle } from "@/lib/products";
 import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as an asymmetric bento. Each card carries a slight wash
@@ -72,19 +72,19 @@ const PRODUCTS: Record<string, Product> = {
     cta: { label: "Explore EdenCompliance", href: "https://edencompliance.com", external: true },
   },
   trials: {
-    name: "EdenTrials", token: "--portal-trials", beta: true,
+    name: "EdenTrials", token: "--portal-trials",
     headline: { pre: "A registry overwrites what it said yesterday. ", accent: "We keep the copies.", post: "" },
     sub: "So we can say what changed, and when. Trial registry records in one vocabulary, with changes tracked daily.",
-    note: "Beta",
-    features: ["Trial registry records, one vocabulary", "Changes tracked daily", "Coverage stated, not implied"],
-    cta: { label: "In Beta", href: "", external: false },
+    note: "",
+    features: ["Trial registry records, one vocabulary", "Changes tracked daily", "244 countries and territories"],
+    cta: { label: "Explore EdenTrials", href: "https://edentrials.com", external: true },
   },
   br: {
     name: "EdenBR", token: "--portal-br", beta: true,
     headline: { pre: "Where a batch sits, ", accent: "never the release decision.", post: "" },
     sub: "EdenBR tracks where a batch sits. The release decision stays with the people accountable for it.",
     note: "Beta",
-    features: ["Tracks where a batch sits", "Never makes the release decision", "Never records the release decision"],
+    features: ["Tracks where every batch sits", "Shows why a batch is waiting", "Release decision stays with your quality unit"],
     cta: { label: "In Beta", href: "", external: false },
   },
   market: {
@@ -224,7 +224,7 @@ function CornerMark({ p }: { p: Product }) {
   const accent = `hsl(var(${p.token}))`;
   const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
   if (src && !failed) {
-    return <img src={src} alt="" aria-hidden decoding="async" onError={() => setFailed(true)} className="h-12 w-12 flex-shrink-0 object-contain" />;
+    return <img src={src} alt="" aria-hidden decoding="async" onError={() => setFailed(true)} className="flex-shrink-0 object-contain" style={markStyle(p.name, 56)} />;
   }
   return (
     <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl" style={{ background: `hsl(var(${p.token}) / 0.12)`, border: `1px solid hsl(var(${p.token}) / 0.2)` }}>

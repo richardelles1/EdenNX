@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SUITE as PRODUCTS, MARKS, type Product } from "@/lib/products";
+import { SUITE as PRODUCTS, MARKS, markStyle, type Product } from "@/lib/products";
 import { DETAIL, type Detail } from "@/lib/productDetail";
 
 
@@ -36,7 +36,7 @@ function Panel({ p, d }: { p: Product; d: Detail }) {
           <div className="aspect-[3/2] w-full" style={{ background: `hsl(var(${p.token}) / 0.07)` }} />
         )}
         {MARKS[p.name] ? (
-          <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="absolute right-4 top-4 h-14 w-14 object-contain md:h-16 md:w-16" />
+          <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="absolute right-4 top-4 object-contain" style={markStyle(p.name, 64)} />
         ) : (
           <span className="absolute right-4 top-4 flex h-14 w-14 items-center justify-center rounded-xl md:h-16 md:w-16" style={{ background: "rgba(255,255,255,0.82)", border: `1px solid hsl(var(${p.token}) / 0.2)` }}>
             <p.Icon className="h-7 w-7" strokeWidth={2.25} style={{ color: accent }} />

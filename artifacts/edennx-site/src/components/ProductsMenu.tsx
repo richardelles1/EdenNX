@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { SUITE, MARKS, type Product } from "@/lib/products";
+import { SUITE, MARKS, markStyle, type Product } from "@/lib/products";
 import { DETAIL } from "@/lib/productDetail";
 
 // The products mega-menu: a quiet list on the left, a preview of the selected
@@ -87,7 +87,7 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
           <div className="h-full w-full" style={{ background: `hsl(var(${p.token}) / 0.07)` }} />
         )}
         {MARKS[p.name] ? (
-          <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="absolute right-3 top-3 h-12 w-12 object-contain" />
+          <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="absolute right-3 top-3 object-contain" style={markStyle(p.name, 52)} />
         ) : null}
       </div>
 

@@ -78,6 +78,12 @@ export const BETA_PRODUCTS: Product[] = [
 
 export const SUITE: Product[] = [PRODUCTS[0], PRODUCTS[1], ...BETA_PRODUCTS, ...PRODUCTS.slice(2)];
 
+// Marks are cropped to their ink. The Radar mark is a wide dot arc, so it takes
+// a wider box to carry the same visual weight as the square marks.
+export function markStyle(name: string, size: number): { width: number | string; height: number | string } {
+  return name === "EdenRadar" ? { width: Math.round(size * 1.7), height: "auto" } : { width: size, height: size };
+}
+
 export const MARKS: Record<string, string> = {
   EdenRadar: "/images/marks/mark-radar.png",
   EdenCompliance: "/images/marks/mark-compliance.png",
