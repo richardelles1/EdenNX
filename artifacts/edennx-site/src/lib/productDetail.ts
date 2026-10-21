@@ -74,7 +74,7 @@ export const DETAIL: Record<string, Detail> = {
     title: "Trial registry records, with the change record kept",
     audience: "For teams that need to know what a registry said, and what it said before.",
     features: [
-      { label: "One vocabulary", desc: "570,000+ trial registry records, resolved into a single vocabulary." },
+      { label: "One vocabulary", desc: "Trial registry records from many registers, resolved into a single vocabulary." },
       { label: "The change record", desc: "A registry overwrites what it said yesterday. We keep the copies." },
       { label: "What changed, and when", desc: "Every change is recorded against the earlier copy, and tracked daily." },
       { label: "Coverage, stated", desc: "Coverage, not completeness: how complete each register is varies, and the product says so." },

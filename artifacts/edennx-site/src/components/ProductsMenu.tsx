@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { PRODUCTS, type Product } from "@/lib/products";
+import { SUITE, MARKS, type Product } from "@/lib/products";
 import { DETAIL } from "@/lib/productDetail";
 
 // The products mega-menu: a quiet list on the left, a preview of the selected
@@ -14,7 +14,7 @@ import { DETAIL } from "@/lib/productDetail";
 /* Every product now has a photograph, so the menu shows the same one the
    Products page does. Hovering a row previews exactly what you land on, and
    there is no special case for the products without a screenshot. */
-const ALL = PRODUCTS;
+const ALL = SUITE;
 
 function Row({
   p,
@@ -48,6 +48,14 @@ function Row({
   }`;
   const testid = `nav-product-${p.suffix.toLowerCase()}`;
 
+  if (p.beta) {
+    return (
+      <div className={cls} data-testid={testid} onMouseEnter={onSelect} onFocus={onSelect} tabIndex={0}>
+        {inner}
+        <span className="ml-auto rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider" style={{ background: `hsl(var(${p.token}) / 0.12)`, color: accent }}>Beta</span>
+      </div>
+    );
+  }
   return p.external ? (
     <a href={p.href} target="_blank" rel="noopener noreferrer" className={cls} data-testid={testid}
        onMouseEnter={onSelect} onFocus={onSelect} onClick={onNavigate}>{inner}</a>
@@ -64,6 +72,7 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
   return (
     <div className="flex h-full flex-col">
       <div className="relative h-[214px] overflow-hidden rounded-xl border border-border bg-muted">
+        {detail.photo ? (
         <img
           src={detail.photo}
           alt=""
@@ -74,6 +83,12 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
           className="h-full w-full"
           style={{ objectFit: "cover", objectPosition: "center" }}
         />
+        ) : (
+          <div className="h-full w-full" style={{ background: `hsl(var(${p.token}) / 0.07)` }} />
+        )}
+        {MARKS[p.name] ? (
+          <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="absolute right-3 top-3 h-12 w-12 object-contain" />
+        ) : null}
       </div>
 
       <p className="mt-4 text-[14px] leading-relaxed text-foreground/75">{p.tagline}</p>
@@ -87,7 +102,10 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
           <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate}
              className="font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
         )}
-        {!p.links?.length && !p.launch && (
+        {p.beta && (
+          <span className="font-semibold" style={{ color: accent }}>Beta, not open yet</span>
+        )}
+        {!p.links?.length && !p.launch && !p.beta && (
           <Link to={p.href} onClick={onNavigate} className="font-semibold hover:underline" style={{ color: accent }}>
             Learn more →
           </Link>

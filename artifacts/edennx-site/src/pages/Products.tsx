@@ -44,7 +44,7 @@ export default function Products() {
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground reveal" style={{ transitionDelay: "0.2s" }}>
           EdenNX is the parent company. EdenRadar tracks {ASSET_COUNT_LABEL} assets across {TTO_COUNT_LABEL}{" "}
           institutions for the teams doing biotech deals. EdenCompliance runs vendor qualification and audits for
-          regulated teams, on a record an inspector can read. EdenTrials holds 570,000+ trial registry records in one
+          regulated teams, on a record an inspector can read. EdenTrials holds trial registry records in one
           vocabulary and keeps the copies a registry overwrites. EdenBR, in Beta, tracks where a batch sits and leaves
           the release decision to people. EdenLab, EdenDiscovery, and EdenMarket are emerging.
         </p>

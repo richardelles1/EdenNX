@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Check, Eye } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
 import { MARKS } from "@/lib/products";
@@ -76,7 +76,7 @@ const PRODUCTS: Record<string, Product> = {
     headline: { pre: "A registry overwrites what it said yesterday. ", accent: "We keep the copies.", post: "" },
     sub: "So we can say what changed, and when. Trial registry records in one vocabulary, with changes tracked daily.",
     note: "Beta",
-    features: ["570,000+ trial registry records", "Changes tracked daily", "Coverage stated, not implied"],
+    features: ["Trial registry records, one vocabulary", "Changes tracked daily", "Coverage stated, not implied"],
     cta: { label: "In Beta", href: "", external: false },
   },
   br: {
@@ -344,18 +344,6 @@ function BigTile({ p }: { p: Product }) {
       <div className="relative z-10 p-8 lg:p-9">
         <div className="flex items-center justify-between gap-4">
           <Wordmark p={p} />
-          {/* Affordance: teaches the reveal, then gets out of the way. */}
-          <span
-            className="hidden flex-shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider transition-opacity duration-200 [@media(hover:hover)]:inline-flex"
-            style={{
-              background: "rgba(255,255,255,0.82)",
-              color: NOTE,
-              border: "1px solid rgba(15,26,20,0.08)",
-              opacity: revealed ? 0 : 1,
-            }}
-          >
-            <Eye className="h-3 w-3" strokeWidth={2.4} /> Preview
-          </span>
           <CornerMark p={p} />
         </div>
         <div className="mt-6"><Headline p={p} cls="text-[1.9rem] lg:text-[2.35rem] max-w-[16ch]" /></div>

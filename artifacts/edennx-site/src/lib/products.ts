@@ -17,6 +17,7 @@ export type Product = {
   external: boolean;   // true -> opens in a new tab
   links?: ProductLink[];               // per-product info pages (platforms)
   launch?: { label: string; href: string }; // open-the-app CTA (platforms)
+  beta?: boolean;      // Beta: listed, not linked
 };
 
 const meta = (name: string) => PORTAL_META[name] ?? PORTAL_META.EdenRadar;
@@ -26,6 +27,7 @@ const meta = (name: string) => PORTAL_META[name] ?? PORTAL_META.EdenRadar;
 // are listed (verified live): EdenRadar has no /features page, so it is omitted there.
 const ER = "https://edenradar.com";
 const EC = "https://edencompliance.com";
+const ET = "https://edentrials.com";
 const pages = (base: string, defs: [string, string][]): ProductLink[] => defs.map(([label, slug]) => ({ label, href: `${base}${slug}` }));
 
 export const PRODUCTS: Product[] = [
@@ -64,12 +66,13 @@ export const BETA_PRODUCTS: Product[] = [
   {
     name: "EdenTrials", suffix: "Trials", tagline: "Trial registry records in one vocabulary, with the change record kept.",
     token: meta("EdenTrials").token, Icon: meta("EdenTrials").Icon,
-    href: "/products#edentrials", external: false,
+    href: `${ET}/how-it-works`, external: true, launch: { label: "Launch EdenTrials", href: ET },
+    links: pages(ET, [["How it works", "/how-it-works"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
   },
   {
     name: "EdenBR", suffix: "BR", tagline: "Tracks where a batch sits. Never makes the release decision.",
     token: meta("EdenBR").token, Icon: meta("EdenBR").Icon,
-    href: "/products#edenbr", external: false,
+    href: "/products#edenbr", external: false, beta: true,
   },
 ];
 

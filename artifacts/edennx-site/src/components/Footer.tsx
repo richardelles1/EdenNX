@@ -7,6 +7,8 @@ const columns: { heading: string; links: { label: string; to?: string; href?: st
     links: [
       { label: "EdenRadar", to: "/products#edenradar" },
       { label: "EdenCompliance", to: "/products#edencompliance" },
+      { label: "EdenTrials", to: "/products#edentrials" },
+      { label: "EdenBR (Beta)" },
       { label: "EdenMarket", to: "/products#edenmarket" },
       { label: "EdenLab", to: "/products#edenlab" },
       { label: "EdenDiscovery", to: "/products#edendiscovery" },
@@ -100,6 +102,8 @@ export function Footer() {
                       >
                         {l.label}
                       </Link>
+                    ) : !l.href ? (
+                      <span className="text-sm text-muted-foreground">{l.label}</span>
                     ) : (
                       <a
                         href={l.href}
