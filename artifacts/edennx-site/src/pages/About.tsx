@@ -1,7 +1,7 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 const edenPrinciples = [
   {
@@ -115,7 +115,7 @@ export default function About() {
             {[
               {
                 t: "The data finally exists.",
-                d: `${TTO_COUNT_LABEL} institutions and ${ASSET_COUNT_LABEL} assets, scattered across hundreds of portals, patents, trials, and papers. The raw material for intelligence was already there. Nobody had assembled it.`,
+                d: `${ASSET_COUNT_LABEL} university assets, scattered across hundreds of portals, patents, trials, and papers. The raw material for intelligence was already there. Nobody had assembled it.`,
               },
               {
                 t: "AI can finally read it.",

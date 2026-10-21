@@ -3,14 +3,14 @@ import { Bell, Sparkles, Search, Plug, Boxes, Building2, Radar, Database, FileTe
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { PortalEyebrow, PortalShowcase } from "@/components/PortalBits";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The EDEN data pipeline — how raw sources become deal-ready intelligence.
 const pipeline: { icon: LucideIcon; title: string; desc: string }[] = [
   {
     icon: Radar,
     title: "Monitor",
-    desc: "Crawl 430+ tech transfer offices, government databases, and publication feeds, around the clock.",
+    desc: "Crawl university technology listings, government databases, and publication feeds, around the clock.",
   },
   {
     icon: Sparkles,
@@ -158,8 +158,8 @@ export default function Products() {
           className="text-lg text-muted-foreground max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.2s" }}
         >
-          EdenNX is the parent company. EdenRadar, tracking {ASSET_COUNT_LABEL} assets
-          across {TTO_COUNT_LABEL} institutions, anchors a connected biotech-intelligence
+          EdenNX is the parent company. EdenRadar, tracking {ASSET_COUNT_LABEL} university assets,
+          anchors a connected biotech-intelligence
           suite with the emerging EdenLab, EdenDiscovery, and EdenMarket. EdenCompliance
           is a separate full platform, managing vendor quality and audits for regulated
           teams. Different jobs; one team behind them.
@@ -216,7 +216,7 @@ export default function Products() {
               </p>
               <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[
-                  `Continuous monitoring of ${TTO_COUNT_LABEL} TTOs and government databases`,
+                  "Continuous monitoring of university technology listings and government databases",
                   "Instant email alerts for newly published assets matching your focus areas",
                   "EDEN Chat for natural language search across the full asset catalog",
                   "Asset Dossiers with competitive landscape, scientific claims, and patent coverage",

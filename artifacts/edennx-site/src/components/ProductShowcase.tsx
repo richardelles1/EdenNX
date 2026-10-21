@@ -34,7 +34,7 @@ import {
 } from "lucide-react";
 import { PORTAL_META } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as an asymmetric bento. Each card carries a slight wash
 // of its product's accent, presses in on hover like a button, and leads with a
@@ -66,11 +66,11 @@ const PRODUCTS: Record<string, Product> = {
   radar: {
     name: "EdenRadar", token: "--portal-radar",
     headline: { pre: "The next biotech breakthrough is ", accent: "already published.", post: "" },
-    sub: `Real-time monitoring across ${TTO_COUNT_LABEL} tech transfer offices means the right assets find you first.`,
+    sub: "EdenRadar reads the technology listings universities publish and turns each one into a structured asset record.",
     note: "From $1,999/mo",
     // Sourced from edenradar.com/how-it-works (HIW_STEPS in the EdenRadar repo).
     capabilities: [
-      { label: "Deepest TTO index", detail: `${TTO_COUNT_LABEL} offices, plus patents, trials, and literature`, Icon: Antenna },
+      { label: `${ASSET_COUNT_LABEL} university assets`, detail: "Patents, trials, and literature alongside", Icon: Antenna },
       { label: "Precision filters", detail: "6 development stages, 10 modalities, 32 biology categories", Icon: SlidersHorizontal },
       { label: "Fit scoring", detail: "Ranked against your buyer profile, not keyword match", Icon: Gauge },
       { label: "Asset dossiers", detail: "Commercial thesis, competitive position, IP and deal readiness", Icon: FileSearch },
@@ -188,7 +188,7 @@ const FRAMES: Record<string, Frame[]> = {
   EdenTrials: [{ img: "/images/shot-trials-1.jpg" }],
   EdenBR: [{ img: "/images/shot-br-1.jpg" }],
   EdenCompliance: [
-    { img: "/images/shot-compliance-1.jpg" },
+    { img: "/images/shot-compliance-2.jpg" },
     { node: <RecordLedger /> },
     { node: <VendorRegister /> },
   ],

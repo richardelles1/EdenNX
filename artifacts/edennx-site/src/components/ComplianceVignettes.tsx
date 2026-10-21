@@ -46,7 +46,7 @@ export function RecordLedger() {
       <div className={`flex items-start justify-between gap-3 border-b px-5 py-3.5 ${HAIR}`}>
         <div className="min-w-0">
           <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-[#e7cd91]">Controlled record</p>
-          <p className={`mt-1.5 text-[15px] font-semibold leading-tight ${T_HEAD}`}>Vertex Contract Labs</p>
+          <p className={`mt-1.5 text-[15px] font-semibold leading-tight ${T_HEAD}`}>Halden Contract Labs</p>
           <p className={`mt-0.5 truncate text-[11px] ${T_META}`}>Vendor qualification · ISO 13485</p>
         </div>
         <StatusPill tone="ok">Qualified</StatusPill>
@@ -59,7 +59,7 @@ export function RecordLedger() {
           </span>
           <div className="min-w-0">
             <p className={`text-[12px] font-medium ${T_HEAD}`}>Qualification approved</p>
-            <p className={`truncate text-[10px] ${T_META}`}>m.reyes@acmetherapeutics.com · re-authenticated</p>
+            <p className={`truncate text-[10px] ${T_META}`}>m.reyes@example.com · re-authenticated</p>
           </div>
           <span className="ml-auto shrink-0 rounded-md bg-[rgba(202,168,95,0.24)] px-1.5 py-0.5 font-mono text-[8.5px] font-semibold uppercase tracking-wider text-[#ecd39a]">
             Signed
