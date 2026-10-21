@@ -186,7 +186,7 @@ const FRAMES: Record<string, Frame[]> = {
   EdenTrials: [{ img: "/images/shot-trials-1.jpg" }, { img: "/images/shot-trials-2.jpg" }, { img: "/images/shot-trials-3.jpg" }],
   EdenBR: [{ img: "/images/shot-br-1.jpg" }, { img: "/images/shot-br-2.jpg" }],
   EdenCompliance: [
-    { img: "/images/shot-compliance-1.jpg" },
+    { img: "/images/shot-compliance-3.jpg" },
     { node: <RecordLedger /> },
     { node: <VendorRegister /> },
   ],
