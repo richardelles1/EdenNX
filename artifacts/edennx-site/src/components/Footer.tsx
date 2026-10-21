@@ -7,8 +7,6 @@ const columns: { heading: string; links: { label: string; to?: string; href?: st
     links: [
       { label: "EdenRadar", to: "/products#edenradar" },
       { label: "EdenCompliance", to: "/products#edencompliance" },
-      { label: "EdenTrials", to: "/products#edentrials" },
-      { label: "EdenBR", to: "/products#edenbr" },
       { label: "EdenMarket", to: "/products#edenmarket" },
       { label: "EdenLab", to: "/products#edenlab" },
       { label: "EdenDiscovery", to: "/products#edendiscovery" },
@@ -54,7 +52,7 @@ export function Footer() {
               The intelligence backbone of modern biotech, from earliest research hypothesis through
               commercial licensing and regulated quality.
             </p>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-5">
+            <div className="flex items-center gap-3 mt-5">
               <a
                 href="https://www.linkedin.com/company/edennx"
                 target="_blank"
@@ -69,7 +67,7 @@ export function Footer() {
                 href="https://edenradar.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="whitespace-nowrap text-sm font-semibold text-primary hover:underline"
+                className="text-sm font-semibold text-primary hover:underline"
                 data-testid="footer-edenradar"
               >
                 Launch EdenRadar
@@ -78,19 +76,10 @@ export function Footer() {
                 href="https://edencompliance.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="whitespace-nowrap text-sm font-semibold text-primary hover:underline"
+                className="text-sm font-semibold text-primary hover:underline"
                 data-testid="footer-edencompliance"
               >
                 Launch EdenCompliance
-              </a>
-              <a
-                href="https://edentrials.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="whitespace-nowrap text-sm font-semibold text-primary hover:underline"
-                data-testid="footer-launch-edentrials"
-              >
-                Launch EdenTrials
               </a>
             </div>
           </div>

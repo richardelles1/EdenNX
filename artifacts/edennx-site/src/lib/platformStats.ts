@@ -3,14 +3,16 @@
 // so the parent-company site and the product never drift. Update here when the
 // EdenRadar canon changes.
 //
-//   ASSET_COUNT_LABEL   rounded-down display for the live asset total
+//   TTO_COUNT_EXACT     latest exact reading of institutions monitored
+//   TTO_COUNT_LABEL     "430+" — display range (confirmed by Rich, 2026-08)
+//   ASSET_COUNT_LABEL   rounded-down display for the live asset total (~35,582)
 //   ASSET_COUNT_EXACT   most recent exact reading from the EdenRadar database
 //   DATA_SOURCE_LABEL   live data-source families feeding the pipeline
 
+export const TTO_COUNT_EXACT = 414;
+export const TTO_COUNT_LABEL = "430+";
 export const ASSET_COUNT_EXACT = 35582;
-// "34,000+": CLAIMS row 239 (Cooper, 18 Oct: 35,170, floor with margin). Never "35,000+".
-// No institution count is printed: "430+" was wrong and the figure is withdrawn.
-export const ASSET_COUNT_LABEL = "34,000+";
+export const ASSET_COUNT_LABEL = "35,000+";
 export const DATA_SOURCE_LABEL = "40+";
 
 // Marquee-ready institution credibility list, ordered by asset volume in the

@@ -3,14 +3,14 @@ import { Bell, Sparkles, Search, Plug, Boxes, Building2, Radar, Database, FileTe
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { PortalEyebrow, PortalShowcase } from "@/components/PortalBits";
-import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The EDEN data pipeline — how raw sources become deal-ready intelligence.
 const pipeline: { icon: LucideIcon; title: string; desc: string }[] = [
   {
     icon: Radar,
     title: "Monitor",
-    desc: "Crawl university technology listings, government databases, and publication feeds, around the clock.",
+    desc: "Crawl 430+ tech transfer offices, government databases, and publication feeds, around the clock.",
   },
   {
     icon: Sparkles,
@@ -137,7 +137,7 @@ export default function Products() {
   useSEO({
     title: "Products - The EdenNX platform",
     description:
-      "The EdenNX product suite: EdenRadar, EdenCompliance, EdenTrials, EdenBR (Beta), EdenLab, EdenDiscovery, and EdenMarket — purpose-built for every stakeholder across biotech intelligence, quality, and licensing.",
+      "The EdenNX product suite: EdenRadar, EdenCompliance, EdenLab, EdenDiscovery, and EdenMarket — purpose-built for every stakeholder across biotech intelligence, quality, and licensing.",
   });
 
   return (
@@ -152,17 +152,17 @@ export default function Products() {
           style={{ transitionDelay: "0.1s" }}
           data-testid="products-headline"
         >
-          Four products. Four different jobs.
+          Two full platforms. Purpose-built for every workflow.
         </h1>
         <p
           className="text-lg text-muted-foreground max-w-2xl leading-relaxed reveal"
           style={{ transitionDelay: "0.2s" }}
         >
-          EdenNX is the parent company. EdenRadar, tracking {ASSET_COUNT_LABEL} university assets,
-          anchors a connected biotech-intelligence suite with the emerging EdenLab, EdenDiscovery,
-          and EdenMarket. EdenTrials is a global clinical-trial record. EdenCompliance manages
-          vendor quality and audits for regulated teams, and EdenBR (Beta) tracks where every
-          batch sits. Different jobs; one team behind them.
+          EdenNX is the parent company. EdenRadar, tracking {ASSET_COUNT_LABEL} assets
+          across {TTO_COUNT_LABEL} institutions, anchors a connected biotech-intelligence
+          suite with the emerging EdenLab, EdenDiscovery, and EdenMarket. EdenCompliance
+          is a separate full platform, managing vendor quality and audits for regulated
+          teams. Different jobs; one team behind them.
         </p>
       </section>
 
@@ -172,8 +172,6 @@ export default function Products() {
           {[
             ["EdenRadar", "#edenradar"],
             ["EdenCompliance", "#edencompliance"],
-            ["EdenTrials", "#edentrials"],
-            ["EdenBR", "#edenbr"],
             ["EdenLab", "#edenlab"],
             ["EdenDiscovery", "#edendiscovery"],
             ["EdenMarket", "#edenmarket"],
@@ -216,7 +214,7 @@ export default function Products() {
               </p>
               <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
                 {[
-                  "Continuous monitoring of university technology listings and government databases",
+                  `Continuous monitoring of ${TTO_COUNT_LABEL} TTOs and government databases`,
                   "Instant email alerts for newly published assets matching your focus areas",
                   "EDEN Chat for natural language search across the full asset catalog",
                   "Asset Dossiers with competitive landscape, scientific claims, and patent coverage",
@@ -343,107 +341,6 @@ export default function Products() {
               </div>
             </div>
             <ControlledRecordPanel />
-          </div>
-        </div>
-      </section>
-
-      {/* EdenTrials */}
-      <section
-        id="edentrials"
-        className="border-t-4 py-20"
-        style={{ borderColor: "hsl(var(--portal-trials))", background: "hsl(var(--portal-trials) / 0.04)" }}
-        data-testid="product-section-edentrials"
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14 items-start">
-            <div>
-              <div className="mb-3 reveal">
-                <PortalEyebrow name="EdenTrials" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal" style={{ transitionDelay: "0.05s" }}>
-                Global clinical-trial record
-              </h2>
-              <p className="text-muted-foreground mb-6 reveal" style={{ transitionDelay: "0.1s" }}>
-                Every national registry resolved into one vocabulary. For: clinical development, competitive intelligence and BD teams.
-              </p>
-              <ul className="space-y-3 mb-8 reveal" style={{ transitionDelay: "0.15s" }}>
-                {[
-                  "560,000+ trial registry records from 244 countries and territories",
-                  "3,389+ identified companies matched to the trials they sponsor",
-                  "Search by area, country, compound or company",
-                  "Each observation kept, with what changed between one and the next recorded",
-                  "Standing watches on new and changed trials",
-                  "Eden, an assistant that answers from the records",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: "hsl(var(--portal-trials))" }} />
-                    {feat}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.2s" }}>
-                <a
-                  href="https://edentrials.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold text-white hover:opacity-90 transition-opacity"
-                  style={{ background: "hsl(var(--portal-trials))" }}
-                  data-testid="visit-edentrials"
-                >
-                  Visit EdenTrials →
-                </a>
-              </div>
-            </div>
-            <PortalShowcase
-              src="/images/shot-trials-1.jpg"
-              alt="EdenTrials homepage: tracked changes to studies, each showing the old and new value"
-              token="--portal-trials"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* EdenBR (Beta, no link) */}
-      <section
-        id="edenbr"
-        className="border-t-4 py-20"
-        style={{ borderColor: "hsl(var(--portal-br))", background: "hsl(var(--portal-br) / 0.04)" }}
-        data-testid="product-section-edenbr"
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-14 items-start lg:[&>*:last-child]:order-first">
-            <div>
-              <div className="mb-3 flex items-center gap-3 reveal">
-                <PortalEyebrow name="EdenBR" />
-                <span className="rounded-full px-2 py-0.5 text-[10.5px] font-bold uppercase tracking-wider" style={{ background: "hsl(var(--portal-br) / 0.12)", color: "hsl(var(--portal-br))" }}>Beta</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-2 reveal" style={{ transitionDelay: "0.05s" }}>
-                Batch-record tracking
-              </h2>
-              <p className="text-muted-foreground mb-6 reveal" style={{ transitionDelay: "0.1s" }}>
-                Batch-record tracking for QA teams: where every batch sits, and why it is waiting. It never makes or records the release decision; that stays with your quality unit. For: QA and manufacturing quality teams.
-              </p>
-              <ul className="space-y-3 mb-2 reveal" style={{ transitionDelay: "0.15s" }}>
-                {[
-                  "A Command Center board of every batch, by stage and urgency",
-                  "Needs-attention flags for aging, expiring and waiting-on-a-part batches",
-                  "Reviewer queue, schedule, tasks and alerts",
-                  "Quality events logged against the batch they affect",
-                  "History of who changed what, and when",
-                  "Reports you can export and print",
-                ].map((feat) => (
-                  <li key={feat} className="flex items-start gap-3 text-sm text-foreground/80">
-                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: "hsl(var(--portal-br))" }} />
-                    {feat}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <PortalShowcase
-              src="/images/shot-br-1.jpg"
-              alt="EdenBR Command Center: batches on a board by stage, with needs-attention flags"
-              token="--portal-br"
-            />
           </div>
         </div>
       </section>
