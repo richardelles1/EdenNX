@@ -11,9 +11,9 @@ import { ROUTE_META } from "@/lib/routeMeta";
 // mark's real height rather than mostly white padding.
 const MARK = "/images/eden-mark-hero.jpg";
 
-// The mission's photograph: patients and families, licensed, from Cleo. Empty
-// until it lands; the band shows a deep green field without it.
-const MISSION_PHOTO = "";
+// The mission's photograph: a mother and daughter (Pexels 6182919, chosen by
+// Rich; Pexels licence, free to use, no attribution required).
+const MISSION_PHOTO = "/images/mission-family.jpg";
 
 export default function Home() {
   useScrollReveal();
@@ -229,9 +229,26 @@ export default function Home() {
       <section className="px-4 pb-20 lg:px-6 lg:pb-28" data-testid="mission-panel">
         <div className="reveal relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px]" style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}>
           {MISSION_PHOTO && (
-            <img src={MISSION_PHOTO} alt="" aria-hidden decoding="async" loading="lazy" className="absolute inset-0 h-full w-full" style={{ objectFit: "cover", objectPosition: "70% 40%" }} />
+            <img
+              src={MISSION_PHOTO}
+              alt=""
+              aria-hidden
+              decoding="async"
+              loading="lazy"
+              // The right side of the band, fading in from the green so the
+              // photograph sits behind the statement rather than beside it.
+              className="absolute inset-y-0 right-0 h-full w-full lg:w-[64%]"
+              style={{
+                objectFit: "cover",
+                objectPosition: "60% 30%",
+                WebkitMaskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 30%, #000 70%)",
+                maskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 30%, #000 70%)",
+              }}
+            />
           )}
-          <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.86) 0%, rgba(8,20,14,0.62) 45%, rgba(8,20,14,0.12) 100%)" }} />
+          {/* Keeps the type legible where it crosses the photo, and gives the
+              photo a light green cast so it belongs to the band. */}
+          <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.7) 0%, rgba(8,20,14,0.35) 50%, rgba(20,60,38,0.18) 100%)" }} />
           <div className="relative flex min-h-[520px] flex-col justify-center px-8 py-16 sm:px-12 lg:min-h-[620px] lg:px-20">
             {/* The old version framed the mission entirely as the licensing gap,
                 which is EdenRadar's problem rather than the company's. This spans
