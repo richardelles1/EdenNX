@@ -205,7 +205,7 @@ function Stage() {
 
       {/* One stage, every product layered in it; the open one is shown. Each
           layer is in the page, so the stage never jumps in height. */}
-      <div className="grid self-start lg:sticky lg:top-32" aria-live="polite">
+      <div className="grid self-center" aria-live="polite">
         {FOUR.map((p) => {
           const on = open === p.name;
           const l = LOCKUP[p.name];
@@ -213,26 +213,38 @@ function Stage() {
             <div
               key={p.name}
               aria-hidden={!on}
-              className="col-start-1 row-start-1 border-t border-foreground/12 pt-8"
-              style={{ opacity: on ? 1 : 0, visibility: on ? "visible" : "hidden", transition: `opacity 0.4s ${EASE}, visibility 0.4s` }}
+              className="col-start-1 row-start-1 overflow-hidden rounded-[22px] border border-foreground/[0.08] bg-white shadow-[0_1px_2px_rgba(15,26,20,0.04),0_30px_60px_-30px_rgba(15,26,20,0.25)]"
+              style={{
+                opacity: on ? 1 : 0,
+                transform: on ? "none" : "translateY(6px)",
+                visibility: on ? "visible" : "hidden",
+                transition: `opacity 0.4s ${EASE}, transform 0.4s ${EASE}, visibility 0.4s`,
+              }}
             >
-              {/* Clean: no tinted box, the logo at a modest size, four
-                  capabilities and one way in. Kept shorter than the list beside
-                  it, so it stays in view the whole way down and never runs
-                  past the window at the bottom. */}
-              <div className="flex h-[120px] items-center">
-                <img src={l.src} alt={p.name} decoding="async" style={{ height: Math.round(l.h * 0.62), width: "auto" }} />
+              {/* Still: it sits centred against the list rather than following
+                  the scroll. The logo has its own band, faintly in the
+                  product's colour, so the card reads as that product's page. */}
+              <div className="flex h-[168px] items-center justify-center border-b border-foreground/[0.06]" style={{ background: `hsl(var(${p.token}) / 0.05)` }}>
+                <img src={l.src} alt={p.name} decoding="async" style={{ height: Math.round(l.h * 0.66), width: "auto" }} />
               </div>
-              <p className="mt-6 max-w-[46ch] text-[16px] leading-[1.6] text-foreground/75">{p.sub}</p>
-              <ul className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
-                {(p.capabilities ?? []).slice(0, 4).map((c) => (
-                  <li key={c.label}>
-                    <span className="block text-[14.5px] font-semibold text-foreground">{c.label}</span>
-                    <span className="mt-0.5 block text-[13.5px] leading-relaxed text-foreground/70">{c.detail}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 flex flex-wrap items-baseline gap-x-5 gap-y-2"><Cta p={p} /><Terms p={p} /></div>
+              <div className="p-9">
+                <p className="text-[16px] leading-[1.6] text-foreground/75">{p.sub}</p>
+                <ol className="mt-7 space-y-4">
+                  {(p.capabilities ?? []).slice(0, 4).map((c, k) => (
+                    <li key={c.label} className="grid grid-cols-[28px_1fr] gap-x-2">
+                      <span className="pt-0.5 font-mono text-[12px]" style={{ color: ink(p.goldToken ?? p.token) }}>{String(k + 1).padStart(2, "0")}</span>
+                      <span>
+                        <span className="block text-[15px] font-semibold text-foreground">{c.label}</span>
+                        <span className="mt-0.5 block text-[13.5px] leading-relaxed text-foreground/70">{c.detail}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+                <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-foreground/[0.07] pt-6">
+                  <Cta p={p} />
+                  <Terms p={p} />
+                </div>
+              </div>
             </div>
           );
         })}
