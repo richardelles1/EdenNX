@@ -20,7 +20,7 @@ function Features({ p }: { p: Product }) {
   const d = DETAIL[p.name];
   const accent = ink(p.goldToken ?? p.token);
   return (
-    <div className="grid gap-10 pb-14 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
+    <div className="grid gap-10 pb-12 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-14">
       <div className="lg:order-2">
         <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: `hsl(var(${p.token}) / 0.2)` }}>
           {d.photo ? (
@@ -35,7 +35,8 @@ function Features({ p }: { p: Product }) {
       <div className="lg:order-1">
         <p className="max-w-[48ch] text-[17px] leading-[1.6] text-foreground/75">{d.audience}</p>
         <dl className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2">
-          {d.features.map((f) => (
+          {/* Four, not six, so an open product leaves the others in view. */}
+          {d.features.slice(0, 4).map((f) => (
             <div key={f.label}>
               <div aria-hidden className="h-[2px] w-8 rounded-full" style={{ background: accent }} />
               <dt className="mt-3 text-[15px] font-semibold text-foreground">{f.label}</dt>

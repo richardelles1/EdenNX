@@ -13,7 +13,7 @@ import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 export type Feature = { label: string; desc: string };
 
 export type Detail = {
-  photo?: string; // Beta products have no photograph yet; the panel shows the mark instead
+  photo?: string; // without one, the panel shows the mark instead
   photoAlt?: string;
   title: string;
   audience: string;
@@ -71,6 +71,9 @@ export const DETAIL: Record<string, Detail> = {
   },
 
   EdenTrials: {
+    // The photograph from edentrials.com/login.
+    photo: "/images/photo-trials.jpg",
+    photoAlt: "",
     title: "Trial registry records, with the change record kept",
     audience: "For teams that need to know what a registry said, and what it said before.",
     // Six, like every panel: four from the claims register and two from the
@@ -90,6 +93,9 @@ export const DETAIL: Record<string, Detail> = {
   },
 
   EdenBR: {
+    // The photograph from EdenBR's login page.
+    photo: "/images/photo-br.jpg",
+    photoAlt: "",
     title: "Batch tracking that leaves the release decision to people",
     audience: "For manufacturing and quality teams that need to see where a batch sits.",
     features: [
