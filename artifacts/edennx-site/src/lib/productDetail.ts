@@ -56,7 +56,7 @@ export const DETAIL: Record<string, Detail> = {
 
   EdenCompliance: {
     photo: "/images/photo-compliance.jpg",
-    photoPosition: "50% 15%",
+    photoPosition: "50% 4%",
     photoAlt: "Two colleagues reviewing a document together by a window",
     title: "Vendor qualification and audit management",
     audience:
@@ -78,7 +78,7 @@ export const DETAIL: Record<string, Detail> = {
     // The photograph from edentrials.com/login.
     photo: "/images/photo-trials.jpg",
     photoAlt: "A smiling lab technician in a mask and hairnet holding a sample rack",
-    photoPosition: "50% 22%",
+    photoPosition: "50% 12%",
     title: "A live, global clinical trial network",
     audience: "Every trial the world is running, and everything attached to it.",
     // Six, like every panel, in edentrials.com's live wording (its hero and
@@ -120,6 +120,7 @@ export const DETAIL: Record<string, Detail> = {
   EdenMarket: {
     photo: "/images/photo-market.jpg",
     photoAlt: "Two people shaking hands over a laptop during a meeting",
+    photoPosition: "50% 0%",
     title: "Confidential deal marketplace",
     audience: "For TTOs, biotechs, and inventors meeting industry BD buyers, on terms the seller sets.",
     features: [
@@ -158,6 +159,7 @@ export const DETAIL: Record<string, Detail> = {
   EdenDiscovery: {
     photo: "/images/photo-discovery.jpg",
     photoAlt: "Three colleagues sketching an idea on a glass wall",
+    photoPosition: "50% 0%",
     title: "Concept registry and community",
     audience: "For early-stage innovators, concept creators, and independent researchers.",
     features: [

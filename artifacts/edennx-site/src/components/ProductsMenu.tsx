@@ -82,7 +82,7 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
              the panel empty on the first hover of each product. */
           decoding="async"
           className="h-full w-full"
-          style={{ objectFit: "cover", objectPosition: "center" }}
+          style={{ objectFit: "cover", objectPosition: detail.photoPosition ?? "center" }}
         />
         ) : (
           <div className="h-full w-full" style={{ background: `hsl(var(${p.token}) / 0.07)` }} />
