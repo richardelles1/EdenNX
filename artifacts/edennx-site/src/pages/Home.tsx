@@ -256,8 +256,10 @@ export default function Home() {
             {/* The old version framed the mission entirely as the licensing gap,
                 which is EdenRadar's problem rather than the company's. This spans
                 the lifecycle: discovery, then quality, then release. */}
-            <h2 className="max-w-[16ch] text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[3.5rem] xl:text-[4rem]">
-              Accelerate science to <span className="text-[#9fdcb4]">patient impact.</span>
+            <h2 className="max-w-[16ch] text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[clamp(2.4rem,3.6vw,4rem)]">
+              Accelerate science to{" "}
+              {/* One line, always (Rich): the phrase the statement lands on. */}
+              <span className="whitespace-nowrap text-[#9fdcb4]">patient impact.</span>
             </h2>
             <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.65] text-white/85 lg:text-[18px]">
               Discover smarter, qualify faster, and track every step across the biotech lifecycle.
