@@ -714,22 +714,32 @@ section[id] { scroll-margin-top: 8rem; }
 @media (prefers-reduced-motion: reduce) {
   .feat-plus { transition: none; }
 }
-/* Hover lights a line and the other closed lines step back (pointer devices). */
-@media (hover: hover) and (pointer: fine) {
-  .feat-list .stmt-row { transition: opacity 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
-  .feat-list:has(.stmt-row:hover) .stmt-row[aria-expanded="false"]:not(:hover) { opacity: 0.45; }
+/* Product rows (ShowcaseFeatures.tsx): text stays full strength. On hover a
+   light fill in the product's colour runs across the row, left to right. */
+.feat-row > .stmt-row { position: relative; isolation: isolate; }
+.feat-row > .stmt-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 -1.5rem;
+  z-index: -1;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
 }
+@media (hover: hover) and (pointer: fine) {
+  .feat-row > .stmt-row:hover::before { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) { .feat-row > .stmt-row::before { transition: none; } }
 
-/* Field notes (FieldNotes.tsx): cards sit a little off-square and straighten
-   and lift on hover. */
-.field-note {
-  transform: rotate(var(--tilt, 0deg));
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 18px 40px -20px rgba(0, 0, 0, 0.6);
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
+/* Post cards (FieldNotes.tsx): the text clamps to four lines like a feed's
+   "see more"; on hover the card lifts a little and its graphic settles. */
+.post-text { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.post-card { box-shadow: 0 1px 2px rgba(15, 26, 20, 0.04), 0 18px 40px -28px rgba(15, 26, 20, 0.3); transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.3s ease; }
+.post-image { transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
 @media (hover: hover) and (pointer: fine) {
-  .field-note:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 30px 60px -24px rgba(0, 0, 0, 0.7); }
-  .field-note:hover .cta-arrow { transform: translate(2px, -2px); }
+  .post-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 2px 4px rgba(15, 26, 20, 0.05), 0 28px 56px -28px rgba(15, 26, 20, 0.4); }
+  .post-card:hover .post-image { transform: scale(1.03); }
+  .post-card:hover .cta-arrow { transform: translate(2px, -2px); }
 }
-@media (max-width: 1023px) { .field-note { transform: none; } }
-@media (prefers-reduced-motion: reduce) { .field-note { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .post-card, .post-image { transition: none; } }

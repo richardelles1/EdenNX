@@ -91,9 +91,9 @@ export function ShowcaseFeatureDropdown() {
   };
   return (
     <div className="feat-list mx-auto max-w-7xl px-6 lg:px-8" data-testid="showcase-features">
-      {/* Opens on click or tap only. Hover only lights a line: it takes its
-          colour and the other closed lines step back, so the page never moves
-          unless the reader asks it to (Rich, after trying scroll-open). */}
+      {/* Opens on click or tap only, so the page never moves unless the reader
+          asks it to. Hover runs a light fill in the product's colour across the
+          line; text stays full strength (Rich). */}
       {FOUR.map((p) => {
         const on = open === p.name;
         const id = `feat-${p.name.toLowerCase()}`;

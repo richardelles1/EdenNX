@@ -1,75 +1,81 @@
 import { ArrowUpRight } from "lucide-react";
-import { PORTAL_META } from "@/components/PortalBits";
+import { PORTAL_META, ink } from "@/components/PortalBits";
 import { INSTAGRAM, LINKEDIN, SOCIAL_POSTS } from "@/lib/socialPosts";
 
-// The social feed, as field notes rather than a LinkedIn widget: a dark band
-// where each recent post is a dated card, stamped with the product it is about,
-// laid out a little off-square like notes pinned to a board. Hover squares a
-// card up and lifts it. No embed: embeds are slow, track visitors and look like
-// someone else's site. Data from socialPosts.ts.
+// The social feed: the actual posts, set as our own post cards rather than a
+// LinkedIn embed (embeds are slow, track visitors and look like someone else's
+// site). Each card is what the post is: who posted, when, its opening words,
+// its graphic, and the product it is about, linking out to read it whole.
+// Data from socialPosts.ts.
 
-const TILT = [-1.2, 0.8, -0.6, 1.1];
+function when(date: string) {
+  return new Date(`${date}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
 
-function stamp(date: string) {
-  const d = new Date(`${date}T12:00:00`);
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" }).toUpperCase();
+function LinkedInGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className="h-4 w-4" fill="currentColor">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
+    </svg>
+  );
 }
 
 export function FieldNotes() {
   return (
-    <section className="relative overflow-hidden" style={{ background: "#0f2219" }} data-testid="field-notes">
-      {/* Faint grid, the same ground as the hero, here in light on dark. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage: "radial-gradient(circle at center, rgba(255,255,255,0.07) 1px, transparent 1.5px)",
-          backgroundSize: "26px 26px",
-        }}
-      />
-      <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+    <section className="border-t border-foreground/10" data-testid="field-notes">
+      <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#8fd3a8]">From the field</p>
-            <h2 className="mt-4 font-display text-[2.4rem] italic leading-[1.05] text-white lg:text-[3.4rem]">
-              What we are seeing this week.
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">From the field</p>
+            <h2 className="mt-4 text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-foreground lg:text-[2.6rem]">
+              What we are posting this week.
             </h2>
           </div>
           <div className="flex gap-3">
-            <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-[14.5px] font-semibold text-[#0f2219] transition-opacity hover:opacity-90">
-              Follow on LinkedIn <ArrowUpRight className="h-4 w-4" />
+            <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-[14.5px] font-semibold text-primary-foreground transition-opacity hover:opacity-90">
+              <LinkedInGlyph /> Follow EdenNX
             </a>
-            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-white/30 px-5 py-2.5 text-[14.5px] font-semibold text-white transition-colors hover:border-white/70">
+            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 px-5 py-2.5 text-[14.5px] font-semibold text-primary transition-colors hover:border-primary hover:bg-primary/5">
               Instagram <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
         </div>
 
-        {/* A row on desktop; on a phone, a sideways swipe with each card snapping. */}
-        <ol className="-mx-6 mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
-          {SOCIAL_POSTS.slice(0, 4).map((post, i) => {
+        {/* A row of four on desktop; on a phone, a sideways swipe that snaps. */}
+        <ol className="-mx-6 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
+          {SOCIAL_POSTS.slice(0, 4).map((post) => {
             const meta = PORTAL_META[post.product];
-            const color = meta ? `hsl(var(${meta.token}))` : "#8fd3a8";
+            const color = meta ? ink(meta.token) : "hsl(var(--primary))";
             return (
-              <li key={post.date + post.title} className="w-[78%] flex-shrink-0 snap-start sm:w-[46%] lg:w-auto">
+              <li key={post.date + post.product} className="w-[82%] flex-shrink-0 snap-start sm:w-[46%] lg:w-auto">
                 <a
                   href={post.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="field-note group flex h-full min-h-[260px] flex-col rounded-[18px] bg-[#f6f3ea] p-6 text-[#13201a]"
-                  style={{ ["--tilt" as string]: `${TILT[i % TILT.length]}deg` }}
+                  className="post-card group flex h-full flex-col overflow-hidden rounded-[18px] border border-foreground/[0.08] bg-white"
+                  style={{ ["--accent" as string]: color }}
                 >
-                  <span className="flex items-center justify-between font-mono text-[12px] tracking-[0.12em] text-[#13201a]/60">
-                    <span>{stamp(post.date)}</span>
-                    <span className="flex items-center gap-1.5">
+                  {/* Who and when, as the post shows it. */}
+                  <span className="flex items-center gap-3 px-5 pt-5">
+                    <img src="/eden-mark.png" alt="" aria-hidden className="h-9 w-9 rounded-full border border-foreground/10 bg-white object-contain p-1" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[14px] font-semibold leading-tight text-foreground">EdenNX</span>
+                      <span className="block text-[12px] text-foreground/60">{when(post.date)} · LinkedIn</span>
+                    </span>
+                    <span className="text-[#0a66c2]"><LinkedInGlyph /></span>
+                  </span>
+                  <span className="post-text mt-4 block px-5 text-[14px] leading-[1.55] text-foreground/85">{post.text}</span>
+                  <span className="mx-5 mt-4 block overflow-hidden rounded-xl border border-foreground/[0.06]">
+                    <img src={post.image} alt={post.imageAlt} loading="lazy" decoding="async" className="post-image aspect-square w-full" style={{ objectFit: "cover", objectPosition: "top" }} />
+                  </span>
+                  <span className="mt-auto flex items-center justify-between px-5 py-4">
+                    <span className="flex items-center gap-1.5 text-[12.5px] font-semibold" style={{ color }}>
                       <span aria-hidden className="h-2 w-2 rounded-full" style={{ background: color }} />
                       {post.product}
                     </span>
-                  </span>
-                  <span className="mt-6 block font-display text-[1.7rem] leading-[1.1]">{post.title}</span>
-                  {post.line && <span className="mt-3 block text-[14.5px] leading-relaxed text-[#13201a]/70">{post.line}</span>}
-                  <span className="mt-auto flex items-center gap-1 pt-8 text-[13.5px] font-semibold text-[#13201a]/70 transition-colors group-hover:text-[#13201a]">
-                    Read on LinkedIn <ArrowUpRight className="cta-arrow h-4 w-4" />
+                    <span className="flex items-center gap-1 text-[13px] font-semibold text-foreground/70 transition-colors group-hover:text-foreground">
+                      Read the post <ArrowUpRight className="cta-arrow h-4 w-4" />
+                    </span>
                   </span>
                 </a>
               </li>
