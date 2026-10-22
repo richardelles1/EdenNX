@@ -28,7 +28,8 @@ function LinkedInGlyph({ cls = "h-4 w-4" }: { cls?: string }) {
 function PostCard({ post }: { post: SocialPost }) {
   const meta = PORTAL_META[post.product];
   const color = meta ? ink(meta.token) : "hsl(var(--primary))";
-  const mark = MARKS[post.product];
+  const nx = post.product === "EdenNX";
+  const mark = nx ? "/eden-mark.png" : MARKS[post.product];
   return (
     <a
       href={post.url}
@@ -39,20 +40,31 @@ function PostCard({ post }: { post: SocialPost }) {
     >
       <span className="flex items-center gap-3 px-5 pt-5">
         <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-white">
-          {mark ? <img src={mark} alt="" aria-hidden decoding="async" className="object-contain" style={markStyle(post.product, 26)} /> : null}
+          {mark ? <img src={mark} alt="" aria-hidden decoding="async" className="object-contain" style={nx ? { width: 24, height: 24 } : markStyle(post.product, 26)} /> : null}
         </span>
         <span className="min-w-0 flex-1">
           <span className="block text-[14.5px] font-semibold leading-tight text-foreground">
             Eden<span style={{ color }}>{post.product.slice(4)}</span>
           </span>
-          <span className="block text-[12px] text-foreground/60">by EdenNX · {when(post.date)}</span>
+          <span className="block text-[12px] text-foreground/60">{nx ? "LinkedIn" : "by EdenNX"} · {when(post.date)}</span>
         </span>
         <span className="text-[#0a66c2]"><LinkedInGlyph /></span>
       </span>
-      <span className="post-text mt-4 block px-5 text-[14.5px] leading-[1.55] text-foreground/85">{post.text}</span>
-      <span className="mx-5 mt-4 block overflow-hidden rounded-xl border border-foreground/[0.06]">
-        <img src={post.image} alt={post.imageAlt} loading="lazy" decoding="async" className="post-image aspect-square w-full" style={{ objectFit: "cover", objectPosition: "top" }} />
-      </span>
+      {post.image ? (
+        <>
+          <span className="post-text mt-4 block px-5 text-[14.5px] leading-[1.55] text-foreground/85">{post.text}</span>
+          <span className="mx-5 mt-4 block overflow-hidden rounded-xl border border-foreground/[0.06]">
+            <img src={post.image} alt={post.imageAlt ?? ""} loading="lazy" decoding="async" className="post-image aspect-square w-full" style={{ objectFit: "cover", objectPosition: "top" }} />
+          </span>
+        </>
+      ) : (
+        // No graphic held for this post: its words carry the card, set large
+        // on a field of the product's colour where the graphic would be.
+        <span className="mx-5 mt-4 flex aspect-[4/5] flex-col justify-end rounded-xl p-6" style={{ background: `color-mix(in srgb, ${color} 9%, white)` }}>
+          <span aria-hidden className="text-[3.5rem] font-bold leading-none" style={{ color }}>&ldquo;</span>
+          <span className="mt-2 block text-[1.3rem] font-semibold leading-[1.3] tracking-[-0.01em] text-foreground">{post.text}</span>
+        </span>
+      )}
       <span className="mt-auto flex items-center justify-end px-5 py-4">
         <span className="flex items-center gap-1 text-[13px] font-semibold text-foreground/70 transition-colors group-hover:text-foreground">
           Read the post <ArrowUpRight className="cta-arrow h-4 w-4" />
@@ -105,8 +117,8 @@ export function FieldNotes() {
       <div className="mx-auto max-w-7xl px-6 pb-20 lg:px-8 lg:pb-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <h2 className="text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-foreground lg:text-[2.6rem]">
-              What's moving at Eden.
+            <h2 className="text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-foreground lg:text-[2.2rem] xl:text-[2.6rem]">
+              What's moving in Eden's ecosystem.
             </h2>
           </div>
           <div className="flex flex-wrap items-center gap-3">

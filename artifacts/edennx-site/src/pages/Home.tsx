@@ -215,7 +215,7 @@ export default function Home() {
         {/* One line, not a list of the products: the rows below introduce
             each of them, so naming all four here said everything twice. */}
         <p className="text-lg text-foreground/75 reveal" style={{ transitionDelay: "0.05s" }}>
-          Four products, and three more emerging.
+          Four products, built to power the biotech ecosystem.
         </p>
       </section>
 
