@@ -30,7 +30,7 @@ function Panel({ p, d }: { p: Product; d: Detail }) {
              an empty frame on the first view of each product. */
           decoding="async"
           className="aspect-[3/2] w-full max-w-full"
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", objectPosition: d.photoPosition }}
         />
         ) : (
           /* Beta products have no photograph yet: a tinted field, same 3:2. */

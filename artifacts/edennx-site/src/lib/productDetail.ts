@@ -15,6 +15,9 @@ export type Feature = { label: string; desc: string };
 export type Detail = {
   photo?: string; // without one, the panel shows the mark instead
   photoAlt?: string;
+  // CSS object-position for the 3:2 crop; centre when absent. The EdenTrials
+  // photo is a 2:3 portrait, so a centred crop cut the face out.
+  photoPosition?: string;
   title: string;
   audience: string;
   features: Feature[]; // six where the claims register supports six
@@ -73,7 +76,8 @@ export const DETAIL: Record<string, Detail> = {
   EdenTrials: {
     // The photograph from edentrials.com/login.
     photo: "/images/photo-trials.jpg",
-    photoAlt: "",
+    photoAlt: "A smiling lab technician in a mask and hairnet holding a sample rack",
+    photoPosition: "50% 22%",
     title: "A live, global clinical trial network",
     audience: "Every trial the world is running, and everything attached to it.",
     // Six, like every panel, in edentrials.com's live wording (its hero and
@@ -96,7 +100,7 @@ export const DETAIL: Record<string, Detail> = {
   EdenBR: {
     // The photograph from EdenBR's login page.
     photo: "/images/photo-br.jpg",
-    photoAlt: "",
+    photoAlt: "Rows of blue batch-record binders on a shelf",
     title: "Batch tracking that leaves the release decision to people",
     audience: "For manufacturing and quality teams that need to see where a batch sits.",
     features: [

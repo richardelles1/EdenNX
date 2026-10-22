@@ -24,7 +24,7 @@ function Features({ p }: { p: Product }) {
       <div className="lg:order-2">
         <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: `hsl(var(${p.token}) / 0.2)` }}>
           {d.photo ? (
-            <img src={d.photo} alt={d.photoAlt} decoding="async" loading="lazy" className="aspect-[3/2] w-full" style={{ objectFit: "cover" }} />
+            <img src={d.photo} alt={d.photoAlt} decoding="async" loading="lazy" className="aspect-[3/2] w-full" style={{ objectFit: "cover", objectPosition: d.photoPosition }} />
           ) : (
             <div className="flex aspect-[3/2] w-full items-center justify-center" style={{ background: `hsl(var(${p.token}) / 0.07)` }}>
               <Mark p={p} size={96} />
