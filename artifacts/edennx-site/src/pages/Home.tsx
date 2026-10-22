@@ -14,12 +14,18 @@ const MARK = "/images/eden-mark-hero.jpg";
 // The mission's photograph: a mother and daughter (Pexels 6182919, chosen by
 // Rich; Pexels licence, free to use, no attribution required).
 const MISSION_PHOTO = "/images/mission-family.jpg";
+// Local comparison only (?mission=b): Cleo's photo B. Removed before the push.
+const MISSION_PHOTO_B = "/images/mission-hands.jpg";
 
 export default function Home() {
   useScrollReveal();
   // The mark drifts at a fifth of the scroll speed while the hero is on screen,
   // so it sits a layer behind the copy. Desktop with motion allowed only.
   const [drift, setDrift] = useState(0);
+  const [missionPhoto, setMissionPhoto] = useState(MISSION_PHOTO);
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("mission") === "b") setMissionPhoto(MISSION_PHOTO_B);
+  }, []);
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
     if (!mq.matches) return;
@@ -227,23 +233,23 @@ export default function Home() {
           scrim darkens the left, where the type sits, and lets the photo
           breathe on the right. */}
       <section className="px-4 pb-20 lg:px-6 lg:pb-28" data-testid="mission-panel">
-        <div className="reveal relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px]" style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}>
-          {MISSION_PHOTO && (
+        <div className="reveal relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px] [container-type:inline-size]" style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}>
+          {missionPhoto && (
             <img
-              src={MISSION_PHOTO}
+              src={missionPhoto}
               alt=""
               aria-hidden
               decoding="async"
               loading="lazy"
               // The right side of the band, fading in from the green so the
               // photograph sits behind the statement rather than beside it.
-              className="absolute inset-y-0 right-0 h-full w-full lg:w-[54%]"
+              className="absolute inset-y-0 right-0 h-full w-full lg:w-[48%]"
               style={{
                 objectFit: "cover",
-                // The photo only ever fills the right 54%, and the text column
-                // stops at 46%, so the faces never sit under the type at any
+                // The photo only ever fills the right 48%, and the text column
+                // stops at 58% (they meet inside the fade), so the faces never sit under the type at any
                 // width (Rich: the text was over the girl's face).
-                objectPosition: "45% 30%",
+                objectPosition: "40% 30%",
                 WebkitMaskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.6) 18%, #000 40%)",
                 maskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.6) 18%, #000 40%)",
               }}
@@ -252,14 +258,16 @@ export default function Home() {
           {/* Keeps the type legible where it crosses the photo, and gives the
               photo a light green cast so it belongs to the band. */}
           <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.7) 0%, rgba(8,20,14,0.35) 50%, rgba(20,60,38,0.18) 100%)" }} />
-          <div className="relative flex min-h-[520px] flex-col justify-center px-8 py-16 sm:px-12 lg:min-h-[620px] lg:w-[48%] lg:px-16 xl:px-20">
+          <div className="relative flex min-h-[520px] flex-col justify-center px-8 py-16 sm:px-12 lg:min-h-[660px] lg:w-[58%] lg:px-12 xl:px-16">
             {/* The old version framed the mission entirely as the licensing gap,
                 which is EdenRadar's problem rather than the company's. This spans
                 the lifecycle: discovery, then quality, then release. */}
-            <h2 className="max-w-[16ch] text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[clamp(2.4rem,3.6vw,4rem)]">
-              Accelerate science to{" "}
-              {/* One line, always (Rich): the phrase the statement lands on. */}
-              <span className="whitespace-nowrap text-[#9fdcb4]">patient impact.</span>
+            <h2 className="text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[clamp(2.6rem,calc(5.8cqw-12px),5.2rem)]">
+              {/* Two set lines; "patient impact." never breaks (Rich). */}
+              <span className="block">Accelerate science</span>
+              <span className="block">
+                to <span className="whitespace-nowrap text-[#9fdcb4]">patient impact.</span>
+              </span>
             </h2>
             <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.65] text-white/85 lg:text-[18px]">
               Discover smarter, qualify faster, and track every step across the biotech lifecycle.
