@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { FieldNotes } from "@/components/FieldNotes";
 import { ShowcaseFeatureDropdown } from "@/components/ShowcaseFeatures";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
@@ -11,6 +13,26 @@ const MARK = "/images/eden-mark-hero.jpg";
 
 export default function Home() {
   useScrollReveal();
+  // The mark drifts at a fifth of the scroll speed while the hero is on screen,
+  // so it sits a layer behind the copy. Desktop with motion allowed only.
+  const [drift, setDrift] = useState(0);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
+    if (!mq.matches) return;
+    let raf = 0;
+    const tick = () => {
+      raf = 0;
+      setDrift(Math.min(window.scrollY, window.innerHeight * 1.2) * 0.2);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
   useSEO(ROUTE_META["/"]);
 
   return (
@@ -53,7 +75,9 @@ export default function Home() {
              entrance keyframe instead of overriding it, centring the mark twice.
              The keyframe owns the vertical offset. */
           className="hero-mark hero-mark-in pointer-events-none absolute top-1/2 w-auto select-none"
-          style={{ objectFit: "contain", mixBlendMode: "multiply" }}
+          // translate, not transform: the entrance keyframe owns transform, and
+          // the two compose, so the scroll drift never fights the settle.
+          style={{ objectFit: "contain", mixBlendMode: "multiply", translate: `0 ${drift}px` }}
         />
 
         {/* The same fine data grid the product bento stands on, so the hero and
@@ -94,8 +118,15 @@ export default function Home() {
               data-testid="hero-wordmark"
               style={{ animationDelay: "0.1s" }}
             >
-              <span className="text-primary">Eden</span>
-              <span className="text-foreground">NX</span>
+              {/* Letters settle in sequence on arrival; the name reads whole to
+                  assistive tech through the label. */}
+              <span aria-label="EdenNX" role="img">
+                {"EdenNX".split("").map((ch, i) => (
+                  <span key={i} aria-hidden className={`hero-letter ${i < 4 ? "text-primary" : "text-foreground"}`} style={{ animationDelay: `${0.05 + i * 0.04}s` }}>
+                    {ch}
+                  </span>
+                ))}
+              </span>
             </div>
 
             {/* A full headline line of air between the name and the claim, so
@@ -144,10 +175,12 @@ export default function Home() {
               >
                 Our products <ArrowRight className="h-4 w-4" />
               </a>
+              {/* The secondary action is an outline, so "Our products" is the
+                  one the eye goes to. */}
               <Link
                 to="/contact"
                 data-testid="hero-cta-contact"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-[16px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-7 py-3.5 text-[16px] font-semibold text-primary transition-colors hover:border-primary hover:bg-primary/5"
               >
                 Contact us <ArrowRight className="h-4 w-4" />
               </Link>
@@ -210,6 +243,8 @@ export default function Home() {
           indexed-asset totals and the named universities. All of it is
           EdenRadar's, and on the parent site it made one product speak for the
           company. It belongs on edenradar.com, which already carries it. */}
+
+      <FieldNotes />
 
       {/* Bottom CTA */}
       <section className="bg-primary/5 border-t border-primary/10">
