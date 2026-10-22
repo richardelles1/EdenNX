@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Check, Eye } from "lucide-react";
-import { PORTAL_META } from "@/components/PortalBits";
+import { ArrowUpRight, Check } from "lucide-react";
+import { PORTAL_META, ink } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { MARKS, markStyle } from "@/lib/products";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as an asymmetric bento. Each card carries a slight wash
 // of its product's accent, presses in on hover like a button, and leads with a
@@ -16,9 +17,9 @@ import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
 // on touch, where a :hover state would stick. Nothing load-bearing lives behind
 // the hover: the tiles carry the meaning, the screenshot is the reward.
 
-type Capability = { label: string; detail: string };
+export type Capability = { label: string; detail: string };
 
-type Product = {
+export type Product = {
   name: string;
   token: string;
   goldToken?: string;
@@ -28,17 +29,18 @@ type Product = {
   features?: string[];
   capabilities?: Capability[];
   cta: { label: string; href: string; external: boolean };
+  beta?: boolean; // Beta: no link yet, the card is not clickable
 };
 
-const PRODUCTS: Record<string, Product> = {
+export const PRODUCTS: Record<string, Product> = {
   radar: {
     name: "EdenRadar", token: "--portal-radar",
     headline: { pre: "The next biotech breakthrough is ", accent: "already published.", post: "" },
-    sub: `Real-time monitoring across ${TTO_COUNT_LABEL} tech transfer offices means the right assets find you first.`,
-    note: "$499/seat/mo",
+    sub: "Real-time monitoring of university tech transfer offices means the right assets find you first.",
+    note: "From $299/seat/mo", // decision 0135
     // Sourced from edenradar.com/how-it-works (HIW_STEPS in the EdenRadar repo).
     capabilities: [
-      { label: "Deepest TTO index", detail: `${TTO_COUNT_LABEL} offices, plus patents, trials, and literature` },
+      { label: "Deepest TTO index", detail: `${ASSET_COUNT_LABEL} university assets, plus patents, trials, and literature` },
       { label: "Precision filters", detail: "6 development stages, 10 modalities, 32 biology categories" },
       { label: "Fit scoring", detail: "Ranked against your buyer profile, not keyword match" },
       { label: "Asset dossiers", detail: "Commercial thesis, competitive position, IP and deal readiness" },
@@ -68,6 +70,47 @@ const PRODUCTS: Record<string, Product> = {
       { label: "Electronic sign-off", detail: "Re-authenticate to approve a vendor or lock an audit" },
     ],
     cta: { label: "Explore EdenCompliance", href: "https://edencompliance.com", external: true },
+  },
+  trials: {
+    name: "EdenTrials", token: "--portal-trials",
+    // edentrials.com's own hero (client/src/pages/Landing.tsx in the EdenTrials repo).
+    headline: { pre: "A live, global ", accent: "clinical trial network.", post: "" },
+    sub: "Every trial the world is running, and everything attached to it.",
+    note: "$499/seat/mo", // Rich via Cleo, 22 Oct
+    // Sourced from the portal's own navigation and screen copy (PORTAL_NAV in
+    // the EdenTrials repo, client/src/components/portal/PortalShell.tsx).
+    capabilities: [
+      { label: "The Record", detail: "Everything that arrived, and everything that moved" },
+      { label: "Changes recorded", detail: "Every difference between one reading of a trial and the next" },
+      { label: "Alerts", detail: "Save the question, and a trial that fits later is caught" },
+      { label: "Search", detail: "Every captured field, by area, phase, status, country and registry" },
+      { label: "Registry", detail: "A page for every company, sponsor, molecule and country" },
+      { label: "Insights", detail: "The whole corpus counted, with a live board by term or filter" },
+      { label: "Ask Eden", detail: "Questions in words, answered from the corpus, trials cited" },
+      { label: "Report", detail: "Name a field once, then read it written up or cut it yourself" },
+    ],
+    cta: { label: "Explore EdenTrials", href: "https://edentrials.com", external: true },
+  },
+  br: {
+    name: "EdenBR", token: "--portal-br", beta: true,
+    headline: { pre: "Where a batch sits, ", accent: "never the release decision.", post: "" },
+    sub: "EdenBR tracks where a batch sits. The release decision stays with the people accountable for it.",
+    note: "Beta",
+    // Sourced from the app's own navigation (PINNED and NAV_GROUPS in the
+    // EdenBR repo, src/components/app/AppShell.tsx). Reviewer queue, schedule
+    // and tasks are views of the Command Center there, not screens, so they
+    // are not listed as separate capabilities.
+    capabilities: [
+      { label: "Command Center", detail: "A board of every batch and where it stands" },
+      { label: "Needs attention", detail: "What is waiting or overdue, surfaced first" },
+      { label: "Quality events", detail: "Quality events, on their own screen" },
+      { label: "Manufacturers and campaigns", detail: "Batches by manufacturer, campaign, product and component" },
+      { label: "History", detail: "A dated record of what happened to each batch" },
+      { label: "Reports and brief", detail: "Batch reports, and a monthly brief" },
+      { label: "Alerts", detail: "Every alert in one place" },
+      { label: "Eden AI", detail: "Narrates only what is in your records" },
+    ],
+    cta: { label: "In Beta", href: "", external: false },
   },
   market: {
     name: "EdenMarket", token: "--portal-market",
@@ -107,9 +150,9 @@ const NOTE = "#525c55";
 // screenshot plus designed vignettes, so its frames mix the two: the program
 // dashboard, then its own record and register vignettes, ported in
 // ComplianceVignettes.
-type Frame = { img: string } | { node: ReactNode };
+export type Frame = { img: string } | { node: ReactNode };
 
-const FRAMES: Record<string, Frame[]> = {
+export const FRAMES: Record<string, Frame[]> = {
   EdenRadar: [
     { img: "/images/shot-radar-1.jpg" },
     { img: "/images/shot-radar-2.jpg" },
@@ -125,7 +168,7 @@ const FRAMES: Record<string, Frame[]> = {
 // Shots are shown contained rather than cover-cropped, so a frame is never
 // sliced through a chart, a row, or a word. Each sits on the ground its own UI
 // uses, so the letterboxing reads as the app's own canvas rather than a gap.
-const SHOT_GROUND: Record<string, string> = {
+export const SHOT_GROUND: Record<string, string> = {
   EdenRadar: "#eef2f0",
   EdenCompliance: "#0b1a12",
 };
@@ -166,7 +209,9 @@ function CardLink({
   onEnter?: () => void;
   onLeave?: () => void;
 }) {
-  const cls = `group relative flex flex-col overflow-hidden rounded-[26px] ${PRESS} ${className}`;
+  const cls = `group relative flex scroll-mt-28 flex-col overflow-hidden rounded-[26px] ${PRESS} ${className}`;
+  // The anchor the footer, the products menu and the mobile menu link to.
+  const id = p.name.toLowerCase();
   // Focus mirrors hover so the reveal is reachable from the keyboard too.
   const handlers = {
     onMouseEnter: onEnter,
@@ -174,15 +219,18 @@ function CardLink({
     onFocus: onEnter,
     onBlur: onLeave,
   };
+  if (p.beta) {
+    return <div id={id} className={cls.replace(PRESS, "")} style={cardStyle(p)}>{children}</div>;
+  }
   return p.cta.external ? (
-    <a href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={cardStyle(p)} {...handlers}>{children}</a>
+    <a id={id} href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={cardStyle(p)} {...handlers}>{children}</a>
   ) : (
-    <Link to={p.cta.href} className={cls} style={cardStyle(p)} {...handlers}>{children}</Link>
+    <Link id={id} to={p.cta.href} className={cls} style={cardStyle(p)} {...handlers}>{children}</Link>
   );
 }
 
 function Wordmark({ p }: { p: Product }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
   const suffix = p.name.slice(4);
   return (
@@ -195,9 +243,25 @@ function Wordmark({ p }: { p: Product }) {
   );
 }
 
+// The product's mark at the card's top right, where the Preview pill sits.
+// Products with a transparent mark show it; the rest keep their existing icon.
+function CornerMark({ p }: { p: Product }) {
+  const [failed, setFailed] = useState(false);
+  const src = MARKS[p.name];
+  const accent = ink(p.token);
+  const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
+  if (src && !failed) {
+    return <img src={src} alt="" aria-hidden decoding="async" onError={() => setFailed(true)} className="flex-shrink-0 object-contain" style={markStyle(p.name, 56)} />;
+  }
+  return (
+    <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl" style={{ background: `hsl(var(${p.token}) / 0.12)`, border: `1px solid hsl(var(${p.token}) / 0.2)` }}>
+      <Icon className="h-6 w-6" strokeWidth={2.25} style={{ color: accent }} />
+    </span>
+  );
+}
+
 function Headline({ p, cls }: { p: Product; cls: string }) {
-  const accent = `hsl(var(${p.token}))`;
-  const headlineAccent = p.goldToken ? `hsl(var(${p.goldToken}))` : accent;
+  const headlineAccent = ink(p.goldToken ?? p.token);
   return (
     <h3 className={`text-balance font-black leading-[1.08] tracking-tight ${cls}`}>
       <span style={{ color: INK }}>{p.headline.pre}</span>
@@ -208,7 +272,14 @@ function Headline({ p, cls }: { p: Product; cls: string }) {
 }
 
 function CtaRow({ p }: { p: Product }) {
-  const headlineAccent = p.goldToken ? `hsl(var(${p.goldToken}))` : `hsl(var(${p.token}))`;
+  const headlineAccent = ink(p.goldToken ?? p.token);
+  if (p.beta) {
+    return (
+      <div className="mt-5 flex items-center gap-3">
+        <span className="rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider" style={{ background: `hsl(var(${p.token}) / 0.12)`, color: headlineAccent }}>Beta</span>
+      </div>
+    );
+  }
   return (
     <div className="mt-5 flex items-center gap-3">
       <span className="inline-flex items-center gap-1 text-[14px] font-semibold transition-[gap] group-hover:gap-2" style={{ color: headlineAccent }}>
@@ -250,7 +321,7 @@ function CapabilityTile({ p, c }: { p: Product; c: Capability }) {
 // screenshots and steps through them. Hover capability is checked at run time
 // rather than in CSS because the timer has to be started and stopped too; on
 // touch none of this arms, and the tiles simply stay.
-function useShotReveal(count: number) {
+export function useShotReveal(count: number) {
   const [revealed, setRevealed] = useState(false);
   const [index, setIndex] = useState(0);
   const openTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -266,6 +337,7 @@ function useShotReveal(count: number) {
   useEffect(() => stop, []);
 
   const onEnter = () => {
+    if (!count) return; // no screenshots to reveal: the tiles stay
     if (!window.matchMedia?.("(hover: hover)").matches) return;
     stop();
     openTimer.current = setTimeout(() => {
@@ -299,18 +371,7 @@ function BigTile({ p }: { p: Product }) {
       <div className="relative z-10 p-8 lg:p-9">
         <div className="flex items-center justify-between gap-4">
           <Wordmark p={p} />
-          {/* Affordance: teaches the reveal, then gets out of the way. */}
-          <span
-            className="hidden flex-shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider transition-opacity duration-200 [@media(hover:hover)]:inline-flex"
-            style={{
-              background: "rgba(255,255,255,0.82)",
-              color: NOTE,
-              border: "1px solid rgba(15,26,20,0.08)",
-              opacity: revealed ? 0 : 1,
-            }}
-          >
-            <Eye className="h-3 w-3" strokeWidth={2.4} /> Preview
-          </span>
+          <CornerMark p={p} />
         </div>
         <div className="mt-6"><Headline p={p} cls="text-[1.9rem] lg:text-[2.35rem] max-w-[16ch]" /></div>
         <p className="mt-4 max-w-[42ch] text-[16px] leading-relaxed" style={{ color: BODY }}>{p.sub}</p>
@@ -409,11 +470,14 @@ function BigTile({ p }: { p: Product }) {
 
 // Smaller product: leads with a feature checklist instead of a screenshot.
 function MiniTile({ p }: { p: Product }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   return (
     <CardLink p={p} className="min-h-[360px]">
       <div className="relative z-10 flex flex-1 flex-col p-7">
-        <Wordmark p={p} />
+        <div className="flex items-center justify-between gap-4">
+          <Wordmark p={p} />
+          <CornerMark p={p} />
+        </div>
         <div className="mt-5"><Headline p={p} cls="text-[1.4rem]" /></div>
         <p className="mt-3 max-w-[34ch] text-[14px] leading-relaxed" style={{ color: BODY }}>{p.sub}</p>
         <ul className="mt-5 space-y-2.5">
@@ -451,6 +515,10 @@ export function ProductShowcase() {
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
             <BigTile p={PRODUCTS.radar} />
             <BigTile p={PRODUCTS.compliance} />
+          </div>
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+            <BigTile p={PRODUCTS.trials} />
+            <BigTile p={PRODUCTS.br} />
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             <MiniTile p={PRODUCTS.market} />

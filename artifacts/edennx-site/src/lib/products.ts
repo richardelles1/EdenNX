@@ -17,6 +17,7 @@ export type Product = {
   external: boolean;   // true -> opens in a new tab
   links?: ProductLink[];               // per-product info pages (platforms)
   launch?: { label: string; href: string }; // open-the-app CTA (platforms)
+  beta?: boolean;      // Beta: listed, not linked
 };
 
 const meta = (name: string) => PORTAL_META[name] ?? PORTAL_META.EdenRadar;
@@ -26,11 +27,12 @@ const meta = (name: string) => PORTAL_META[name] ?? PORTAL_META.EdenRadar;
 // are listed (verified live): EdenRadar has no /features page, so it is omitted there.
 const ER = "https://edenradar.com";
 const EC = "https://edencompliance.com";
+const ET = "https://edentrials.com";
 const pages = (base: string, defs: [string, string][]): ProductLink[] => defs.map(([label, slug]) => ({ label, href: `${base}${slug}` }));
 
 export const PRODUCTS: Product[] = [
   {
-    name: "EdenRadar", suffix: "Radar", tagline: "Industry BD intelligence across 430+ tech transfer offices.",
+    name: "EdenRadar", suffix: "Radar", tagline: "Industry BD intelligence from university tech transfer offices.",
     token: meta("EdenRadar").token, Icon: meta("EdenRadar").Icon,
     href: `${ER}/how-it-works`, external: true, launch: { label: "Launch EdenRadar", href: ER },
     links: pages(ER, [["How it works", "/how-it-works"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
@@ -57,4 +59,35 @@ export const PRODUCTS: Product[] = [
     href: "/products#edendiscovery", external: false,
   },
 ];
+
+// EdenTrials and EdenBR (Beta, no link yet). SUITE below is the whole suite in
+// display order, and is what the menus, canvas and cards list.
+export const BETA_PRODUCTS: Product[] = [
+  {
+    name: "EdenTrials", suffix: "Trials", tagline: "A live, global clinical trial network.",
+    token: meta("EdenTrials").token, Icon: meta("EdenTrials").Icon,
+    href: `${ET}/how-it-works`, external: true, launch: { label: "Launch EdenTrials", href: ET },
+    links: pages(ET, [["How it works", "/how-it-works"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
+  },
+  {
+    name: "EdenBR", suffix: "BR", tagline: "Tracks where a batch sits. Never makes the release decision.",
+    token: meta("EdenBR").token, Icon: meta("EdenBR").Icon,
+    href: "/products#edenbr", external: false, beta: true,
+  },
+];
+
+export const SUITE: Product[] = [PRODUCTS[0], PRODUCTS[1], ...BETA_PRODUCTS, ...PRODUCTS.slice(2)];
+
+// Marks are cropped to their ink and square. The Radar mark is the dot globe from
+// the EdenRadar lockup, without the wordmark band.
+export function markStyle(_name: string, size: number): { width: number; height: number } {
+  return { width: size, height: size };
+}
+
+export const MARKS: Record<string, string> = {
+  EdenRadar: "/images/marks/mark-radar.svg",
+  EdenCompliance: "/images/marks/mark-compliance.png",
+  EdenTrials: "/images/marks/mark-trials.png", // the globe with the name through it (Rich)
+  EdenBR: "/images/marks/mark-br.png",
+};
 

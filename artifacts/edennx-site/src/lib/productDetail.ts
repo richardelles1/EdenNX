@@ -1,4 +1,4 @@
-import { TTO_COUNT_LABEL } from "@/lib/platformStats";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // One standardized record per product. Every product gets exactly the same
 // shape: a photograph, six capabilities, an access line, and links out. Nothing
@@ -13,11 +13,14 @@ import { TTO_COUNT_LABEL } from "@/lib/platformStats";
 export type Feature = { label: string; desc: string };
 
 export type Detail = {
-  photo: string;
-  photoAlt: string;
+  photo?: string; // without one, the panel shows the mark instead
+  photoAlt?: string;
+  // CSS object-position for the 3:2 crop; centre when absent. The EdenTrials
+  // photo is a 2:3 portrait, so a centred crop cut the face out.
+  photoPosition?: string;
   title: string;
   audience: string;
-  features: Feature[]; // always six
+  features: Feature[]; // six where the claims register supports six
   /** The headline commercial term, shown as a pill. */
   term: string;
   /** The qualifier beside it. Never restates the term. */
@@ -36,32 +39,33 @@ export const DETAIL: Record<string, Detail> = {
     audience:
       "For business development teams, licensing executives, pharma strategy divisions, and life science investors who need to know what is available before their competitors do.",
     features: [
-      { label: "The deepest index", desc: `${TTO_COUNT_LABEL} tech transfer offices, with patents, trials, and the literature alongside.` },
-      { label: "Precise filtering", desc: "Six development stages, ten modalities, and thirty-two biology categories." },
+      { label: "The deepest index", desc: `${ASSET_COUNT_LABEL} university assets, with patents, trials, and the literature alongside.` },
+      { label: "Fit scoring", desc: "Ranked against your buyer profile, not keyword match." },
       { label: "Scored dossiers", desc: "Commercial thesis, competitive position, IP and licensing, each traced to its evidence." },
-      { label: "Whitespace map", desc: "Asset density across every biology and modality, refreshed daily." },
-      { label: "Deal pipeline", desc: "Watching through In Discussion, in board, grid, and export views." },
       { label: "Standing alerts", desc: "Real-time, daily, or weekly on new matches, stage changes, and licensing updates." },
+      { label: "Precise filtering", desc: "Six development stages, ten modalities, and thirty-two biology categories." },
+      { label: "Whitespace map", desc: "Asset density across every biology and modality, refreshed daily." },
     ],
     // Per-seat as of this revision. edenradar.com still publishes the older
     // tiered pricing ($1,999 for one seat, $8,999 for five); it is being
     // corrected there separately, so the two sites disagree until it lands.
-    term: "$499/seat/mo",
+    term: "From $299/seat/mo", // decision 0135; $499 is EdenTrials'
     note: "Every paid plan starts with a 3-day free trial.",
     primary: { label: "Launch EdenRadar", href: ER },
   },
 
   EdenCompliance: {
     photo: "/images/photo-compliance.jpg",
+    photoPosition: "50% 4%",
     photoAlt: "Two colleagues reviewing a document together by a window",
     title: "Vendor qualification and audit management",
     audience:
-      "For QA and compliance leaders in pharma, biotech, medical device, and food and beverage who need the rigor of an eQMS without the year of configuration.",
+      "For quality and compliance teams who qualify vendors and run the audit program.",
     features: [
       { label: "Vendor register", desc: "Type, service, location, risk tier, and qualification status, colour-coded on one sortable list." },
       { label: "Audit program", desc: "Risk-based scheduling, with findings logged and classified by severity." },
       { label: "Vendor portal", desc: "A private link with no account to create, and uploads read and filed automatically." },
-      { label: "Controlled record", desc: "Append-only and hash-chained, with every entry SHA-256 sealed." },
+      { label: "Controlled record", desc: "Append-only, hash-chained, and signed off by re-authentication." },
       { label: "Electronic sign-off", desc: "Re-authenticated signatures on every qualification and audit closure." },
       { label: "Regulation Watch", desc: "FDA and MHRA recall and enforcement actions matched to your vendors, checked daily." },
     ],
@@ -70,9 +74,54 @@ export const DETAIL: Record<string, Detail> = {
     primary: { label: "Open EdenCompliance", href: EC },
   },
 
+  EdenTrials: {
+    // The photograph from edentrials.com/login.
+    photo: "/images/photo-trials.jpg",
+    photoAlt: "A smiling lab technician in a mask and hairnet holding a sample rack",
+    photoPosition: "50% 12%",
+    title: "A live, global clinical trial network",
+    audience: "Every trial the world is running, and everything attached to it.",
+    // Six, like every panel, in edentrials.com's live wording (its hero and
+    // meta description), the claims register, and the portal's own screens.
+    // Tex measured 215 (ceiling 219) on 21 Oct 2026 and gives "210+" as the
+    // safe wording, matching edentrials.com.
+    features: [
+      { label: "National registries", desc: "National clinical trial registries from around the world, read on a schedule." },
+      { label: "210+ countries and territories", desc: "Coverage, not completeness: how complete each register is varies." },
+      { label: "One vocabulary", desc: "Trial registry records from many registers, resolved into a single vocabulary." },
+      { label: "Every version kept", desc: "Every version of every record kept." },
+      { label: "Alerts", desc: "Save the question once. A trial registered later that fits it is caught." },
+      { label: "Ask Eden", desc: "Ask the record in words. Every answer cites the trials it used." },
+    ],
+    term: "$499/seat/mo", // Rich via Cleo, 22 Oct
+    note: "Sign up at edentrials.com.",
+    primary: { label: "Visit EdenTrials", href: "https://edentrials.com" },
+  },
+
+  EdenBR: {
+    // The photograph from EdenBR's login page.
+    photo: "/images/photo-br.jpg",
+    photoAlt: "Rows of blue batch-record binders on a shelf",
+    title: "Batch tracking that leaves the release decision to people",
+    audience: "For manufacturing and quality teams that need to see where every batch sits, and why it is waiting.",
+    // Cleo's final lines, 22 Oct 2026.
+    features: [
+      { label: "Command Center", desc: "A board of every batch and where it stands, with what needs attention first." },
+      { label: "Why it is waiting", desc: "The reason a batch has not moved, shown next to the batch." },
+      { label: "Quality events", desc: "On their own screen, beside the batches they touch." },
+      { label: "The decision stays human", desc: "The release decision stays with your quality unit. EdenBR never makes or records it." },
+      { label: "Tracks where every batch sits", desc: "The position of each batch, at a glance." },
+      { label: "History", desc: "A dated record of what happened to each batch." },
+    ],
+    term: "Beta",
+    note: "Not open for sign-up yet.",
+    primary: { label: "", href: "" },
+  },
+
   EdenMarket: {
     photo: "/images/photo-market.jpg",
     photoAlt: "Two people shaking hands over a laptop during a meeting",
+    photoPosition: "50% 0%",
     title: "Confidential deal marketplace",
     audience: "For TTOs, biotechs, and inventors meeting industry BD buyers, on terms the seller sets.",
     features: [
@@ -111,6 +160,7 @@ export const DETAIL: Record<string, Detail> = {
   EdenDiscovery: {
     photo: "/images/photo-discovery.jpg",
     photoAlt: "Three colleagues sketching an idea on a glass wall",
+    photoPosition: "50% 0%",
     title: "Concept registry and community",
     audience: "For early-stage innovators, concept creators, and independent researchers.",
     features: [

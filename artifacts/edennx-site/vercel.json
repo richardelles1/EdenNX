@@ -1,3 +1,4 @@
 {
+  "redirects": [{ "source": "/team", "destination": "/about#people", "permanent": true }],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

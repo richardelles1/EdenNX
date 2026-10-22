@@ -237,7 +237,7 @@ export default function About() {
                     {f.quote}
                     <span aria-hidden className="ml-0.5 font-bold text-primary">&rdquo;</span>
                   </p>
-                  <footer className="mt-3 text-[12.5px] font-semibold text-foreground/45">
+                  <footer className="mt-3 text-[12.5px] font-semibold text-foreground/65">
                     {f.name.split(",")[0]}
                   </footer>
                 </blockquote>

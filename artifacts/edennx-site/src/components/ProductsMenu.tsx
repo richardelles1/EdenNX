@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { PRODUCTS, type Product } from "@/lib/products";
+import { SUITE, MARKS, markStyle, type Product } from "@/lib/products";
 import { DETAIL } from "@/lib/productDetail";
+import { ink } from "@/components/PortalBits";
 
 // The products mega-menu: a quiet list on the left, a preview of the selected
 // product on the right. Hovering or focusing a row swaps the preview.
@@ -14,7 +15,7 @@ import { DETAIL } from "@/lib/productDetail";
 /* Every product now has a photograph, so the menu shows the same one the
    Products page does. Hovering a row previews exactly what you land on, and
    there is no special case for the products without a screenshot. */
-const ALL = PRODUCTS;
+const ALL = SUITE;
 
 function Row({
   p,
@@ -27,7 +28,7 @@ function Row({
   onSelect: () => void;
   onNavigate: () => void;
 }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   const inner = (
     <>
       <span
@@ -35,7 +36,12 @@ function Row({
         className="absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-r-full transition-opacity"
         style={{ background: accent, opacity: selected ? 1 : 0 }}
       />
-      <p.Icon className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
+      {/* Brand-kit mark where we hold one; the line icon for the emerging three. */}
+      {MARKS[p.name] ? (
+        <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="flex-shrink-0 object-contain" style={markStyle(p.name, 22)} />
+      ) : (
+        <p.Icon className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
+      )}
       <span className="text-[14.5px] font-semibold tracking-tight">
         <span className="text-foreground">Eden</span>
         <span style={{ color: accent }}>{p.suffix}</span>
@@ -48,6 +54,14 @@ function Row({
   }`;
   const testid = `nav-product-${p.suffix.toLowerCase()}`;
 
+  if (p.beta) {
+    return (
+      <div className={cls} data-testid={testid} onMouseEnter={onSelect} onFocus={onSelect} tabIndex={0}>
+        {inner}
+        <span className="ml-auto rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider" style={{ background: `hsl(var(${p.token}) / 0.12)`, color: accent }}>Beta</span>
+      </div>
+    );
+  }
   return p.external ? (
     <a href={p.href} target="_blank" rel="noopener noreferrer" className={cls} data-testid={testid}
        onMouseEnter={onSelect} onFocus={onSelect} onClick={onNavigate}>{inner}</a>
@@ -58,12 +72,13 @@ function Row({
 }
 
 function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   const detail = DETAIL[p.name];
 
   return (
     <div className="flex h-full flex-col">
       <div className="relative h-[214px] overflow-hidden rounded-xl border border-border bg-muted">
+        {detail.photo ? (
         <img
           src={detail.photo}
           alt=""
@@ -72,8 +87,14 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
              the panel empty on the first hover of each product. */
           decoding="async"
           className="h-full w-full"
-          style={{ objectFit: "cover", objectPosition: "center" }}
+          style={{ objectFit: "cover", objectPosition: detail.photoPosition ?? "center" }}
         />
+        ) : (
+          <div className="h-full w-full" style={{ background: `hsl(var(${p.token}) / 0.07)` }} />
+        )}
+        {MARKS[p.name] ? (
+          <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="absolute right-3 top-3 object-contain" style={markStyle(p.name, 52)} />
+        ) : null}
       </div>
 
       <p className="mt-4 text-[14px] leading-relaxed text-foreground/75">{p.tagline}</p>
@@ -87,7 +108,10 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
           <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate}
              className="font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
         )}
-        {!p.links?.length && !p.launch && (
+        {p.beta && (
+          <span className="font-semibold" style={{ color: accent }}>Beta, not open yet</span>
+        )}
+        {!p.links?.length && !p.launch && !p.beta && (
           <Link to={p.href} onClick={onNavigate} className="font-semibold hover:underline" style={{ color: accent }}>
             Learn more →
           </Link>
@@ -99,7 +123,7 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
 
 function GroupLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="px-4 pb-1.5 pt-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-foreground/40">
+    <p className="px-4 pb-1.5 pt-1 font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground/65">
       {children}
     </p>
   );
@@ -114,7 +138,7 @@ export function ProductsMenu({ onNavigate }: { onNavigate: () => void }) {
   // panel while its image fetches. The cost lands on opening the menu, not on
   // page load, since this component only mounts when the menu is open.
   useEffect(() => {
-    for (const d of Object.values(DETAIL)) new Image().src = d.photo;
+    for (const d of Object.values(DETAIL)) if (d.photo) new Image().src = d.photo;
   }, []);
 
   return (

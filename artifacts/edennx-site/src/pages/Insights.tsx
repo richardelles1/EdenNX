@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { PORTAL_META } from "@/components/PortalBits";
+import { PORTAL_META, ink } from "@/components/PortalBits";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
@@ -27,7 +27,7 @@ const SOURCES: InsightSource[] = ["EdenRadar", "EdenCompliance"];
 function accentOf(source: InsightSource) {
   const meta = PORTAL_META[source] ?? PORTAL_META.EdenRadar;
   const token = source === "EdenCompliance" ? "--portal-compliance-gold" : meta.token;
-  return { accent: `hsl(var(${token}))`, token, Icon: meta.Icon };
+  return { accent: ink(token), token, Icon: meta.Icon };
 }
 
 
@@ -67,7 +67,7 @@ function FeedRow({ post }: { post: Insight }) {
           <span className="mt-1.5 block text-[13.5px] leading-relaxed text-foreground/65">
             {post.lede}
           </span>
-          <span className="mt-2.5 block font-mono text-[10.5px] uppercase tracking-[0.14em] text-foreground/40">
+          <span className="mt-2.5 block font-mono text-[12px] uppercase tracking-[0.14em] text-foreground/65">
             {formatDate(post.date)} · {post.readTime}
           </span>
         </span>
@@ -130,7 +130,7 @@ export default function Insights() {
                     <span className="text-foreground">Eden</span>
                     <span style={{ color: accent }}>{source.slice(4)}</span>
                   </h2>
-                  <span className="ml-auto font-mono text-[11px] uppercase tracking-wider text-foreground/40">
+                  <span className="ml-auto font-mono text-[12px] uppercase tracking-wider text-foreground/65">
                     {posts.length} {posts.length === 1 ? "piece" : "pieces"}
                   </span>
                 </div>

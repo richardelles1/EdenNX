@@ -1,17 +1,43 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { ProductShowcase } from "@/components/ProductShowcase";
+import { FieldNotes } from "@/components/FieldNotes";
+import { ShowcaseFeatureDropdown } from "@/components/ShowcaseFeatures";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
-import { TTO_COUNT_LABEL, ASSET_COUNT_LABEL } from "@/lib/platformStats";
+import { ASSET_COUNT_LABEL, TRIAL_RECORD_LABEL } from "@/lib/platformStats";
 
 // The mark, cropped tight to its artwork so a height percentage means the
 // mark's real height rather than mostly white padding.
 const MARK = "/images/eden-mark-hero.jpg";
 
+// The mission's photograph: a mother and daughter (Pexels 6182919, chosen by
+// Rich; Pexels licence, free to use, no attribution required).
+const MISSION_PHOTO = "/images/mission-family.jpg";
+
 export default function Home() {
   useScrollReveal();
+  // The mark drifts at a fifth of the scroll speed while the hero is on screen,
+  // so it sits a layer behind the copy. Desktop with motion allowed only.
+  const [drift, setDrift] = useState(0);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
+    if (!mq.matches) return;
+    let raf = 0;
+    const tick = () => {
+      raf = 0;
+      setDrift(Math.min(window.scrollY, window.innerHeight * 1.2) * 0.2);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
   useSEO(ROUTE_META["/"]);
 
   return (
@@ -54,7 +80,9 @@ export default function Home() {
              entrance keyframe instead of overriding it, centring the mark twice.
              The keyframe owns the vertical offset. */
           className="hero-mark hero-mark-in pointer-events-none absolute top-1/2 w-auto select-none"
-          style={{ objectFit: "contain", mixBlendMode: "multiply" }}
+          // translate, not transform: the entrance keyframe owns transform, and
+          // the two compose, so the scroll drift never fights the settle.
+          style={{ objectFit: "contain", mixBlendMode: "multiply", translate: `0 ${drift}px` }}
         />
 
         {/* The same fine data grid the product bento stands on, so the hero and
@@ -95,8 +123,15 @@ export default function Home() {
               data-testid="hero-wordmark"
               style={{ animationDelay: "0.1s" }}
             >
-              <span className="text-primary">Eden</span>
-              <span className="text-foreground">NX</span>
+              {/* Letters settle in sequence on arrival; the name reads whole to
+                  assistive tech through the label. */}
+              <span aria-label="EdenNX" role="img">
+                {"EdenNX".split("").map((ch, i) => (
+                  <span key={i} aria-hidden className={`hero-letter ${i < 4 ? "text-primary" : "text-foreground"}`} style={{ animationDelay: `${0.05 + i * 0.04}s` }}>
+                    {ch}
+                  </span>
+                ))}
+              </span>
             </div>
 
             {/* A full headline line of air between the name and the claim, so
@@ -125,10 +160,11 @@ export default function Home() {
               data-testid="hero-subheadline"
               style={{ animationDelay: "0.38s" }}
             >
-              Transforming <span className="font-semibold text-primary">discovery</span>, elevating{" "}
-              <span className="font-semibold text-primary">quality</span>, and delivering end-to-end{" "}
-              <span className="font-semibold text-primary">visibility</span> through intelligent
-              tracking.
+              {/* Cleo, 22 Oct: what the suite holds, in figures that are floors
+                  (platformStats), rather than three verbs. */}
+              <span className="font-semibold text-primary">{ASSET_COUNT_LABEL}</span> university assets,{" "}
+              <span className="font-semibold text-primary">{TRIAL_RECORD_LABEL}</span> trial registry records, and
+              vendor audits on <span className="font-semibold text-primary">one controlled record</span>.
             </p>
 
             {/* Two actions, weighted rather than matched: the primary carries
@@ -141,14 +177,16 @@ export default function Home() {
               <a
                 href="#suite"
                 data-testid="hero-cta-products"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-[16px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3.5 text-[16px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90 sm:px-7"
               >
                 Our products <ArrowRight className="h-4 w-4" />
               </a>
+              {/* The secondary action is an outline, so "Our products" is the
+                  one the eye goes to. */}
               <Link
                 to="/contact"
                 data-testid="hero-cta-contact"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-[16px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-5 py-3.5 sm:px-7 text-[16px] font-semibold text-primary transition-colors hover:border-primary hover:bg-primary/5"
               >
                 Contact us <ArrowRight className="h-4 w-4" />
               </Link>
@@ -166,45 +204,67 @@ export default function Home() {
       >
         {/* "Backbone" belongs to the hero now, so this heading leads with the
             problem instead of repeating the metaphor, and the body picks up the
-            hero's three beats to show how the five products deliver them. */}
-        <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-5 reveal">
+            hero's three beats to show how the products deliver them. */}
+        <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-4 reveal">
           Built for every step that slows science down.
         </h2>
-        <p
-          className="text-lg text-foreground/80 max-w-2xl leading-relaxed reveal"
-          style={{ transitionDelay: "0.05s" }}
-        >
-          Find the science. Prove the quality. Move it to market. Each product owns a
-          different stretch of the same road, and one company builds all five.
+        {/* One line, not a list of the products: the rows below introduce
+            each of them, so naming all four here said everything twice. */}
+        <p className="text-lg text-foreground/75 reveal" style={{ transitionDelay: "0.05s" }}>
+          For the work between discovery and the clinic.
         </p>
       </section>
 
-      <ProductShowcase />
+      <section className="pb-12 lg:pb-16" data-testid="product-showcase">
+        <ShowcaseFeatureDropdown />
+      </section>
 
-      {/* Mission — light emerald tinted panel */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20">
-        <div
-          className="rounded-2xl border border-primary/20 p-10 md:p-14 reveal"
-          data-testid="mission-panel"
-          style={{
-            background:
-              "linear-gradient(135deg, hsl(142 52% 36% / 0.06) 0%, hsl(142 52% 36% / 0.10) 100%)",
-          }}
-        >
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
-            Our Mission
-          </p>
-          {/* The old version framed the mission entirely as the licensing gap,
-              which is EdenRadar's problem rather than the company's. This spans
-              the lifecycle: discovery, then quality, then release. */}
-          <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug max-w-3xl mb-6">
-            Accelerate science to patient impact.
-          </p>
-          <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
-            Discover smarter, qualify faster, and track every step across the biotech lifecycle.
-            From opportunities across {TTO_COUNT_LABEL} tech transfer offices, to audit-ready vendor
-            management, to release into clinic and market. Every stakeholder, every stage.
-          </p>
+      {/* Mission, as the page's one full-bleed moment, with no eyebrow label:
+          the statement says what it is. It is the section's heading (h2).
+          The photograph is of patients and families, who are who it is for. Until the
+          licensed photo lands (Cleo, MISSION_PHOTO), a deep green field. The
+          scrim darkens the left, where the type sits, and lets the photo
+          breathe on the right. */}
+      <section className="px-4 pb-20 lg:px-6 lg:pb-28" data-testid="mission-panel">
+        <div className="reveal relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px] [container-type:inline-size]" style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}>
+          {MISSION_PHOTO && (
+            <img
+              src={MISSION_PHOTO}
+              alt=""
+              aria-hidden
+              decoding="async"
+              loading="lazy"
+              // The right side of the band, fading in from the green so the
+              // photograph sits behind the statement rather than beside it.
+              className="mission-photo relative block aspect-[4/3] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:h-full lg:w-[48%]"
+              style={{
+                objectFit: "cover",
+                // The photo only ever fills the right 48%, and the text column
+                // stops at 58% (they meet inside the fade), so the faces never sit under the type at any
+                // width (Rich: the text was over the girl's face).
+                objectPosition: "62% 30%",
+              }}
+            />
+          )}
+          {/* Keeps the type legible where it crosses the photo, and gives the
+              photo a light green cast so it belongs to the band. */}
+          <div aria-hidden className="absolute inset-0 hidden lg:block" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.7) 0%, rgba(8,20,14,0.35) 50%, rgba(20,60,38,0.18) 100%)" }} />
+          <div className="relative flex flex-col justify-center px-8 py-12 sm:px-12 lg:py-16 lg:min-h-[660px] lg:w-[58%] lg:px-12 xl:px-16">
+            {/* The old version framed the mission entirely as the licensing gap,
+                which is EdenRadar's problem rather than the company's. This spans
+                the lifecycle: discovery, then quality, then release. */}
+            <h2 className="text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[clamp(3rem,calc(7cqw-14px),6rem)]">
+              {/* Three set lines (Rich). */}
+              <span className="block">Accelerate</span>
+              <span className="block">science to</span>
+              <span className="block whitespace-nowrap text-[#9fdcb4]">patient impact.</span>
+            </h2>
+            <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.65] text-white/85 lg:text-[18px]">
+              Discover smarter, qualify faster, and track every step across the biotech lifecycle.
+              From opportunities at university tech transfer offices, to audit-ready vendor
+              management, to release into clinic and market. Every stakeholder, every stage.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -213,36 +273,32 @@ export default function Home() {
           EdenRadar's, and on the parent site it made one product speak for the
           company. It belongs on edenradar.com, which already carries it. */}
 
-      {/* Bottom CTA */}
-      <section className="bg-primary/5 border-t border-primary/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 text-center">
-          {/* One action, and not a product launch. This used to read "Start with
-              the flagship that fits your team" over two buttons, which made two
-              of the products stand in for the company on the last thing anyone
-              reads. Sending people to us keeps the parent site introducing the
-              suite rather than routing traffic to one half of it. */}
-          <h2
-            className="text-2xl md:text-3xl font-bold text-foreground mb-3 reveal"
-            data-testid="bottom-cta-headline"
-          >
+      <FieldNotes />
+
+      {/* Bottom CTA. It closes the page in the mission band's green and at
+          its width, so the last thing on the page has the weight of the
+          statement rather than fading out on a pale strip. One action, and
+          not a product launch: sending people to us keeps the parent site
+          introducing the suite rather than routing to one half of it. */}
+      <section className="px-4 pb-20 lg:px-6 lg:pb-28">
+        <div
+          className="reveal relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px] px-8 py-16 text-center sm:px-12 lg:py-24"
+          style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}
+        >
+          <h2 className="text-[2.2rem] font-bold leading-[1.05] tracking-[-0.03em] text-white lg:text-[3.4rem]" data-testid="bottom-cta-headline">
             Tell us what you are working on.
           </h2>
-          <p
-            className="mx-auto mb-7 max-w-xl text-base leading-relaxed text-foreground/70 reveal"
-            style={{ transitionDelay: "0.05s" }}
-          >
+          <p className="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-white/80">
             We will direct you to the right product across the suite, or build toward the one you
             need.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 reveal" style={{ transitionDelay: "0.1s" }}>
-            <Link
-              to="/contact"
-              data-testid="bottom-cta-contact"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
-            >
-              Contact us <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <Link
+            to="/contact"
+            data-testid="bottom-cta-contact"
+            className="mt-9 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-base font-semibold text-[#14352a] transition-opacity hover:opacity-90"
+          >
+            Contact us <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
     </div>

@@ -21,8 +21,15 @@ export function AppShell() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <ScrollToTop />
+      {/* First tab stop: past the navigation, straight to the page. */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-primary focus:px-5 focus:py-2.5 focus:text-[15px] focus:font-semibold focus:text-primary-foreground focus:shadow-lg"
+      >
+        Skip to content
+      </a>
       <Navbar />
-      <main className="flex-1">
+      <main id="main" tabIndex={-1} className="flex-1 outline-none">
         {/* key on pathname remounts the page so the fade replays on navigation */}
         <div key={location.pathname} className="page-fade">
           <Routes location={location}>

@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { ProductsMenu } from "@/components/ProductsMenu";
-import { PRODUCTS, type Product } from "@/lib/products";
+import { SUITE, MARKS, markStyle, type Product } from "@/lib/products";
+import { ink } from "@/components/PortalBits";
 
 const otherLinks = [
   { href: "/insights", label: "Insights" },
@@ -23,22 +24,28 @@ function ProductRow({
   onNavigate: () => void;
   compact?: boolean;
 }) {
-  const accent = `hsl(var(${p.token}))`;
+  const accent = ink(p.token);
   const testid = `nav-product-${p.suffix.toLowerCase()}`;
 
   const heading = (
     <>
-      <span
-        className="flex flex-shrink-0 items-center justify-center rounded-xl"
-        style={{
-          background: `hsl(var(${p.token}) / 0.12)`,
-          border: `1px solid hsl(var(${p.token}) / 0.18)`,
-          height: compact ? 32 : 38,
-          width: compact ? 32 : 38,
-        }}
-      >
-        <p.Icon className={compact ? "h-4 w-4" : "h-[18px] w-[18px]"} strokeWidth={2.25} style={{ color: accent }} />
-      </span>
+      {/* The product's brand-kit mark where we hold one; the line icon only
+          for the emerging products, until their kit marks land (Cleo). */}
+      {MARKS[p.name] ? (
+        <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="flex-shrink-0 object-contain" style={markStyle(p.name, compact ? 30 : 34)} />
+      ) : (
+        <span
+          className="flex flex-shrink-0 items-center justify-center rounded-xl"
+          style={{
+            background: `hsl(var(${p.token}) / 0.12)`,
+            border: `1px solid hsl(var(${p.token}) / 0.18)`,
+            height: compact ? 32 : 38,
+            width: compact ? 32 : 38,
+          }}
+        >
+          <p.Icon className={compact ? "h-4 w-4" : "h-[18px] w-[18px]"} strokeWidth={2.25} style={{ color: accent }} />
+        </span>
+      )}
       <span className="min-w-0">
         <span className={`block font-bold tracking-tight leading-none ${compact ? "text-[14px]" : "text-[15.5px]"}`}>
           <span className="text-foreground">Eden</span>
@@ -51,7 +58,13 @@ function ProductRow({
     </>
   );
 
-  const headLink = p.external ? (
+  // Beta: listed, not linked, with its status where a link would be.
+  const headLink = p.beta ? (
+    <div className="flex items-start gap-3" data-testid={testid}>
+      {heading}
+      <span className="ml-auto flex-shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider" style={{ background: `hsl(var(${p.token}) / 0.12)`, color: accent }}>Beta</span>
+    </div>
+  ) : p.external ? (
     <a href={p.href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-3" onClick={onNavigate} data-testid={testid}>{heading}</a>
   ) : (
     <Link to={p.href} className="flex items-start gap-3" onClick={onNavigate} data-testid={testid}>{heading}</Link>
@@ -75,8 +88,7 @@ function ProductRow({
           ))}
           {p.launch && (
             <>
-              <span className="text-foreground/25" aria-hidden>·</span>
-              <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
+              <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="basis-full py-1 font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
             </>
           )}
         </div>
@@ -96,6 +108,13 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const closeTimer = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -202,7 +221,7 @@ export function Navbar() {
             </div>
 
             <button
-              className="md:hidden p-2 rounded-md text-foreground/70 hover:text-foreground hover:bg-muted transition-colors"
+              className="md:hidden flex h-11 w-11 items-center justify-center rounded-md text-foreground/70 hover:text-foreground hover:bg-muted transition-colors"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
@@ -223,8 +242,8 @@ export function Navbar() {
             <div className="px-4 py-4 flex flex-col gap-1">
               {/* One list, matching the desktop menu: each row carries its own
                   status instead of being filed under a roadmap heading. */}
-              <p className="px-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-foreground/40">The suite</p>
-              {PRODUCTS.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setMenuOpen(false)} />)}
+              <p className="px-2 pb-1 text-[12px] font-semibold uppercase tracking-wider text-foreground/65">The suite</p>
+              {SUITE.map((p) => <ProductRow key={p.name} p={p} onNavigate={() => setMenuOpen(false)} />)}
               <Link to="/products" className="mt-1 rounded-lg px-2.5 py-2 text-sm font-semibold text-primary" onClick={() => setMenuOpen(false)}>Compare the full suite →</Link>
               <div className="my-1 border-t border-border" />
               {otherLinks.map((link) => (

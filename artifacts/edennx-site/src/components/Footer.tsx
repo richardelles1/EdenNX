@@ -7,6 +7,8 @@ const columns: { heading: string; links: { label: string; to?: string; href?: st
     links: [
       { label: "EdenRadar", to: "/products#edenradar" },
       { label: "EdenCompliance", to: "/products#edencompliance" },
+      { label: "EdenTrials", to: "/products#edentrials" },
+      { label: "EdenBR (Beta)" },
       { label: "EdenMarket", to: "/products#edenmarket" },
       { label: "EdenLab", to: "/products#edenlab" },
       { label: "EdenDiscovery", to: "/products#edendiscovery" },
@@ -51,7 +53,7 @@ export function Footer() {
               The intelligence backbone of modern biotech, from the first research hypothesis
               through qualification, quality and release.
             </p>
-            <div className="flex items-center gap-3 mt-5">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-5">
               <a
                 href="https://www.linkedin.com/company/edennx"
                 target="_blank"
@@ -66,7 +68,7 @@ export function Footer() {
                 href="https://edenradar.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-primary hover:underline"
+                className="inline-block py-0.5 text-sm font-semibold text-primary hover:underline"
                 data-testid="footer-edenradar"
               >
                 Launch EdenRadar
@@ -75,10 +77,19 @@ export function Footer() {
                 href="https://edencompliance.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-primary hover:underline"
+                className="inline-block py-0.5 text-sm font-semibold text-primary hover:underline"
                 data-testid="footer-edencompliance"
               >
                 Launch EdenCompliance
+              </a>
+              <a
+                href="https://edentrials.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block py-0.5 text-sm font-semibold text-primary hover:underline"
+                data-testid="footer-edentrials"
+              >
+                Launch EdenTrials
               </a>
             </div>
           </div>
@@ -86,7 +97,7 @@ export function Footer() {
           {/* Link columns */}
           {columns.map((col) => (
             <div key={col.heading}>
-              <p className="text-xs font-semibold tracking-widest uppercase text-foreground/50 mb-4">
+              <p className="text-xs font-semibold tracking-widest uppercase text-foreground/65 mb-4">
                 {col.heading}
               </p>
               <ul className="space-y-2.5">
@@ -95,17 +106,19 @@ export function Footer() {
                     {l.to ? (
                       <Link
                         to={l.to}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="inline-block py-0.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
                         data-testid={`footer-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
                       >
                         {l.label}
                       </Link>
+                    ) : !l.href ? (
+                      <span className="text-sm text-muted-foreground">{l.label}</span>
                     ) : (
                       <a
                         href={l.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="inline-block py-0.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
                       >
                         {l.label}
                       </a>
