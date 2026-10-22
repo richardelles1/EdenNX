@@ -4,7 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { ink } from "@/components/PortalBits";
 import { FRAMES, type Product } from "@/components/ProductShowcase";
 import { Cta, Headline, Mark, Name, Terms } from "@/components/ProductCards";
-import { FOUR, LOCKUP } from "@/components/HomeShowcase";
+import { FOUR, LOCKUP, ShowcaseStatements } from "@/components/HomeShowcase";
 
 // Three dressed-up versions of the Statements proposal Rich picked. Same idea in
 // each: every product is one line of display type, its headline, and one line is
@@ -162,10 +162,21 @@ export function StatementsLedger() {
 
 /* ---------------------------------- Stage --------------------------------- */
 
+// Desktop only; below lg there is no room beside the list, so phones and
+// tablets get the original Statements.
 export function StatementsStage() {
+  return (
+    <>
+      <div className="lg:hidden"><ShowcaseStatements /></div>
+      <div className="hidden lg:block"><Stage /></div>
+    </>
+  );
+}
+
+function Stage() {
   const [open, setOpen] = useState<string>(FOUR[0].name);
   return (
-    <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:px-8" data-testid="statements-stage">
+    <div className="mx-auto grid max-w-7xl grid-cols-[1.1fr_1fr] gap-16 px-8" data-testid="statements-stage">
       <div>
         {FOUR.map((p) => {
           const on = open === p.name;
@@ -194,7 +205,7 @@ export function StatementsStage() {
 
       {/* One stage, every product layered in it; the open one is shown. Each
           layer is in the page, so the stage never jumps in height. */}
-      <div className="grid self-start lg:sticky lg:top-28" aria-live="polite">
+      <div className="grid self-start lg:sticky lg:top-32" aria-live="polite">
         {FOUR.map((p) => {
           const on = open === p.name;
           const l = LOCKUP[p.name];
@@ -202,20 +213,26 @@ export function StatementsStage() {
             <div
               key={p.name}
               aria-hidden={!on}
-              className="col-start-1 row-start-1 rounded-2xl p-8 lg:p-10"
-              style={{
-                background: `hsl(var(${p.token}) / 0.05)`,
-                opacity: on ? 1 : 0,
-                visibility: on ? "visible" : "hidden",
-                transition: `opacity 0.4s ${EASE}, visibility 0.4s`,
-              }}
+              className="col-start-1 row-start-1 border-t border-foreground/12 pt-8"
+              style={{ opacity: on ? 1 : 0, visibility: on ? "visible" : "hidden", transition: `opacity 0.4s ${EASE}, visibility 0.4s` }}
             >
-              <div className="flex h-[200px] items-center justify-center">
-                <img src={l.src} alt={p.name} decoding="async" style={{ height: l.h, width: "auto" }} />
+              {/* Clean: no tinted box, the logo at a modest size, four
+                  capabilities and one way in. Kept shorter than the list beside
+                  it, so it stays in view the whole way down and never runs
+                  past the window at the bottom. */}
+              <div className="flex h-[120px] items-center">
+                <img src={l.src} alt={p.name} decoding="async" style={{ height: Math.round(l.h * 0.62), width: "auto" }} />
               </div>
-              <p className="mt-6 text-[16px] leading-[1.6] text-foreground/75">{p.sub}</p>
-              <div className="mt-5"><CapList p={p} cols="sm:grid-cols-2" /></div>
-              <div className="mt-6 flex flex-wrap items-baseline gap-x-5 gap-y-2"><Cta p={p} /><Terms p={p} /></div>
+              <p className="mt-6 max-w-[46ch] text-[16px] leading-[1.6] text-foreground/75">{p.sub}</p>
+              <ul className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                {(p.capabilities ?? []).slice(0, 4).map((c) => (
+                  <li key={c.label}>
+                    <span className="block text-[14.5px] font-semibold text-foreground">{c.label}</span>
+                    <span className="mt-0.5 block text-[13.5px] leading-relaxed text-foreground/70">{c.detail}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex flex-wrap items-baseline gap-x-5 gap-y-2"><Cta p={p} /><Terms p={p} /></div>
             </div>
           );
         })}
