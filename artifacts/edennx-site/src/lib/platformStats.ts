@@ -14,6 +14,9 @@ export const TTO_COUNT_EXACT = 414;
 export const TTO_COUNT_LABEL = "430+";
 export const ASSET_COUNT_EXACT = 35582;
 export const ASSET_COUNT_LABEL = "34,000+";
+// EdenTrials registry records, display floor per CLAIMS.md rows 157/170. Say
+// "registry records", never "trials".
+export const TRIAL_RECORD_LABEL = "560,000+";
 export const DATA_SOURCE_LABEL = "40+";
 
 // Marquee-ready institution credibility list, ordered by asset volume in the

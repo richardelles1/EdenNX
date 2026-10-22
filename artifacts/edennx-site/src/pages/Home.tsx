@@ -6,6 +6,7 @@ import { ShowcaseFeatureDropdown } from "@/components/ShowcaseFeatures";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
+import { ASSET_COUNT_LABEL, TRIAL_RECORD_LABEL } from "@/lib/platformStats";
 
 // The mark, cropped tight to its artwork so a height percentage means the
 // mark's real height rather than mostly white padding.
@@ -14,18 +15,12 @@ const MARK = "/images/eden-mark-hero.jpg";
 // The mission's photograph: a mother and daughter (Pexels 6182919, chosen by
 // Rich; Pexels licence, free to use, no attribution required).
 const MISSION_PHOTO = "/images/mission-family.jpg";
-// Local comparison only (?mission=b): Cleo's photo B. Removed before the push.
-const MISSION_PHOTO_B = "/images/mission-hands.jpg";
 
 export default function Home() {
   useScrollReveal();
   // The mark drifts at a fifth of the scroll speed while the hero is on screen,
   // so it sits a layer behind the copy. Desktop with motion allowed only.
   const [drift, setDrift] = useState(0);
-  const [missionPhoto, setMissionPhoto] = useState(MISSION_PHOTO);
-  useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("mission") === "b") setMissionPhoto(MISSION_PHOTO_B);
-  }, []);
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
     if (!mq.matches) return;
@@ -165,10 +160,11 @@ export default function Home() {
               data-testid="hero-subheadline"
               style={{ animationDelay: "0.38s" }}
             >
-              Transforming <span className="font-semibold text-primary">discovery</span>, elevating{" "}
-              <span className="font-semibold text-primary">quality</span>, and delivering end-to-end{" "}
-              <span className="font-semibold text-primary">visibility</span> through intelligent
-              tracking.
+              {/* Cleo, 22 Oct: what the suite holds, in figures that are floors
+                  (platformStats), rather than three verbs. */}
+              <span className="font-semibold text-primary">{ASSET_COUNT_LABEL}</span> university assets,{" "}
+              <span className="font-semibold text-primary">{TRIAL_RECORD_LABEL}</span> trial registry records, and
+              vendor audits on <span className="font-semibold text-primary">one controlled record</span>.
             </p>
 
             {/* Two actions, weighted rather than matched: the primary carries
@@ -215,7 +211,7 @@ export default function Home() {
         {/* One line, not a list of the products: the rows below introduce
             each of them, so naming all four here said everything twice. */}
         <p className="text-lg text-foreground/75 reveal" style={{ transitionDelay: "0.05s" }}>
-          Four products, built to power the biotech ecosystem.
+          Four products for the work between discovery and the clinic.
         </p>
       </section>
 
@@ -231,9 +227,9 @@ export default function Home() {
           breathe on the right. */}
       <section className="px-4 pb-20 lg:px-6 lg:pb-28" data-testid="mission-panel">
         <div className="reveal relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px] [container-type:inline-size]" style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}>
-          {missionPhoto && (
+          {MISSION_PHOTO && (
             <img
-              src={missionPhoto}
+              src={MISSION_PHOTO}
               alt=""
               aria-hidden
               decoding="async"

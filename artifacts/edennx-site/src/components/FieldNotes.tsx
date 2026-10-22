@@ -118,7 +118,7 @@ export function FieldNotes() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <h2 className="text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-foreground lg:text-[2.2rem] xl:text-[2.6rem]">
-              What's moving in Eden's ecosystem.
+              What's moving at EdenNX.
             </h2>
           </div>
           <div className="flex flex-wrap items-center gap-3">
