@@ -68,7 +68,7 @@ function Features({ p, on }: { p: Product; on: boolean }) {
 // The full logos where the name is part of the artwork (Rich): EdenRadar's name
 // over its dot globe, and EdenTrials' globe with the name through it. The
 // others keep the mark beside the name.
-const FULL: Record<string, { src: string; h: number }> = {
+export const FULL: Record<string, { src: string; h: number }> = {
   EdenRadar: { src: "/images/logos/edenradar.png", h: 96 },
   EdenTrials: { src: "/images/logos/edentrials.png", h: 96 },
   EdenCompliance: { src: "/images/logos/edencompliance.png", h: 96 },

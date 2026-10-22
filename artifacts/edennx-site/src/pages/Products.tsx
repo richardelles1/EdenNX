@@ -3,7 +3,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
 import { ShieldCheck } from "lucide-react";
-import { ProductShowcase } from "@/components/ProductShowcase";
+import { ProductsIndex } from "@/components/ProductsIndex";
 import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 import { ink } from "@/components/PortalBits";
 
@@ -34,7 +34,6 @@ export default function Products() {
     <div className="overflow-x-clip pt-16">
       {/* Intro */}
       <section className="mx-auto max-w-7xl px-6 pb-12 pt-24 lg:px-8 lg:pb-16 lg:pt-32">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-primary reveal">The Product Suite</p>
         <h1
           className="max-w-4xl text-4xl font-bold tracking-tight text-foreground md:text-5xl md:leading-[1.08] reveal"
           style={{ transitionDelay: "0.1s" }}
@@ -50,16 +49,15 @@ export default function Products() {
         </p>
       </section>
 
-      {/* The canvas: every product on one surface */}
-      <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-8 lg:pb-32" data-testid="product-canvas">
-        <ProductShowcase />
+      {/* Every product, one section each, in the home page's language. */}
+      <section className="pb-12 lg:pb-16" data-testid="product-canvas">
+        <ProductsIndex />
       </section>
 
       {/* How the intelligence products connect */}
-      <section id="how-it-connects" className="scroll-mt-28 border-t border-border bg-foreground/[0.015] py-20 dark:bg-white/[0.015] lg:py-28">
+      <section id="how-it-connects" className="scroll-mt-28 border-t border-foreground/12 py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mb-14 max-w-2xl">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-primary reveal">How It Connects</p>
             <h2
               className="text-3xl font-bold tracking-tight text-foreground md:text-4xl reveal"
               style={{ transitionDelay: "0.05s" }}
@@ -76,16 +74,16 @@ export default function Products() {
           {/* Reveal sits on the list, not the tiles: .reveal owns the transition
               property, and putting it on a tile would swallow the tile's own
               hover transition. */}
-          <ol className="grid gap-4 reveal md:grid-cols-4">
+          <ol className="grid gap-x-8 gap-y-10 reveal md:grid-cols-4">
             {path.map((s, i) => (
               <li
                 key={s.step}
-                className="glass-tile p-6"
-                style={{ ["--glass-accent" as string]: `hsl(var(${s.token}))` }}
+                className="border-t-2 pt-5"
+                style={{ borderColor: ink(s.token) }}
                 data-testid={`path-step-${i}`}
               >
-                <span aria-hidden className="glass-mark">{String(i + 1).padStart(2, "0")}</span>
-                <div className="relative">
+                <span aria-hidden className="font-mono text-[13px] text-foreground/60">{String(i + 1).padStart(2, "0")}</span>
+                <div className="relative mt-3">
                   <p className="font-mono text-[12px] font-semibold uppercase tracking-[0.16em]" style={{ color: ink(s.token) }}>
                     {s.product}
                   </p>
@@ -146,58 +144,11 @@ export default function Products() {
       {/* CTA. Centred copy in a wide box left most of it empty, so the two
           platforms move out of a footnote and become the right-hand column,
           which is also where someone who already knows what they want goes. */}
-      <section className="relative overflow-hidden bg-foreground/[0.015] dark:bg-white/[0.015]">
-        {/* No card. A rounded box directly under the EdenCompliance box was two
-            boxes stacked, and its edges sat wider than the content above it
-            because a max-width box and a max-width column with padding are not
-            the same width. This is a full-bleed band that rises out of the
-            section above it, so there is no edge to mismatch.
-            The first stop carries the green at zero alpha rather than
-            `transparent`, which some engines interpolate through transparent
-            black and haze grey on the way down. */}
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{
-            background: [
-              "linear-gradient(180deg,",
-              // Eased rather than linear. A straight two-stop alpha ramp reads
-              // as a visible edge, because the eye is far more sensitive to the
-              // first few percent of opacity than to the last few. These stops
-              // approximate a smoothstep, so the green arrives without a line.
-              "hsl(146 46% 38% / 0) 0px,",
-              "hsl(146 46% 38% / 0.02) 22px,",
-              "hsl(146 46% 38% / 0.08) 44px,",
-              "hsl(146 46% 38% / 0.20) 66px,",
-              "hsl(146 46% 38% / 0.40) 88px,",
-              "hsl(146 46% 38% / 0.62) 108px,",
-              "hsl(146 46% 38% / 0.81) 126px,",
-              "hsl(146 46% 38% / 0.94) 142px,",
-              "hsl(146 46% 38%) 156px,",
-              // Fixed lengths, not percentages: the band is far taller when the
-              // two columns stack, and a percentage fade would stretch down over
-              // the copy on narrow screens.
-              "hsl(152 49% 31%) 62%,",
-              "hsl(158 52% 23%) 100%)",
-            ].join(" "),
-          }}
-        />
-        {/* The same dot grid the home hero uses, so the two greens read as one
-            surface rather than two flat gradients. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            backgroundImage: "radial-gradient(circle at center, rgba(255,255,255,0.10) 1px, transparent 1.5px)",
-            backgroundSize: "22px 22px",
-            maskImage: "radial-gradient(120% 80% at 20% 62%, #000 15%, transparent 80%)",
-            WebkitMaskImage: "radial-gradient(120% 80% at 20% 62%, #000 15%, transparent 80%)",
-          }}
-        />
-
-        {/* Top padding clears the 156px fade, so the copy always lands on solid
-            green rather than part way through the transition. */}
-        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-40 lg:px-8 lg:pb-28 lg:pt-44">
+      {/* CTA, as the home page closes: one dark green band at the mission's
+          width, the ask on the left and every product's site on the right. */}
+      <section className="px-4 pb-20 lg:px-6 lg:pb-28">
+        <div className="relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px]" style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}>
+        <div className="relative mx-auto max-w-7xl px-8 py-16 sm:px-12 lg:px-16 lg:py-24">
           <div className="grid gap-10 reveal lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16">
             <div>
               <h2 className="text-2xl font-bold tracking-tight text-white md:text-[2.4rem] md:leading-[1.12]">
@@ -249,6 +200,7 @@ export default function Products() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </section>
     </div>

@@ -36,7 +36,12 @@ function Row({
         className="absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-r-full transition-opacity"
         style={{ background: accent, opacity: selected ? 1 : 0 }}
       />
-      <p.Icon className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
+      {/* Brand-kit mark where we hold one; the line icon for the emerging three. */}
+      {MARKS[p.name] ? (
+        <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="flex-shrink-0 object-contain" style={markStyle(p.name, 22)} />
+      ) : (
+        <p.Icon className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
+      )}
       <span className="text-[14.5px] font-semibold tracking-tight">
         <span className="text-foreground">Eden</span>
         <span style={{ color: accent }}>{p.suffix}</span>

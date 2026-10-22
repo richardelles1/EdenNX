@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { ProductsMenu } from "@/components/ProductsMenu";
-import { SUITE, type Product } from "@/lib/products";
+import { SUITE, MARKS, markStyle, type Product } from "@/lib/products";
 import { ink } from "@/components/PortalBits";
 
 const otherLinks = [
@@ -29,17 +29,23 @@ function ProductRow({
 
   const heading = (
     <>
-      <span
-        className="flex flex-shrink-0 items-center justify-center rounded-xl"
-        style={{
-          background: `hsl(var(${p.token}) / 0.12)`,
-          border: `1px solid hsl(var(${p.token}) / 0.18)`,
-          height: compact ? 32 : 38,
-          width: compact ? 32 : 38,
-        }}
-      >
-        <p.Icon className={compact ? "h-4 w-4" : "h-[18px] w-[18px]"} strokeWidth={2.25} style={{ color: accent }} />
-      </span>
+      {/* The product's brand-kit mark where we hold one; the line icon only
+          for the emerging products, until their kit marks land (Cleo). */}
+      {MARKS[p.name] ? (
+        <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="flex-shrink-0 object-contain" style={markStyle(p.name, compact ? 30 : 34)} />
+      ) : (
+        <span
+          className="flex flex-shrink-0 items-center justify-center rounded-xl"
+          style={{
+            background: `hsl(var(${p.token}) / 0.12)`,
+            border: `1px solid hsl(var(${p.token}) / 0.18)`,
+            height: compact ? 32 : 38,
+            width: compact ? 32 : 38,
+          }}
+        >
+          <p.Icon className={compact ? "h-4 w-4" : "h-[18px] w-[18px]"} strokeWidth={2.25} style={{ color: accent }} />
+        </span>
+      )}
       <span className="min-w-0">
         <span className={`block font-bold tracking-tight leading-none ${compact ? "text-[14px]" : "text-[15.5px]"}`}>
           <span className="text-foreground">Eden</span>
