@@ -3,19 +3,17 @@ import { Plus } from "lucide-react";
 import { ink } from "@/components/PortalBits";
 import { type Product } from "@/components/ProductShowcase";
 import { DETAIL } from "@/lib/productDetail";
-import { Cta, Headline, Mark, Name, Terms } from "@/components/ProductCards";
-import { FOUR } from "@/components/HomeShowcase";
+import { Cta, FOUR, Headline, Mark, Name, Terms } from "@/components/ProductBits";
 
 // The Statements dropdown (Rich's pick) with the slider's photographs: each line
 // is the product's logo and tagline, and opening one shows its capabilities
-// beside its photograph. Preview only.
+// beside its photograph. On the home page.
 
 const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
 
-// Opening a line shows what the product slider shows: the product's photograph
-// beside its six capabilities (DETAIL, the same source as ProductCanvas). Beta
-// products have no photograph yet, so they show a tinted field with their mark,
-// as the slider does.
+// Opening a line shows the product's photograph beside four of its
+// capabilities (DETAIL). A product without a photograph shows a tinted field
+// with its mark.
 function Features({ p, on }: { p: Product; on: boolean }) {
   const d = DETAIL[p.name];
   const accent = ink(p.goldToken ?? p.token);

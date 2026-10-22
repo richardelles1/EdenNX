@@ -680,74 +680,17 @@ section[id] { scroll-margin-top: 8rem; }
   }
 }
 
-/* Product cards, preview directions A and B (ProductCards.tsx). One curve for
-   all of it, the strong ease-out, and only transform, opacity and colour move. */
-.ix-row { position: relative; }
-.ix-row::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 1px;
-  background: hsl(var(--foreground) / 0.14);
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.ix-row.reveal {
-  transform: translateY(12px);
-  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1), transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.ix-row.reveal.visible { transform: none; }
-.ix-row.visible::before { transform: scaleX(1); }
-
+/* Text links with an arrow (ProductBits.tsx). */
 .cta-link .cta-arrow { transition: transform 0.16s cubic-bezier(0.23, 1, 0.32, 1); }
 .cta-link:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .cta-link:hover .cta-arrow { transform: translate(2px, -2px); }
 
-.sheet-card {
-  border-color: hsl(var(--foreground) / 0.09);
-  transition: border-color 0.2s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.2s cubic-bezier(0.23, 1, 0.32, 1);
-}
-@media (hover: hover) and (pointer: fine) {
-  .sheet-card:hover {
-    border-color: hsl(var(--foreground) / 0.2);
-    box-shadow: 0 1px 2px rgba(15, 26, 20, 0.04), 0 12px 32px rgba(15, 26, 20, 0.06);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .ix-row::before { transform: none; transition: none; }
-  .ix-row.reveal { transform: none; }
   .cta-link .cta-arrow { transition: none; }
 }
 
-/* Home showcase proposals (HomeShowcase.tsx). */
 .stmt-panel { transition: grid-template-rows 0.45s cubic-bezier(0.23, 1, 0.32, 1); }
-.stmt-plus { transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.2s ease; }
-@media (hover: hover) and (pointer: fine) {
-  .stmt-row:hover .stmt-plus { border-color: hsl(var(--foreground) / 0.4); }
-}
-
-.path-line::before {
-  content: "";
-  position: absolute;
-  left: 5px; top: 8px; bottom: 0; width: 1px;
-  background: hsl(var(--foreground) / 0.16);
-  transform-origin: top;
-  transform: scaleY(0);
-  transition: transform 1.1s cubic-bezier(0.23, 1, 0.32, 1);
-}
-@media (min-width: 1024px) {
-  .path-line::before { left: 0; right: 0; top: 6px; bottom: auto; width: auto; height: 1px; transform-origin: left; transform: scaleX(0); }
-}
-.path-line.visible::before { transform: none; }
-.path-stop { transform: scale(0); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
-.path-line.visible .path-stop { transform: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  .stmt-panel, .stmt-plus, .path-line::before, .path-stop { transition: none; }
-  .path-line::before, .path-stop { transform: none; }
-}
+@media (prefers-reduced-motion: reduce) { .stmt-panel { transition: none; } }
 
 /* Dropdown with photographs (ShowcaseFeatures.tsx): the + takes its product's
    colour on hover and while open. */

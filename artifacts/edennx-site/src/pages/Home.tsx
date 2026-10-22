@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { ProductCanvas } from "@/components/ProductCanvas";
-import { ProductCardsA, ProductCardsB } from "@/components/ProductCards";
 import { ShowcaseFeatureDropdown } from "@/components/ShowcaseFeatures";
-import { StatementsLedger, StatementsSpotlight, StatementsStage } from "@/components/StatementVariants";
-import { ShowcasePath, ShowcaseQuarters, ShowcaseStatements } from "@/components/HomeShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
@@ -13,9 +9,7 @@ import { ROUTE_META } from "@/lib/routeMeta";
 // mark's real height rather than mostly white padding.
 const MARK = "/images/eden-mark-hero.jpg";
 
-// lead and cards are for the preview routes only (/preview/home-cards-a and -b),
-// so Rich can compare the home page led by the cards against the scroller.
-export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scroller" | "cards"; cards?: "a" | "b" | "statements" | "quarters" | "path" | "spotlight" | "ledger" | "stage" | "features" }) {
+export default function Home() {
   useScrollReveal();
   useSEO(ROUTE_META["/"]);
 
@@ -185,15 +179,9 @@ export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scrol
         </p>
       </section>
 
-      {lead === "cards" ? (
-        <section className="pb-16 lg:pb-24" data-testid="product-cards">
-          {cards === "b" ? <ProductCardsB /> : cards === "statements" ? <ShowcaseStatements /> : cards === "quarters" ? <ShowcaseQuarters /> : cards === "path" ? <ShowcasePath /> : cards === "spotlight" ? <StatementsSpotlight /> : cards === "ledger" ? <StatementsLedger /> : cards === "stage" ? <StatementsStage /> : cards === "features" ? <ShowcaseFeatureDropdown /> : <ProductCardsA />}
-        </section>
-      ) : (
-        <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-8 lg:pb-24" data-testid="product-canvas">
-          <ProductCanvas />
-        </section>
-      )}
+      <section className="pb-16 lg:pb-24" data-testid="product-showcase">
+        <ShowcaseFeatureDropdown />
+      </section>
 
       {/* Mission — light emerald tinted panel */}
       <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20">

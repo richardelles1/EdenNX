@@ -39,19 +39,6 @@ export function AppShell() {
             <Route path="/team" element={<Team />} />
             <Route path="/insights" element={<Insights />} />
             <Route path="/contact" element={<Contact />} />
-            {/* Preview only: card placement and card directions for Rich. */}
-            <Route path="/preview/home-cards-a" element={<Home lead="cards" cards="a" />} />
-            <Route path="/preview/home-cards-b" element={<Home lead="cards" cards="b" />} />
-            <Route path="/preview/home-statements" element={<Home lead="cards" cards="statements" />} />
-            <Route path="/preview/home-quarters" element={<Home lead="cards" cards="quarters" />} />
-            <Route path="/preview/home-path" element={<Home lead="cards" cards="path" />} />
-            <Route path="/preview/home-spotlight" element={<Home lead="cards" cards="spotlight" />} />
-            <Route path="/preview/home-ledger" element={<Home lead="cards" cards="ledger" />} />
-            <Route path="/preview/home-stage" element={<Home lead="cards" cards="stage" />} />
-            <Route path="/preview/home-features" element={<Home lead="cards" cards="features" />} />
-            <Route path="/preview/products-a" element={<Products body="a" />} />
-            <Route path="/preview/products-b" element={<Products body="b" />} />
-            <Route path="/preview/products-scroller" element={<Products body="scroller" />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<NotFound />} />

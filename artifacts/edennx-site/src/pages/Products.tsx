@@ -4,8 +4,6 @@ import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
 import { ShieldCheck } from "lucide-react";
 import { ProductShowcase } from "@/components/ProductShowcase";
-import { ProductCardsA, ProductCardsB } from "@/components/ProductCards";
-import { ProductCanvas } from "@/components/ProductCanvas";
 import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 import { ink } from "@/components/PortalBits";
 
@@ -26,9 +24,7 @@ const path = [
   { step: "Control the deal", product: "EdenMarket", token: "--portal-market", desc: "List when you are ready. Blind by default, with identity revealed only when you agree." },
 ];
 
-// body is for the preview routes only: the two card directions, and the
-// scroller here for when the home page leads with the cards.
-export default function Products({ body = "current" }: { body?: "current" | "a" | "b" | "scroller" }) {
+export default function Products() {
   useScrollReveal();
   useSEO(ROUTE_META["/products"]);
 
@@ -55,15 +51,9 @@ export default function Products({ body = "current" }: { body?: "current" | "a" 
       </section>
 
       {/* The canvas: every product on one surface */}
-      {body === "scroller" ? (
-        <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-8 lg:pb-32" data-testid="product-canvas">
-          <ProductCanvas />
-        </section>
-      ) : (
-        <section className="pb-24 lg:pb-32" data-testid="product-cards">
-          {body === "a" ? <ProductCardsA /> : body === "b" ? <ProductCardsB /> : <div className="mx-auto max-w-7xl px-6 lg:px-8"><ProductShowcase /></div>}
-        </section>
-      )}
+      <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-8 lg:pb-32" data-testid="product-canvas">
+        <ProductShowcase />
+      </section>
 
       {/* How the intelligence products connect */}
       <section id="how-it-connects" className="scroll-mt-28 border-t border-border bg-foreground/[0.015] py-20 dark:bg-white/[0.015] lg:py-28">
