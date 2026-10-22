@@ -1,7 +1,8 @@
 // The latest EdenNX posts for the home page. Copy and images are the published
 // assets in RICO marketing/ready/<date>-<slug>/ (caption or post text, and the
 // graphic or first carousel card); dates from Taylor's engagement log. Each
-// links to the EdenNX LinkedIn page until Taylor logs the post URLs.
+// links to the EdenNX LinkedIn page until Taylor logs the post URLs. Only posts
+// that went out are listed (the 21 Oct one per Taylor's ACTIONS.md schedule).
 export type SocialPost = {
   date: string; // ISO date it went out
   text: string; // the post's opening, word for word
@@ -15,6 +16,14 @@ export const LINKEDIN = "https://www.linkedin.com/company/edennx/";
 export const INSTAGRAM = "https://www.instagram.com/eden__nx/";
 
 export const SOCIAL_POSTS: SocialPost[] = [
+  {
+    date: "2026-10-21",
+    text: "The system was compliant. The form wasn't. Picture the inspection. The system is validated and every transaction sits in an audit trail. The finding gets written anyway, because the paper change form never asked why the change was made.",
+    image: "/images/social/form-wasnt.jpg",
+    imageAlt: "The system was compliant. The form wasn't.",
+    product: "EdenCompliance",
+    url: LINKEDIN,
+  },
   {
     date: "2026-10-16",
     text: "New in EdenRadar this week: 18 medical devices, 10 research platforms, 7 diagnostics, 6 small molecules, 3 antibodies.",

@@ -743,3 +743,6 @@ section[id] { scroll-margin-top: 8rem; }
   .post-card:hover .cta-arrow { transform: translate(2px, -2px); }
 }
 @media (prefers-reduced-motion: reduce) { .post-card, .post-image { transition: none; } }
+/* A scroller with its own arrows hides the native scrollbar. */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
