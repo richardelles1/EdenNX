@@ -706,3 +706,8 @@ section[id] { scroll-margin-top: 8rem; }
 @media (prefers-reduced-motion: reduce) {
   .feat-plus { transition: none; }
 }
+/* Hover lights a line and the other closed lines step back (pointer devices). */
+@media (hover: hover) and (pointer: fine) {
+  .feat-list .stmt-row { transition: opacity 0.25s cubic-bezier(0.23, 1, 0.32, 1); }
+  .feat-list:has(.stmt-row:hover) .stmt-row[aria-expanded="false"]:not(:hover) { opacity: 0.45; }
+}

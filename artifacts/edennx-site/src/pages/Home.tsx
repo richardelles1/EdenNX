@@ -183,30 +183,26 @@ export default function Home() {
         <ShowcaseFeatureDropdown />
       </section>
 
-      {/* Mission — light emerald tinted panel */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14 lg:py-20">
-        <div
-          className="rounded-2xl border border-primary/20 p-10 md:p-14 reveal"
-          data-testid="mission-panel"
-          style={{
-            background:
-              "linear-gradient(135deg, hsl(142 52% 36% / 0.06) 0%, hsl(142 52% 36% / 0.10) 100%)",
-          }}
-        >
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-4">
-            Our Mission
-          </p>
-          {/* The old version framed the mission entirely as the licensing gap,
-              which is EdenRadar's problem rather than the company's. This spans
-              the lifecycle: discovery, then quality, then release. */}
-          <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug max-w-3xl mb-6">
-            Accelerate science to patient impact.
-          </p>
-          <p className="text-base text-foreground/65 leading-relaxed max-w-2xl">
-            Discover smarter, qualify faster, and track every step across the biotech lifecycle.
-            From opportunities at university tech transfer offices, to audit-ready vendor
-            management, to release into clinic and market. Every stakeholder, every stage.
-          </p>
+      {/* Mission. No tinted box: after the hairline-ruled product list, a
+          rounded green panel read as a different site. It is set like the
+          list, as one statement at display size on a single rule, with the
+          explanation beside it. */}
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-28" data-testid="mission-panel">
+        <div className="reveal grid gap-8 border-t border-foreground/12 pt-10 lg:grid-cols-[260px_1fr] lg:gap-0 lg:pt-14">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">Our mission</p>
+          <div>
+            {/* The old version framed the mission entirely as the licensing gap,
+                which is EdenRadar's problem rather than the company's. This spans
+                the lifecycle: discovery, then quality, then release. */}
+            <p className="max-w-[18ch] text-[2.4rem] font-bold leading-[1.04] tracking-[-0.035em] text-foreground lg:text-[3.6rem]">
+              Accelerate science to <span className="text-primary">patient impact.</span>
+            </p>
+            <p className="mt-8 max-w-[58ch] text-[17px] leading-[1.65] text-foreground/70">
+              Discover smarter, qualify faster, and track every step across the biotech lifecycle.
+              From opportunities at university tech transfer offices, to audit-ready vendor
+              management, to release into clinic and market. Every stakeholder, every stage.
+            </p>
+          </div>
         </div>
       </section>
 

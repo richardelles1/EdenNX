@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Plus } from "lucide-react";
 import { ink } from "@/components/PortalBits";
 import { type Product } from "@/components/ProductShowcase";
@@ -75,62 +75,18 @@ const FULL: Record<string, { src: string; h: number }> = {
 
 export function ShowcaseFeatureDropdown() {
   const [open, setOpen] = useState<string | null>(FOUR[0].name);
-  const section = useRef<HTMLDivElement>(null);
-  const band = useRef(-1);
-  // Where the page was when a product was clicked. Opening it collapses
-  // another panel, which moves the page under the browser's scroll anchoring;
-  // the scroll does not take over again until the reader has scrolled 400px
-  // on their own, so a click is never undone by its own layout change.
-  const clickedAt = useRef<number | null>(null);
-
-  // Opens and closes with the scroll: the section is split into four equal
-  // bands of scroll, one per product, and the product whose band holds a line
-  // 30% down the screen is the open one. Exactly one panel is open and all are
-  // the same height, so the section's height never changes and the bands stay
-  // put. Panels above the screen collapse under the browser's scroll anchoring,
-  // so what you are reading does not jump. A click still opens any product.
-  // Desktop only. On a phone a tap opens a product and nothing else does: an
-  // open panel there is taller than the screen, so a scroll band would reopen
-  // the line the reader just left, and the tap would undo itself (Murphy, 390px).
-  useEffect(() => {
-    if (!window.matchMedia("(min-width: 1024px)").matches) return;
-    let raf = 0;
-    const tick = () => {
-      raf = 0;
-      const el = section.current;
-      if (!el) return;
-      if (clickedAt.current !== null) {
-        if (Math.abs(window.scrollY - clickedAt.current) < 400) return;
-        clickedAt.current = null;
-      }
-      const r = el.getBoundingClientRect();
-      const progress = (window.innerHeight * 0.3 - r.top) / r.height;
-      if (progress < 0 || progress > 1) return;
-      const i = Math.min(FOUR.length - 1, Math.floor(progress * FOUR.length));
-      if (i !== band.current) {
-        band.current = i;
-        setOpen(FOUR[i].name);
-      }
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(tick);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
   // On a phone the opened line can start above the fold once the one above it
   // closes, so bring its headline to the top after the panels settle.
   const toggle = (name: string, on: boolean) => {
-    clickedAt.current = window.scrollY;
     setOpen(on ? null : name);
     if (on || !window.matchMedia("(max-width: 1023px)").matches) return;
     setTimeout(() => document.getElementById(`row-${name.toLowerCase()}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 480);
   };
   return (
-    <div ref={section} className="mx-auto max-w-7xl px-6 lg:px-8" data-testid="showcase-features">
+    <div className="feat-list mx-auto max-w-7xl px-6 lg:px-8" data-testid="showcase-features">
+      {/* Opens on click or tap only. Hover only lights a line: it takes its
+          colour and the other closed lines step back, so the page never moves
+          unless the reader asks it to (Rich, after trying scroll-open). */}
       {FOUR.map((p) => {
         const on = open === p.name;
         const id = `feat-${p.name.toLowerCase()}`;
