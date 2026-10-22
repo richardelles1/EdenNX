@@ -11,6 +11,10 @@ import { ROUTE_META } from "@/lib/routeMeta";
 // mark's real height rather than mostly white padding.
 const MARK = "/images/eden-mark-hero.jpg";
 
+// The mission's photograph: patients and families, licensed, from Cleo. Empty
+// until it lands; the band shows a deep green field without it.
+const MISSION_PHOTO = "";
+
 export default function Home() {
   useScrollReveal();
   // The mark drifts at a fifth of the scroll speed while the hero is on screen,
@@ -212,25 +216,30 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="pb-16 lg:pb-24" data-testid="product-showcase">
+      <section className="pb-12 lg:pb-16" data-testid="product-showcase">
         <ShowcaseFeatureDropdown />
       </section>
 
-      {/* Mission. No tinted box: after the hairline-ruled product list, a
-          rounded green panel read as a different site. It is set like the
-          list, as one statement at display size on a single rule, with the
-          explanation beside it. */}
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-28" data-testid="mission-panel">
-        <div className="reveal grid gap-8 border-t border-foreground/12 pt-10 lg:grid-cols-[260px_1fr] lg:gap-0 lg:pt-14">
-          <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">Our mission</p>
-          <div>
+      {/* Mission, as the page's one full-bleed moment: the statement over a
+          photograph of patients and families, who are who it is for. Until the
+          licensed photo lands (Cleo, MISSION_PHOTO), a deep green field. The
+          scrim darkens the left, where the type sits, and lets the photo
+          breathe on the right. */}
+      <section className="px-4 pb-20 lg:px-6 lg:pb-28" data-testid="mission-panel">
+        <div className="reveal relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px]" style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}>
+          {MISSION_PHOTO && (
+            <img src={MISSION_PHOTO} alt="" aria-hidden decoding="async" loading="lazy" className="absolute inset-0 h-full w-full" style={{ objectFit: "cover", objectPosition: "70% 40%" }} />
+          )}
+          <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.86) 0%, rgba(8,20,14,0.62) 45%, rgba(8,20,14,0.12) 100%)" }} />
+          <div className="relative flex min-h-[520px] flex-col justify-center px-8 py-16 sm:px-12 lg:min-h-[620px] lg:px-20">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#9fdcb4]">Our mission</p>
             {/* The old version framed the mission entirely as the licensing gap,
                 which is EdenRadar's problem rather than the company's. This spans
                 the lifecycle: discovery, then quality, then release. */}
-            <p className="max-w-[18ch] text-[2.4rem] font-bold leading-[1.04] tracking-[-0.035em] text-foreground lg:text-[3.6rem]">
-              Accelerate science to <span className="text-primary">patient impact.</span>
+            <p className="mt-6 max-w-[16ch] text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[4.6rem]">
+              Accelerate science to <span className="text-[#9fdcb4]">patient impact.</span>
             </p>
-            <p className="mt-8 max-w-[58ch] text-[17px] leading-[1.65] text-foreground/70">
+            <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.65] text-white/85 lg:text-[18px]">
               Discover smarter, qualify faster, and track every step across the biotech lifecycle.
               From opportunities at university tech transfer offices, to audit-ready vendor
               management, to release into clinic and market. Every stakeholder, every stage.
