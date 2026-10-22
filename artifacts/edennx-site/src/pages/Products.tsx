@@ -170,8 +170,8 @@ export default function Products() {
                 EdenRadar, which made one of two live products the default. */}
             <div className="grid gap-3">
               {[
-                { name: "EdenRadar", host: "edenradar.com", href: ER, line: `Biotech BD intelligence across ${ASSET_COUNT_LABEL} university assets.` },
                 { name: "EdenTrials", host: "edentrials.com", href: "https://edentrials.com", line: "A live, global clinical trial network." },
+                { name: "EdenRadar", host: "edenradar.com", href: ER, line: `Biotech BD intelligence across ${ASSET_COUNT_LABEL} university assets.` },
                 { name: "EdenCompliance", host: "edencompliance.com", href: EC, line: "Vendor qualification and audits, on a record an inspector can read." },
               ].map((s) => (
                 <a
