@@ -69,8 +69,9 @@ function Features({ p, on }: { p: Product; on: boolean }) {
 // over its dot globe, and EdenTrials' globe with the name through it. The
 // others keep the mark beside the name.
 const FULL: Record<string, { src: string; h: number }> = {
-  EdenRadar: { src: "/images/lockups/edenradar.svg", h: 84 },
-  EdenTrials: { src: "/images/marks/mark-trials.png", h: 84 },
+  EdenRadar: { src: "/images/logos/edenradar.png", h: 92 },
+  EdenTrials: { src: "/images/logos/edentrials.png", h: 96 },
+  EdenBR: { src: "/images/logos/edenbr.png", h: 96 },
 };
 
 export function ShowcaseFeatureDropdown() {
@@ -101,7 +102,7 @@ export function ShowcaseFeatureDropdown() {
               onClick={() => toggle(p.name, on)}
               className="stmt-row grid w-full grid-cols-[1fr_auto] items-center gap-6 py-8 text-left lg:min-h-[164px] lg:grid-cols-[260px_1fr_auto] lg:py-0"
             >
-              <span className="flex h-[84px] items-center gap-3.5">
+              <span className="flex h-[100px] items-center gap-3.5">
                 {FULL[p.name] ? (
                   <img src={FULL[p.name].src} alt={p.name} decoding="async" style={{ height: FULL[p.name].h, width: "auto" }} />
                 ) : (

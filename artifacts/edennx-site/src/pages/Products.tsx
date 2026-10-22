@@ -127,7 +127,7 @@ export default function Products() {
               <dl className="grid gap-5 self-center">
                 {[
                   ["Append-only", "Entries cannot be edited or deleted, ever."],
-                  ["Hash-chained", "Every entry SHA-256 sealed to the one before it."],
+                  ["Hash-chained", "Every entry chained to the one before it, with an integrity check you can run on demand."],
                   ["E-signed", "Re-authenticated signatures on each approval and sign-off."],
                 ].map(([term, def]) => (
                   <div key={term} className="border-l-2 pl-4" style={{ borderColor: GOLD }}>

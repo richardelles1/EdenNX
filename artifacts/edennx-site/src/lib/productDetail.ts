@@ -49,7 +49,7 @@ export const DETAIL: Record<string, Detail> = {
     // Per-seat as of this revision. edenradar.com still publishes the older
     // tiered pricing ($1,999 for one seat, $8,999 for five); it is being
     // corrected there separately, so the two sites disagree until it lands.
-    term: "$499/seat/mo",
+    term: "From $299/seat/mo", // decision 0135; $499 is EdenTrials'
     note: "Every paid plan starts with a 3-day free trial.",
     primary: { label: "Launch EdenRadar", href: ER },
   },
@@ -60,12 +60,12 @@ export const DETAIL: Record<string, Detail> = {
     photoAlt: "Two colleagues reviewing a document together by a window",
     title: "Vendor qualification and audit management",
     audience:
-      "For QA and compliance leaders in pharma, biotech, medical device, and food and beverage who need the rigor of an eQMS without the year of configuration.",
+      "For quality and compliance teams who qualify vendors and run the audit program.",
     features: [
       { label: "Vendor register", desc: "Type, service, location, risk tier, and qualification status, colour-coded on one sortable list." },
       { label: "Audit program", desc: "Risk-based scheduling, with findings logged and classified by severity." },
       { label: "Vendor portal", desc: "A private link with no account to create, and uploads read and filed automatically." },
-      { label: "Controlled record", desc: "Append-only and hash-chained, with every entry SHA-256 sealed." },
+      { label: "Controlled record", desc: "Append-only and hash-chained, with an integrity check you can run on demand." },
       { label: "Electronic sign-off", desc: "Re-authenticated signatures on every qualification and audit closure." },
       { label: "Regulation Watch", desc: "FDA and MHRA recall and enforcement actions matched to your vendors, checked daily." },
     ],

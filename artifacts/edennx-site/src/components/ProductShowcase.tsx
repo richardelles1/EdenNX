@@ -37,7 +37,7 @@ export const PRODUCTS: Record<string, Product> = {
     name: "EdenRadar", token: "--portal-radar",
     headline: { pre: "The next biotech breakthrough is ", accent: "already published.", post: "" },
     sub: "Real-time monitoring of university tech transfer offices means the right assets find you first.",
-    note: "$499/seat/mo",
+    note: "From $299/seat/mo", // decision 0135
     // Sourced from edenradar.com/how-it-works (HIW_STEPS in the EdenRadar repo).
     capabilities: [
       { label: "Deepest TTO index", detail: `${ASSET_COUNT_LABEL} university assets, plus patents, trials, and literature` },
