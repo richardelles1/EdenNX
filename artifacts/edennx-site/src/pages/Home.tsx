@@ -180,7 +180,7 @@ export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scrol
           style={{ transitionDelay: "0.05s" }}
         >
           EdenRadar finds the asset. EdenCompliance qualifies the vendors and runs the audits
-          behind it. EdenTrials keeps the trial registry record and what changed in it. EdenBR
+          behind it. EdenTrials is a live, global clinical trial network. EdenBR
           (Beta) tracks where a batch sits. EdenLab, EdenDiscovery and EdenMarket are emerging.
         </p>
       </section>

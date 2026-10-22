@@ -74,16 +74,17 @@ export const DETAIL: Record<string, Detail> = {
     // The photograph from edentrials.com/login.
     photo: "/images/photo-trials.jpg",
     photoAlt: "",
-    title: "Trial registry records, with the change record kept",
-    audience: "For teams that need to know what a registry said, and what it said before.",
-    // Six, like every panel: four from the claims register and two from the
-    // portal's own screens. Tex measured 215 (ceiling 219) on 21 Oct 2026 and
-    // gives "210+" as the safe wording, matching edentrials.com.
+    title: "A live, global clinical trial network",
+    audience: "Every trial the world is running, and everything attached to it.",
+    // Six, like every panel, in edentrials.com's live wording (its hero and
+    // meta description), the claims register, and the portal's own screens.
+    // Tex measured 215 (ceiling 219) on 21 Oct 2026 and gives "210+" as the
+    // safe wording, matching edentrials.com.
     features: [
-      { label: "One vocabulary", desc: "Trial registry records from many registers, resolved into a single vocabulary." },
-      { label: "The change record", desc: "A registry overwrites what it said yesterday. We keep the copies." },
-      { label: "Daily change tracking", desc: "So we can say what changed, and when." },
+      { label: "National registries", desc: "National clinical trial registries from around the world, read on a schedule." },
       { label: "210+ countries and territories", desc: "Coverage, not completeness: how complete each register is varies." },
+      { label: "One vocabulary", desc: "Trial registry records from many registers, resolved into a single vocabulary." },
+      { label: "Every version kept", desc: "Every version of every record kept." },
       { label: "Alerts", desc: "Save the question once. A trial registered later that fits it is caught." },
       { label: "Ask Eden", desc: "Ask the record in words. Every answer cites the trials it used." },
     ],

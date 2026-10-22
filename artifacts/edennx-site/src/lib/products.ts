@@ -64,7 +64,7 @@ export const PRODUCTS: Product[] = [
 // display order, and is what the menus, canvas and cards list.
 export const BETA_PRODUCTS: Product[] = [
   {
-    name: "EdenTrials", suffix: "Trials", tagline: "Trial registry records in one vocabulary, with the change record kept.",
+    name: "EdenTrials", suffix: "Trials", tagline: "A live, global clinical trial network.",
     token: meta("EdenTrials").token, Icon: meta("EdenTrials").Icon,
     href: `${ET}/how-it-works`, external: true, launch: { label: "Launch EdenTrials", href: ET },
     links: pages(ET, [["How it works", "/how-it-works"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),

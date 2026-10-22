@@ -48,8 +48,8 @@ export default function Products({ body = "current" }: { body?: "current" | "a" 
         </h1>
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground reveal" style={{ transitionDelay: "0.2s" }}>
           EdenNX is the parent company. EdenRadar tracks {ASSET_COUNT_LABEL} university assets for the teams doing biotech deals. EdenCompliance runs vendor qualification and audits for
-          regulated teams, on a record an inspector can read. EdenTrials holds trial registry records in one
-          vocabulary and keeps the copies a registry overwrites. EdenBR, in Beta, tracks where a batch sits and leaves
+          regulated teams, on a record an inspector can read. EdenTrials is a live, global clinical trial
+          network: every trial the world is running, and everything attached to it. EdenBR, in Beta, tracks where a batch sits and leaves
           the release decision to people. EdenLab, EdenDiscovery, and EdenMarket are emerging.
         </p>
       </section>
@@ -230,7 +230,7 @@ export default function Products({ body = "current" }: { body?: "current" | "a" 
             <div className="grid gap-3">
               {[
                 { name: "EdenRadar", host: "edenradar.com", href: ER, line: `Biotech BD intelligence across ${ASSET_COUNT_LABEL} university assets.` },
-                { name: "EdenTrials", host: "edentrials.com", href: "https://edentrials.com", line: "Trial registry records in one vocabulary, with the change record kept." },
+                { name: "EdenTrials", host: "edentrials.com", href: "https://edentrials.com", line: "A live, global clinical trial network." },
                 { name: "EdenCompliance", host: "edencompliance.com", href: EC, line: "Vendor qualification and audits, on a record an inspector can read." },
               ].map((s) => (
                 <a
