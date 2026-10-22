@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { ink } from "@/components/PortalBits";
 import { MARKS, markStyle } from "@/lib/products";
-import { RADAR_TOP, RADAR_BOTTOM } from "@/lib/radarDots";
+import { LOCKUP_VIEWBOX, RADAR_TOP, RADAR_BOTTOM, WORDMARK_EDEN, WORDMARK_RADAR, TAGLINE } from "@/lib/radarLockup";
 import { PRODUCTS, FRAMES, SHOT_GROUND, useShotReveal, type Product } from "@/components/ProductShowcase";
 
 // Two redesigns of the product cards, same content as ProductShowcase (headline,
@@ -118,35 +118,27 @@ function IndexRow({ p, right, pinned = false }: { p: Product; right?: ReactNode;
 /* ---------------------- A: EdenRadar lockup reveal ----------------------- */
 
 // The EdenRadar lockup, drawn live so each part can move on its own: the dot
-// globe's two domes, the wordmark, and the line under it. Built from our dot
-// globe with live text until Amelia supplies the lockup as layered vector art.
+// globe's two domes, the wordmark, and the line under it, from Amelia's layered
+// lockup (generated into radarLockup.ts by scripts/make-radar-dots.mjs).
 // `t` runs 0 (lockup whole) to 1 (lockup gone): the domes part up and down, and
 // the wordmark fades and settles, opening the way the features come in.
-const DOME_X = 257.5; // left edge of a dome 485 wide, centred in 1000
-const DOME_K = 5.27;  // dot box (100) to lockup units, across
-const DOME_KY = 3.9;  // and down, flatter, as in the lockup
-
 function RadarLockup({ t }: { t: number }) {
-  const part = t * 190;
+  const part = t * 270;
   // The wordmark is gone before the features are legible, so the two never sit
   // on top of each other at half strength.
   const fade = Math.max(0, 1 - t * 3);
-  const dome = (dots: [number, number, number][], dy: number) =>
-    dots.map(([cx, cy, r], i) => <circle key={i} cx={DOME_X + cx * DOME_K} cy={cy * DOME_KY + dy} r={r * 2.6} />);
+  const domes = Math.max(0, 1 - t * 1.25);
+  const dome = (dots: [number, number, number][]) => dots.map(([cx, cy, r], i) => <circle key={i} cx={cx} cy={cy} r={r} />);
   return (
-    <svg viewBox="0 0 1000 720" className="pointer-events-none absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 overflow-visible" aria-hidden>
-      <g fill="#26744a">
-        <g style={{ transform: `translateY(${-part}px)`, opacity: Math.max(0, 1 - t * 1.25) }}>{dome(RADAR_TOP, 52)}</g>
-        <g style={{ transform: `translateY(${part}px)`, opacity: Math.max(0, 1 - t * 1.25) }}>{dome(RADAR_BOTTOM, 300)}</g>
+    <svg viewBox={LOCKUP_VIEWBOX} className="pointer-events-none absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 overflow-visible" aria-hidden>
+      <g fill="#257349">
+        <g style={{ transform: `translateY(${-part}px)`, opacity: domes }}>{dome(RADAR_TOP)}</g>
+        <g style={{ transform: `translateY(${part}px)`, opacity: domes }}>{dome(RADAR_BOTTOM)}</g>
       </g>
-      <g style={{ opacity: fade, transform: `scale(${1 - t * 0.06})`, transformOrigin: "500px 360px" }}>
-        <text x="500" y="408" textAnchor="middle" textLength="800" lengthAdjust="spacingAndGlyphs" fontSize="178" fontWeight="800" letterSpacing="-2">
-          <tspan fill="#222222">Eden</tspan>
-          <tspan fill="#26744a">Radar</tspan>
-        </text>
-        <text x="500" y="478" textAnchor="middle" textLength="640" lengthAdjust="spacing" fontSize="42" fontWeight="500" fill="#26744a" letterSpacing="10">
-          BIOTECH INNOVATION ENGINE
-        </text>
+      <g style={{ opacity: fade, transform: `scale(${1 - t * 0.06})`, transformOrigin: "1000px 1000px" }}>
+        <path fill="#222222" d={WORDMARK_EDEN} />
+        <path fill="#257349" d={WORDMARK_RADAR} />
+        <path fill="#257349" d={TAGLINE} />
       </g>
     </svg>
   );
