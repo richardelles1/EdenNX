@@ -69,13 +69,14 @@ function Features({ p, on }: { p: Product; on: boolean }) {
 // over its dot globe, and EdenTrials' globe with the name through it. The
 // others keep the mark beside the name.
 const FULL: Record<string, { src: string; h: number }> = {
-  EdenRadar: { src: "/images/logos/edenradar.png", h: 92 },
+  EdenRadar: { src: "/images/logos/edenradar.png", h: 96 },
   EdenTrials: { src: "/images/logos/edentrials.png", h: 96 },
+  EdenCompliance: { src: "/images/logos/edencompliance.png", h: 96 },
   EdenBR: { src: "/images/logos/edenbr.png", h: 96 },
 };
 
 export function ShowcaseFeatureDropdown() {
-  const [open, setOpen] = useState<string | null>(FOUR[0].name);
+  const [open, setOpen] = useState<string | null>(null);
   // On a phone the opened line can start above the fold once the one above it
   // closes, so bring its headline to the top after the panels settle.
   const toggle = (name: string, on: boolean) => {
@@ -102,7 +103,7 @@ export function ShowcaseFeatureDropdown() {
               onClick={() => toggle(p.name, on)}
               className="stmt-row grid w-full grid-cols-[1fr_auto] items-center gap-6 py-8 text-left lg:min-h-[164px] lg:grid-cols-[260px_1fr_auto] lg:py-0"
             >
-              <span className="flex h-[100px] items-center gap-3.5">
+              <span className="flex h-[100px] items-center gap-3.5 lg:justify-center lg:pr-10">
                 {FULL[p.name] ? (
                   <img src={FULL[p.name].src} alt={p.name} decoding="async" style={{ height: FULL[p.name].h, width: "auto" }} />
                 ) : (
