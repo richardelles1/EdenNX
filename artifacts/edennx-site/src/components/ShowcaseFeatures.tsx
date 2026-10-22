@@ -108,9 +108,9 @@ export function ShowcaseFeatureDropdown() {
               onClick={() => toggle(p.name, on)}
               className="stmt-row grid w-full grid-cols-[1fr_auto] items-center gap-6 py-8 text-left lg:min-h-[164px] lg:grid-cols-[260px_1fr_auto] lg:py-0"
             >
-              <span className="flex h-[100px] items-center gap-3.5 lg:justify-center lg:pr-10">
+              <span className="flex h-[64px] items-center gap-3.5 lg:h-[100px] lg:justify-center lg:pr-10">
                 {FULL[p.name] ? (
-                  <img src={FULL[p.name].src} alt={p.name} decoding="async" style={{ height: FULL[p.name].h, width: "auto" }} />
+                  <img src={FULL[p.name].src} alt={p.name} decoding="async" className="row-logo" style={{ ["--h" as string]: `${FULL[p.name].h}px`, width: "auto" }} />
                 ) : (
                   <>
                     <Mark p={p} size={p.name === "EdenCompliance" ? 56 : 44} />
@@ -119,7 +119,7 @@ export function ShowcaseFeatureDropdown() {
                 )}
               </span>
               <span className="col-span-2 row-start-2 lg:col-span-1 lg:row-start-auto">
-                <Headline p={p} cls="max-w-[26ch] text-[1.7rem] leading-[1.08] tracking-[-0.03em] lg:text-[2.4rem]" />
+                <Headline p={p} cls="max-w-[26ch] text-[1.45rem] leading-[1.1] tracking-[-0.03em] sm:text-[1.7rem] lg:text-[2.4rem]" />
               </span>
               <span
                 aria-hidden

@@ -536,7 +536,7 @@ body::after {
    value large enough to fill a phone overflows the half-width column on a small
    laptop. Two rules, one per layout. */
 .hero-wordmark {
-  font-size: clamp(2.5rem, 24vw, 8rem);
+  font-size: clamp(2.5rem, 19vw, 8rem);
 }
 @media (min-width: 1024px) {
   .hero-wordmark {
@@ -578,8 +578,17 @@ body::after {
      was spending half the first screen restating the brand before the claim
      had been made once. Vertical space is the scarce resource here; on desktop
      the mark sits beside the copy and costs nothing. */
+  /* Revised 22 Oct (Rich: the phone front page looked bare): the mark comes
+     back as a quiet layer behind the copy, top right and cropped by the edge,
+     so the first screen has the brand's one image without spending height. */
   .hero-mark {
-    display: none;
+    --hero-mark-opacity: 0.2;
+    top: 34%;
+    right: -22%;
+    height: 64vh;
+    max-width: none;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 
@@ -756,3 +765,6 @@ section[id] { scroll-margin-top: 8rem; }
     mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.6) 18%, #000 40%);
   }
 }
+/* Product row logos: 60px on a phone, full height from lg. */
+.row-logo { height: 60px; }
+@media (min-width: 1024px) { .row-logo { height: var(--h, 96px); } }

@@ -177,7 +177,7 @@ export default function Home() {
               <a
                 href="#suite"
                 data-testid="hero-cta-products"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-[16px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3.5 text-[16px] font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90 sm:px-7"
               >
                 Our products <ArrowRight className="h-4 w-4" />
               </a>
@@ -186,7 +186,7 @@ export default function Home() {
               <Link
                 to="/contact"
                 data-testid="hero-cta-contact"
-                className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-7 py-3.5 text-[16px] font-semibold text-primary transition-colors hover:border-primary hover:bg-primary/5"
+                className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-5 py-3.5 sm:px-7 text-[16px] font-semibold text-primary transition-colors hover:border-primary hover:bg-primary/5"
               >
                 Contact us <ArrowRight className="h-4 w-4" />
               </Link>
