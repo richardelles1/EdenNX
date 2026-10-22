@@ -40,11 +40,11 @@ export const DETAIL: Record<string, Detail> = {
       "For business development teams, licensing executives, pharma strategy divisions, and life science investors who need to know what is available before their competitors do.",
     features: [
       { label: "The deepest index", desc: `${ASSET_COUNT_LABEL} university assets, with patents, trials, and the literature alongside.` },
-      { label: "Precise filtering", desc: "Six development stages, ten modalities, and thirty-two biology categories." },
+      { label: "Fit scoring", desc: "Ranked against your buyer profile, not keyword match." },
       { label: "Scored dossiers", desc: "Commercial thesis, competitive position, IP and licensing, each traced to its evidence." },
-      { label: "Whitespace map", desc: "Asset density across every biology and modality, refreshed daily." },
-      { label: "Deal pipeline", desc: "Watching through In Discussion, in board, grid, and export views." },
       { label: "Standing alerts", desc: "Real-time, daily, or weekly on new matches, stage changes, and licensing updates." },
+      { label: "Precise filtering", desc: "Six development stages, ten modalities, and thirty-two biology categories." },
+      { label: "Whitespace map", desc: "Asset density across every biology and modality, refreshed daily." },
     ],
     // Per-seat as of this revision. edenradar.com still publishes the older
     // tiered pricing ($1,999 for one seat, $8,999 for five); it is being
@@ -65,7 +65,7 @@ export const DETAIL: Record<string, Detail> = {
       { label: "Vendor register", desc: "Type, service, location, risk tier, and qualification status, colour-coded on one sortable list." },
       { label: "Audit program", desc: "Risk-based scheduling, with findings logged and classified by severity." },
       { label: "Vendor portal", desc: "A private link with no account to create, and uploads read and filed automatically." },
-      { label: "Controlled record", desc: "Append-only and hash-chained, with an integrity check you can run on demand." },
+      { label: "Controlled record", desc: "Append-only, hash-chained, and signed off by re-authentication." },
       { label: "Electronic sign-off", desc: "Re-authenticated signatures on every qualification and audit closure." },
       { label: "Regulation Watch", desc: "FDA and MHRA recall and enforcement actions matched to your vendors, checked daily." },
     ],
@@ -103,13 +103,14 @@ export const DETAIL: Record<string, Detail> = {
     photo: "/images/photo-br.jpg",
     photoAlt: "Rows of blue batch-record binders on a shelf",
     title: "Batch tracking that leaves the release decision to people",
-    audience: "For manufacturing and quality teams that need to see where a batch sits.",
+    audience: "For manufacturing and quality teams that need to see where every batch sits, and why it is waiting.",
+    // Cleo's final lines, 22 Oct 2026.
     features: [
+      { label: "Command Center", desc: "A board of every batch and where it stands, with what needs attention first." },
+      { label: "Why it is waiting", desc: "The reason a batch has not moved, shown next to the batch." },
+      { label: "Quality events", desc: "On their own screen, beside the batches they touch." },
+      { label: "The decision stays human", desc: "The release decision stays with your quality unit. EdenBR never makes or records it." },
       { label: "Tracks where every batch sits", desc: "The position of each batch, at a glance." },
-      { label: "Shows why a batch is waiting", desc: "The reason a batch has not moved, next to the batch." },
-      { label: "Release decision stays with your quality unit", desc: "EdenBR never makes or records it." },
-      { label: "Command Center", desc: "A board of every batch, with what needs attention surfaced first." },
-      { label: "Quality events", desc: "Quality events on their own screen, beside the batches." },
       { label: "History", desc: "A dated record of what happened to each batch." },
     ],
     term: "Beta",
