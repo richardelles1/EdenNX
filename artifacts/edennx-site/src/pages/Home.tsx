@@ -211,7 +211,7 @@ export default function Home() {
         {/* One line, not a list of the products: the rows below introduce
             each of them, so naming all four here said everything twice. */}
         <p className="text-lg text-foreground/75 reveal" style={{ transitionDelay: "0.05s" }}>
-          Four products for the work between discovery and the clinic.
+          For the work between discovery and the clinic.
         </p>
       </section>
 
