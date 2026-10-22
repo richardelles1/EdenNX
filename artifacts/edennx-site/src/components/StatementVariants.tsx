@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { ink } from "@/components/PortalBits";
@@ -175,6 +175,19 @@ export function StatementsStage() {
 
 function Stage() {
   const [open, setOpen] = useState<string>(FOUR[0].name);
+  // Hover intent: a pointer crossing other lines on its way to the card should
+  // not swap the product, so a hover only takes after it rests for 140ms.
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cancel = () => {
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = null;
+  };
+  const hover = (name: string) => {
+    if (!window.matchMedia("(hover: hover)").matches) return;
+    cancel();
+    timer.current = setTimeout(() => setOpen(name), 140);
+  };
+  useEffect(() => cancel, []);
   return (
     <div className="mx-auto grid max-w-7xl grid-cols-[1.1fr_1fr] gap-16 px-8" data-testid="statements-stage">
       <div>
@@ -186,12 +199,12 @@ function Stage() {
               type="button"
               aria-pressed={on}
               onClick={() => setOpen(p.name)}
-              onMouseEnter={() => window.matchMedia("(hover: hover)").matches && setOpen(p.name)}
+              onMouseEnter={() => hover(p.name)}
+              onMouseLeave={cancel}
               onFocus={() => setOpen(p.name)}
               className="block w-full border-t border-foreground/12 py-7 text-left last:border-b"
             >
               <span className="flex items-center gap-3" style={{ opacity: on ? 1 : 0.5, transition: `opacity 0.3s ${EASE}` }}>
-                <Mark p={p} size={26} />
                 <Name p={p} cls="text-[15px]" />
                 <ArrowUpRight aria-hidden className="ml-auto h-4 w-4 text-foreground/60" style={{ opacity: on ? 1 : 0, transition: `opacity 0.3s ${EASE}` }} />
               </span>
@@ -205,10 +218,11 @@ function Stage() {
 
       {/* One stage, every product layered in it; the open one is shown. Each
           layer is in the page, so the stage never jumps in height. */}
-      <div className="grid self-center" aria-live="polite">
+      <div className="grid self-start" aria-live="polite">
         {FOUR.map((p) => {
           const on = open === p.name;
           const l = LOCKUP[p.name];
+
           return (
             <div
               key={p.name}
@@ -224,8 +238,8 @@ function Stage() {
               {/* Still: it sits centred against the list rather than following
                   the scroll. The logo has its own band, faintly in the
                   product's colour, so the card reads as that product's page. */}
-              <div className="flex h-[168px] items-center justify-center border-b border-foreground/[0.06]" style={{ background: `hsl(var(${p.token}) / 0.05)` }}>
-                <img src={l.src} alt={p.name} decoding="async" style={{ height: Math.round(l.h * 0.66), width: "auto" }} />
+              <div className="flex h-[200px] items-center justify-center border-b border-foreground/[0.06]" style={{ background: `hsl(var(${p.token}) / 0.05)` }}>
+                <img src={l.src} alt={p.name} decoding="async" style={{ height: Math.round(l.h * 0.78), width: "auto" }} />
               </div>
               <div className="p-9">
                 <p className="text-[16px] leading-[1.6] text-foreground/75">{p.sub}</p>
