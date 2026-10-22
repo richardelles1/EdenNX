@@ -220,8 +220,9 @@ export default function Home() {
         <ShowcaseFeatureDropdown />
       </section>
 
-      {/* Mission, as the page's one full-bleed moment: the statement over a
-          photograph of patients and families, who are who it is for. Until the
+      {/* Mission, as the page's one full-bleed moment, with no eyebrow label:
+          the statement says what it is. It is the section's heading (h2).
+          The photograph is of patients and families, who are who it is for. Until the
           licensed photo lands (Cleo, MISSION_PHOTO), a deep green field. The
           scrim darkens the left, where the type sits, and lets the photo
           breathe on the right. */}
@@ -232,13 +233,12 @@ export default function Home() {
           )}
           <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.86) 0%, rgba(8,20,14,0.62) 45%, rgba(8,20,14,0.12) 100%)" }} />
           <div className="relative flex min-h-[520px] flex-col justify-center px-8 py-16 sm:px-12 lg:min-h-[620px] lg:px-20">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#9fdcb4]">Our mission</p>
             {/* The old version framed the mission entirely as the licensing gap,
                 which is EdenRadar's problem rather than the company's. This spans
                 the lifecycle: discovery, then quality, then release. */}
-            <p className="mt-6 max-w-[16ch] text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[4.6rem]">
+            <h2 className="max-w-[16ch] text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[4.6rem]">
               Accelerate science to <span className="text-[#9fdcb4]">patient impact.</span>
-            </p>
+            </h2>
             <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.65] text-white/85 lg:text-[18px]">
               Discover smarter, qualify faster, and track every step across the biotech lifecycle.
               From opportunities at university tech transfer offices, to audit-ready vendor

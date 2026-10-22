@@ -105,8 +105,7 @@ export function FieldNotes() {
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-primary">From the field</p>
-            <h2 className="mt-4 text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-foreground lg:text-[2.6rem]">
+            <h2 className="text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-foreground lg:text-[2.6rem]">
               What we are posting this week.
             </h2>
           </div>
