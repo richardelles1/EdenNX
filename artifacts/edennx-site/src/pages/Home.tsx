@@ -249,7 +249,7 @@ export default function Home() {
                 // The photo only ever fills the right 48%, and the text column
                 // stops at 58% (they meet inside the fade), so the faces never sit under the type at any
                 // width (Rich: the text was over the girl's face).
-                objectPosition: "40% 30%",
+                objectPosition: "62% 30%",
                 WebkitMaskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.6) 18%, #000 40%)",
                 maskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.6) 18%, #000 40%)",
               }}
@@ -262,12 +262,11 @@ export default function Home() {
             {/* The old version framed the mission entirely as the licensing gap,
                 which is EdenRadar's problem rather than the company's. This spans
                 the lifecycle: discovery, then quality, then release. */}
-            <h2 className="text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[clamp(2.6rem,calc(5.8cqw-12px),5.2rem)]">
-              {/* Two set lines; "patient impact." never breaks (Rich). */}
-              <span className="block">Accelerate science</span>
-              <span className="block">
-                to <span className="whitespace-nowrap text-[#9fdcb4]">patient impact.</span>
-              </span>
+            <h2 className="text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[clamp(3rem,calc(7cqw-14px),6rem)]">
+              {/* Three set lines (Rich). */}
+              <span className="block">Accelerate</span>
+              <span className="block">science to</span>
+              <span className="block whitespace-nowrap text-[#9fdcb4]">patient impact.</span>
             </h2>
             <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.65] text-white/85 lg:text-[18px]">
               Discover smarter, qualify faster, and track every step across the biotech lifecycle.
