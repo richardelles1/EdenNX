@@ -67,6 +67,14 @@ function Features({ p, on }: { p: Product; on: boolean }) {
   );
 }
 
+// The full logos where the name is part of the artwork (Rich): EdenRadar's name
+// over its dot globe, and EdenTrials' globe with the name through it. The
+// others keep the mark beside the name.
+const FULL: Record<string, { src: string; h: number }> = {
+  EdenRadar: { src: "/images/lockups/edenradar.svg", h: 84 },
+  EdenTrials: { src: "/images/marks/mark-trials.png", h: 84 },
+};
+
 export function ShowcaseFeatureDropdown() {
   const [open, setOpen] = useState<string | null>(FOUR[0].name);
   const section = useRef<HTMLDivElement>(null);
@@ -135,9 +143,15 @@ export function ShowcaseFeatureDropdown() {
               onClick={() => toggle(p.name, on)}
               className="stmt-row grid w-full grid-cols-[1fr_auto] items-center gap-6 py-8 text-left lg:min-h-[164px] lg:grid-cols-[260px_1fr_auto] lg:py-0"
             >
-              <span className="flex items-center gap-3.5">
-                <Mark p={p} size={44} />
-                <Name p={p} cls="text-[19px]" />
+              <span className="flex h-[84px] items-center gap-3.5">
+                {FULL[p.name] ? (
+                  <img src={FULL[p.name].src} alt={p.name} decoding="async" style={{ height: FULL[p.name].h, width: "auto" }} />
+                ) : (
+                  <>
+                    <Mark p={p} size={p.name === "EdenCompliance" ? 56 : 44} />
+                    <Name p={p} cls="text-[19px]" />
+                  </>
+                )}
               </span>
               <span className="col-span-2 row-start-2 lg:col-span-1 lg:row-start-auto">
                 <Headline p={p} cls="max-w-[26ch] text-[1.7rem] leading-[1.08] tracking-[-0.03em] lg:text-[2.4rem]" />

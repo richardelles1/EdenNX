@@ -87,7 +87,7 @@ export function markStyle(_name: string, size: number): { width: number; height:
 export const MARKS: Record<string, string> = {
   EdenRadar: "/images/marks/mark-radar.svg",
   EdenCompliance: "/images/marks/mark-compliance.png",
-  EdenTrials: "/images/marks/mark-trials.svg", // edentrials.com's favicon: the line globe
+  EdenTrials: "/images/marks/mark-trials.png", // the globe with the name through it (Rich)
   EdenBR: "/images/marks/mark-br.png",
 };
 
