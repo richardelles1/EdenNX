@@ -77,12 +77,17 @@ const FULL: Record<string, { src: string; h: number }> = {
 
 export function ShowcaseFeatureDropdown() {
   const [open, setOpen] = useState<string | null>(null);
-  // On a phone the opened line can start above the fold once the one above it
-  // closes, so bring its headline to the top after the panels settle.
   const toggle = (name: string, on: boolean) => {
     setOpen(on ? null : name);
-    if (on || !window.matchMedia("(max-width: 1023px)").matches) return;
-    setTimeout(() => document.getElementById(`row-${name.toLowerCase()}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 480);
+    if (on) return;
+    // At any width: if closing the line above carried this one up under the
+    // fixed header (Murphy, 1440), bring its headline back into view.
+    setTimeout(() => {
+      const row = document.getElementById(`row-${name.toLowerCase()}`);
+      if (!row) return;
+      const top = row.getBoundingClientRect().top;
+      if (top < 90 || window.matchMedia("(max-width: 1023px)").matches) row.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 480);
   };
   return (
     <div className="feat-list mx-auto max-w-7xl px-6 lg:px-8" data-testid="showcase-features">
