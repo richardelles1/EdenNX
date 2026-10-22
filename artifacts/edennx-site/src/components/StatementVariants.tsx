@@ -5,6 +5,7 @@ import { ink } from "@/components/PortalBits";
 import { FRAMES, type Product } from "@/components/ProductShowcase";
 import { Cta, Headline, Mark, Name, Terms } from "@/components/ProductCards";
 import { FOUR, LOCKUP, ShowcaseStatements } from "@/components/HomeShowcase";
+import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // Three dressed-up versions of the Statements proposal Rich picked. Same idea in
 // each: every product is one line of display type, its headline, and one line is
@@ -173,6 +174,16 @@ export function StatementsStage() {
   );
 }
 
+// One proof point per product, each already on our pages: the asset count from
+// platformStats, coverage as edentrials.com states it (Tex's safe wording), the
+// record's own three properties, and BR's own status line.
+const PROOF: Record<string, [string, string]> = {
+  EdenRadar: [ASSET_COUNT_LABEL, "university assets, tracked from tech transfer offices"],
+  EdenTrials: ["210+", "countries and territories"],
+  EdenCompliance: ["Append-only", "Hash-chained and e-signed, on every change"],
+  EdenBR: ["Every batch", "and where it sits, on one board"],
+};
+
 function Stage() {
   const [open, setOpen] = useState<string>(FOUR[0].name);
   // Hover intent: a pointer crossing other lines on its way to the card should
@@ -227,7 +238,7 @@ function Stage() {
             <div
               key={p.name}
               aria-hidden={!on}
-              className="col-start-1 row-start-1 overflow-hidden rounded-[22px] border border-foreground/[0.08] bg-white shadow-[0_1px_2px_rgba(15,26,20,0.04),0_30px_60px_-30px_rgba(15,26,20,0.25)]"
+              className="col-start-1 row-start-1 overflow-hidden rounded-[22px] border border-foreground/[0.08] bg-white p-10 shadow-[0_1px_2px_rgba(15,26,20,0.04),0_30px_60px_-30px_rgba(15,26,20,0.25)]"
               style={{
                 opacity: on ? 1 : 0,
                 transform: on ? "none" : "translateY(6px)",
@@ -235,29 +246,32 @@ function Stage() {
                 transition: `opacity 0.4s ${EASE}, transform 0.4s ${EASE}, visibility 0.4s`,
               }}
             >
-              {/* Still: it sits centred against the list rather than following
-                  the scroll. The logo has its own band, faintly in the
-                  product's colour, so the card reads as that product's page. */}
-              <div className="flex h-[200px] items-center justify-center border-b border-foreground/[0.06]" style={{ background: `hsl(var(${p.token}) / 0.05)` }}>
-                <img src={l.src} alt={p.name} decoding="async" style={{ height: Math.round(l.h * 0.78), width: "auto" }} />
+              {/* The card leads with one proof point, the thing a buyer would
+                  quote back, with the logo small in the corner. */}
+              <div className="flex items-center justify-between gap-4">
+                <span className="flex items-center gap-3">
+                  <Mark p={p} size={36} />
+                  <Name p={p} cls="text-[17px]" />
+                </span>
+                {p.beta && <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground/65">Beta</span>}
               </div>
-              <div className="p-9">
-                <p className="text-[16px] leading-[1.6] text-foreground/75">{p.sub}</p>
-                <ol className="mt-7 space-y-4">
-                  {(p.capabilities ?? []).slice(0, 4).map((c, k) => (
-                    <li key={c.label} className="grid grid-cols-[28px_1fr] gap-x-2">
-                      <span className="pt-0.5 font-mono text-[12px]" style={{ color: ink(p.goldToken ?? p.token) }}>{String(k + 1).padStart(2, "0")}</span>
-                      <span>
-                        <span className="block text-[15px] font-semibold text-foreground">{c.label}</span>
-                        <span className="mt-0.5 block text-[13.5px] leading-relaxed text-foreground/70">{c.detail}</span>
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-                <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-foreground/[0.07] pt-6">
-                  <Cta p={p} />
-                  <Terms p={p} />
-                </div>
+              <div className="mt-10 border-t pt-8" style={{ borderColor: `hsl(var(${p.token}) / 0.35)` }}>
+                <p className="text-[3.4rem] font-bold leading-none tracking-[-0.04em]" style={{ color: ink(p.goldToken ?? p.token) }}>{PROOF[p.name][0]}</p>
+                <p className="mt-3 text-[17px] font-medium text-foreground">{PROOF[p.name][1]}</p>
+              </div>
+              <p className="mt-6 text-[15.5px] leading-[1.6] text-foreground/70">{p.sub}</p>
+              <ul className="mt-7 space-y-2.5">
+                {/* Skip a capability that only repeats the proof point. */}
+                {(p.capabilities ?? []).filter((c) => !c.detail.includes(PROOF[p.name][0])).slice(0, 3).map((c) => (
+                  <li key={c.label} className="flex items-baseline gap-3 text-[15px] text-foreground">
+                    <span aria-hidden className="h-px w-3 flex-shrink-0 translate-y-[-4px]" style={{ background: ink(p.goldToken ?? p.token) }} />
+                    <span><span className="font-semibold">{c.label}</span><span className="text-foreground/65">, {c.detail.charAt(0).toLowerCase() + c.detail.slice(1)}</span></span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-9 flex flex-wrap items-center justify-between gap-4">
+                <Cta p={p} />
+                <Terms p={p} />
               </div>
             </div>
           );

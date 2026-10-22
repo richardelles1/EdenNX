@@ -73,8 +73,9 @@ export const PRODUCTS: Record<string, Product> = {
   },
   trials: {
     name: "EdenTrials", token: "--portal-trials",
-    headline: { pre: "A registry overwrites what it said yesterday. ", accent: "We keep the copies.", post: "" },
-    sub: "So we can say what changed, and when. Trial registry records in one vocabulary, with changes tracked daily.",
+    // edentrials.com's own hero (client/src/pages/Landing.tsx in the EdenTrials repo).
+    headline: { pre: "A live, global ", accent: "clinical trial network.", post: "" },
+    sub: "Every trial the world is running, and everything attached to it.",
     note: "",
     // Sourced from the portal's own navigation and screen copy (PORTAL_NAV in
     // the EdenTrials repo, client/src/components/portal/PortalShell.tsx).

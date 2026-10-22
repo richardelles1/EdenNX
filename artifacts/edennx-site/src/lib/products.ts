@@ -87,7 +87,7 @@ export function markStyle(_name: string, size: number): { width: number; height:
 export const MARKS: Record<string, string> = {
   EdenRadar: "/images/marks/mark-radar.svg",
   EdenCompliance: "/images/marks/mark-compliance.png",
-  EdenTrials: "/images/marks/mark-trials.png",
+  EdenTrials: "/images/marks/mark-trials.svg", // edentrials.com's own nav mark: the pulse line on its blue square
   EdenBR: "/images/marks/mark-br.png",
 };
 
