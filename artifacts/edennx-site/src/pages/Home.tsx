@@ -237,23 +237,26 @@ export default function Home() {
               loading="lazy"
               // The right side of the band, fading in from the green so the
               // photograph sits behind the statement rather than beside it.
-              className="absolute inset-y-0 right-0 h-full w-full lg:w-[64%]"
+              className="absolute inset-y-0 right-0 h-full w-full lg:w-[54%]"
               style={{
                 objectFit: "cover",
-                objectPosition: "60% 30%",
-                WebkitMaskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 30%, #000 70%)",
-                maskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.55) 30%, #000 70%)",
+                // The photo only ever fills the right 54%, and the text column
+                // stops at 46%, so the faces never sit under the type at any
+                // width (Rich: the text was over the girl's face).
+                objectPosition: "45% 30%",
+                WebkitMaskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.6) 18%, #000 40%)",
+                maskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.6) 18%, #000 40%)",
               }}
             />
           )}
           {/* Keeps the type legible where it crosses the photo, and gives the
               photo a light green cast so it belongs to the band. */}
           <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.7) 0%, rgba(8,20,14,0.35) 50%, rgba(20,60,38,0.18) 100%)" }} />
-          <div className="relative flex min-h-[520px] flex-col justify-center px-8 py-16 sm:px-12 lg:min-h-[620px] lg:px-20">
+          <div className="relative flex min-h-[520px] flex-col justify-center px-8 py-16 sm:px-12 lg:min-h-[620px] lg:w-[48%] lg:px-16 xl:px-20">
             {/* The old version framed the mission entirely as the licensing gap,
                 which is EdenRadar's problem rather than the company's. This spans
                 the lifecycle: discovery, then quality, then release. */}
-            <h2 className="max-w-[16ch] text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[4.6rem]">
+            <h2 className="max-w-[16ch] text-[2.6rem] font-bold leading-[1.02] tracking-[-0.035em] text-white sm:text-[3.4rem] lg:text-[3.5rem] xl:text-[4rem]">
               Accelerate science to <span className="text-[#9fdcb4]">patient impact.</span>
             </h2>
             <p className="mt-8 max-w-[52ch] text-[17px] leading-[1.65] text-white/85 lg:text-[18px]">
