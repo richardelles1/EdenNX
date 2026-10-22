@@ -209,7 +209,9 @@ function CardLink({
   onEnter?: () => void;
   onLeave?: () => void;
 }) {
-  const cls = `group relative flex flex-col overflow-hidden rounded-[26px] ${PRESS} ${className}`;
+  const cls = `group relative flex scroll-mt-28 flex-col overflow-hidden rounded-[26px] ${PRESS} ${className}`;
+  // The anchor the footer, the products menu and the mobile menu link to.
+  const id = p.name.toLowerCase();
   // Focus mirrors hover so the reveal is reachable from the keyboard too.
   const handlers = {
     onMouseEnter: onEnter,
@@ -218,12 +220,12 @@ function CardLink({
     onBlur: onLeave,
   };
   if (p.beta) {
-    return <div className={cls.replace(PRESS, "")} style={cardStyle(p)}>{children}</div>;
+    return <div id={id} className={cls.replace(PRESS, "")} style={cardStyle(p)}>{children}</div>;
   }
   return p.cta.external ? (
-    <a href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={cardStyle(p)} {...handlers}>{children}</a>
+    <a id={id} href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={cardStyle(p)} {...handlers}>{children}</a>
   ) : (
-    <Link to={p.cta.href} className={cls} style={cardStyle(p)} {...handlers}>{children}</Link>
+    <Link id={id} to={p.cta.href} className={cls} style={cardStyle(p)} {...handlers}>{children}</Link>
   );
 }
 

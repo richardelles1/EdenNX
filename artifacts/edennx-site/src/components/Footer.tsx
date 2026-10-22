@@ -53,7 +53,7 @@ export function Footer() {
               The intelligence backbone of modern biotech, from the first research hypothesis
               through qualification, quality and release.
             </p>
-            <div className="flex items-center gap-3 mt-5">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-5">
               <a
                 href="https://www.linkedin.com/company/edennx"
                 target="_blank"
@@ -82,6 +82,15 @@ export function Footer() {
               >
                 Launch EdenCompliance
               </a>
+              <a
+                href="https://edentrials.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold text-primary hover:underline"
+                data-testid="footer-edentrials"
+              >
+                Launch EdenTrials
+              </a>
             </div>
           </div>
 
@@ -97,7 +106,7 @@ export function Footer() {
                     {l.to ? (
                       <Link
                         to={l.to}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="inline-block py-0.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
                         data-testid={`footer-${l.label.toLowerCase().replace(/\s+/g, "-")}`}
                       >
                         {l.label}
@@ -109,7 +118,7 @@ export function Footer() {
                         href={l.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="inline-block py-0.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
                       >
                         {l.label}
                       </a>

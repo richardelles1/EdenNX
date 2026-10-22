@@ -240,22 +240,20 @@ export default function Home() {
               loading="lazy"
               // The right side of the band, fading in from the green so the
               // photograph sits behind the statement rather than beside it.
-              className="absolute inset-y-0 right-0 h-full w-full lg:w-[48%]"
+              className="mission-photo relative block aspect-[4/3] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:h-full lg:w-[48%]"
               style={{
                 objectFit: "cover",
                 // The photo only ever fills the right 48%, and the text column
                 // stops at 58% (they meet inside the fade), so the faces never sit under the type at any
                 // width (Rich: the text was over the girl's face).
                 objectPosition: "62% 30%",
-                WebkitMaskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.6) 18%, #000 40%)",
-                maskImage: "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.6) 18%, #000 40%)",
               }}
             />
           )}
           {/* Keeps the type legible where it crosses the photo, and gives the
               photo a light green cast so it belongs to the band. */}
-          <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.7) 0%, rgba(8,20,14,0.35) 50%, rgba(20,60,38,0.18) 100%)" }} />
-          <div className="relative flex min-h-[520px] flex-col justify-center px-8 py-16 sm:px-12 lg:min-h-[660px] lg:w-[58%] lg:px-12 xl:px-16">
+          <div aria-hidden className="absolute inset-0 hidden lg:block" style={{ background: "linear-gradient(90deg, rgba(8,20,14,0.7) 0%, rgba(8,20,14,0.35) 50%, rgba(20,60,38,0.18) 100%)" }} />
+          <div className="relative flex flex-col justify-center px-8 py-12 sm:px-12 lg:py-16 lg:min-h-[660px] lg:w-[58%] lg:px-12 xl:px-16">
             {/* The old version framed the mission entirely as the licensing gap,
                 which is EdenRadar's problem rather than the company's. This spans
                 the lifecycle: discovery, then quality, then release. */}
