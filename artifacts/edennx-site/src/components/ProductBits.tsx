@@ -51,7 +51,7 @@ export function Cta({ p }: { p: Product }) {
       <ArrowUpRight aria-hidden className="cta-arrow h-4 w-4" />
     </>
   );
-  const cls = "cta-link inline-flex items-center gap-1 text-[15px] font-semibold";
+  const cls = "cta-link inline-flex min-h-[24px] items-center gap-1 py-0.5 text-[15px] font-semibold";
   return p.cta.external ? (
     <a href={p.cta.href} target="_blank" rel="noopener noreferrer" className={cls} style={{ color }}>{inner}</a>
   ) : (

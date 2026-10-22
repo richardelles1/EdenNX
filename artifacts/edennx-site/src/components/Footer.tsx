@@ -68,7 +68,7 @@ export function Footer() {
                 href="https://edenradar.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-primary hover:underline"
+                className="inline-block py-0.5 text-sm font-semibold text-primary hover:underline"
                 data-testid="footer-edenradar"
               >
                 Launch EdenRadar
@@ -77,7 +77,7 @@ export function Footer() {
                 href="https://edencompliance.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-primary hover:underline"
+                className="inline-block py-0.5 text-sm font-semibold text-primary hover:underline"
                 data-testid="footer-edencompliance"
               >
                 Launch EdenCompliance
@@ -86,7 +86,7 @@ export function Footer() {
                 href="https://edentrials.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-semibold text-primary hover:underline"
+                className="inline-block py-0.5 text-sm font-semibold text-primary hover:underline"
                 data-testid="footer-edentrials"
               >
                 Launch EdenTrials

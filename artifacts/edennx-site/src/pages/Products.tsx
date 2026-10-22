@@ -63,11 +63,11 @@ export default function Products() {
               style={{ transitionDelay: "0.05s" }}
               data-testid="how-it-connects-headline"
             >
-              A connected path, in service of our mission and our people.
+              How it connects.
             </h2>
             <p className="mt-3 text-base leading-relaxed text-foreground/75 reveal" style={{ transitionDelay: "0.1s" }}>
-              Four of the products are one road, not four tools. A concept registered on day one can end as a licensed
-              asset without its author ever writing a pitch.
+              A path for research teams, from first idea to the right buyer. Register an idea, build the project, be
+              found by industry teams, and list when you are ready. Each step stands on its own; together they are one path.
             </p>
           </div>
 

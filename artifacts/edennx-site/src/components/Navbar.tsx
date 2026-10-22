@@ -88,8 +88,7 @@ function ProductRow({
           ))}
           {p.launch && (
             <>
-              <span className="text-foreground/25" aria-hidden>·</span>
-              <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
+              <a href={p.launch.href} target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="basis-full py-1 font-semibold hover:underline" style={{ color: accent }}>{p.launch.label} →</a>
             </>
           )}
         </div>
@@ -109,6 +108,13 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const closeTimer = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
