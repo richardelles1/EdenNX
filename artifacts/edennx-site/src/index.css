@@ -748,3 +748,18 @@ section[id] { scroll-margin-top: 8rem; }
   .stmt-panel, .stmt-plus, .path-line::before, .path-stop { transition: none; }
   .path-line::before, .path-stop { transform: none; }
 }
+
+/* Dropdown with photographs (ShowcaseFeatures.tsx): the + takes its product's
+   colour on hover and while open. */
+.feat-plus {
+  border-color: hsl(var(--foreground) / 0.15);
+  color: hsl(var(--foreground) / 0.7);
+  transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.feat-plus[data-on="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .feat-row button:hover .feat-plus { background: var(--accent); border-color: var(--accent); color: #fff; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feat-plus { transition: none; }
+}

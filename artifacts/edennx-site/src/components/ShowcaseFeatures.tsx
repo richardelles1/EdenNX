@@ -16,7 +16,7 @@ const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
 // beside its six capabilities (DETAIL, the same source as ProductCanvas). Beta
 // products have no photograph yet, so they show a tinted field with their mark,
 // as the slider does.
-function Features({ p }: { p: Product }) {
+function Features({ p, on }: { p: Product; on: boolean }) {
   const d = DETAIL[p.name];
   const accent = ink(p.goldToken ?? p.token);
   return (
@@ -24,7 +24,21 @@ function Features({ p }: { p: Product }) {
       <div className="lg:order-2">
         <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: `hsl(var(${p.token}) / 0.2)` }}>
           {d.photo ? (
-            <img src={d.photo} alt={d.photoAlt} decoding="async" loading="lazy" className="aspect-[3/2] w-full" style={{ objectFit: "cover", objectPosition: d.photoPosition }} />
+            <img
+              src={d.photo}
+              alt={d.photoAlt}
+              decoding="async"
+              loading="lazy"
+              className="aspect-[3/2] w-full"
+              // Settles once as the line opens, then holds still.
+              style={{
+                objectFit: "cover",
+                objectPosition: d.photoPosition,
+                opacity: on ? 1 : 0,
+                transform: on ? "scale(1)" : "scale(1.03)",
+                transition: `opacity 0.6s ${EASE} 0.1s, transform 0.9s ${EASE} 0.1s`,
+              }}
+            />
           ) : (
             <div className="flex aspect-[3/2] w-full items-center justify-center" style={{ background: `hsl(var(${p.token}) / 0.07)` }}>
               <Mark p={p} size={96} />
@@ -55,18 +69,27 @@ function Features({ p }: { p: Product }) {
 
 export function ShowcaseFeatureDropdown() {
   const [open, setOpen] = useState<string | null>(FOUR[0].name);
+  // On a phone the opened line can start above the fold once the one above it
+  // closes, so bring its headline to the top after the panels settle.
+  const toggle = (name: string, on: boolean) => {
+    setOpen(on ? null : name);
+    if (on || !window.matchMedia("(max-width: 1023px)").matches) return;
+    setTimeout(() => document.getElementById(`row-${name.toLowerCase()}`)?.scrollIntoView({ behavior: "smooth", block: "start" }), 480);
+  };
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-8" data-testid="showcase-features">
       {FOUR.map((p) => {
         const on = open === p.name;
         const id = `feat-${p.name.toLowerCase()}`;
         return (
-          <div key={p.name} className="border-t border-foreground/12">
+          <div key={p.name} id={`row-${p.name.toLowerCase()}`} className="feat-row relative scroll-mt-24 border-t border-foreground/12" style={{ ["--accent" as string]: ink(p.goldToken ?? p.token) }}>
+            {/* The open line carries its product's colour along its top edge. */}
+            <span aria-hidden className="absolute -top-px left-0 h-[2px] w-full origin-left" style={{ background: "var(--accent)", transform: on ? "scaleX(1)" : "scaleX(0)", transition: `transform 0.7s ${EASE}` }} />
             <button
               type="button"
               aria-expanded={on}
               aria-controls={id}
-              onClick={() => setOpen(on ? null : p.name)}
+              onClick={() => toggle(p.name, on)}
               className="stmt-row grid w-full grid-cols-[1fr_auto] items-center gap-6 py-8 text-left lg:grid-cols-[260px_1fr_auto] lg:py-10"
             >
               <span className="flex items-center gap-3.5">
@@ -78,7 +101,8 @@ export function ShowcaseFeatureDropdown() {
               </span>
               <span
                 aria-hidden
-                className="stmt-plus flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 text-foreground/70"
+                className="feat-plus flex h-10 w-10 items-center justify-center rounded-full border"
+                data-on={on}
                 style={{ transform: on ? "rotate(45deg)" : "none" }}
               >
                 <Plus className="h-4 w-4" />
@@ -86,7 +110,7 @@ export function ShowcaseFeatureDropdown() {
             </button>
             <div id={id} role="region" className="stmt-panel grid" style={{ gridTemplateRows: on ? "1fr" : "0fr" }}>
               <div className="overflow-hidden">
-                <div style={{ opacity: on ? 1 : 0, transition: `opacity 0.35s ${EASE}` }}><Features p={p} /></div>
+                <div style={{ opacity: on ? 1 : 0, transition: `opacity 0.35s ${EASE}` }}><Features p={p} on={on} /></div>
               </div>
             </div>
           </div>
