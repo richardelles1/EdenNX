@@ -5,9 +5,9 @@ const columns: { heading: string; links: { label: string; to?: string; href?: st
   {
     heading: "Product",
     links: [
+      { label: "EdenTrials", to: "/products#edentrials" },
       { label: "EdenRadar", to: "/products#edenradar" },
       { label: "EdenCompliance", to: "/products#edencompliance" },
-      { label: "EdenTrials", to: "/products#edentrials" },
       { label: "EdenBR (Beta)" },
       { label: "EdenMarket", to: "/products#edenmarket" },
       { label: "EdenLab", to: "/products#edenlab" },
@@ -65,6 +65,15 @@ export function Footer() {
                 <LinkedInIcon />
               </a>
               <a
+                href="https://edentrials.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block py-0.5 text-sm font-semibold text-primary hover:underline"
+                data-testid="footer-edentrials"
+              >
+                Launch EdenTrials
+              </a>
+              <a
                 href="https://edenradar.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -81,15 +90,6 @@ export function Footer() {
                 data-testid="footer-edencompliance"
               >
                 Launch EdenCompliance
-              </a>
-              <a
-                href="https://edentrials.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block py-0.5 text-sm font-semibold text-primary hover:underline"
-                data-testid="footer-edentrials"
-              >
-                Launch EdenTrials
               </a>
             </div>
           </div>

@@ -76,7 +76,8 @@ export const BETA_PRODUCTS: Product[] = [
   },
 ];
 
-export const SUITE: Product[] = [PRODUCTS[0], PRODUCTS[1], ...BETA_PRODUCTS, ...PRODUCTS.slice(2)];
+// Suite order (Wafick, 22 Oct 2026): Trials, Radar, Compliance, BR, then the emerging three.
+export const SUITE: Product[] = [BETA_PRODUCTS[0], PRODUCTS[0], PRODUCTS[1], BETA_PRODUCTS[1], ...PRODUCTS.slice(2)];
 
 // Marks are cropped to their ink and square. The Radar mark is the dot globe from
 // the EdenRadar lockup, without the wordmark band.

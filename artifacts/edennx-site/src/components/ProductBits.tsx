@@ -9,7 +9,7 @@ import { PRODUCTS, type Product } from "@/components/ProductShowcase";
 // headline with the accent words in its colour, its way in, and its terms.
 
 // The four products, in the order the home page lists them.
-export const FOUR = [PRODUCTS.radar, PRODUCTS.trials, PRODUCTS.compliance, PRODUCTS.br];
+export const FOUR = [PRODUCTS.trials, PRODUCTS.radar, PRODUCTS.compliance, PRODUCTS.br];
 
 export function Mark({ p, size }: { p: Product; size: number }) {
   const [failed, setFailed] = useState(false);

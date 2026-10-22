@@ -11,7 +11,7 @@ import { DETAIL } from "@/lib/productDetail";
 // as a ruled list. The emerging three follow as one row. Same content as the
 // cards this replaces; nothing dropped.
 
-const FLAGSHIPS = [PRODUCTS.radar, PRODUCTS.compliance, PRODUCTS.trials, PRODUCTS.br];
+const FLAGSHIPS = [PRODUCTS.trials, PRODUCTS.radar, PRODUCTS.compliance, PRODUCTS.br];
 const EMERGING = [PRODUCTS.market, PRODUCTS.lab, PRODUCTS.discovery];
 
 function Visual({ p }: { p: Product }) {
