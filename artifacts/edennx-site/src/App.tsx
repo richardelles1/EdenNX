@@ -45,6 +45,9 @@ export function AppShell() {
             <Route path="/preview/home-statements" element={<Home lead="cards" cards="statements" />} />
             <Route path="/preview/home-quarters" element={<Home lead="cards" cards="quarters" />} />
             <Route path="/preview/home-path" element={<Home lead="cards" cards="path" />} />
+            <Route path="/preview/home-spotlight" element={<Home lead="cards" cards="spotlight" />} />
+            <Route path="/preview/home-ledger" element={<Home lead="cards" cards="ledger" />} />
+            <Route path="/preview/home-stage" element={<Home lead="cards" cards="stage" />} />
             <Route path="/preview/products-a" element={<Products body="a" />} />
             <Route path="/preview/products-b" element={<Products body="b" />} />
             <Route path="/preview/products-scroller" element={<Products body="scroller" />} />

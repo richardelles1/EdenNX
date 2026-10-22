@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { ProductCanvas } from "@/components/ProductCanvas";
 import { ProductCardsA, ProductCardsB } from "@/components/ProductCards";
+import { StatementsLedger, StatementsSpotlight, StatementsStage } from "@/components/StatementVariants";
 import { ShowcasePath, ShowcaseQuarters, ShowcaseStatements } from "@/components/HomeShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
@@ -13,7 +14,7 @@ const MARK = "/images/eden-mark-hero.jpg";
 
 // lead and cards are for the preview routes only (/preview/home-cards-a and -b),
 // so Rich can compare the home page led by the cards against the scroller.
-export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scroller" | "cards"; cards?: "a" | "b" | "statements" | "quarters" | "path" }) {
+export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scroller" | "cards"; cards?: "a" | "b" | "statements" | "quarters" | "path" | "spotlight" | "ledger" | "stage" }) {
   useScrollReveal();
   useSEO(ROUTE_META["/"]);
 
@@ -185,7 +186,7 @@ export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scrol
 
       {lead === "cards" ? (
         <section className="pb-16 lg:pb-24" data-testid="product-cards">
-          {cards === "b" ? <ProductCardsB /> : cards === "statements" ? <ShowcaseStatements /> : cards === "quarters" ? <ShowcaseQuarters /> : cards === "path" ? <ShowcasePath /> : <ProductCardsA />}
+          {cards === "b" ? <ProductCardsB /> : cards === "statements" ? <ShowcaseStatements /> : cards === "quarters" ? <ShowcaseQuarters /> : cards === "path" ? <ShowcasePath /> : cards === "spotlight" ? <StatementsSpotlight /> : cards === "ledger" ? <StatementsLedger /> : cards === "stage" ? <StatementsStage /> : <ProductCardsA />}
         </section>
       ) : (
         <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-8 lg:pb-24" data-testid="product-canvas">

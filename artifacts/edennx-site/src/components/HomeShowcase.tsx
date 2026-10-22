@@ -17,8 +17,8 @@ import { Cta, Headline, Mark, Name, Terms } from "@/components/ProductCards";
 // 3, The path: the products placed along the work they serve, from finding an
 //    asset to releasing a batch, on one line.
 
-const FOUR = [PRODUCTS.radar, PRODUCTS.trials, PRODUCTS.compliance, PRODUCTS.br];
-const LOCKUP: Record<string, { src: string; h: number }> = {
+export const FOUR = [PRODUCTS.radar, PRODUCTS.trials, PRODUCTS.compliance, PRODUCTS.br];
+export const LOCKUP: Record<string, { src: string; h: number }> = {
   EdenRadar: { src: "/images/lockups/edenradar.svg", h: 150 },
   EdenCompliance: { src: "/images/lockups/edencompliance.svg", h: 176 },
   EdenTrials: { src: "/images/lockups/edentrials.svg", h: 188 },
