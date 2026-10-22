@@ -68,7 +68,7 @@ export function FieldNotes() {
   const [shown, setShown] = useState({ from: 1, to: 3 });
   const total = SOCIAL_POSTS.length;
 
-  // Which cards are in view, for the arrows and the "1-3 of N" count.
+  // Which cards are in view, for the arrows and the progress rule.
   useEffect(() => {
     const el = track.current;
     if (!el) return;
@@ -101,12 +101,12 @@ export function FieldNotes() {
   const arrow = "flex h-11 w-11 items-center justify-center rounded-full border border-foreground/15 text-foreground/80 disabled:opacity-30";
 
   return (
-    <section className="border-t border-foreground/10" data-testid="field-notes">
-      <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+    <section data-testid="field-notes">
+      <div className="mx-auto max-w-7xl px-6 pb-20 lg:px-8 lg:pb-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <h2 className="text-[2rem] font-bold leading-[1.08] tracking-[-0.03em] text-foreground lg:text-[2.6rem]">
-              What's moving in the Eden ecosystem.
+              What's moving at Eden.
             </h2>
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -135,11 +135,8 @@ export function FieldNotes() {
         {total > 3 && (
           <div className="mt-8 flex items-center justify-between gap-4">
             {/* Progress: a rule that fills as the reader moves along. */}
-            <div className="flex flex-1 items-center gap-4">
-              <span className="font-mono text-[12.5px] text-foreground/65">
-                {shown.from}–{shown.to} of {total}
-              </span>
-              <span className="relative h-[2px] max-w-[240px] flex-1 overflow-hidden rounded-full bg-foreground/10">
+            <div className="flex flex-1 items-center" aria-hidden>
+              <span className="relative h-[2px] max-w-[280px] flex-1 overflow-hidden rounded-full bg-foreground/10">
                 <span
                   className="absolute inset-y-0 left-0 rounded-full bg-primary"
                   style={{ width: `${(shown.to / total) * 100}%`, transition: `width 0.4s ${EASE}` }}

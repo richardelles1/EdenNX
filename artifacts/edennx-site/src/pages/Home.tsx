@@ -209,16 +209,13 @@ export default function Home() {
         {/* "Backbone" belongs to the hero now, so this heading leads with the
             problem instead of repeating the metaphor, and the body picks up the
             hero's three beats to show how the products deliver them. */}
-        <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-5 reveal">
+        <h2 className="text-3xl md:text-[2.75rem] font-black tracking-tight leading-[1.08] text-foreground mb-4 reveal">
           Built for every step that slows science down.
         </h2>
-        <p
-          className="text-lg text-foreground/80 max-w-2xl leading-relaxed reveal"
-          style={{ transitionDelay: "0.05s" }}
-        >
-          EdenRadar finds the asset. EdenCompliance qualifies the vendors and runs the audits
-          behind it. EdenTrials is a live, global clinical trial network. EdenBR
-          (Beta) tracks where a batch sits. EdenLab, EdenDiscovery and EdenMarket are emerging.
+        {/* One line, not a list of the products: the rows below introduce
+            each of them, so naming all four here said everything twice. */}
+        <p className="text-lg text-foreground/75 reveal" style={{ transitionDelay: "0.05s" }}>
+          Four products, and three more emerging.
         </p>
       </section>
 
@@ -284,36 +281,30 @@ export default function Home() {
 
       <FieldNotes />
 
-      {/* Bottom CTA */}
-      <section className="bg-primary/5 border-t border-primary/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14 text-center">
-          {/* One action, and not a product launch. This used to read "Start with
-              the flagship that fits your team" over two buttons, which made two
-              of the products stand in for the company on the last thing anyone
-              reads. Sending people to us keeps the parent site introducing the
-              suite rather than routing traffic to one half of it. */}
-          <h2
-            className="text-2xl md:text-3xl font-bold text-foreground mb-3 reveal"
-            data-testid="bottom-cta-headline"
-          >
+      {/* Bottom CTA. It closes the page in the mission band's green and at
+          its width, so the last thing on the page has the weight of the
+          statement rather than fading out on a pale strip. One action, and
+          not a product launch: sending people to us keeps the parent site
+          introducing the suite rather than routing to one half of it. */}
+      <section className="px-4 pb-20 lg:px-6 lg:pb-28">
+        <div
+          className="reveal relative mx-auto max-w-[88rem] overflow-hidden rounded-[28px] px-8 py-16 text-center sm:px-12 lg:py-24"
+          style={{ background: "linear-gradient(120deg, hsl(152 40% 16%) 0%, hsl(146 42% 26%) 100%)" }}
+        >
+          <h2 className="text-[2.2rem] font-bold leading-[1.05] tracking-[-0.03em] text-white lg:text-[3.4rem]" data-testid="bottom-cta-headline">
             Tell us what you are working on.
           </h2>
-          <p
-            className="mx-auto mb-7 max-w-xl text-base leading-relaxed text-foreground/70 reveal"
-            style={{ transitionDelay: "0.05s" }}
-          >
+          <p className="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-white/80">
             We will direct you to the right product across the suite, or build toward the one you
             need.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 reveal" style={{ transitionDelay: "0.1s" }}>
-            <Link
-              to="/contact"
-              data-testid="bottom-cta-contact"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
-            >
-              Contact us <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <Link
+            to="/contact"
+            data-testid="bottom-cta-contact"
+            className="mt-9 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-base font-semibold text-[#14352a] transition-opacity hover:opacity-90"
+          >
+            Contact us <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
     </div>
