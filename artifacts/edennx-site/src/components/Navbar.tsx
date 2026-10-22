@@ -209,7 +209,7 @@ export function Navbar() {
             </div>
 
             <button
-              className="md:hidden p-2 rounded-md text-foreground/70 hover:text-foreground hover:bg-muted transition-colors"
+              className="md:hidden flex h-11 w-11 items-center justify-center rounded-md text-foreground/70 hover:text-foreground hover:bg-muted transition-colors"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
               aria-expanded={menuOpen}

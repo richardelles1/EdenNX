@@ -89,7 +89,11 @@ export function ShowcaseFeatureDropdown() {
   // the same height, so the section's height never changes and the bands stay
   // put. Panels above the screen collapse under the browser's scroll anchoring,
   // so what you are reading does not jump. A click still opens any product.
+  // Desktop only. On a phone a tap opens a product and nothing else does: an
+  // open panel there is taller than the screen, so a scroll band would reopen
+  // the line the reader just left, and the tap would undo itself (Murphy, 390px).
   useEffect(() => {
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
     let raf = 0;
     const tick = () => {
       raf = 0;

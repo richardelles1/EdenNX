@@ -56,6 +56,7 @@ export const DETAIL: Record<string, Detail> = {
 
   EdenCompliance: {
     photo: "/images/photo-compliance.jpg",
+    photoPosition: "50% 15%",
     photoAlt: "Two colleagues reviewing a document together by a window",
     title: "Vendor qualification and audit management",
     audience:
