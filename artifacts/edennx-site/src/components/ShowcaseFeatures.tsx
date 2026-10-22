@@ -1,109 +1,53 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Plus } from "lucide-react";
 import { ink } from "@/components/PortalBits";
-import { SHOT_GROUND, type Product } from "@/components/ProductShowcase";
+import { type Product } from "@/components/ProductShowcase";
+import { DETAIL } from "@/lib/productDetail";
 import { Cta, Headline, Mark, Name, Terms } from "@/components/ProductCards";
 import { FOUR } from "@/components/HomeShowcase";
 
-// The Statements dropdown (Rich's pick) with the product page's life in it: each
-// line is the product's logo and tagline; opening one shows its features beside
-// the product's own high-res screen for whichever feature is chosen. Screens are
-// shown whole (contained on the app's own ground), never cropped, and swap by
-// cross-fade only. Preview only.
+// The Statements dropdown (Rich's pick) with the slider's photographs: each line
+// is the product's logo and tagline, and opening one shows its capabilities
+// beside its photograph. Preview only.
 
 const EASE = "cubic-bezier(0.23, 1, 0.32, 1)";
 
-// Feature label (as in the product's capabilities) to the screen that shows it.
-// EdenTrials and EdenBR have no screens on file yet (asked of Finn and Beth), so
-// they show their features alone until they land.
-const SHOTS: Record<string, Record<string, string>> = {
-  EdenRadar: {
-    "Deepest TTO index": "/images/shot-radar-1.jpg", // fills the frame; the search-only shot letterboxed
-    "Asset dossiers": "/images/shot-radar-dossier.jpg",
-    "Whitespace map": "/images/shot-radar-whitespace.jpg",
-    "Pipeline board": "/images/shot-radar-board.jpg",
-    "Standing alerts": "/images/shot-radar-alerts.jpg",
-  },
-  EdenCompliance: {
-    "Vendor register": "/images/shot-ec-register.jpg",
-    "Qualification tracking": "/images/shot-compliance-1.jpg",
-    "Findings management": "/images/shot-ec-findings.jpg",
-    "Vendor portal": "/images/shot-ec-portal.jpg",
-    "Append-only trail": "/images/shot-ec-record.jpg",
-  },
-};
-
+// Opening a line shows what the product slider shows: the product's photograph
+// beside its six capabilities (DETAIL, the same source as ProductCanvas). Beta
+// products have no photograph yet, so they show a tinted field with their mark,
+// as the slider does.
 function Features({ p }: { p: Product }) {
-  const shots = SHOTS[p.name] ?? {};
-  // With screens, list the features that have one; without, the first five.
-  const caps = (p.capabilities ?? []).filter((c) => !Object.keys(shots).length || shots[c.label]).slice(0, 5);
-  const [active, setActive] = useState(caps[0]?.label);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const cancel = () => {
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = null;
-  };
-  // Hover intent, so sweeping down the list does not flick through screens.
-  const hover = (label: string) => {
-    if (!window.matchMedia("(hover: hover)").matches) return;
-    cancel();
-    timer.current = setTimeout(() => setActive(label), 120);
-  };
-  useEffect(() => cancel, []);
-  const color = ink(p.goldToken ?? p.token);
-  const hasShots = Object.keys(shots).length > 0;
-
+  const d = DETAIL[p.name];
+  const accent = ink(p.goldToken ?? p.token);
   return (
-    <div className={`grid gap-8 pb-14 ${hasShots ? "lg:grid-cols-[340px_1fr] lg:gap-12" : ""}`}>
-      <div>
-        <p className="max-w-[46ch] text-[16.5px] leading-[1.6] text-foreground/75">{p.sub}</p>
-        <ul className={`mt-6 ${hasShots ? "" : "grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3"}`}>
-          {caps.map((c) => {
-            const on = hasShots && active === c.label;
-            return (
-              <li key={c.label}>
-                <button
-                  type="button"
-                  disabled={!hasShots}
-                  aria-pressed={hasShots ? on : undefined}
-                  onClick={() => setActive(c.label)}
-                  onFocus={() => setActive(c.label)}
-                  onMouseEnter={() => hover(c.label)}
-                  onMouseLeave={cancel}
-                  className="block w-full rounded-xl px-4 py-3.5 text-left disabled:cursor-default"
-                  style={{ background: on ? `hsl(var(${p.token}) / 0.07)` : "transparent", transition: `background-color 0.25s ${EASE}` }}
-                >
-                  <span className="block text-[15px] font-semibold" style={{ color: on ? color : undefined }}>{c.label}</span>
-                  <span className="mt-0.5 block text-[13.5px] leading-relaxed text-foreground/70">{c.detail}</span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-        <div className="mt-6 flex flex-wrap items-baseline gap-x-5 gap-y-2 px-4">
+    <div className="grid gap-10 pb-14 lg:grid-cols-[1fr_1.05fr] lg:gap-14">
+      <div className="lg:order-2">
+        <div className="relative overflow-hidden rounded-2xl border" style={{ borderColor: `hsl(var(${p.token}) / 0.2)` }}>
+          {d.photo ? (
+            <img src={d.photo} alt={d.photoAlt} decoding="async" loading="lazy" className="aspect-[3/2] w-full" style={{ objectFit: "cover" }} />
+          ) : (
+            <div className="flex aspect-[3/2] w-full items-center justify-center" style={{ background: `hsl(var(${p.token}) / 0.07)` }}>
+              <Mark p={p} size={96} />
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="lg:order-1">
+        <p className="max-w-[48ch] text-[17px] leading-[1.6] text-foreground/75">{d.audience}</p>
+        <dl className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2">
+          {d.features.map((f) => (
+            <div key={f.label}>
+              <div aria-hidden className="h-[2px] w-8 rounded-full" style={{ background: accent }} />
+              <dt className="mt-3 text-[15px] font-semibold text-foreground">{f.label}</dt>
+              <dd className="mt-1 text-[13.5px] leading-relaxed text-foreground/70">{f.desc}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="mt-8 flex flex-wrap items-baseline gap-x-5 gap-y-2">
           <Cta p={p} />
           <Terms p={p} />
         </div>
       </div>
-
-      {hasShots && (
-        <div
-          className="relative grid aspect-[16/10] overflow-hidden rounded-2xl border border-foreground/[0.08] shadow-[0_2px_4px_rgba(15,26,20,0.04),0_40px_80px_-40px_rgba(15,26,20,0.35)]"
-          style={{ background: SHOT_GROUND[p.name] ?? "#eef2f0" }}
-        >
-          {caps.map((c) => (
-            <img
-              key={c.label}
-              src={shots[c.label]}
-              alt={`${p.name}: ${c.label}`}
-              decoding="async"
-              loading="lazy"
-              className="col-start-1 row-start-1 h-full w-full p-3"
-              style={{ objectFit: "contain", opacity: active === c.label ? 1 : 0, transition: `opacity 0.45s ${EASE}` }}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
