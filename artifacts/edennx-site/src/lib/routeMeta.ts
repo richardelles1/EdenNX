@@ -59,6 +59,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   "/preview/home-spotlight": { title: "Preview: home, statements spotlight", description: "Preview." },
   "/preview/home-ledger": { title: "Preview: home, statements ledger", description: "Preview." },
   "/preview/home-stage": { title: "Preview: home, statements stage", description: "Preview." },
+  "/preview/home-features": { title: "Preview: home, dropdown with screens", description: "Preview." },
   "/preview/products-a": { title: "Preview: products, cards A", description: "Preview." },
   "/preview/products-b": { title: "Preview: products, cards B", description: "Preview." },
   "/preview/products-scroller": { title: "Preview: products, scroller", description: "Preview." },

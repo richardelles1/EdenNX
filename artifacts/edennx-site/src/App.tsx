@@ -48,6 +48,7 @@ export function AppShell() {
             <Route path="/preview/home-spotlight" element={<Home lead="cards" cards="spotlight" />} />
             <Route path="/preview/home-ledger" element={<Home lead="cards" cards="ledger" />} />
             <Route path="/preview/home-stage" element={<Home lead="cards" cards="stage" />} />
+            <Route path="/preview/home-features" element={<Home lead="cards" cards="features" />} />
             <Route path="/preview/products-a" element={<Products body="a" />} />
             <Route path="/preview/products-b" element={<Products body="b" />} />
             <Route path="/preview/products-scroller" element={<Products body="scroller" />} />
