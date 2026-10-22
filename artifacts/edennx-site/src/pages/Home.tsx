@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { ProductCanvas } from "@/components/ProductCanvas";
 import { ProductCardsA, ProductCardsB } from "@/components/ProductCards";
+import { ShowcasePath, ShowcaseQuarters, ShowcaseStatements } from "@/components/HomeShowcase";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
@@ -12,7 +13,7 @@ const MARK = "/images/eden-mark-hero.jpg";
 
 // lead and cards are for the preview routes only (/preview/home-cards-a and -b),
 // so Rich can compare the home page led by the cards against the scroller.
-export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scroller" | "cards"; cards?: "a" | "b" }) {
+export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scroller" | "cards"; cards?: "a" | "b" | "statements" | "quarters" | "path" }) {
   useScrollReveal();
   useSEO(ROUTE_META["/"]);
 
@@ -184,7 +185,7 @@ export default function Home({ lead = "scroller", cards = "a" }: { lead?: "scrol
 
       {lead === "cards" ? (
         <section className="pb-16 lg:pb-24" data-testid="product-cards">
-          {cards === "b" ? <ProductCardsB /> : <ProductCardsA />}
+          {cards === "b" ? <ProductCardsB /> : cards === "statements" ? <ShowcaseStatements /> : cards === "quarters" ? <ShowcaseQuarters /> : cards === "path" ? <ShowcasePath /> : <ProductCardsA />}
         </section>
       ) : (
         <section className="mx-auto max-w-7xl px-6 pb-16 lg:px-8 lg:pb-24" data-testid="product-canvas">

@@ -42,6 +42,9 @@ export function AppShell() {
             {/* Preview only: card placement and card directions for Rich. */}
             <Route path="/preview/home-cards-a" element={<Home lead="cards" cards="a" />} />
             <Route path="/preview/home-cards-b" element={<Home lead="cards" cards="b" />} />
+            <Route path="/preview/home-statements" element={<Home lead="cards" cards="statements" />} />
+            <Route path="/preview/home-quarters" element={<Home lead="cards" cards="quarters" />} />
+            <Route path="/preview/home-path" element={<Home lead="cards" cards="path" />} />
             <Route path="/preview/products-a" element={<Products body="a" />} />
             <Route path="/preview/products-b" element={<Products body="b" />} />
             <Route path="/preview/products-scroller" element={<Products body="scroller" />} />

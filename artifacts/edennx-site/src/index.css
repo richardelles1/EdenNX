@@ -720,3 +720,31 @@ section[id] { scroll-margin-top: 8rem; }
   .ix-row.reveal { transform: none; }
   .cta-link .cta-arrow { transition: none; }
 }
+
+/* Home showcase proposals (HomeShowcase.tsx). */
+.stmt-panel { transition: grid-template-rows 0.45s cubic-bezier(0.23, 1, 0.32, 1); }
+.stmt-plus { transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.2s ease; }
+@media (hover: hover) and (pointer: fine) {
+  .stmt-row:hover .stmt-plus { border-color: hsl(var(--foreground) / 0.4); }
+}
+
+.path-line::before {
+  content: "";
+  position: absolute;
+  left: 5px; top: 8px; bottom: 0; width: 1px;
+  background: hsl(var(--foreground) / 0.16);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 1.1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (min-width: 1024px) {
+  .path-line::before { left: 0; right: 0; top: 6px; bottom: auto; width: auto; height: 1px; transform-origin: left; transform: scaleX(0); }
+}
+.path-line.visible::before { transform: none; }
+.path-stop { transform: scale(0); transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+.path-line.visible .path-stop { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stmt-panel, .stmt-plus, .path-line::before, .path-stop { transition: none; }
+  .path-line::before, .path-stop { transform: none; }
+}

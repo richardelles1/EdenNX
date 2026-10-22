@@ -53,6 +53,9 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   // Preview only (card placement and directions); never merged to main.
   "/preview/home-cards-a": { title: "Preview: home led by cards, A", description: "Preview." },
   "/preview/home-cards-b": { title: "Preview: home led by cards, B", description: "Preview." },
+  "/preview/home-statements": { title: "Preview: home, statements", description: "Preview." },
+  "/preview/home-quarters": { title: "Preview: home, four quarters", description: "Preview." },
+  "/preview/home-path": { title: "Preview: home, the path", description: "Preview." },
   "/preview/products-a": { title: "Preview: products, cards A", description: "Preview." },
   "/preview/products-b": { title: "Preview: products, cards B", description: "Preview." },
   "/preview/products-scroller": { title: "Preview: products, scroller", description: "Preview." },

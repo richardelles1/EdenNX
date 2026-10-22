@@ -25,7 +25,7 @@ import { PRODUCTS, FRAMES, SHOT_GROUND, useShotReveal, type Product } from "@/co
 const FLAGSHIPS = [PRODUCTS.radar, PRODUCTS.compliance, PRODUCTS.trials, PRODUCTS.br];
 const EMERGING = [PRODUCTS.market, PRODUCTS.lab, PRODUCTS.discovery];
 
-function Mark({ p, size }: { p: Product; size: number }) {
+export function Mark({ p, size }: { p: Product; size: number }) {
   const [failed, setFailed] = useState(false);
   const src = MARKS[p.name];
   if (!src || failed) return null;
@@ -34,7 +34,7 @@ function Mark({ p, size }: { p: Product; size: number }) {
   );
 }
 
-function Name({ p, cls }: { p: Product; cls: string }) {
+export function Name({ p, cls }: { p: Product; cls: string }) {
   return (
     <span className={`font-semibold tracking-tight text-foreground ${cls}`}>
       Eden<span style={{ color: ink(p.token) }}>{p.name.slice(4)}</span>
@@ -42,7 +42,7 @@ function Name({ p, cls }: { p: Product; cls: string }) {
   );
 }
 
-function Headline({ p, cls }: { p: Product; cls: string }) {
+export function Headline({ p, cls }: { p: Product; cls: string }) {
   return (
     <h3 className={`text-balance font-bold text-foreground ${cls}`}>
       {p.headline.pre}
@@ -54,7 +54,7 @@ function Headline({ p, cls }: { p: Product; cls: string }) {
 
 // The CTA as a text link, not a pill: the card is no longer one big button, so
 // the action is the one thing on it that moves.
-function Cta({ p }: { p: Product }) {
+export function Cta({ p }: { p: Product }) {
   const color = ink(p.goldToken ?? p.token);
   if (p.beta) {
     return <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-foreground/65">In Beta</span>;
@@ -73,7 +73,7 @@ function Cta({ p }: { p: Product }) {
   );
 }
 
-function Terms({ p }: { p: Product }) {
+export function Terms({ p }: { p: Product }) {
   if (!p.note || p.beta) return null;
   return <span className="font-mono text-[13.5px] text-foreground/65">{p.note}</span>;
 }
