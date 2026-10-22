@@ -76,7 +76,7 @@ export const PRODUCTS: Record<string, Product> = {
     // edentrials.com's own hero (client/src/pages/Landing.tsx in the EdenTrials repo).
     headline: { pre: "A live, global ", accent: "clinical trial network.", post: "" },
     sub: "Every trial the world is running, and everything attached to it.",
-    note: "",
+    note: "$499/seat/mo", // Rich via Cleo, 22 Oct
     // Sourced from the portal's own navigation and screen copy (PORTAL_NAV in
     // the EdenTrials repo, client/src/components/portal/PortalShell.tsx).
     capabilities: [

@@ -93,7 +93,7 @@ export const DETAIL: Record<string, Detail> = {
       { label: "Alerts", desc: "Save the question once. A trial registered later that fits it is caught." },
       { label: "Ask Eden", desc: "Ask the record in words. Every answer cites the trials it used." },
     ],
-    term: "Live",
+    term: "$499/seat/mo", // Rich via Cleo, 22 Oct
     note: "Sign up at edentrials.com.",
     primary: { label: "Visit EdenTrials", href: "https://edentrials.com" },
   },
