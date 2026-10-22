@@ -93,11 +93,9 @@ function Capabilities({ p }: { p: Product }) {
   );
 }
 
-// `pinned` rows mount after the page's scroll-reveal observer has run, so they
-// are drawn visible rather than waiting for a reveal that never comes.
-function IndexRow({ p, right, pinned = false }: { p: Product; right?: ReactNode; pinned?: boolean }) {
+function IndexRow({ p, right }: { p: Product; right?: ReactNode }) {
   return (
-    <article className={`ix-row ${pinned ? "visible" : "reveal"} grid gap-10 py-14 lg:grid-cols-12 lg:gap-16 lg:py-20`} data-testid={`ix-${p.name.toLowerCase()}`}>
+    <article className={`ix-row reveal grid gap-10 py-14 lg:grid-cols-12 lg:gap-16 lg:py-20`} data-testid={`ix-${p.name.toLowerCase()}`}>
       <div className="lg:col-span-5">
         <div className="flex items-center gap-3">
           <Mark p={p} size={40} />
@@ -130,7 +128,7 @@ function RadarLockup({ t }: { t: number }) {
   const domes = Math.max(0, 1 - t * 1.25);
   const dome = (dots: [number, number, number][]) => dots.map(([cx, cy, r], i) => <circle key={i} cx={cx} cy={cy} r={r} />);
   return (
-    <svg viewBox={LOCKUP_VIEWBOX} className="pointer-events-none absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 overflow-visible" aria-hidden>
+    <svg viewBox={LOCKUP_VIEWBOX} className="pointer-events-none absolute left-0 top-1/2 h-[440px] w-full -translate-y-1/2 overflow-visible" aria-hidden>
       <g fill="#257349">
         <g style={{ transform: `translateY(${-part}px)`, opacity: domes }}>{dome(RADAR_TOP)}</g>
         <g style={{ transform: `translateY(${part}px)`, opacity: domes }}>{dome(RADAR_BOTTOM)}</g>
@@ -144,12 +142,95 @@ function RadarLockup({ t }: { t: number }) {
   );
 }
 
-// Pins the EdenRadar row while the page scrolls through 130% of a screen, and
-// maps that scroll to the reveal. Scroll-linked rather than timed, so the reader
-// drives it and can stop or reverse it. Desktop with motion allowed only: on a
-// phone, or with reduced motion, it is the plain row. The features are in the
-// page throughout (only clipped), so assistive tech reads them at any point.
-function RadarRevealRow({ p }: { p: Product }) {
+// The other three lockups are Amelia's layered SVGs, fetched and inlined so each
+// named layer can move. Per layer: how far it travels (in the lockup's own units,
+// negative is up), whether it grows, and whether it is mark (fades as it moves)
+// or type (gone in the first third, so it never sits over the features).
+type Move = { id: string; dy?: number; grow?: number; type?: boolean };
+// h: the lockup's drawn height in px, so the tall ones stay inside their row.
+const LOCKUPS: Record<string, { src: string; h: number; moves: Move[] }> = {
+  EdenCompliance: {
+    src: "/images/lockups/edencompliance.svg",
+    h: 400,
+    moves: [
+      { id: "layer-1-mark-ring", grow: 0.25 },
+      { id: "layer-2-mark-check", dy: -220 },
+      ...["layer-3-wordmark-eden", "layer-4-wordmark-nx", "layer-5-tagline-compliance", "layer-6-rules-gold"].map((id) => ({ id, type: true })),
+    ],
+  },
+  EdenTrials: {
+    src: "/images/lockups/edentrials.svg",
+    h: 420,
+    // The globe's rows part from its equator: row 7 fades in place, the rows
+    // above rise and the rows below fall, further the further out they sit.
+    moves: [
+      ...Array.from({ length: 13 }, (_, k) => ({ id: `mark-row-${k + 1}`, dy: (k - 6) * 34 })),
+      { id: "layer-2-wordmark", type: true },
+      { id: "layer-3-tagline", type: true },
+    ],
+  },
+  EdenBR: {
+    src: "/images/lockups/edenbr.svg",
+    h: 340,
+    // The stack comes apart, top slab furthest: a batch's layers, opened.
+    moves: [
+      { id: "layer-0-mark-shadow", type: true },
+      { id: "layer-3-mark-slab-top", dy: -260 },
+      { id: "layer-2-mark-slab-middle", dy: -90 },
+      { id: "layer-1-mark-slab-bottom", dy: 140 },
+      { id: "layer-4-wordmark", type: true },
+    ],
+  },
+};
+
+function LayeredLockup({ name, t }: { name: string; t: number }) {
+  const spec = LOCKUPS[name];
+  const box = useRef<HTMLDivElement>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let live = true;
+    fetch(spec.src)
+      .then((r) => r.text())
+      .then((svg) => {
+        if (!live || !box.current) return;
+        box.current.innerHTML = svg;
+        const el = box.current.querySelector("svg");
+        el?.removeAttribute("width");
+        el?.removeAttribute("height");
+        el?.setAttribute("class", "h-full w-full overflow-visible");
+        setReady(true);
+      });
+    return () => {
+      live = false;
+    };
+  }, [spec.src]);
+
+  useEffect(() => {
+    if (!ready || !box.current) return;
+    const mark = Math.max(0, 1 - t * 1.25);
+    const type = Math.max(0, 1 - t * 3);
+    for (const m of spec.moves) {
+      const g = box.current.querySelector<SVGGElement>(`[id="${m.id}"]`);
+      if (!g) continue;
+      g.style.transformBox = "fill-box";
+      g.style.transformOrigin = "center";
+      g.style.transform = `translateY(${(m.dy ?? 0) * t}px) scale(${1 + (m.grow ?? 0) * t})`;
+      g.style.opacity = String(m.type ? type : mark);
+    }
+  }, [ready, t, spec]);
+
+  return <div ref={box} aria-hidden className="pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2" style={{ height: spec.h }} />;
+}
+
+// Each flagship's right column holds its large lockup, which opens into the
+// features as the row crosses the screen: it starts as the row's top passes 85%
+// of the viewport and is fully open by 30%. Nothing pins, so the page is no
+// longer and every product arrives exactly when it does without the effect.
+// Scroll-linked, so the reader drives it and can reverse it. Desktop with motion
+// allowed only; otherwise the plain row. The features are in the page throughout
+// (only clipped), so assistive tech reads them at any point.
+function RevealRow({ p }: { p: Product }) {
   const ref = useRef<HTMLDivElement>(null);
   const [on, setOn] = useState(false);
   const [t, setT] = useState(0);
@@ -169,11 +250,10 @@ function RadarRevealRow({ p }: { p: Product }) {
       raf = 0;
       const el = ref.current;
       if (!el) return;
-      const r = el.getBoundingClientRect();
-      const span = r.height - window.innerHeight;
-      // Hold the whole lockup for the first 15% of the pin, open across the
-      // next 60%, then hold the features before the row lets go.
-      const raw = Math.min(1, Math.max(0, (-r.top / span - 0.15) / 0.6));
+      const vh = window.innerHeight;
+      // ?reveal=0.5 holds every row at that point, for stills (preview only).
+      const held = new URLSearchParams(window.location.search).get("reveal");
+      const raw = held !== null ? Number(held) : Math.min(1, Math.max(0, (vh * 0.85 - el.getBoundingClientRect().top) / (vh * 0.55)));
       setT(raw * raw * (3 - 2 * raw));
     };
     const onScroll = () => {
@@ -189,26 +269,22 @@ function RadarRevealRow({ p }: { p: Product }) {
     };
   }, [on]);
 
-  if (!on) return <IndexRow p={p} />;
   const open = 50 * (1 - t);
   return (
-    <div ref={ref} style={{ height: "230vh" }} data-testid="radar-reveal">
-      <div className="sticky top-0 flex h-screen items-center">
-        <div className="w-full">
-          <IndexRow
-            p={p}
-            pinned
-            right={
-              <>
-                <div style={{ clipPath: `inset(${open}% 0 ${open}% 0)`, opacity: Math.min(1, Math.max(0, (t - 0.3) / 0.5)) }}>
-                  <Capabilities p={p} />
-                </div>
-                <RadarLockup t={t} />
-              </>
-            }
-          />
-        </div>
-      </div>
+    <div ref={ref} data-testid={`reveal-${p.name.toLowerCase()}`}>
+      <IndexRow
+        p={p}
+        right={
+          on ? (
+            <>
+              <div style={{ clipPath: `inset(${open}% 0 ${open}% 0)`, opacity: Math.min(1, Math.max(0, (t - 0.3) / 0.5)) }}>
+                <Capabilities p={p} />
+              </div>
+              {p === PRODUCTS.radar ? <RadarLockup t={t} /> : <LayeredLockup name={p.name} t={t} />}
+            </>
+          ) : undefined
+        }
+      />
     </div>
   );
 }
@@ -245,7 +321,7 @@ function IndexEmerging() {
 export function ProductCardsA() {
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-8" data-testid="cards-a">
-      {FLAGSHIPS.map((p) => (p === PRODUCTS.radar ? <RadarRevealRow key={p.name} p={p} /> : <IndexRow key={p.name} p={p} />))}
+      {FLAGSHIPS.map((p) => <RevealRow key={p.name} p={p} />)}
       <IndexEmerging />
     </div>
   );
