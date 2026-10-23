@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { PORTAL_META, ink } from "@/components/PortalBits";
-import { MARKS, markStyle } from "@/lib/products";
+import { markStyle, markSrc } from "@/lib/products";
 import { INSTAGRAM, LINKEDIN, SOCIAL_POSTS, type SocialPost } from "@/lib/socialPosts";
 
 // The social feed: the actual posts, set as our own post cards rather than a
@@ -29,7 +29,7 @@ function PostCard({ post }: { post: SocialPost }) {
   const meta = PORTAL_META[post.product];
   const color = meta ? ink(meta.token) : "hsl(var(--primary))";
   const nx = post.product === "EdenNX";
-  const mark = nx ? "/eden-mark.png" : MARKS[post.product];
+  const mark = nx ? "/eden-mark.png" : markSrc(post.product, 26);
   return (
     <a
       href={post.url}
@@ -113,7 +113,8 @@ export function FieldNotes() {
   const arrow = "flex h-11 w-11 items-center justify-center rounded-full border border-foreground/15 text-foreground/80 disabled:opacity-30";
 
   return (
-    <section data-testid="field-notes">
+    // id="posts": the product sites link here as "All EdenNX posts".
+    <section id="posts" data-testid="field-notes" className="scroll-mt-24">
       <div className="mx-auto max-w-7xl px-6 pb-20 lg:px-8 lg:pb-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>

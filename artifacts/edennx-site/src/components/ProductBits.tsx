@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { ink } from "@/components/PortalBits";
-import { MARKS, markStyle } from "@/lib/products";
+import { markStyle, markSrc } from "@/lib/products";
 import { PRODUCTS, type Product } from "@/components/ProductShowcase";
 
 // The pieces a product line is built from: its mark, its two-tone name, its
@@ -13,7 +13,7 @@ export const FOUR = [PRODUCTS.trials, PRODUCTS.radar, PRODUCTS.compliance, PRODU
 
 export function Mark({ p, size }: { p: Product; size: number }) {
   const [failed, setFailed] = useState(false);
-  const src = MARKS[p.name];
+  const src = markSrc(p.name, size);
   if (!src || failed) return null;
   return (
     <img src={src} alt="" aria-hidden decoding="async" onError={() => setFailed(true)} className="flex-shrink-0 object-contain" style={markStyle(p.name, size)} />

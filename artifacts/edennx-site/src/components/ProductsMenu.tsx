@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { SUITE, MARKS, markStyle, type Product } from "@/lib/products";
+import { SUITE, MARKS, markStyle, type Product, markSrc } from "@/lib/products";
 import { DETAIL } from "@/lib/productDetail";
 import { ink } from "@/components/PortalBits";
 
@@ -38,7 +38,7 @@ function Row({
       />
       {/* Brand-kit mark where we hold one; the line icon for the emerging three. */}
       {MARKS[p.name] ? (
-        <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="flex-shrink-0 object-contain" style={markStyle(p.name, 22)} />
+        <img src={markSrc(p.name, 22)} alt="" aria-hidden decoding="async" className="flex-shrink-0 object-contain" style={markStyle(p.name, 22)} />
       ) : (
         <p.Icon className="h-[18px] w-[18px] flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
       )}
@@ -93,7 +93,7 @@ function PreviewPanel({ p, onNavigate }: { p: Product; onNavigate: () => void })
           <div className="h-full w-full" style={{ background: `hsl(var(${p.token}) / 0.07)` }} />
         )}
         {MARKS[p.name] ? (
-          <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="absolute right-3 top-3 object-contain" style={markStyle(p.name, 52)} />
+          <img src={markSrc(p.name, 52)} alt="" aria-hidden decoding="async" className="absolute right-3 top-3 object-contain" style={markStyle(p.name, 52)} />
         ) : null}
       </div>
 

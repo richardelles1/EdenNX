@@ -88,7 +88,17 @@ export function markStyle(_name: string, size: number): { width: number; height:
 export const MARKS: Record<string, string> = {
   EdenRadar: "/images/marks/mark-radar.svg",
   EdenCompliance: "/images/marks/mark-compliance.png",
-  EdenTrials: "/images/marks/mark-trials.png", // the globe with the name through it (Rich)
+  EdenTrials: "/images/marks/mark-trials.svg", // final ET mark, A8 V4 (Rich, 23 Oct)
   EdenBR: "/images/marks/mark-br.png",
 };
+
+// Marks drawn for small sizes, where the big mark's detail turns to mush. The
+// EdenTrials small master holds from 22 to 64 px; above that, the big mark.
+const SMALL_MARKS: Record<string, string> = {
+  EdenTrials: "/images/marks/mark-trials-small.svg",
+};
+
+export function markSrc(name: string, size: number): string | undefined {
+  return (size <= 64 && SMALL_MARKS[name]) || MARKS[name];
+}
 

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { ProductsMenu } from "@/components/ProductsMenu";
-import { SUITE, MARKS, markStyle, type Product } from "@/lib/products";
+import { SUITE, MARKS, markStyle, type Product, markSrc } from "@/lib/products";
 import { ink } from "@/components/PortalBits";
 
 const otherLinks = [
@@ -32,7 +32,7 @@ function ProductRow({
       {/* The product's brand-kit mark where we hold one; the line icon only
           for the emerging products, until their kit marks land (Cleo). */}
       {MARKS[p.name] ? (
-        <img src={MARKS[p.name]} alt="" aria-hidden decoding="async" className="flex-shrink-0 object-contain" style={markStyle(p.name, compact ? 30 : 34)} />
+        <img src={markSrc(p.name, compact ? 30 : 34)} alt="" aria-hidden decoding="async" className="flex-shrink-0 object-contain" style={markStyle(p.name, compact ? 30 : 34)} />
       ) : (
         <span
           className="flex flex-shrink-0 items-center justify-center rounded-xl"
