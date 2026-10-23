@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32">
+  <!-- A3 optical master for 32-64 px (Cleo, 23 Oct): thick ring in the big mark's gradient, a bigger gold bead
+       (gap widened to +/-27 deg to keep half-stroke clearance), one curved meridian + equator in 11 large dots. -->
+  <defs>
+    <linearGradient id="ring" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#3A82D0"/><stop offset="0.55" stop-color="#1D64B4"/><stop offset="1" stop-color="#174F8F"/>
+    </linearGradient>
+  </defs>
+  <path d="M469.0 186.8 A224 224 0 1 1 325.2 43.0" fill="none" stroke="url(#ring)" stroke-width="64" stroke-linecap="round"/>
+  <g fill="#3F82CF">
+    <circle cx="336" cy="256" r="24"/><circle cx="312.6" cy="355" r="24"/><circle cx="256" cy="396" r="24"/>
+    <circle cx="199.4" cy="355" r="24"/><circle cx="176" cy="256" r="24"/><circle cx="199.4" cy="157" r="24"/>
+    <circle cx="256" cy="116" r="24"/><circle cx="312.6" cy="157" r="24"/>
+    <circle cx="116" cy="256" r="24"/><circle cx="256" cy="256" r="24"/><circle cx="396" cy="256" r="24"/>
+  </g>
+  <circle cx="414.4" cy="97.6" r="54" fill="#FAC748"/>
+</svg>

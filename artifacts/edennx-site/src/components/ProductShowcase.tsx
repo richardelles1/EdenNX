@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Check } from "lucide-react";
 import { PORTAL_META, ink } from "@/components/PortalBits";
 import { RecordLedger, VendorRegister } from "@/components/ComplianceVignettes";
-import { MARKS, markStyle } from "@/lib/products";
+import { markStyle, markSrc } from "@/lib/products";
 import { ASSET_COUNT_LABEL } from "@/lib/platformStats";
 
 // The home Product Suite as an asymmetric bento. Each card carries a slight wash
@@ -247,7 +247,7 @@ function Wordmark({ p }: { p: Product }) {
 // Products with a transparent mark show it; the rest keep their existing icon.
 function CornerMark({ p }: { p: Product }) {
   const [failed, setFailed] = useState(false);
-  const src = MARKS[p.name];
+  const src = markSrc(p.name, 56);
   const accent = ink(p.token);
   const Icon = (PORTAL_META[p.name] ?? PORTAL_META.EdenRadar).Icon;
   if (src && !failed) {
