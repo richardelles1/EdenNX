@@ -139,29 +139,40 @@ export default function Insights() {
                 </div>
 
                 {posts.length > 0 ? (
-                  <ul className="reveal">
-                    {posts.slice(0, PER_PRODUCT).map((post) => (
-                      <FeedRow key={post.url} post={post} />
-                    ))}
-                  </ul>
+                  <>
+                    <ul className="reveal">
+                      {posts.slice(0, PER_PRODUCT).map((post) => (
+                        <FeedRow key={post.url} post={post} />
+                      ))}
+                    </ul>
+                    <a
+                      href={blog.home}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center gap-1.5 self-start px-4 text-[14px] font-semibold hover:underline underline-offset-4"
+                      style={{ color: accent }}
+                    >
+                      All {posts.length} on {blog.site}
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                  </>
                 ) : (
-                  <p className="px-4 py-5 text-[15px] leading-relaxed text-foreground/65 reveal">
-                    EdenBR has not published yet.
+                  // Copy: Cleo, 2 Nov 2026 (claims row added).
+                  <p className="max-w-md px-4 py-5 text-[15px] leading-relaxed text-foreground/65 reveal">
+                    EdenBR has not published yet. Meanwhile, see how batches, reviews and
+                    signed status changes work at{" "}
+                    <a
+                      href={blog.home}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold underline-offset-4 hover:underline"
+                      style={{ color: accent }}
+                    >
+                      {blog.site}
+                    </a>
+                    .
                   </p>
                 )}
-
-                <a
-                  href={blog.home}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-1.5 self-start px-4 text-[14px] font-semibold hover:underline underline-offset-4"
-                  style={{ color: accent }}
-                >
-                  {posts.length > 0
-                    ? `All ${posts.length} on ${blog.site}`
-                    : `Visit ${blog.site}`}
-                  <ArrowUpRight className="h-4 w-4" />
-                </a>
               </div>
             );
           })}

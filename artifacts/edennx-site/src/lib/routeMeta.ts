@@ -35,7 +35,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   "/insights": {
     title: "Insights | Writing from the EdenNX product teams",
     description:
-      "Writing from across the EdenNX product suite: clinical-trial registries from EdenTrials, academic licensing from EdenRadar, and regulated quality from EdenCompliance.",
+      "Field Notes, Line of Sight and On the Record: writing from EdenTrials, EdenRadar and EdenCompliance on clinical trial data, technology scouting and regulated quality.",
   },
   "/contact": {
     title: "Contact EdenNX | Demos and partnerships",
