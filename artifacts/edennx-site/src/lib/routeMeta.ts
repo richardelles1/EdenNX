@@ -33,9 +33,9 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       "EdenNX is the intelligence backbone of modern biotech. Meet the founders, and read the mission and the EDEN framework behind the product suite.",
   },
   "/insights": {
-    title: "Insights | Tech transfer and regulated quality",
+    title: "Insights | Writing from the EdenNX product teams",
     description:
-      "Writing from across the EdenNX product suite: analysis of academic licensing, tech transfer, and regulated quality from the EdenRadar and EdenCompliance teams.",
+      "Field Notes, Line of Sight and On the Record: writing from EdenTrials, EdenRadar and EdenCompliance on clinical trial data, technology scouting and regulated quality.",
   },
   "/contact": {
     title: "Contact EdenNX | Demos and partnerships",

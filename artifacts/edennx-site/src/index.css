@@ -88,7 +88,7 @@
   --portal-lab: 262 80% 60%;         /* EdenLab — violet */
   --portal-discovery: 38 92% 50%;    /* EdenDiscovery — amber */
   --portal-market: 234 80% 58%;      /* EdenMarket — indigo */
-  --portal-trials: 192 72% 34%;      /* EdenTrials — teal */
+  --portal-trials: 212 72% 41%;      /* EdenTrials — kit blue #1D64B4 */
   --portal-br: 212 58% 30%;          /* EdenBR — navy */
 
   /* Ink variants: the same hue, dark enough to read as text on the page tint
@@ -98,7 +98,7 @@
   --portal-radar-ink: 142 52% 32%;
   --portal-compliance-gold-ink: 41 46% 36%;
   --portal-discovery-ink: 38 92% 31%;
-  --portal-trials-ink: 192 72% 32%;
+  --portal-trials-ink: 212 72% 41%;
 
   --background: 210 25% 97%;
   --foreground: 220 30% 12%;
@@ -192,7 +192,7 @@
   --portal-lab: 262 80% 70%;
   --portal-discovery: 38 92% 58%;
   --portal-market: 234 85% 70%;
-  --portal-trials: 192 70% 52%;
+  --portal-trials: 212 72% 62%;
   --portal-br: 212 70% 66%;
 
   /* Deep blue-black, never pure black (house rule) */

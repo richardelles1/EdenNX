@@ -5,6 +5,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useSEO } from "@/hooks/useSEO";
 import { ROUTE_META } from "@/lib/routeMeta";
 import {
+  BLOGS,
   SORTED_INSIGHTS,
   formatDate,
   type Insight,
@@ -13,10 +14,15 @@ import {
 
 // One reading room for the writing across the suite. EdenNX publishes nothing
 // here: every card links out to the product that wrote it, which is the point.
-// The page is grouped by product rather than filtered, so both are always on it.
+// The page is grouped by product rather than filtered, so all four are always on it.
 
 // Group order matches the product order used everywhere else on the site.
-const SOURCES: InsightSource[] = ["EdenRadar", "EdenCompliance"];
+const SOURCES: InsightSource[] = ["EdenTrials", "EdenRadar", "EdenCompliance", "EdenBR"];
+
+// Each product shows its newest few and hands off to its own blog for the rest,
+// so four feeds of 2, 9, 6 and 0 pieces sit as four even blocks, not four
+// columns of very different lengths.
+const PER_PRODUCT = 3;
 
 // EdenRadar is emerald and EdenCompliance is forest green, which are four
 // degrees of hue apart and all but identical in a grid of small cards: the one
@@ -31,13 +37,6 @@ function accentOf(source: InsightSource) {
 }
 
 
-// Two parallel feeds, one per product, rather than one grid.
-//
-// A grid of fifteen always ends on a ragged row, and that gap was what read as
-// unbalanced. Two columns cannot: each feed simply runs its own length, and the
-// nine-against-six difference shows as one column ending sooner, which is true
-// rather than broken.
-//
 // A row, not a card: source mark on the left, headline and standfirst to the
 // right, date and read time underneath. No boxes, hairlines between entries.
 function FeedRow({ post }: { post: Insight }) {
@@ -85,7 +84,7 @@ export default function Insights() {
   useScrollReveal();
   useSEO(ROUTE_META["/insights"]);
 
-  // Both groups, always. The filter chips are gone: with the page grouped by
+  // All four groups, always. The filter chips are gone: with the page grouped by
   // product they were a control for something the layout already did, and a
   // default of "All" over a mixed stream was the thing that read as random.
   const groups = useMemo(
@@ -115,31 +114,65 @@ export default function Insights() {
         </p>
       </section>
 
-      {/* Two feeds side by side. Each column heads with its wordmark and count,
-          so the page says two products are writing without a sentence. On
-          narrow screens they stack, which is the same reading order. */}
+      {/* Four blocks, two by two, in product order. Each heads with its
+          wordmark, its blog's name and its count, shows the newest pieces and
+          hands off to the product's own blog. On narrow screens they stack. */}
       <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8 lg:pb-28">
         <div className="grid gap-x-12 gap-y-14 lg:grid-cols-2">
           {groups.map(({ source, posts }) => {
             const { accent, Icon } = accentOf(source);
+            const blog = BLOGS[source];
             return (
-              <div key={source} data-testid={`insights-group-${source.toLowerCase()}`}>
+              <div key={source} className="flex flex-col" data-testid={`insights-group-${source.toLowerCase()}`}>
                 <div className="mb-2 flex items-center gap-2.5 border-t-2 pt-5 reveal" style={{ borderColor: accent }}>
                   <Icon className="h-[19px] w-[19px] flex-shrink-0" strokeWidth={2.25} style={{ color: accent }} />
                   <h2 className="text-[19px] font-bold tracking-tight">
                     <span className="text-foreground">Eden</span>
                     <span style={{ color: accent }}>{source.slice(4)}</span>
                   </h2>
+                  {blog.name && (
+                    <span className="text-[14px] text-foreground/65">{blog.name}</span>
+                  )}
                   <span className="ml-auto font-mono text-[12px] uppercase tracking-wider text-foreground/65">
                     {posts.length} {posts.length === 1 ? "piece" : "pieces"}
                   </span>
                 </div>
 
-                <ul className="reveal">
-                  {posts.map((post) => (
-                    <FeedRow key={post.url} post={post} />
-                  ))}
-                </ul>
+                {posts.length > 0 ? (
+                  <>
+                    <ul className="reveal">
+                      {posts.slice(0, PER_PRODUCT).map((post) => (
+                        <FeedRow key={post.url} post={post} />
+                      ))}
+                    </ul>
+                    <a
+                      href={blog.home}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-flex items-center gap-1.5 self-start px-4 text-[14px] font-semibold hover:underline underline-offset-4"
+                      style={{ color: accent }}
+                    >
+                      All {posts.length} on {blog.site}
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                  </>
+                ) : (
+                  // Copy: Cleo, 2 Nov 2026 (claims row added).
+                  <p className="max-w-md px-4 py-5 text-[15px] leading-relaxed text-foreground/65 reveal">
+                    EdenBR has not published yet. Meanwhile, see how batches, reviews and
+                    signed status changes work at{" "}
+                    <a
+                      href={blog.home}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold underline-offset-4 hover:underline"
+                      style={{ color: accent }}
+                    >
+                      {blog.site}
+                    </a>
+                    .
+                  </p>
+                )}
               </div>
             );
           })}
