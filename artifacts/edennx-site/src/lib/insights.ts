@@ -2,23 +2,13 @@
 // own posts: every entry links out to the product site that wrote it, so the
 // canonical URL stays with the product and nothing is duplicated across domains.
 //
-// Mirrored by hand from each product's `shared/blogPosts.ts`. Titles, standfirsts,
-// descriptions, dates, and read times are copied verbatim, never rewritten.
-//
-// This cannot update itself, and CORS is no longer the reason. Both sites now
-// send Access-Control-Allow-Origin: *, but neither publishes anything a machine
-// can read: /blog.json, /rss.xml and /feed.xml all fall through to the SPA
-// shell, the blog index renders client-side, and every post serves the same
-// site-level og:title and og:description rather than its own. There is nothing
-// to fetch.
-//
-// Until one of them ships a real feed, this file only changes when a person
-// changes it, which is exactly how five EdenCompliance posts went missing from
-// the parent site for a fortnight.
-//
-// Refresh: re-mirror when either product publishes.
+// The block between the sync-insights markers is generated, verbatim, from each
+// product's `shared/blogPosts.ts` by `node scripts/sync-insights.mjs`. Do not
+// edit it by hand: the hand copy is how this page drifted (two EdenRadar titles
+// renamed, EdenCompliance's launch post redated, both EdenTrials posts missing).
+// Re-run the script when any product publishes.
 
-export type InsightSource = "EdenRadar" | "EdenCompliance";
+export type InsightSource = "EdenTrials" | "EdenRadar" | "EdenCompliance" | "EdenBR";
 
 export type Insight = {
   source: InsightSource;
@@ -31,81 +21,79 @@ export type Insight = {
   url: string;
 };
 
-const ER = "https://edenradar.com/blog";
-const EC = "https://edencompliance.com/blog";
+/** Each product's blog: its name and index page. EdenBR has not published. */
+export const BLOGS: Record<InsightSource, { name: string | null; home: string; site: string }> = {
+  EdenTrials: { name: "Field Notes", home: "https://edentrials.com/blog", site: "edentrials.com" },
+  EdenRadar: { name: "Line of Sight", home: "https://edenradar.com/blog", site: "edenradar.com" },
+  EdenCompliance: { name: "On the Record", home: "https://edencompliance.com/blog", site: "edencompliance.com" },
+  EdenBR: { name: null, home: "https://edenbr.com", site: "edenbr.com" },
+};
 
 export const INSIGHTS: Insight[] = [
+  // <sync-insights>
+  {
+    source: "EdenTrials",
+    title: "What we write down",
+    lede: "Registries publish today and overwrite yesterday. The overwritten part is the part worth having.",
+    date: "2026-08-20",
+    readTime: "3 min read",
+    url: "https://edentrials.com/blog/what-we-write-down",
+  },
+  {
+    source: "EdenTrials",
+    title: "A pipeline that reported success 136,000 times",
+    lede: "Inserting a duplicate is a successful insert. Every run was green while the corpus quietly doubled.",
+    date: "2026-08-20",
+    readTime: "4 min read",
+    url: "https://edentrials.com/blog/a-pipeline-that-reported-success",
+  },
   {
     source: "EdenRadar",
     title: "What 34,186 academic assets are actually made of",
     lede: "Diagnostics and devices outnumber small molecules and antibodies. The field talks about the other half.",
     date: "2026-08-12",
     readTime: "4 min read",
-    url: `${ER}/what-the-index-is-made-of`,
-  },
-  {
-    source: "EdenCompliance",
-    title: "What we mean by a controlled record",
-    lede: "A plain account of what a controlled record is: append-only history, what a signature captures, what a hash chain proves, and where the line sits.",
-    date: "2026-08-12",
-    readTime: "5 min read",
-    url: `${EC}/what-we-mean-by-a-controlled-record`,
+    url: "https://edenradar.com/blog/what-the-index-is-made-of",
   },
   {
     source: "EdenRadar",
-    title: "The top ten institutions hold less than you would guess",
-    lede: "A third of the index sits outside the fifty largest offices, and a tenth of it is federal.",
+    title: "Where the other 71 percent of the index sits",
+    lede: "A third of the index sits beyond the fifty largest offices, and a tenth of it is federal.",
     date: "2026-08-12",
     readTime: "4 min read",
-    url: `${ER}/outside-the-top-tier`,
+    url: "https://edenradar.com/blog/outside-the-top-tier",
   },
   {
     source: "EdenRadar",
-    title: "What the fit score does not know",
-    lede: "A ranked list makes a claim tens of thousands of times a day. Here is where its knowledge stops.",
+    title: "What the fit score is comparing",
+    lede: "A ranked list makes a claim tens of thousands of times a day. Here is what stands behind it.",
     date: "2026-08-05",
     readTime: "3 min read",
-    url: `${ER}/what-the-fit-score-does-not-know`,
+    url: "https://edenradar.com/blog/what-the-fit-score-does-not-know",
   },
   {
     source: "EdenRadar",
     title: "One office's preclinical is another's discovery",
-    lede: "Stage is one of the first fields people filter on, and one of the least reliable fields in a listing.",
+    lede: "Stage is one of the first fields people filter on, and the one that most rewards normalizing.",
     date: "2026-07-30",
     readTime: "4 min read",
-    url: `${ER}/stage-language-is-not-standard`,
+    url: "https://edenradar.com/blog/stage-language-is-not-standard",
   },
   {
     source: "EdenRadar",
     title: "What a tech transfer office is actually optimizing for",
-    lede: "A licensing office is not a sales organization, and approaching it as one costs deals that were otherwise available.",
+    lede: "A licensing office runs on a scoreboard of its own, and reading it wins deals a term sheet alone will not.",
     date: "2026-07-17",
     readTime: "5 min read",
-    url: `${ER}/what-a-tto-optimizes-for`,
+    url: "https://edenradar.com/blog/what-a-tto-optimizes-for",
   },
   {
     source: "EdenRadar",
     title: "Four places an asset surfaces before the patent does",
-    lede: "The eighteen-month patent lag is real. It is also not the only record a piece of science leaves behind.",
+    lede: "The eighteen-month patent lag is real. Four other records arrive well ahead of it.",
     date: "2026-07-06",
     readTime: "5 min read",
-    url: `${ER}/before-the-patent-publishes`,
-  },
-  {
-    source: "EdenRadar",
-    title: 'What we mean by "the index"',
-    lede: "A plain introduction to what EdenRadar actually measures: what a tech transfer office is, what counts as an asset, and why a live index beats a static one.",
-    date: "2026-06-26",
-    readTime: "3 min read",
-    url: `${ER}/what-we-mean-by-the-index`,
-  },
-  {
-    source: "EdenRadar",
-    title: "Why now",
-    lede: "For decades, the gap between research and treatment was a structural fact you had to accept. It just became a solvable problem.",
-    date: "2026-06-23",
-    readTime: "4 min read",
-    url: `${ER}/why-now`,
+    url: "https://edenradar.com/blog/before-the-patent-publishes",
   },
   {
     source: "EdenRadar",
@@ -113,48 +101,73 @@ export const INSIGHTS: Insight[] = [
     lede: "See the full field before your first move.",
     date: "2026-06-22",
     readTime: "4 min read",
-    url: `${ER}/edenradar-is-live`,
+    url: "https://edenradar.com/blog/edenradar-is-live",
+  },
+  {
+    source: "EdenRadar",
+    title: "Why now",
+    lede: "For decades, the gap between research and treatment was a structural fact you had to accept. It just became a solvable problem.",
+    date: "2026-06-23",
+    readTime: "4 min read",
+    url: "https://edenradar.com/blog/why-now",
+  },
+  {
+    source: "EdenRadar",
+    title: "What we mean by \"the index\"",
+    lede: "A plain introduction to what EdenRadar actually measures: what a tech transfer office is, what counts as an asset, and why a live index beats a static one.",
+    date: "2026-06-26",
+    readTime: "3 min read",
+    url: "https://edenradar.com/blog/what-we-mean-by-the-index",
   },
   {
     source: "EdenCompliance",
-    title: "EdenCompliance is live.",
-    lede: "Vendor qualification, audits, and a two-way vendor portal on one controlled record.",
-    date: "2026-08-12",
+    title: "EdenCompliance is live",
+    lede: "The tool we kept waiting for somebody to build. Vendor qualification, audits, and your vendors themselves, on one controlled record.",
+    date: "2026-09-25",
     readTime: "4 min read",
-    url: `${EC}/edencompliance-is-live`,
+    url: "https://edencompliance.com/blog/edencompliance-is-live",
+  },
+  {
+    source: "EdenCompliance",
+    title: "What we mean by a controlled record",
+    lede: "Nothing is deleted, everything is attributable, and the history is checkable. Here is what each of those actually means.",
+    date: "2026-08-12",
+    readTime: "5 min read",
+    url: "https://edencompliance.com/blog/what-we-mean-by-a-controlled-record",
   },
   {
     source: "EdenCompliance",
     title: "Noticing the cause",
-    lede: "When a for cause supplier audit is warranted: the trigger categories worth naming in advance, and the one category attention alone cannot cover.",
+    lede: "Interval-based scheduling is the right backbone. It is also indifferent to news.",
     date: "2026-08-10",
     readTime: "5 min read",
-    url: `${EC}/for-cause-triggers`,
+    url: "https://edencompliance.com/blog/for-cause-triggers",
   },
   {
     source: "EdenCompliance",
     title: "Two questions",
-    lede: "An approved vendor list is a document issued from a live register. What it takes to prove any past version of it, and who approved what.",
+    lede: "Nobody asks to see your software. They ask what the list said in March, and who signed it.",
     date: "2026-08-07",
     readTime: "5 min read",
-    url: `${EC}/two-questions`,
+    url: "https://edencompliance.com/blog/two-questions",
   },
   {
     source: "EdenCompliance",
     title: "Nobody's job",
-    lede: "Vendor requalification lapses because the follow-up sits between roles. Why reminders do not fix it, and what changes when the request is shared.",
+    lede: "Requalification does not lapse through carelessness. It lapses because the chasing has no owner.",
     date: "2026-08-05",
     readTime: "4 min read",
-    url: `${EC}/nobodys-job`,
+    url: "https://edencompliance.com/blog/nobodys-job",
   },
   {
     source: "EdenCompliance",
     title: "What a spreadsheet cannot do",
-    lede: "Vendor qualification tracking in a spreadsheet works until somebody asks about the past. The precise point it breaks, and when it is still the right tool.",
+    lede: "A workbook holds the current state perfectly well. That is not the part that fails.",
     date: "2026-08-03",
     readTime: "4 min read",
-    url: `${EC}/what-a-spreadsheet-cannot-do`,
+    url: "https://edencompliance.com/blog/what-a-spreadsheet-cannot-do",
   },
+  // </sync-insights>
 ];
 
 export const SORTED_INSIGHTS: Insight[] = [...INSIGHTS].sort((a, b) =>
