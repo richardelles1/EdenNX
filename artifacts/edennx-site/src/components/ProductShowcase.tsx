@@ -92,10 +92,10 @@ export const PRODUCTS: Record<string, Product> = {
     cta: { label: "Explore EdenTrials", href: "https://edentrials.com", external: true },
   },
   br: {
-    name: "EdenBR", token: "--portal-br", beta: true,
+    name: "EdenBR", token: "--portal-br",
     headline: { pre: "Where a batch sits, ", accent: "never the release decision.", post: "" },
     sub: "EdenBR tracks where a batch sits. The release decision stays with the people accountable for it.",
-    note: "Beta",
+    note: "",
     // Sourced from the app's own navigation (PINNED and NAV_GROUPS in the
     // EdenBR repo, src/components/app/AppShell.tsx). Reviewer queue, schedule
     // and tasks are views of the Command Center there, not screens, so they
@@ -110,7 +110,7 @@ export const PRODUCTS: Record<string, Product> = {
       { label: "Alerts", detail: "Every alert in one place" },
       { label: "Eden AI", detail: "Narrates only what is in your records" },
     ],
-    cta: { label: "In Beta", href: "", external: false },
+    cta: { label: "Explore EdenBR", href: "https://www.edenbr.com", external: true },
   },
   market: {
     name: "EdenMarket", token: "--portal-market",

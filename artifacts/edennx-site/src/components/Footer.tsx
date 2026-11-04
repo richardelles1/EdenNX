@@ -8,7 +8,7 @@ const columns: { heading: string; links: { label: string; to?: string; href?: st
       { label: "EdenTrials", to: "/products#edentrials" },
       { label: "EdenRadar", to: "/products#edenradar" },
       { label: "EdenCompliance", to: "/products#edencompliance" },
-      { label: "EdenBR (Beta)" },
+      { label: "EdenBR", to: "/products#edenbr" },
       { label: "EdenMarket", to: "/products#edenmarket" },
       { label: "EdenLab", to: "/products#edenlab" },
       { label: "EdenDiscovery", to: "/products#edendiscovery" },

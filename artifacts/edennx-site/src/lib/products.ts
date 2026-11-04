@@ -28,6 +28,7 @@ const meta = (name: string) => PORTAL_META[name] ?? PORTAL_META.EdenRadar;
 const ER = "https://edenradar.com";
 const EC = "https://edencompliance.com";
 const ET = "https://edentrials.com";
+const BR = "https://www.edenbr.com";
 const pages = (base: string, defs: [string, string][]): ProductLink[] => defs.map(([label, slug]) => ({ label, href: `${base}${slug}` }));
 
 export const PRODUCTS: Product[] = [
@@ -60,7 +61,7 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
-// EdenTrials and EdenBR (Beta, no link yet). SUITE below is the whole suite in
+// EdenTrials and EdenBR, the two newest. SUITE below is the whole suite in
 // display order, and is what the menus, canvas and cards list.
 export const BETA_PRODUCTS: Product[] = [
   {
@@ -72,7 +73,8 @@ export const BETA_PRODUCTS: Product[] = [
   {
     name: "EdenBR", suffix: "BR", tagline: "Tracks where a batch sits. Never makes the release decision.",
     token: meta("EdenBR").token, Icon: meta("EdenBR").Icon,
-    href: "/products#edenbr", external: false, beta: true,
+    href: `${BR}/how-it-works`, external: true, launch: { label: "Launch EdenBR", href: BR },
+    links: pages(BR, [["How it works", "/how-it-works"], ["Features", "/features"], ["Pricing", "/pricing"], ["One-pager", "/one-pager"]]),
   },
 ];
 
