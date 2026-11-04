@@ -44,7 +44,7 @@ export default function Products() {
         <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground reveal" style={{ transitionDelay: "0.2s" }}>
           EdenNX is the parent company. EdenRadar tracks {ASSET_COUNT_LABEL} university assets for the teams doing biotech deals. EdenCompliance runs vendor qualification and audits for
           regulated teams, on a record an inspector can read. EdenTrials is a live, global clinical trial
-          network: every trial the world is running, and everything attached to it. EdenBR, in Beta, tracks where a batch sits and leaves
+          network: every trial the world is running, and everything attached to it. EdenBR tracks where a batch sits and leaves
           the release decision to people. EdenLab, EdenDiscovery, and EdenMarket are emerging.
         </p>
       </section>
@@ -173,6 +173,7 @@ export default function Products() {
                 { name: "EdenTrials", host: "edentrials.com", href: "https://edentrials.com", line: "A live, global clinical trial network." },
                 { name: "EdenRadar", host: "edenradar.com", href: ER, line: `Biotech BD intelligence across ${ASSET_COUNT_LABEL} university assets.` },
                 { name: "EdenCompliance", host: "edencompliance.com", href: EC, line: "Vendor qualification and audits, on a record an inspector can read." },
+                { name: "EdenBR", host: "edenbr.com", href: "https://www.edenbr.com", line: "Tracks where a batch sits. The release decision stays with your quality unit." },
               ].map((s) => (
                 <a
                   key={s.name}
@@ -190,14 +191,6 @@ export default function Products() {
                   <span className="mt-1.5 block text-[13px] leading-relaxed text-white/70">{s.line}</span>
                 </a>
               ))}
-              {/* Beta: listed with the rest, not linked. */}
-              <div className="rounded-xl border border-white/15 bg-white/[0.04] p-5">
-                <span className="flex items-center justify-between gap-3">
-                  <span className="text-[15.5px] font-bold tracking-tight text-white">EdenBR</span>
-                  <span className="font-mono text-[12px] uppercase tracking-wider text-white/70">Beta</span>
-                </span>
-                <span className="mt-1.5 block text-[13px] leading-relaxed text-white/70">Tracks where a batch sits. The release decision stays with your quality unit.</span>
-              </div>
             </div>
           </div>
         </div>
